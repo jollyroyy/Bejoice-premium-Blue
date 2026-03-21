@@ -42,9 +42,12 @@ const SCROLL_HEIGHT = 700                     // vh — covers full combined vid
 // Story chapters
 // Phase 1 (0 → PHASE_BREAK): static truck image with ch.0 text
 // Phase 2 (PHASE_BREAK → 1): video scrub with ch.1–4 text
+// Video timing: hero-combined.mp4 = 12.42s total
+// Truck footage:  0s  – 7s   → scroll progress 0.00 – 0.56
+// Ship footage:   7s  – 12.42s → scroll progress 0.56 – 1.00
 const CHAPTERS = [
   {
-    range: [0, 0.15],          // visible during static image phase
+    range: [0, 0.15],          // Globe video background phase
     eyebrow: 'Bejoice Shipping Company · Saudi Arabia · Connecting KSA to the World',
     headline: ['SMART FREIGHT', 'POWERED BY AI'],
     sub: 'Award-winning freight forwarder delivering seamless end-to-end logistics solutions with reliability, efficiency, and the strength of a powerful global network.',
@@ -52,33 +55,32 @@ const CHAPTERS = [
     showStats: true,
   },
   {
-    range: [0.22, 0.38],       // video phase chapters
+    range: [0.18, 0.34],       // Truck footage — early (road/ground transport)
     eyebrow: 'Air Freight',
     headline: ['FAST AS', 'THE SKY'],
     sub: 'Priority air cargo handled with precision — express, charter, and consolidated shipments to 40+ countries.',
   },
   {
-    range: [0.42, 0.57],
-    eyebrow: 'Ocean Freight · FCL · LCL · Hazardous · Reefer',
-    headline: ['OCEAN', 'FREIGHT'],
-    sub: "Connecting Continents, Delivering Worldwide. We've Got you Covered — FCL, LCL, hazardous, reefer & oversized cargo across 180 countries, powered by Bejoice logistics experts.",
-  },
-  {
-    range: [0.61, 0.74],
+    range: [0.36, 0.52],       // Truck footage — mid (heavy cargo on road)
     eyebrow: 'Heavy Lift · ODC · OOG · Project Cargo',
     headline: ['WHEN THE LOAD', 'DEFIES LIMITS'],
     sub: "From hydraulic axle convoys to precision onsite jacking & skidding — we move wind turbines, transformers, and industrial modules that others won't touch.",
   },
-  // Ship video chapters (progress ~0.67+ = ship footage)
   {
-    range: [0.72, 0.84],
+    range: [0.54, 0.68],       // Ship appears at ~0.56 — ocean freight text right as ship comes in
+    eyebrow: 'Ocean Freight · FCL · LCL · Hazardous · Reefer',
+    headline: ['OCEAN', 'FREIGHT'],
+    sub: "Connecting Continents, Delivering Worldwide — FCL, LCL, hazardous, reefer & oversized cargo across 180 countries, powered by Bejoice logistics experts.",
+  },
+  {
+    range: [0.70, 0.84],       // Deep into ship footage
     eyebrow: 'Ocean Freight · Global Shipping Lanes',
     headline: ['THE WORLD\'S', 'OCEANS MOVE FOR YOU'],
     sub: 'Full container loads, bulk cargo, and project shipments across 180+ countries — on-time, every time.',
     align: 'right',
   },
   {
-    range: [0.87, 0.97],
+    range: [0.87, 0.97],       // End of ship footage
     eyebrow: 'Trust & Compliance',
     headline: ['CERTIFIED', 'TO DELIVER'],
     sub: 'ZATCA · ISO 9001 · FIATA · IATA · AEO · SASO — built on the strongest compliance foundation in the industry.',
@@ -378,7 +380,7 @@ export default function VideoHero({ onQuoteClick }) {
         {/* Globe trade video — initial hero background, fades out on scroll */}
         <video
           ref={globeVideoRef}
-          src="/globe-trade.mp4"
+          src="/saudi-connected.mp4"
           autoPlay
           muted
           loop
