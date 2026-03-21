@@ -4,7 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Nav from './components/Nav'
 import VideoHero from './components/VideoHero'
-import OceanFreight from './components/OceanFreight'
+import LogisticsTools from './components/LogisticsTools'
 import Services from './components/Services'
 import HeavyCargo from './components/HeavyCargo'
 import HeavyLift from './components/HeavyLift'
@@ -16,12 +16,15 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import FloatingBookCTA from './components/FloatingBookCTA'
 import QuoteModal from './components/QuoteModal'
+import ScrollProgress from './components/ScrollProgress'
+import GlobalInteractions from './components/GlobalInteractions'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
   const [quoteOpen, setQuoteOpen] = useState(false)
   useEffect(() => {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
     window.scrollTo(0, 0)
   }, [])
 
@@ -50,10 +53,12 @@ export default function App() {
 
   return (
     <div className="grain">
+      <ScrollProgress />
+      <GlobalInteractions />
       <Nav />
       <main>
         <VideoHero onQuoteClick={() => setQuoteOpen(true)} />
-        <OceanFreight />
+        <LogisticsTools />
         <Services />
         <HeavyLift />
         <HeavyCargo />

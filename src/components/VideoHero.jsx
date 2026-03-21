@@ -36,54 +36,51 @@ function CountUp({ target, suffix = '', duration = 900 }) {
   return <span ref={elRef}>{display}</span>
 }
 
-const VIDEO_SRC     = '/hero-combined.mp4'   // truck (8s) + dissolve + ship (5.5s)
-const SCROLL_HEIGHT = 700                     // vh — covers full combined video
+const VIDEO_SRC     = '/hero-combined.mp4'
+// 1200 vh total — each of 6 chapters gets ~200 vh (~2000px) of comfortable scroll room
+const SCROLL_HEIGHT = 1200
 
-// Story chapters
-// Phase 1 (0 → PHASE_BREAK): static truck image with ch.0 text
-// Phase 2 (PHASE_BREAK → 1): video scrub with ch.1–4 text
-// Video timing: hero-combined.mp4 = 12.42s total
-// Truck footage:  0s  – 7s   → scroll progress 0.00 – 0.56
-// Ship footage:   7s  – 12.42s → scroll progress 0.56 – 1.00
+// Chapters span 0→1 with NO gaps. Each boundary uses a centered crossfade:
+// outgoing fades 1→0 while incoming fades 0→1 over the same window,
+// so combined opacity = 1.0 at every scroll position.
+//
+// hero-combined.mp4 = 12.42s | truck 0–7s (prog 0–0.56) | ship 7–12.42s (prog 0.56–1.0)
+const HALF_FADE = 0.025   // half the crossfade window (= 30 vh either side of boundary)
+
 const CHAPTERS = [
   {
-    range: [0, 0.15],          // Globe video background phase
-    eyebrow: 'Bejoice Shipping Company · Saudi Arabia · Connecting KSA to the World',
-    headline: ['SMART FREIGHT', 'POWERED BY AI'],
-    sub: 'Award-winning freight forwarder delivering seamless end-to-end logistics solutions with reliability, efficiency, and the strength of a powerful global network.',
-    showCta: true,
-    showStats: true,
-  },
-  {
-    range: [0.18, 0.34],       // Truck footage — early (road/ground transport)
-    eyebrow: 'Air Freight',
-    headline: ['FAST AS', 'THE SKY'],
-    sub: 'Priority air cargo handled with precision — express, charter, and consolidated shipments to 40+ countries.',
-  },
-  {
-    range: [0.36, 0.52],       // Truck footage — mid (heavy cargo on road)
-    eyebrow: 'Heavy Lift · ODC · OOG · Project Cargo',
-    headline: ['WHEN THE LOAD', 'DEFIES LIMITS'],
-    sub: "From hydraulic axle convoys to precision onsite jacking & skidding — we move wind turbines, transformers, and industrial modules that others won't touch.",
-  },
-  {
-    range: [0.54, 0.68],       // Ship appears at ~0.56 — ocean freight text right as ship comes in
-    eyebrow: 'Ocean Freight · FCL · LCL · Hazardous · Reefer',
-    headline: ['OCEAN', 'FREIGHT'],
-    sub: "Connecting Continents, Delivering Worldwide — FCL, LCL, hazardous, reefer & oversized cargo across 180 countries, powered by Bejoice logistics experts.",
-  },
-  {
-    range: [0.70, 0.84],       // Deep into ship footage
-    eyebrow: 'Ocean Freight · Global Shipping Lanes',
-    headline: ['THE WORLD\'S', 'OCEANS MOVE FOR YOU'],
-    sub: 'Full container loads, bulk cargo, and project shipments across 180+ countries — on-time, every time.',
+    range: [0.00, 0.20],
+    eyebrow: 'Hydraulic Axle Transport · OOG & ODC Cargo',
+    headline: ['ENGINEERED', 'FOR EXTREMES'],
+    sub: 'Navigating KSA\'s toughest corridors with hydraulic convoys for out-of-gauge cargo.',
     align: 'right',
   },
   {
-    range: [0.87, 0.97],       // End of ship footage
-    eyebrow: 'Trust & Compliance',
-    headline: ['CERTIFIED', 'TO DELIVER'],
-    sub: 'ZATCA · ISO 9001 · FIATA · IATA · AEO · SASO — built on the strongest compliance foundation in the industry.',
+    range: [0.20, 0.40],
+    eyebrow: 'Route Survey & Modification · Technical Engineering',
+    headline: ['EVERY ROUTE,', 'ZERO OBSTACLES'],
+    sub: 'Precision surveys and route modifications. Every path mapped and certified before moving.',
+    align: 'left',
+  },
+  {
+    range: [0.40, 0.60],
+    eyebrow: 'Onsite Jacking & Skidding · Lift Plans & Load Calc',
+    headline: ['PRECISION', 'LIFT SCIENCE'],
+    sub: 'Millimetre-precision jacking and skidding backed by 25+ years of lift science.',
+    align: 'right',
+  },
+  {
+    range: [0.60, 0.80],
+    eyebrow: 'Customs Brokerage · Saudi Regulatory Compliance',
+    headline: ['CLEARED BEFORE', 'IT LANDS'],
+    sub: 'ZATCA-compliant and AEO-certified end-to-end customs clearance by Saudi experts.',
+    align: 'left',
+  },
+  {
+    range: [0.80, 1.00],
+    eyebrow: 'Wind Turbines · Transformers · Industrial Modules',
+    headline: ['WE MOVE', 'GIANTS'],
+    sub: 'Moving transformers, turbines, and mega-modules. We handle the cargo that defines your project.',
     align: 'right',
   },
 ]
@@ -216,65 +213,56 @@ function TrackCard() {
 }
 
 export default function VideoHero({ onQuoteClick }) {
-  const wrapperRef      = useRef(null)
-  const canvasRef       = useRef(null)
-  const videoRef        = useRef(null)
-  const globeVideoRef   = useRef(null)
-  const rafRef          = useRef(null)
-  const chaptersRef     = useRef([])
+  const wrapperRef     = useRef(null)
+  const canvasRef      = useRef(null)
+  const videoRef       = useRef(null)
+  const globeVideoRef  = useRef(null)
+  const chaptersRef    = useRef([])
+  const scrollLockedRef = useRef(true)
+  const heroCardsRef   = useRef(null)
+  const transHeadRef   = useRef(null)
 
-  // ── GLITTER ─────────────────────────────────────────────────────
-  const glitterColors = ['#c8a84e','#ffe680','#ffffff','#f5d98b','#ffd700','#e8cc7a']
-  const spawnGlitter = useCallback((e) => {
-    const count = 6
-    for (let i = 0; i < count; i++) {
-      const el = document.createElement('span')
-      const size = Math.random() * 8 + 4
-      const color = glitterColors[Math.floor(Math.random() * glitterColors.length)]
-      const angle = Math.random() * 360
-      const dist = Math.random() * 55 + 20
-      const dx = Math.cos((angle * Math.PI) / 180) * dist
-      const dy = Math.sin((angle * Math.PI) / 180) * dist
-      Object.assign(el.style, {
-        position: 'fixed',
-        left: e.clientX + 'px',
-        top: e.clientY + 'px',
-        width: size + 'px',
-        height: size + 'px',
-        borderRadius: '50%',
-        background: color,
-        pointerEvents: 'none',
-        zIndex: 9999,
-        transform: 'translate(-50%, -50%) scale(1)',
-        boxShadow: `0 0 ${size * 2}px ${color}`,
-        transition: 'none',
-      })
-      document.body.appendChild(el)
-      const start = performance.now()
-      const duration = Math.random() * 500 + 400
-      const tick = (now) => {
-        const t = Math.min((now - start) / duration, 1)
-        const ease = 1 - t * t
-        el.style.transform = `translate(calc(-50% + ${dx * t}px), calc(-50% + ${dy * t}px)) scale(${ease})`
-        el.style.opacity = ease
-        if (t < 1) requestAnimationFrame(tick)
-        else el.remove()
-      }
-      requestAnimationFrame(tick)
+  // Virtual scroll — drives chapter text during globe lock
+  const virtualScrollRef  = useRef(0)   // accumulated wheel delta
+  const virtualTargetRef  = useRef(0)   // target progress 0-1
+  const virtualCurrentRef = useRef(-1)  // current lerped progress (-1 = not started)
+  const virtualRafRef     = useRef(null)
+  const VIRTUAL_TOTAL = 2800            // px of delta to traverse all 6 chapters
+
+  // ── Shared: update every chapter's opacity for a given progress 0-1 ─
+  // Uses centered crossfade: at boundary B, outgoing fades 1→0 while
+  // incoming fades 0→1 over [B-HALF_FADE, B+HALF_FADE] → combined always 1.0
+  const applyChapterProgress = useCallback((p) => {
+    if (scrollLockedRef.current && transHeadRef.current) {
+      transHeadRef.current.style.opacity = Math.max(0, 1 - p * 8);
     }
+    chaptersRef.current.forEach((el, i) => {
+      if (!el) return
+      const [start, end] = CHAPTERS[i].range
+      const isFirst = i === 0
+      const isLast  = i === CHAPTERS.length - 1
+      // First chapter: no fade-in (starts full), Last chapter: no fade-out (stays full at end)
+      const visStart = isFirst ? 0        : start - HALF_FADE
+      const visEnd   = isLast  ? 1        : end   + HALF_FADE
+      let opacity = 0
+      if (p >= visStart && p <= visEnd) {
+        const fadeIn  = isFirst ? 1 : Math.min(1, (p - visStart) / (2 * HALF_FADE))
+        const fadeOut = isLast  ? 1 : Math.min(1, (visEnd - p)   / (2 * HALF_FADE))
+        opacity = Math.min(fadeIn, fadeOut)
+      }
+      el.style.opacity   = opacity
+      el.style.transform = `translateY(${(1 - opacity) * 20}px)`
+    })
   }, [])
 
-  // ── PAINT ───────────────────────────────────────────────────────
+  // ── PAINT frame to canvas ────────────────────────────────────────
   const paintVideo = useCallback((canvas, video) => {
     if (!canvas || !video || !video.videoWidth) return
     const ctx = canvas.getContext('2d')
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    const cw = canvas.clientWidth
-    const ch = canvas.clientHeight
-    // cover: fill viewport, no distortion
+    const cw = canvas.clientWidth, ch = canvas.clientHeight
     const scale = Math.max(cw / video.videoWidth, ch / video.videoHeight)
-    const w = video.videoWidth  * scale
-    const h = video.videoHeight * scale
+    const w = video.videoWidth * scale, h = video.videoHeight * scale
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'high'
     ctx.clearRect(0, 0, cw * dpr, ch * dpr)
@@ -324,49 +312,156 @@ export default function VideoHero({ onQuoteClick }) {
     }
   }, [paintVideo])
 
-  // ── GSAP SCROLL SCRUB ────────────────────────────────────────────
+  // ── PHASE 1: Globe plays — virtual scroll cycles chapters ─────────
   useEffect(() => {
+    const globe  = globeVideoRef.current
+    const canvas = canvasRef.current
+    if (!globe) return
+
+    // Always re-lock here (React Strict Mode runs effects twice; cleanup
+    // sets scrollLockedRef=false, so we must re-set it on each effect run)
+    scrollLockedRef.current = true
+
+    // Initial visual states — globe video full-screen, no text, no canvas
+    gsap.set(canvas, { opacity: 0, scale: 0.96, transformOrigin: 'center center' })
+    gsap.set(globe,  { scale: 1.0, opacity: 1, filter: 'blur(0px)', transformOrigin: 'center center' })
+    // Show hero cards during globe phase; transition heading stays hidden
+    if (heroCardsRef.current) gsap.set(heroCardsRef.current, { opacity: 1, y: 0 })
+    if (transHeadRef.current) gsap.set(transHeadRef.current, { opacity: 1, y: 0 })
+    // Show chapter 0 (SMART FREIGHT) immediately on load; hide all others
+    chaptersRef.current.forEach((el, i) => {
+      if (!el) return
+      el.style.opacity   = '0'
+      el.style.transform = 'translateY(0px)'
+    })
+
+    // ── Smooth lerp loop for virtual scroll ─────────────────────────
+    const lerpLoop = () => {
+      const cur = virtualCurrentRef.current
+      const tgt = virtualTargetRef.current
+      const next = cur + (tgt - cur) * 0.07   // eased approach
+      virtualCurrentRef.current = next
+      applyChapterProgress(next)
+      if (Math.abs(tgt - next) > 0.0005) {
+        virtualRafRef.current = requestAnimationFrame(lerpLoop)
+      } else {
+        virtualCurrentRef.current = tgt
+        applyChapterProgress(tgt)
+        virtualRafRef.current = null
+      }
+    }
+
+    // ── Wheel during lock → cycle chapter headings visually ─────────
+    const onWheel = (e) => {
+      e.preventDefault()
+      virtualScrollRef.current = Math.max(
+        0, Math.min(VIRTUAL_TOTAL, virtualScrollRef.current + e.deltaY * 0.85)
+      )
+      const newTarget = virtualScrollRef.current / VIRTUAL_TOTAL
+      virtualTargetRef.current = newTarget
+      // Kick off lerp if user hasn't scrolled yet — start from 0
+      if (virtualCurrentRef.current < 0) virtualCurrentRef.current = 0
+      if (!virtualRafRef.current) virtualRafRef.current = requestAnimationFrame(lerpLoop)
+    }
+    const onTouch = (e) => e.preventDefault()
+    const onKey   = (e) => {
+      if ([' ','ArrowUp','ArrowDown','PageUp','PageDown','Home','End'].includes(e.key))
+        e.preventDefault()
+    }
+    window.addEventListener('wheel',     onWheel, { passive: false })
+    window.addEventListener('touchmove', onTouch, { passive: false })
+    window.addEventListener('keydown',   onKey)
+    if (window.__lenis) window.__lenis.stop()
+
+    // ── After globe ends → PHASE 2: cinematic transition ───────────
+    const runTransition = () => {
+      // Stop the virtual scroll lerp immediately
+      if (virtualRafRef.current) { cancelAnimationFrame(virtualRafRef.current); virtualRafRef.current = null }
+
+      // 1. Fade hero cards + all chapter text out cleanly first
+      if (heroCardsRef.current) gsap.to(heroCardsRef.current, { opacity: 0, y: 20, duration: 0.35, ease: 'power2.in' })
+      if (transHeadRef.current) gsap.to(transHeadRef.current, { opacity: 0, y: -20, duration: 0.35, ease: 'power2.in' })
+      chaptersRef.current.forEach(el => {
+        if (el) gsap.to(el, { opacity: 0, y: -16, duration: 0.35, ease: 'power2.in' })
+      })
+
+      setTimeout(() => {
+        const tl = gsap.timeline({
+          onComplete: () => {
+            window.removeEventListener('wheel',     onWheel)
+            window.removeEventListener('touchmove', onTouch)
+            window.removeEventListener('keydown',   onKey)
+            window.scrollTo(0, 0)
+            if (window.__lenis) {
+              window.__lenis.scrollTo(0, { immediate: true })
+              window.__lenis.start()
+            }
+            scrollLockedRef.current = false
+            ScrollTrigger.refresh()
+            gsap.to(canvas, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' })
+            applyChapterProgress(0)
+          },
+        })
+
+        // Globe zooms and blurs out
+        tl.to(globe, {
+          scale: 1.14, opacity: 0, filter: 'blur(18px)',
+          duration: 1.0, ease: 'power2.in',
+        }, 0)
+      }, 300)
+    }
+
+    globe.addEventListener('ended', runTransition, { once: true })
+
+    return () => {
+      globe.removeEventListener('ended', runTransition)
+      window.removeEventListener('wheel',     onWheel)
+      window.removeEventListener('touchmove', onTouch)
+      window.removeEventListener('keydown',   onKey)
+      if (virtualRafRef.current) cancelAnimationFrame(virtualRafRef.current)
+      if (window.__lenis) window.__lenis.start()
+      scrollLockedRef.current = false
+    }
+  }, [applyChapterProgress])
+
+  // ── PHASE 3: Scroll-driven scrub + chapter sequencing ─────────────
+  useEffect(() => {
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
+
+    // ── Raw scroll → chapter text (no scrub lag, always consistent) ──
+    const onScroll = () => {
+      if (scrollLockedRef.current) return
+      const rect  = wrapper.getBoundingClientRect()
+      const total = wrapper.offsetHeight - window.innerHeight
+      const p     = Math.max(0, Math.min(1, -rect.top / total))
+      applyChapterProgress(p)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    // ── GSAP scrub → video only (smooth frame scrubbing) ─────────────
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
-        trigger: wrapperRef.current,
+        trigger: wrapper,
         start: 'top top',
-        end: 'bottom bottom',
-        scrub: 0.3,
+        end:   'bottom bottom',
+        scrub: 0.8,
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
-          const p = self.progress
-
-          // ── Globe → canvas crossfade (0 → 10% scroll) ─────────
-          const fadeEnd = 0.10
-          const canvasOpacity = Math.min(1, p / fadeEnd)
-          if (canvasRef.current)     canvasRef.current.style.opacity    = canvasOpacity
-          if (globeVideoRef.current) globeVideoRef.current.style.opacity = 1 - canvasOpacity
-
-          // ── Video scrub ────────────────────────────────────────
+          if (scrollLockedRef.current) return
           const video = videoRef.current
           if (video && video.readyState >= 2 && video.duration) {
-            video.currentTime = p * video.duration
+            video.currentTime = self.progress * video.duration
           }
-
-          // Chapter text
-          chaptersRef.current.forEach((el, i) => {
-            if (!el) return
-            const [start, end] = CHAPTERS[i].range
-            const fadeLen = 0.04
-            let opacity = 0
-            if (p >= start && p <= end) {
-              if      (p < start + fadeLen) opacity = (p - start) / fadeLen
-              else if (p > end   - fadeLen) opacity = (end - p)   / fadeLen
-              else                          opacity = 1
-            }
-            el.style.opacity = opacity
-            el.style.transform = `translateY(${(1 - Math.min(opacity, 1)) * 28}px)`
-          })
         },
       })
     }, wrapperRef)
 
-    return () => ctx.revert()
-  }, [])
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      ctx.revert()
+    }
+  }, [applyChapterProgress])
 
   return (
     <div ref={wrapperRef} id="hero" style={{ height: `${SCROLL_HEIGHT}vh`, position: 'relative' }}>
@@ -377,23 +472,24 @@ export default function VideoHero({ onQuoteClick }) {
         <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: '#050508' }} />
 
 
-        {/* Globe trade video — initial hero background, fades out on scroll */}
+        {/* Globe video — plays fully as cinematic intro, then GSAP transitions out */}
         <video
           ref={globeVideoRef}
           src="/saudi-connected.mp4"
           autoPlay
           muted
-          loop
           playsInline
           style={{
             position: 'absolute', inset: 0, zIndex: 1,
             width: '100%', height: '100%',
             objectFit: 'cover', objectPosition: 'center center',
             opacity: 1,
+            transformOrigin: 'center center',
+            willChange: 'transform, opacity, filter',
           }}
         />
 
-        {/* Hidden video — scrubbed via currentTime, painted to canvas */}
+        {/* Hidden video — scrubbed via scroll, painted to canvas */}
         <video
           ref={videoRef}
           src={VIDEO_SRC}
@@ -403,8 +499,12 @@ export default function VideoHero({ onQuoteClick }) {
           style={{ display: 'none' }}
         />
 
-        {/* Canvas — video frames painted here, fades in on scroll */}
-        <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, zIndex: 2, opacity: 0 }} />
+        {/* Canvas — fades in via GSAP transition after globe ends */}
+        <canvas ref={canvasRef} style={{
+          position: 'absolute', inset: 0, zIndex: 2, opacity: 0,
+          transformOrigin: 'center center',
+          willChange: 'transform, opacity',
+        }} />
 
         {/* Cinematic overlay — sits over globe video, stays for whole hero */}
         <div style={{
@@ -431,9 +531,8 @@ export default function VideoHero({ onQuoteClick }) {
               alignItems: ch.align === 'right' ? 'flex-end' : 'flex-start',
               textAlign: ch.align === 'right' ? 'right' : 'left',
               padding: 'clamp(2rem, 6vw, 6rem)',
-              opacity: i === 0 ? 1 : 0,
+              opacity: 0,
               transform: 'translateY(0px)',
-              transition: 'opacity 0.08s linear, transform 0.08s linear',
               pointerEvents: 'none',
             }}
           >
@@ -559,6 +658,162 @@ export default function VideoHero({ onQuoteClick }) {
           </div>
         ))}
 
+        {/* Transition heading — shown only during globe→scrollytelling crossfade */}
+        <div ref={transHeadRef} style={{
+          position: 'absolute', inset: 0, zIndex: 6,
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
+          textAlign: 'center',
+          pointerEvents: 'none',
+          opacity: 0,
+        }}>
+          <p style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 'clamp(11px, 1.1vw, 14px)',
+            letterSpacing: '0.32em',
+            textTransform: 'uppercase',
+            color: '#c8a84e',
+            margin: '0 0 16px',
+            textShadow: '0 0 20px rgba(200,168,78,0.6)',
+          }}>
+            Bejoice · Est. 2006 · Saudi Arabia
+          </p>
+          <h2 style={{
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: 'clamp(2.6rem, 6.5vw, 6rem)',
+            lineHeight: 0.92,
+            letterSpacing: '0.06em',
+            margin: 0,
+            color: '#ffffff',
+            textShadow: '0 0 40px rgba(255,255,255,0.35), 0 2px 32px rgba(0,0,0,0.9)',
+          }}>
+            SMART FREIGHT<br />
+            <span style={{ color: '#ffe680', textShadow: '0 0 30px rgba(255,214,0,0.55), 0 2px 16px rgba(0,0,0,0.9)' }}>
+              POWERED BY AI
+            </span>
+          </h2>
+          <div style={{
+            width: '60px', height: '2px',
+            background: 'linear-gradient(90deg, transparent, #c8a84e, transparent)',
+            margin: '24px auto 0',
+            borderRadius: '2px',
+          }} />
+        </div>
+
+        {/* Hero cards — visible during globe video, hidden before scrollytelling */}
+        <div ref={heroCardsRef} style={{
+          position: 'absolute', bottom: 'clamp(80px, 10vh, 120px)', left: 0, right: 0, zIndex: 5,
+          display: 'flex', flexWrap: 'wrap', gap: 'clamp(12px, 2vw, 24px)',
+          alignItems: 'stretch', justifyContent: 'center',
+          padding: '0 clamp(2rem, 6vw, 6rem)',
+          pointerEvents: 'all',
+          opacity: 1,
+        }}>
+          {/* Tracking card */}
+          <div style={{ flex: '0 1 380px', minWidth: 0, maxWidth: '380px', display: 'flex' }}>
+            <TrackCard />
+          </div>
+          {/* Stats row */}
+          <div style={{
+            flex: '0 0 auto',
+            display: 'flex', flexDirection: 'row', flexWrap: 'nowrap', alignItems: 'center',
+            background: 'linear-gradient(135deg, rgba(180,190,210,0.08) 0%, rgba(120,130,160,0.05) 100%)',
+            border: '1px solid rgba(200,210,230,0.18)',
+            borderRadius: '0.9rem',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)',
+            overflow: 'hidden',
+          }}>
+            {[
+              { v: '1500', suffix: '+', l: 'Heavy Lift' },
+              { v: '120',  suffix: '+', l: 'Countries' },
+              { v: '25',   suffix: '+', l: 'Years' },
+              { v: '24/7', suffix: '',  l: 'Operations' },
+              { v: 'KSA',  suffix: '',  l: 'Specialist' },
+            ].map((s, i, arr) => (
+              <div key={s.l} style={{
+                display: 'flex', alignItems: 'center',
+                padding: '10px 12px',
+                borderRight: i < arr.length - 1 ? '1px solid rgba(200,210,230,0.1)' : 'none',
+                flexShrink: 0,
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{
+                    fontFamily: "'Bebas Neue', sans-serif",
+                    fontSize: '3.2rem', letterSpacing: '0.05em', lineHeight: 1,
+                    color: '#ffffff',
+                    textShadow: '0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(200,220,255,0.3), 0 1px 6px rgba(0,0,0,0.8)',
+                  }}>
+                    <CountUp target={s.v} suffix={s.suffix} duration={800} />
+                  </div>
+                  <div style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: '13px', letterSpacing: '0.12em',
+                    textTransform: 'uppercase', color: 'rgba(210,220,240,0.9)',
+                    fontWeight: 600, marginTop: '4px', whiteSpace: 'nowrap',
+                  }}>{s.l}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Premium Animated Certification Strip */}
+          <div style={{
+            flex: '1 1 100%',
+            marginTop: '2rem',
+            padding: '1.2rem 0',
+            background: 'linear-gradient(90deg, transparent, rgba(200,168,78,0.03) 50%, transparent)',
+            borderTop: '1px solid rgba(200, 168, 78, 0.15)',
+            borderBottom: '1px solid rgba(200, 168, 78, 0.05)',
+            position: 'relative',
+            overflow: 'hidden',
+          }}>
+            {/* Fade edges to smooth the marquee entry/exit */}
+            <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '12%', background: 'linear-gradient(to right, #050508 0%, transparent 100%)', zIndex: 2, pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '12%', background: 'linear-gradient(to left, #050508 0%, transparent 100%)', zIndex: 2, pointerEvents: 'none' }} />
+
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              width: 'max-content',
+              animation: 'scrollMarquee 45s linear infinite',
+            }}>
+              {[0, 1].map((arrayIndex) => (
+                <div key={arrayIndex} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(3.5rem, 6vw, 7rem)', paddingRight: 'clamp(3.5rem, 6vw, 7rem)' }}>
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '14px', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>
+                    Certified By
+                  </span>
+                  {['ZATCA', 'ISO 9001', 'FIATA', 'IATA', 'AEO', 'SASO'].map((cert) => (
+                    <span key={cert} style={{
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontSize: 'clamp(30px, 4vw, 46px)',
+                      letterSpacing: '0.25em',
+                      color: 'rgba(225, 195, 110, 0.95)',
+                      textShadow: '0 0 16px rgba(225, 195, 110, 0.4), 0 2px 16px rgba(0,0,0,0.9)',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      cursor: 'default',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#ffe680';
+                      e.currentTarget.style.textShadow = '0 0 24px rgba(255,214,0,0.8), 0 2px 14px rgba(0,0,0,0.9)';
+                      e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = 'rgba(225, 195, 110, 0.95)';
+                      e.currentTarget.style.textShadow = '0 0 16px rgba(225, 195, 110, 0.4), 0 2px 16px rgba(0,0,0,0.9)';
+                      e.currentTarget.style.transform = 'translateY(0px) scale(1)';
+                    }}
+                    >
+                      {cert}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Gold progress bar */}
         <ProgressBar wrapperRef={wrapperRef} />
 
@@ -585,6 +840,10 @@ export default function VideoHero({ onQuoteClick }) {
         @keyframes scrollDown {
           0%   { transform: translateY(-100%); }
           100% { transform: translateY(200%); }
+        }
+        @keyframes scrollMarquee {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
       `}</style>
     </div>

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 const pillars = [
   { icon: '◈', title: 'ZATCA Certified', desc: 'Fully compliant with Saudi Zakat, Tax and Customs Authority — ensuring zero delays at border crossings.' },
@@ -33,7 +34,12 @@ export default function WhyBejoice() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
           {/* Left */}
           <div>
-            <div className="fade-up">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px 0px" }}
+              transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            >
               <div className="section-num mb-5">02 — Our Edge</div>
               <h2 className="section-headline mb-8">
                 <span className="shine-text" data-text="WHY">WHY</span><br />
@@ -42,13 +48,14 @@ export default function WhyBejoice() {
               <p className="body-text max-w-sm">
                 Decades of experience meeting the demands of one of the world's most dynamic logistics corridors — with the discipline of a global operator.
               </p>
+
               <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(80px, 18vw, 160px)', lineHeight: 1, letterSpacing: '0.05em', color: 'rgba(200,168,78,0.06)', userSelect: 'none', marginTop: '16px', marginLeft: '-8px' }}>
                 18
               </div>
               <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(200,168,78,0.55)', marginTop: '-24px' }}>
                 Years of Excellence
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right: pillars */}

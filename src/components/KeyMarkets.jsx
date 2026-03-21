@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 const routes = [
   { from: 'RIYADH', to: 'SHANGHAI', type: 'Air · 8h', active: true },
@@ -45,18 +46,24 @@ export default function KeyMarkets() {
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-20">
-          <div className="section-num fade-up mb-4">03 — Key Markets</div>
-          <div className="flex flex-col md:flex-row md:items-end gap-8">
-            <h2 className="section-headline fade-up">
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px 0px" }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className="mb-20 flex flex-col items-end text-right"
+        >
+          <div className="section-num mb-4">03 — Key Markets</div>
+          <div className="flex flex-col md:flex-row-reverse md:items-end gap-8 text-right">
+            <h2 className="section-headline">
               <span className="shine-text" data-text="GLOBAL">GLOBAL</span><br />
               <span className="accent shine-text shine-gold" data-text="REACH">REACH</span>
             </h2>
-            <p className="fade-up font-body max-w-xs mb-2" style={{ color: 'rgba(255,255,255,0.92)', fontSize: '17px', fontWeight: 500, lineHeight: 1.75 }}>
+            <p className="font-body max-w-xs mb-2 md:text-left" style={{ color: 'rgba(255,255,255,0.92)', fontSize: '17px', fontWeight: 500, lineHeight: 1.75 }}>
               Strategic footprint across the world's most critical trade lanes, with deep roots in Saudi Arabia.
             </p>
           </div>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Map area */}

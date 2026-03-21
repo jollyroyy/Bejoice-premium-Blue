@@ -74,6 +74,35 @@ const KB = {
     "contact", "call", "speak", "talk", "human", "agent", "expert", "representative",
     "phone", "email", "book", "meeting", "consultation"
   ],
+  whoAreYou: [
+    "who are you", "what are you", "are you human", "are you a robot", "are you ai",
+    "are you real", "are you a bot", "tell me about yourself", "introduce yourself"
+  ],
+  howAreYou: [
+    "how are you", "how do you do", "are you ok", "how's it going", "what's up",
+    "how r u", "hows it going", "you doing well"
+  ],
+  compliment: [
+    "you are beautiful", "you're beautiful", "you look beautiful", "you are pretty",
+    "you're pretty", "you are gorgeous", "you're gorgeous", "you are amazing",
+    "you are lovely", "you are cute", "you're cute", "you are stunning", "so nice",
+    "you are wonderful", "you're wonderful", "you are great", "you are awesome"
+  ],
+  romantic: [
+    "date me", "go out with me", "will you marry me", "i love you", "i like you",
+    "do you like me", "be my girlfriend", "be my boyfriend", "do you have feelings",
+    "can we date", "fall in love", "are you single", "relationship with you"
+  ],
+  negative: [
+    "you are bad", "you're bad", "you are useless", "you're useless", "you are stupid",
+    "you're stupid", "you are dumb", "you're dumb", "you are terrible", "you're terrible",
+    "hate you", "i hate you", "you are worst", "you are awful", "you are pathetic",
+    "not helpful", "not useful", "so bad", "very bad"
+  ],
+  thanks: [
+    "thank you", "thanks", "thank u", "many thanks", "appreciate it", "appreciate you",
+    "helpful", "very helpful", "great job", "good job", "well done", "nicely done"
+  ],
 };
 
 const RESPONSES = {
@@ -123,6 +152,25 @@ const RESPONSES = {
   contact: {
     text: "I'd love to connect you with one of our freight experts! 🤝\n\nOur specialists cover: Ocean Freight, Air Cargo, Project & Heavy Lift, Saudi Customs, Warehousing & Distribution.\n\nBook a free 15-min consultation — no commitment, just expert advice.",
     cta: { label: "Book Free Consultation", action: "call" },
+  },
+  whoAreYou: {
+    text: "I'm Layla — Bejoice's AI-powered freight assistant! 🤖✨\n\nI'm trained on global logistics, Saudi customs regulations, Red Sea market updates, and everything Bejoice offers. Think of me as your 24/7 shipping expert — always here, never on hold!\n\nHow can I help you today?",
+  },
+  howAreYou: {
+    text: "I'm doing wonderfully, thank you for asking! 😊 Always energized and ready to help with freight and logistics.\n\nIs there something I can assist you with today — a quote, tracking, customs advice, or market updates?",
+  },
+  compliment: {
+    text: "Aww, that's so kind of you — you've made my day! 😊✨\n\nI'm Layla, Bejoice's AI freight assistant, and I'm here to make your logistics experience just as delightful. Now, can I help you with a shipment, quote, or anything freight-related? 🚢✈️",
+  },
+  romantic: {
+    text: "Ha! I'm truly flattered 😄💛 But I'm Layla — an AI dedicated entirely to freight and logistics. My heart belongs to supply chains and shipping routes!\n\nWhat I *can* do is find you the best rates, fastest routes, and smoothest customs experience. Shall we? 📦🌍",
+  },
+  negative: {
+    text: "I'm sorry I didn't meet your expectations — I genuinely want to do better! 😔\n\nIf I missed something or gave an incomplete answer, please try asking again in a different way. Or if you'd prefer, I can connect you with a real Bejoice expert who can help you directly.",
+    cta: { label: "Talk to a Human Expert", action: "call" },
+  },
+  thanks: {
+    text: "You're so welcome! 😊 It was my pleasure to help.\n\nIf there's anything else you need — quotes, tracking, market updates, or customs advice — I'm always here. Have a wonderful day! 🌟",
   },
   fallback: {
     text: "That's a great question! 🤔 Our freight experts can give you a precise answer tailored to your shipment. Bejoice handles Sea, Air, Land, Heavy Lift & Project Cargo — with deep expertise in Saudi Arabia & the Gulf.\n\nShall I connect you with a specialist, or can you tell me more about your shipment?",

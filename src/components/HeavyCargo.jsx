@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 const capabilities = [
   {
@@ -105,18 +106,24 @@ export default function HeavyCargo() {
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 md:mb-16 lg:mb-20 gap-6 md:gap-8">
-          <div>
-            <div className="section-num mb-5">02 — Heavy & Project Cargo</div>
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px 0px" }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className="flex flex-col md:flex-row-reverse md:items-end md:justify-between mb-10 md:mb-16 lg:mb-20 gap-6 md:gap-8"
+        >
+          <div className="text-right">
+            <div className="section-num mb-5 justify-end flex">02 — Heavy & Project Cargo</div>
             <h2 className="section-headline">
               <span className="shine-text" data-text="ENGINEERED">ENGINEERED</span><br />
               <span className="accent shine-text shine-gold" data-text="FOR THE IMPOSSIBLE">FOR THE IMPOSSIBLE</span>
             </h2>
           </div>
-          <p className="body-text max-w-sm">
+          <p className="body-text max-w-sm text-right md:text-left">
             From mega-project turbines to out-of-gauge industrial modules — Bejoice delivers the technical expertise, specialised equipment, and regulatory precision to move what others can't.
           </p>
-        </div>
+        </motion.div>
 
         <div className="gold-line mb-20" />
 

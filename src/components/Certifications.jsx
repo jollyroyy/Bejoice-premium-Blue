@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 const certs = [
   { code: 'ZATCA', name: 'Zakat, Tax & Customs Authority', desc: 'Certified customs broker recognized by Saudi Arabia\'s ZATCA for seamless import/export compliance.', color: '#2aaa5e' },
@@ -33,13 +34,19 @@ export default function Certifications() {
         style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.06) 0%, transparent 50%)' }}/>
 
       <div className="max-w-7xl mx-auto">
-        <div className="mb-20">
-          <div className="section-num fade-up mb-5">04 — Trust & Compliance</div>
-          <h2 className="fade-up section-headline">
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px 0px" }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className="mb-20"
+        >
+          <div className="section-num mb-5">04 — Trust & Compliance</div>
+          <h2 className="section-headline">
             <span className="shine-text" data-text="CERTIFIED">CERTIFIED</span><br />
             <span className="accent shine-text shine-gold" data-text="TO DELIVER">TO DELIVER</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(200,168,78,0.10)' }}>
           {certs.map((c, i) => (
@@ -61,18 +68,6 @@ export default function Certifications() {
                 style={{ background: `radial-gradient(ellipse at 50% 100%, ${c.color}0a 0%, transparent 65%)` }}/>
             </div>
           ))}
-        </div>
-
-        {/* Trust bar */}
-        <div className="mt-16 py-10 border-t border-b border-white/10">
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 lg:gap-12">
-            {certs.map(c => (
-              <span key={c.code} className="fade-up"
-                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '20px', letterSpacing: '0.28em', color: 'rgba(255,255,255,0.35)' }}>
-                {c.code}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
     </section>

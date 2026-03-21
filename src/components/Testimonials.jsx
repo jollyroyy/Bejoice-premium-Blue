@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 
 const testimonials = [
   { quote: "Bejoice transformed our supply chain for the Saudi market. Their ZATCA expertise saved us weeks of compliance headaches — goods now clear customs within hours.", name: "Ahmad Al-Rashidi", title: "Supply Chain Director", company: "Al-Rashidi Industrial Group", initials: "AR" },
@@ -50,13 +51,19 @@ export default function Testimonials() {
       </div>
 
       <div className="max-w-5xl mx-auto">
-        <div className="mb-20">
-          <div className="section-num fade-up mb-5">05 — Client Voices</div>
-          <h2 className="fade-up section-headline">
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px 0px" }}
+          transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          className="mb-20 flex flex-col items-end text-right"
+        >
+          <div className="section-num mb-5">05 — Client Voices</div>
+          <h2 className="section-headline">
             <span className="shine-text" data-text="WHAT THEY">WHAT THEY</span><br />
             <span className="accent shine-text shine-gold" data-text="SAY">SAY</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="fade-up">
           <div className="glass-card p-6 sm:p-10 md:p-16 border-gold/25 relative overflow-hidden">
