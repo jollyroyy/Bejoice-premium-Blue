@@ -106,34 +106,40 @@ export default function HeavyCargo() {
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px 0px" }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className="flex flex-col md:flex-row-reverse md:items-end md:justify-between mb-10 md:mb-16 lg:mb-20 gap-6 md:gap-8"
+          className="mb-10 md:mb-16 lg:mb-20 flex flex-col items-end"
         >
-          <div className="text-right">
-            <div className="section-num mb-5 justify-end flex">02 — Heavy & Project Cargo</div>
-            <h2 className="section-headline">
+          <div className="section-glass-header" style={{ textAlign: 'right' }}>
+            <div className="section-num mb-5" style={{ display: 'flex', justifyContent: 'flex-end' }}>02 — Heavy &amp; Project Cargo</div>
+            <h2 className="section-headline" style={{ textAlign: 'right' }}>
               <span className="shine-text" data-text="ENGINEERED">ENGINEERED</span><br />
-              <span className="accent shine-text shine-gold" data-text="FOR THE IMPOSSIBLE">FOR THE IMPOSSIBLE</span>
+              <span style={{ color: 'rgba(200,168,78,0.78)' }}>FOR THE IMPOSSIBLE</span>
             </h2>
+            <p className="body-text max-w-sm" style={{ marginTop: '1.2rem', textAlign: 'left' }}>
+              From mega-project turbines to out-of-gauge industrial modules — Bejoice delivers the technical expertise, specialised equipment, and regulatory precision to move what others can't.
+            </p>
           </div>
-          <p className="body-text max-w-sm text-right md:text-left">
-            From mega-project turbines to out-of-gauge industrial modules — Bejoice delivers the technical expertise, specialised equipment, and regulatory precision to move what others can't.
-          </p>
         </motion.div>
 
         <div className="gold-line mb-20" />
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(200,168,78,0.12)' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(200,168,78,0.12)', perspective: '1200px' }}>
           {capabilities.map((c, i) => (
-            <div key={c.num}
+            <motion.div key={c.num}
               ref={el => cardsRef.current[i] = el}
               className="fade-up glass-card p-6 md:p-8 lg:p-10 group cursor-default"
               style={{ transitionDelay: `${i * 75}ms` }}
+              whileHover={{
+                rotateY: i % 2 === 0 ? 3 : -3,
+                rotateX: -2,
+                z: 18,
+                transition: { type: 'spring', stiffness: 280, damping: 22 }
+              }}
             >
               <div style={{
                 fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(36px, 8vw, 56px)',
@@ -156,7 +162,7 @@ export default function HeavyCargo() {
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 500 }}>Learn More</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 

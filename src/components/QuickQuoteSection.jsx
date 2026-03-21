@@ -222,7 +222,7 @@ function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading }) {
           color: step === 0 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.6)',
           background: 'none',
           border: `1px solid ${step === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.15)'}`,
-          borderRadius: '2rem',
+          borderRadius: '12px',
           padding: '0.75rem 1.6rem',
           cursor: step === 0 ? 'default' : 'pointer',
           transition: 'all 0.2s',

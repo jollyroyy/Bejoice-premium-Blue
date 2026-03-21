@@ -34,20 +34,22 @@ export default function WhyBejoice() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
           {/* Left */}
           <div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px 0px" }}
               transition={{ type: "spring", stiffness: 100, damping: 20 }}
             >
-              <div className="section-num mb-5">02 — Our Edge</div>
-              <h2 className="section-headline mb-8">
-                <span className="shine-text" data-text="WHY">WHY</span><br />
-                <span className="accent shine-text shine-gold" data-text="BEJOICE">BEJOICE</span>
-              </h2>
-              <p className="body-text max-w-sm">
-                Decades of experience meeting the demands of one of the world's most dynamic logistics corridors — with the discipline of a global operator.
-              </p>
+              <div className="section-glass-header" style={{ display: 'inline-block', marginBottom: '2rem' }}>
+                <div className="section-num mb-5">02 — Our Edge</div>
+                <h2 className="section-headline">
+                  <span className="shine-text" data-text="WHY">WHY</span><br />
+                  <span style={{ color: 'rgba(200,168,78,0.78)' }}>BEJOICE</span>
+                </h2>
+                <p className="body-text max-w-sm" style={{ marginTop: '1.2rem' }}>
+                  Decades of experience meeting the demands of one of the world's most dynamic logistics corridors — with the discipline of a global operator.
+                </p>
+              </div>
 
               <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(80px, 18vw, 160px)', lineHeight: 1, letterSpacing: '0.05em', color: 'rgba(200,168,78,0.06)', userSelect: 'none', marginTop: '16px', marginLeft: '-8px' }}>
                 18
@@ -59,21 +61,30 @@ export default function WhyBejoice() {
           </div>
 
           {/* Right: pillars */}
-          <div className="space-y-px">
+          <div className="space-y-px" style={{ perspective: '1000px' }}>
             {pillars.map((p, i) => (
-              <div key={p.title}
+              <motion.div key={p.title}
                 className="fade-up glass-card group p-8 flex gap-6 items-start"
                 style={{ transitionDelay: `${i * 90}ms` }}
+                whileHover={{
+                  rotateX: -2,
+                  rotateY: 4,
+                  z: 16,
+                  transition: { type: 'spring', stiffness: 280, damping: 22 }
+                }}
               >
-                <div style={{ fontSize: '28px', color: '#c8a84e', flexShrink: 0, marginTop: '2px', transition: 'transform 0.3s' }}
-                  className="group-hover:scale-110">
+                <motion.div
+                  style={{ fontSize: '28px', color: '#c8a84e', flexShrink: 0, marginTop: '2px' }}
+                  whileHover={{ rotate: 15, scale: 1.15 }}
+                  transition={{ type: 'spring', stiffness: 350, damping: 18 }}
+                >
                   {p.icon}
-                </div>
+                </motion.div>
                 <div>
                   <h3 className="card-title mb-3">{p.title}</h3>
                   <p className="card-body">{p.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

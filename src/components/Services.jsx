@@ -87,17 +87,17 @@ export default function Services() {
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 md:mb-16 lg:mb-20 gap-6 md:gap-8"
+          className="mb-10 md:mb-16 lg:mb-20"
         >
-          <div>
+          <div className="section-glass-header" style={{ display: 'inline-block', minWidth: 0 }}>
             <div className="section-num mb-5">01 — What We Do</div>
             <h2 className="section-headline">
               <span className="shine-text" data-text="OUR">OUR</span><br />
-              <span className="accent shine-text shine-gold" data-text="SERVICES">SERVICES</span>
+              <span style={{ color: 'rgba(200,168,78,0.78)' }}>SERVICES</span>
             </h2>
           </div>
         </motion.div>
@@ -105,20 +105,24 @@ export default function Services() {
         <div className="gold-line mb-20" />
 
         {/* Asymmetrical Bento Grid */}
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "show" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          style={{ perspective: '1200px' }}
         >
           {services.map((s, i) => (
-            <motion.div 
+            <motion.div
               key={s.num}
               custom={i}
               variants={itemVariants}
-              whileHover={{ 
-                scale: 1.02, 
-                transition: { type: "spring", stiffness: 300, damping: 20 } 
+              whileHover={{
+                scale: 1.02,
+                rotateY: i % 2 === 0 ? 3 : -3,
+                rotateX: -2,
+                z: 24,
+                transition: { type: "spring", stiffness: 300, damping: 22 }
               }}
               className={cn(
                 "glass-card p-8 md:p-10 lg:p-12 group cursor-default relative overflow-hidden flex flex-col justify-between tilt-effect",

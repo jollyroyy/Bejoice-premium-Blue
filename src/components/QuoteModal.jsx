@@ -19,62 +19,80 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
       40%  { transform: scale(0.96); }
       100% { transform: scale(1); }
     }
+    @keyframes qm-success-glow {
+      0%   { box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,168,78,0.1); }
+      50%  { box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 60px rgba(200,168,78,0.4); }
+      100% { box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 30px rgba(200,168,78,0.2); }
+    }
     .qm-input {
-      width: 100%; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(200,168,78,0.18); border-radius: 8px;
+      width: 100%; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px;
       color: #fff; font-family: 'DM Sans', sans-serif;
-      font-size: 13.5px; padding: 11px 14px; outline: none;
-      transition: border-color 0.2s, background 0.2s;
+      font-size: 13.5px; padding: 13px 18px; outline: none;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       box-sizing: border-box;
     }
-    .qm-input::placeholder { color: rgba(255,255,255,0.28); }
-    .qm-input:focus { border-color: rgba(200,168,78,0.55); background: rgba(255,255,255,0.08); }
+    .qm-input::placeholder { color: rgba(255,255,255,0.2); }
+    .qm-input:focus { 
+      border-color: rgba(200,168,78,0.6); 
+      background: rgba(255,255,255,0.06); 
+      box-shadow: 0 0 0 1px rgba(200,168,78,0.3), 0 8px 24px rgba(0,0,0,0.2);
+    }
     .qm-select {
-      width: 100%; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(200,168,78,0.18); border-radius: 8px;
+      width: 100%; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
       color: #fff; font-family: 'DM Sans', sans-serif;
-      font-size: 13.5px; padding: 11px 14px; outline: none;
+      font-size: 13.5px; padding: 13px 18px; outline: none;
       cursor: pointer; appearance: none;
-      transition: border-color 0.2s, background 0.2s;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       box-sizing: border-box;
     }
-    .qm-select:focus { border-color: rgba(200,168,78,0.55); background: rgba(255,255,255,0.08); }
-    .qm-select option { background: #0d1525; color: #fff; }
-    .qm-submit {
-      width: 100%; padding: 14px;
-      background: linear-gradient(135deg, #e8cc7a, #c8a84e);
-      color: #050508; border: none; border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px; font-weight: 800;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(200,168,78,0.4);
-      transition: transform 0.18s, box-shadow 0.18s;
+    .qm-select:focus { 
+      border-color: rgba(200,168,78,0.6); 
+      background: rgba(255,255,255,0.06); 
+      box-shadow: 0 0 0 1px rgba(200,168,78,0.3);
     }
-    .qm-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(200,168,78,0.6); }
-    .qm-submit:active { transform: scale(0.98); }
-    .qm-submit:disabled { opacity: 0.5; cursor: default; transform: none; }
+    .qm-select option { background: #0a0e1a; color: #fff; }
+    .qm-submit {
+      width: 100%; padding: 18px;
+      background: linear-gradient(135deg, #f5d97a 0%, #e8cc7a 40%, #c8a84e 100%);
+      color: #050508; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 900;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      cursor: pointer; position: relative; overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.45);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .qm-submit:hover:not(:disabled) { 
+      transform: translateY(-2.5px); 
+      background: linear-gradient(135deg, #fff2a8 0%, #f5d97a 40%, #e8cc7a 100%); 
+      box-shadow: 0 16px 40px rgba(200,168,78,0.45), 0 12px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.6); 
+    }
+    .qm-submit:active { transform: scale(0.975); }
+    .qm-submit:disabled { opacity: 0.4; cursor: default; transform: none; }
     .qm-service-card {
       flex: 1 1 0; min-width: 0;
       display: flex; flex-direction: column; align-items: center; gap: 8px;
-      padding: 16px 10px 14px;
+      padding: 18px 12px 16px;
       border-radius: 12px;
-      border: 1.5px solid rgba(200,168,78,0.15);
-      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(200,168,78,0.12);
+      background: rgba(255,255,255,0.02);
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, transform 0.18s;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       user-select: none;
     }
     .qm-service-card:hover {
-      border-color: rgba(200,168,78,0.4);
-      background: rgba(200,168,78,0.07);
-      transform: translateY(-2px);
+      border-color: rgba(200,168,78,0.35);
+      background: rgba(200,168,78,0.06);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
     }
     .qm-service-card.active {
-      border-color: rgba(200,168,78,0.8);
+      border-color: rgba(200,168,78,0.9);
       background: rgba(200,168,78,0.12);
-      box-shadow: 0 0 18px rgba(200,168,78,0.18);
-      animation: qm-service-select 0.25s ease;
+      box-shadow: 0 0 20px rgba(200,168,78,0.22);
+      animation: qm-service-select 0.28s ease;
     }
   `
   document.head.appendChild(s)
@@ -136,19 +154,21 @@ export default function QuoteModal({ onClose }) {
       <div style={{
         width: '100%', maxWidth: 580,
         maxHeight: '90vh', overflowY: 'auto',
-        background: 'linear-gradient(170deg, #0c1220 0%, #060810 100%)',
-        border: '1px solid rgba(200,168,78,0.28)',
-        borderRadius: 20,
-        boxShadow: '0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,168,78,0.1)',
-        animation: 'qm-panel-in 0.38s cubic-bezier(0.34,1.4,0.64,1) forwards',
+        background: 'linear-gradient(170deg, #0f172a 0%, #050508 100%)',
+        border: '1.5px solid rgba(200,168,78,0.32)',
+        borderRadius: 24,
+        boxShadow: submitted ? '0 40px 100px rgba(0,0,0,0.95), 0 0 30px rgba(200,168,78,0.2)' : '0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(200,168,78,0.12)',
+        animation: submitted 
+          ? 'qm-success-glow 0.8s ease-out forwards' 
+          : 'qm-panel-in 0.45s cubic-bezier(0.23, 1, 0.32, 1) forwards',
         scrollbarWidth: 'none',
+        position: 'relative', overflow: 'hidden',
       }}>
 
-        {/* ── Top gold line ── */}
         <div style={{
-          height: 3,
-          background: 'linear-gradient(90deg, transparent 0%, #c8a84e 40%, #e8cc7a 60%, transparent 100%)',
-          borderRadius: '20px 20px 0 0',
+          height: 4,
+          background: 'linear-gradient(90deg, transparent 0%, #c8a84e 30%, #ffe680 50%, #c8a84e 70%, transparent 100%)',
+          borderRadius: '24px 24px 0 0',
         }} />
 
         {submitted ? (
@@ -176,57 +196,61 @@ export default function QuoteModal({ onClose }) {
             <button
               onClick={onClose}
               style={{
-                marginTop: 8, padding: '12px 36px',
-                background: 'linear-gradient(135deg, #e8cc7a, #c8a84e)',
-                color: '#050508', border: 'none', borderRadius: 8,
+                marginTop: 12, padding: '14px 44px',
+                background: 'linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)',
+                color: '#050508', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 12,
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: 13, fontWeight: 800, letterSpacing: '0.14em',
+                fontSize: 14, fontWeight: 900, letterSpacing: '0.18em',
                 textTransform: 'uppercase', cursor: 'pointer',
-                boxShadow: '0 4px 20px rgba(200,168,78,0.4)',
+                position: 'relative', overflow: 'hidden',
+                boxShadow: '0 12px 32px rgba(200,168,78,0.4), 0 8px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.5)',
               }}
             >
+              <div className="btn-shine-overlay" />
               Close
             </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
-            {/* ── Header ── */}
             <div style={{
-              padding: '28px 32px 0',
-              display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
+              padding: '36px 32px 0',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
+              position: 'relative',
             }}>
-              <div>
-                <div style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 11, letterSpacing: '0.22em',
-                  color: '#c8a84e', textTransform: 'uppercase', marginBottom: 6,
-                }}>
-                  Bejoice Freight · Free Quote
-                </div>
-                <h2 style={{
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
-                  letterSpacing: '0.1em', color: '#fff',
-                  lineHeight: 1, margin: 0,
-                }}>
-                  Request a Quote
-                </h2>
-              </div>
               <button
                 type="button"
                 onClick={onClose}
                 style={{
-                  background: 'rgba(255,255,255,0.07)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  color: 'rgba(255,255,255,0.5)',
-                  borderRadius: 8, cursor: 'pointer',
-                  fontSize: 16, padding: '5px 10px',
-                  lineHeight: 1, transition: 'all 0.2s',
-                  flexShrink: 0, marginTop: 4,
+                  position: 'absolute', right: 26, top: 26,
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  color: 'rgba(255,255,255,0.4)',
+                  borderRadius: 10, cursor: 'pointer',
+                  fontSize: 14, padding: '6px 12px',
+                  lineHeight: 1, transition: 'all 0.22s cubic-bezier(0.23, 1, 0.32, 1)',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.13)'; e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = '#fff' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'rgba(255,255,255,0.4)' }}
               >✕</button>
+              
+              <div style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 11.5, letterSpacing: '0.28em',
+                color: '#c8a84e', textTransform: 'uppercase', marginBottom: 10,
+                fontWeight: 700,
+              }}>
+                Bejoice Freight · Premium Booking
+              </div>
+              <h2 style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
+                letterSpacing: '0.08em', color: '#fff',
+                lineHeight: 0.9, margin: 0,
+                textShadow: '0 0 30px rgba(255,255,255,0.15)',
+              }}>
+                Get a Quick Quote
+              </h2>
+              <div style={{ width: 60, height: 2, background: '#c8a84e', marginTop: 16, opacity: 0.6 }} />
             </div>
 
             <div style={{ padding: '24px 32px 32px', display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -311,6 +335,7 @@ export default function QuoteModal({ onClose }) {
 
               {/* ── Submit ── */}
               <button type="submit" className="qm-submit" disabled={!service || !form.name || !form.email}>
+                <div className="btn-shine-overlay" />
                 Get My Free Quote →
               </button>
 

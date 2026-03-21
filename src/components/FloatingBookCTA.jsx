@@ -494,17 +494,19 @@ export default function FloatingBookCTA() {
                   <button
                     onClick={() => handleCTA(msg.cta.action)}
                     style={{
-                      background: "linear-gradient(135deg, #e8cc7a, #c8a84e)",
-                      color: "#050508", border: "none", borderRadius: 22,
-                      padding: "8px 18px", fontSize: 12, fontWeight: 700,
+                      background: "linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)",
+                      color: "#050508", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 12,
+                      padding: "10px 20px", fontSize: 12, fontWeight: 900,
                       cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
-                      letterSpacing: "0.07em", textTransform: "uppercase",
-                      boxShadow: "0 4px 16px rgba(200,168,78,0.4)",
-                      transition: "transform 0.15s, box-shadow 0.15s",
+                      letterSpacing: "0.1em", textTransform: "uppercase",
+                      boxShadow: "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)",
+                      transition: "all 0.3s cubic-bezier(0.23, 1, 0.32, 1)",
+                      position: 'relative', overflow: 'hidden',
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 22px rgba(200,168,78,0.6)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(200,168,78,0.4)"; }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1.5px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(200,168,78,0.4), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #fff2a8, #f5d97a, #e8cc7a)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)"; }}
                   >
+                    <div className="btn-shine-overlay" />
                     {msg.cta.label} →
                   </button>
                 )}
@@ -733,15 +735,51 @@ export default function FloatingBookCTA() {
 function Avatar({ size }) {
   return (
     <div style={{
-      width: size, height: size, borderRadius: "50%",
-      overflow: "hidden", flexShrink: 0,
-      background: "linear-gradient(135deg, #1a2a40, #0a1220)",
+      width: size, height: size, flexShrink: 0,
+      position: "relative",
+      animation: "laylaFloat 3s ease-in-out infinite",
     }}>
-      <img
-        src="/ai-assistant-female.png"
-        alt="Layla — Bejoice AI"
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-      />
+      {/* Glow ring */}
+      <div style={{
+        position: "absolute", inset: -3,
+        borderRadius: "50%",
+        border: "2px solid rgba(200,168,78,0.55)",
+        boxShadow: "0 0 18px rgba(200,168,78,0.4), inset 0 0 12px rgba(200,168,78,0.15)",
+        animation: "laylaRingPulse 2.4s ease-in-out infinite",
+        zIndex: 2,
+        pointerEvents: "none",
+      }} />
+      {/* Image */}
+      <div style={{
+        width: size, height: size, borderRadius: "50%",
+        overflow: "hidden",
+        background: "linear-gradient(135deg, #0d1a2e, #06101c)",
+        border: "1.5px solid rgba(200,168,78,0.3)",
+        position: "relative", zIndex: 1,
+      }}>
+        <img
+          src="/ai-assistant-female.png"
+          alt="Layla — Bejoice AI"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
+        {/* Scanlines overlay */}
+        <div style={{
+          position: "absolute", inset: 0,
+          backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.12) 3px, rgba(0,0,0,0.12) 4px)",
+          borderRadius: "50%",
+          pointerEvents: "none",
+        }} />
+      </div>
+      <style>{`
+        @keyframes laylaFloat {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-4px); }
+        }
+        @keyframes laylaRingPulse {
+          0%, 100% { opacity: 0.7; box-shadow: 0 0 14px rgba(200,168,78,0.35), inset 0 0 10px rgba(200,168,78,0.1); }
+          50% { opacity: 1; box-shadow: 0 0 26px rgba(200,168,78,0.65), inset 0 0 18px rgba(200,168,78,0.2); }
+        }
+      `}</style>
     </div>
   );
 }

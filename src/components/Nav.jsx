@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useCalBooking } from '../hooks/useCalBooking'
+import { useLang } from '../context/LangContext'
 
 
 const CAL_LINK = "sudeshna-pal-ruww5f/freight-consultation"
@@ -15,6 +16,7 @@ const links = [
 
 export default function Nav() {
   const { openCalPopup } = useCalBooking()
+  const { lang, setLang } = useLang()
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
   const overlayRef                = useRef(null)
@@ -99,25 +101,103 @@ export default function Nav() {
           {/* Right side: CTA + Hamburger */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
 
-            {/* CTA — Book a Call */}
+          {/* Language Toggle — split EN / AR pill with SVG flags */}
+          <div style={{
+            display: 'flex', alignItems: 'stretch', flexShrink: 0,
+            background: 'rgba(255,255,255,0.04)',
+            border: '1.5px solid rgba(200,168,78,0.35)',
+            borderRadius: '8px', overflow: 'hidden',
+            backdropFilter: 'blur(8px)',
+          }}>
+            {/* EN button */}
+            <button
+              onClick={() => {
+                if (lang === 'en') return
+                setLang('en')
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/'
+                document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname}`
+                window.location.reload()
+              }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '6px',
+                padding: '7px 11px',
+                background: lang === 'en' ? 'rgba(200,168,78,0.18)' : 'transparent',
+                border: 'none', borderRight: '1px solid rgba(200,168,78,0.25)',
+                cursor: 'pointer', transition: 'background 0.2s',
+              }}
+              onMouseEnter={e => { if (lang !== 'en') e.currentTarget.style.background = 'rgba(200,168,78,0.08)' }}
+              onMouseLeave={e => { if (lang !== 'en') e.currentTarget.style.background = 'transparent' }}
+            >
+              {/* UK flag via flagcdn */}
+              <img
+                src="https://flagcdn.com/w40/gb.png"
+                width="20" height="14"
+                alt="English"
+                style={{ borderRadius: '2px', flexShrink: 0, objectFit: 'cover', display: 'block' }}
+              />
+              <span style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: '11px', fontWeight: 700,
+                letterSpacing: '0.1em', lineHeight: 1,
+                color: lang === 'en' ? '#c8a84e' : 'rgba(200,168,78,0.5)',
+                transition: 'color 0.2s',
+              }}>EN</span>
+            </button>
+
+            {/* AR button */}
+            <button
+              onClick={() => {
+                if (lang === 'ar') return
+                setLang('ar')
+                document.cookie = 'googtrans=/en/ar; path=/'
+                document.cookie = `googtrans=/en/ar; path=/; domain=.${window.location.hostname}`
+                window.location.reload()
+              }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '6px',
+                padding: '7px 11px',
+                background: lang === 'ar' ? 'rgba(200,168,78,0.18)' : 'transparent',
+                border: 'none',
+                cursor: 'pointer', transition: 'background 0.2s',
+              }}
+              onMouseEnter={e => { if (lang !== 'ar') e.currentTarget.style.background = 'rgba(200,168,78,0.08)' }}
+              onMouseLeave={e => { if (lang !== 'ar') e.currentTarget.style.background = 'transparent' }}
+            >
+              {/* Saudi Arabia flag via flagcdn */}
+              <img
+                src="https://flagcdn.com/w40/sa.png"
+                width="20" height="14"
+                alt="Saudi Arabia"
+                style={{ borderRadius: '2px', flexShrink: 0, objectFit: 'cover', display: 'block' }}
+              />
+              <span style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: '11px', fontWeight: 700,
+                letterSpacing: '0.1em', lineHeight: 1,
+                color: lang === 'ar' ? '#c8a84e' : 'rgba(200,168,78,0.5)',
+                transition: 'color 0.2s',
+              }}>AR</span>
+            </button>
+          </div>
+
+          {/* CTA — Book a Call */}
             <button
               onClick={openCalPopup}
               style={{
                 fontFamily: "'DM Sans', sans-serif", fontSize: '13px',
-                letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 700,
-                color: '#050508', background: 'linear-gradient(135deg, #e8cc7a, #c8a84e)',
-                border: 'none', cursor: 'pointer', padding: '11px 22px',
-                display: 'flex', alignItems: 'center', gap: '7px',
-                borderRadius: '6px',
-                boxShadow: '0 0 20px rgba(200,168,78,0.4), 0 4px 16px rgba(0,0,0,0.4)',
-                transition: 'all 0.22s ease',
+                letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 900,
+                color: '#050508', background: 'linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)',
+                border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', padding: '12px 24px',
+                display: 'flex', alignItems: 'center', gap: '8px',
+                borderRadius: '12px', position: 'relative', overflow: 'hidden',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)',
+                transition: 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
                 whiteSpace: 'nowrap',
               }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 0 32px rgba(200,168,78,0.7), 0 4px 20px rgba(0,0,0,0.5)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 0 20px rgba(200,168,78,0.4), 0 4px 16px rgba(0,0,0,0.4)'; e.currentTarget.style.transform = 'translateY(0)' }}
-              onMouseDown={e => { e.currentTarget.style.transform = 'translateY(0) scale(0.97)' }}
-              onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 24px rgba(200,168,78,0.4), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)'; e.currentTarget.style.transform = 'translateY(-1.5px)'; e.currentTarget.style.background = 'linear-gradient(135deg, #fff2a8, #f5d97a, #e8cc7a)' }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = 'linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)' }}
+              onMouseDown={e => { e.currentTarget.style.transform = 'translateY(0) scale(0.98)' }}
+              onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1.5px)' }}
             >
+              <div className="btn-shine-overlay" />
               {/* Calendar icon */}
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>

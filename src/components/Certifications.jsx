@@ -34,25 +34,33 @@ export default function Certifications() {
         style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.06) 0%, transparent 50%)' }}/>
 
       <div className="max-w-7xl mx-auto">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px 0px" }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
           className="mb-20"
         >
-          <div className="section-num mb-5">04 — Trust & Compliance</div>
-          <h2 className="section-headline">
-            <span className="shine-text" data-text="CERTIFIED">CERTIFIED</span><br />
-            <span className="accent shine-text shine-gold" data-text="TO DELIVER">TO DELIVER</span>
-          </h2>
+          <div className="section-glass-header" style={{ display: 'inline-block' }}>
+            <div className="section-num mb-5">04 — Trust &amp; Compliance</div>
+            <h2 className="section-headline">
+              <span className="shine-text" data-text="CERTIFIED">CERTIFIED</span><br />
+              <span style={{ color: 'rgba(200,168,78,0.78)' }}>TO DELIVER</span>
+            </h2>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(200,168,78,0.10)' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(200,168,78,0.10)', perspective: '1200px' }}>
           {certs.map((c, i) => (
-            <div key={c.code}
+            <motion.div key={c.code}
               className="fade-up glass-card p-6 md:p-8 lg:p-10 group cursor-default relative overflow-hidden"
               style={{ transitionDelay: `${i * 65}ms` }}
+              whileHover={{
+                rotateY: i % 3 === 0 ? 4 : i % 3 === 1 ? -2 : 3,
+                rotateX: -2,
+                z: 20,
+                transition: { type: 'spring', stiffness: 280, damping: 22 }
+              }}
             >
               <div className="absolute top-0 left-0 right-0 h-px"
                 style={{ background: `linear-gradient(90deg, transparent, ${c.color}90, transparent)` }}/>
@@ -66,7 +74,7 @@ export default function Certifications() {
               <p className="card-body">{c.desc}</p>
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{ background: `radial-gradient(ellipse at 50% 100%, ${c.color}0a 0%, transparent 65%)` }}/>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

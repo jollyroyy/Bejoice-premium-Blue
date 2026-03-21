@@ -40,11 +40,13 @@ export default function Contact() {
 
       <div className="max-w-7xl mx-auto">
         <div className="mb-20">
-          <div className="section-num fade-up mb-5">06 — Get in Touch</div>
-          <h2 className="fade-up section-headline">
-            <span className="shine-text" data-text="REQUEST">REQUEST</span><br />
-            <span className="accent shine-text shine-gold" data-text="A QUOTE">A QUOTE</span>
-          </h2>
+          <div className="section-glass-header fade-up" style={{ display: 'inline-block' }}>
+            <div className="section-num mb-5">06 — Get in Touch</div>
+            <h2 className="section-headline">
+              <span className="shine-text" data-text="REQUEST">REQUEST</span><br />
+              <span style={{ color: 'rgba(200,168,78,0.78)' }}>A QUOTE</span>
+            </h2>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">

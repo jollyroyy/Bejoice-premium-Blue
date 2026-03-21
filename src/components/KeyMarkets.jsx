@@ -46,20 +46,20 @@ export default function KeyMarkets() {
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px 0px" }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className="mb-20 flex flex-col items-end text-right"
+          className="mb-20 flex flex-col items-end"
         >
-          <div className="section-num mb-4">03 — Key Markets</div>
-          <div className="flex flex-col md:flex-row-reverse md:items-end gap-8 text-right">
-            <h2 className="section-headline">
+          <div className="section-glass-header" style={{ textAlign: 'right' }}>
+            <div className="section-num mb-4" style={{ textAlign: 'right' }}>03 — Key Markets</div>
+            <h2 className="section-headline" style={{ textAlign: 'right' }}>
               <span className="shine-text" data-text="GLOBAL">GLOBAL</span><br />
-              <span className="accent shine-text shine-gold" data-text="REACH">REACH</span>
+              <span style={{ color: 'rgba(200,168,78,0.78)' }}>REACH</span>
             </h2>
-            <p className="font-body max-w-xs mb-2 md:text-left" style={{ color: 'rgba(255,255,255,0.92)', fontSize: '17px', fontWeight: 500, lineHeight: 1.75 }}>
+            <p className="font-body max-w-xs" style={{ color: 'rgba(255,255,255,0.92)', fontSize: '17px', fontWeight: 500, lineHeight: 1.75, marginTop: '1.2rem', textAlign: 'left' }}>
               Strategic footprint across the world's most critical trade lanes, with deep roots in Saudi Arabia.
             </p>
           </div>

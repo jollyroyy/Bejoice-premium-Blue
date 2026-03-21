@@ -32,75 +32,78 @@ export default function HeavyLift() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
 
-          {/* Eyebrow */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px' }}>
-            <div style={{ width: '44px', height: '1.5px', background: '#c8a84e', flexShrink: 0 }} />
-            <span style={{
-              fontFamily: "'DM Sans', sans-serif", fontSize: '12px',
-              letterSpacing: '0.35em', textTransform: 'uppercase',
-              color: '#c8a84e', fontWeight: 600,
+          {/* Glass Header Block */}
+          <div className="section-glass-header" style={{ display: 'inline-block', marginBottom: '48px' }}>
+            {/* Eyebrow */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px' }}>
+              <div style={{ width: '44px', height: '1.5px', background: '#c8a84e', flexShrink: 0 }} />
+              <span style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: '12px',
+                letterSpacing: '0.35em', textTransform: 'uppercase',
+                color: '#c8a84e', fontWeight: 600,
+              }}>
+                Heavy Lift · ODC · OOG · Project Cargo
+              </span>
+            </div>
+
+            {/* Main heading */}
+            <h2 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
+              lineHeight: 0.92, letterSpacing: '0.06em',
+              margin: '0',
+              color: '#ffffff',
+              textShadow: '0 2px 32px rgba(0,0,0,0.5)',
+              cursor: 'default',
             }}>
-              Heavy Lift · ODC · OOG · Project Cargo
-            </span>
+              <span className="shine-text" data-text="WHEN THE LOAD">WHEN THE LOAD</span>
+            </h2>
+            <h2 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
+              lineHeight: 0.92, letterSpacing: '0.06em',
+              margin: '0 0 24px',
+              color: '#c8a84e',
+              textShadow: '0 2px 32px rgba(200,168,78,0.2)',
+              cursor: 'default',
+            }}>
+              <span style={{ color: 'rgba(200,168,78,0.78)' }}>DEFIES LIMITS</span>
+            </h2>
+
+            {/* Gold divider */}
+            <div style={{ width: '60px', height: '2px', background: 'linear-gradient(90deg, #c8a84e, transparent)', marginBottom: '24px' }} />
+
+            {/* Subheading */}
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(17px, 2.2vw, 24px)',
+              fontWeight: 600,
+              color: '#ffffff',
+              lineHeight: 1.5,
+              maxWidth: '680px',
+              marginBottom: '16px',
+              textShadow: '0 1px 16px rgba(0,0,0,0.8)',
+            }}>
+              Saudi Arabia's most demanding projects trust Bejoice to move what others won't touch.
+            </p>
+
+            {/* Body */}
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(16px, 1.8vw, 19px)',
+              fontWeight: 500,
+              color: 'rgba(255,255,255,0.88)',
+              lineHeight: 1.85,
+              maxWidth: '620px',
+              margin: 0,
+            }}>
+              From hydraulic axle convoys navigating KSA's most complex routes to precision onsite jacking,
+              skidding, and technical engineering — we deliver the full spectrum of heavy lift and
+              out-of-gauge logistics, backed by{' '}
+              <strong style={{ color: '#c8a84e' }}>25+ years of project cargo expertise</strong> and
+              end-to-end customs clearance built for Saudi Arabia's regulatory environment.
+            </p>
           </div>
-
-          {/* Main heading */}
-          <h2 style={{
-            fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
-            lineHeight: 0.92, letterSpacing: '0.06em',
-            margin: '0 0 0',
-            color: '#ffffff',
-            textShadow: '0 2px 32px rgba(0,0,0,0.5)',
-            cursor: 'default',
-          }}>
-            <span className="shine-text" data-text="WHEN THE LOAD">WHEN THE LOAD</span>
-          </h2>
-          <h2 style={{
-            fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
-            lineHeight: 0.92, letterSpacing: '0.06em',
-            margin: '0 0 32px',
-            color: '#c8a84e',
-            textShadow: '0 2px 32px rgba(200,168,78,0.2)',
-            cursor: 'default',
-          }}>
-            <span className="shine-text shine-gold" data-text="DEFIES LIMITS">DEFIES LIMITS</span>
-          </h2>
-
-          {/* Gold divider */}
-          <div style={{ width: '60px', height: '2px', background: 'linear-gradient(90deg, #c8a84e, transparent)', marginBottom: '32px' }} />
-
-          {/* Subheading */}
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 'clamp(17px, 2.2vw, 24px)',
-            fontWeight: 600,
-            color: '#ffffff',
-            lineHeight: 1.5,
-            maxWidth: '680px',
-            marginBottom: '24px',
-            textShadow: '0 1px 16px rgba(0,0,0,0.8)',
-          }}>
-            Saudi Arabia's most demanding projects trust Bejoice to move what others won't touch.
-          </p>
-
-          {/* Body */}
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 'clamp(16px, 1.8vw, 19px)',
-            fontWeight: 500,
-            color: 'rgba(255,255,255,0.88)',
-            lineHeight: 1.85,
-            maxWidth: '620px',
-            marginBottom: '48px',
-          }}>
-            From hydraulic axle convoys navigating KSA's most complex routes to precision onsite jacking,
-            skidding, and technical engineering — we deliver the full spectrum of heavy lift and
-            out-of-gauge logistics, backed by{' '}
-            <strong style={{ color: '#c8a84e' }}>25+ years of project cargo expertise</strong> and
-            end-to-end customs clearance built for Saudi Arabia's regulatory environment.
-          </p>
 
           {/* Capability tags */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>

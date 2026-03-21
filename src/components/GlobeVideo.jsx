@@ -133,7 +133,7 @@ export default function GlobeVideo() {
           style={{ lineHeight: 1, marginBottom: '0.08em', opacity: 0 }}
         >
           GLOBAL{' '}
-          <span className="accent shine-text shine-gold" data-text="REACH.">REACH.</span>
+          <span style={{ color: 'rgba(200,168,78,0.78)' }}>REACH.</span>
         </h1>
 
         <h1

@@ -16,9 +16,10 @@ import Testimonials from './components/Testimonials'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import FloatingBookCTA from './components/FloatingBookCTA'
-import QuoteModal from './components/QuoteModal'
+import QuickQuoteModal from './components/QuickQuoteModal'
 import ScrollProgress from './components/ScrollProgress'
 import GlobalInteractions from './components/GlobalInteractions'
+import { LangProvider } from './context/LangContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -31,9 +32,11 @@ export default function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothTouch: false,
+      lerp: 0.1,
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.8,
+      infinite: false,
     })
 
     window.__lenis = lenis
@@ -53,6 +56,7 @@ export default function App() {
   }, [])
 
   return (
+    <LangProvider>
     <div className="grain">
       <ScrollProgress />
       <GlobalInteractions />
@@ -72,7 +76,8 @@ export default function App() {
       </main>
       <Footer />
       <FloatingBookCTA />
-      {quoteOpen && <QuoteModal onClose={() => setQuoteOpen(false)} />}
+      {quoteOpen && <QuickQuoteModal onClose={() => setQuoteOpen(false)} />}
     </div>
+    </LangProvider>
   )
 }

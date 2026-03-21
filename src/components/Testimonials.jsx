@@ -51,18 +51,20 @@ export default function Testimonials() {
       </div>
 
       <div className="max-w-5xl mx-auto">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px 0px" }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className="mb-20 flex flex-col items-end text-right"
+          className="mb-20 flex flex-col items-end"
         >
-          <div className="section-num mb-5">05 — Client Voices</div>
-          <h2 className="section-headline">
-            <span className="shine-text" data-text="WHAT THEY">WHAT THEY</span><br />
-            <span className="accent shine-text shine-gold" data-text="SAY">SAY</span>
-          </h2>
+          <div className="section-glass-header" style={{ textAlign: 'right' }}>
+            <div className="section-num mb-5" style={{ textAlign: 'right' }}>05 — Client Voices</div>
+            <h2 className="section-headline" style={{ textAlign: 'right' }}>
+              <span className="shine-text" data-text="WHAT THEY">WHAT THEY</span><br />
+              <span style={{ color: 'rgba(200,168,78,0.78)' }}>SAY</span>
+            </h2>
+          </div>
         </motion.div>
 
         <div className="fade-up">
