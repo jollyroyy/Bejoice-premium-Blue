@@ -1,0 +1,335 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #c8a84e;
+  --gold-light: #e8cc7a;
+  --gold-dark: #9a7a2e;
+  --obsidian: #050508;
+  --obsidian-50: #0d0d14;
+  --cream: #ffffff;
+  --cream-muted: #d0c8b8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── POWERED BY AI — continuous left-to-right letter shine ── */
+@keyframes shineLTR {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.shine-ltr {
+  position: relative;
+  display: inline-block;
+  font-weight: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+.shine-ltr::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  font-weight: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0)    0%,
+    rgba(255,255,255,0)   35%,
+    rgba(255,255,255,1)   50%,
+    rgba(255,255,255,0)   65%,
+    rgba(255,255,255,0)  100%
+  );
+  background-size: 300% 100%;
+  background-position: -200% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  pointer-events: none;
+  animation: shineLTR 4s ease-in-out infinite;
+}
+
+/* ── SHINE SWEEP — auto left-to-right sweep, always running ── */
+
+/* White text shine */
+.shine-text {
+  position: relative;
+  display: inline-block;
+  font-weight: inherit;
+  -webkit-font-smoothing: antialiased;
+  cursor: default;
+}
+.shine-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  font-weight: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0)    0%,
+    rgba(255,255,255,0)   30%,
+    rgba(255,255,255,1)   50%,
+    rgba(255,255,255,0)   70%,
+    rgba(255,255,255,0)  100%
+  );
+  background-size: 300% 100%;
+  background-position: -200% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  pointer-events: none;
+  animation: shineLTR 4s ease-in-out infinite;
+}
+
+/* Gold text shine — bright white flash on gold */
+.shine-gold::after {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0)    0%,
+    rgba(255,255,255,0)   30%,
+    rgba(255,255,255,1)   50%,
+    rgba(255,255,255,0)   70%,
+    rgba(255,255,255,0)  100%
+  );
+  background-size: 300% 100%;
+  background-position: -200% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shineLTR 4s ease-in-out infinite;
+}
+
+
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--obsidian);
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0d0d14; }
+::-webkit-scrollbar-thumb { background: #9a7a2e; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #c8a84e; }
+
+/* ── GOLD GRADIENT TEXT ── */
+.gold-text {
+  background: linear-gradient(135deg, #c8a84e 0%, #e8cc7a 45%, #c8a84e 75%, #9a7a2e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── GRAIN OVERLAY ── */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -200%;
+  width: 400%; height: 400%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 0.5s steps(2) infinite;
+}
+@keyframes grain {
+  0%,100%{transform:translate(0,0)} 10%{transform:translate(-2%,-3%)}
+  20%{transform:translate(2%,2%)} 30%{transform:translate(-1%,3%)}
+  40%{transform:translate(3%,-1%)} 50%{transform:translate(-3%,2%)}
+  60%{transform:translate(1%,-2%)} 70%{transform:translate(-2%,1%)}
+  80%{transform:translate(2%,3%)} 90%{transform:translate(-1%,-1%)}
+}
+
+/* ── HAMBURGER PULSE ── */
+@keyframes hamburgerPulse {
+  0%   { box-shadow: 0 0 0px rgba(200,168,78,0); border-color: rgba(200,168,78,0.45); }
+  50%  { box-shadow: 0 0 18px rgba(200,168,78,0.55), 0 0 36px rgba(200,168,78,0.2); border-color: rgba(200,168,78,0.9); }
+  100% { box-shadow: 0 0 0px rgba(200,168,78,0); border-color: rgba(200,168,78,0.45); }
+}
+@keyframes hamburgerLineWave {
+  0%, 100% { transform: scaleX(1); }
+  50%       { transform: scaleX(0.65); }
+}
+.hamburger-btn {
+  animation: hamburgerPulse 2.5s ease-in-out infinite;
+}
+.hamburger-btn:hover {
+  animation: none;
+}
+.hamburger-btn .bar-mid {
+  animation: hamburgerLineWave 2.5s ease-in-out infinite;
+  transform-origin: left center;
+}
+.hamburger-btn:hover .bar-mid {
+  animation: none;
+}
+
+/* ── TRACKING ANIMATIONS ── */
+@keyframes trackSpin {
+  to { transform: rotate(360deg); }
+}
+@keyframes trackFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes trackPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── SEPARATOR ── */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200,168,78,0.5), transparent);
+}
+
+/* ── GLASS CARD ── */
+.glass-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(200,168,78,0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+.glass-card:hover {
+  background: rgba(200,168,78,0.07);
+  border-color: rgba(200,168,78,0.45);
+}
+
+/* ── FADE UP ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── NAV LINK ── */
+.nav-link { position: relative; }
+.nav-link::after {
+  content: '';
+  position: absolute; bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after { width: 100%; }
+
+/* ── BUTTONS ── */
+.btn-gold {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: clamp(11px, 2vw, 15px) clamp(22px, 4vw, 38px);
+  background: linear-gradient(135deg, #e8cc7a, #c8a84e);
+  border: 1.5px solid var(--gold);
+  color: #050508;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(11px, 1.5vw, 13px); font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  border-radius: 8px;
+  cursor: pointer; overflow: hidden;
+  box-shadow: 0 0 20px rgba(200,168,78,0.4), 0 4px 16px rgba(0,0,0,0.4);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.btn-gold::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #f5d97a, #e8cc7a);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.btn-gold:hover::before { opacity: 1; }
+.btn-gold:hover { box-shadow: 0 0 32px rgba(200,168,78,0.7), 0 4px 20px rgba(0,0,0,0.5); transform: translateY(-1px); }
+.btn-gold span, .btn-gold svg { position: relative; z-index: 1; }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: clamp(11px, 2vw, 15px) clamp(22px, 4vw, 38px);
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(11px, 1.5vw, 13px); font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-ghost:hover {
+  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.06);
+}
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+  .section-headline { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+  .body-text { font-size: clamp(15px, 4vw, 17px); }
+  .card-body { font-size: 15px; }
+  .card-title { font-size: 1.35rem; }
+  .glass-card { padding: 1.2rem 1rem !important; }
+}
+
+/* ── SECTION NUMBER ── */
+.section-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px; letter-spacing: 0.3em;
+  color: var(--gold); opacity: 0.9;
+}
+
+/* ── SECTION HEADINGS — used in all non-hero sections ── */
+.section-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 6.5rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  text-shadow: 0 0 40px rgba(255,255,255,0.15), 0 2px 12px rgba(0,0,0,0.8);
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+  cursor: default;
+  -webkit-font-smoothing: antialiased;
+}
+.section-headline .accent {
+  color: #c8a84e;
+}
+
+/* ── BODY TEXT ── */
+.body-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(17px, 1.9vw, 19px);
+  font-weight: 500;
+  color: rgba(255,255,255,0.97);
+  line-height: 1.75;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+}
+
+/* ── CARD TITLE ── */
+.card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+}
+
+/* ── CARD BODY ── */
+.card-body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.7;
+}

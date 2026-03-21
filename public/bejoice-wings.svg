@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 160" fill="none">
+  <defs>
+    <linearGradient id="wingGradL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a6fd4"/>
+      <stop offset="50%" stop-color="#2a3fa8"/>
+      <stop offset="100%" stop-color="#1a2880"/>
+    </linearGradient>
+    <linearGradient id="wingGradR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a6fd4"/>
+      <stop offset="50%" stop-color="#2a3fa8"/>
+      <stop offset="100%" stop-color="#1a2880"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8cc7a"/>
+      <stop offset="100%" stop-color="#c8a84e"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- LEFT WING -->
+  <g filter="url(#glow)">
+    <!-- Primary large feather -->
+    <path d="M195 78 C170 72 140 55 110 30 C125 52 140 68 158 80 Z" fill="url(#wingGradL)" opacity="0.95"/>
+    <!-- Outer sweeping feather -->
+    <path d="M193 82 C165 80 128 72 88 50 C108 70 138 82 162 86 Z" fill="url(#wingGradL)" opacity="0.9"/>
+    <!-- Far outer feather -->
+    <path d="M191 87 C158 90 118 90 75 78 C100 92 138 96 165 92 Z" fill="url(#wingGradL)" opacity="0.85"/>
+    <!-- Bottom sweep -->
+    <path d="M190 92 C162 100 122 106 80 100 C105 108 145 108 168 100 Z" fill="url(#wingGradL)" opacity="0.80"/>
+    <!-- Inner upper feather -->
+    <path d="M196 74 C178 62 158 44 142 22 C152 44 162 62 175 76 Z" fill="url(#wingGradL)" opacity="0.9"/>
+    <!-- Second inner -->
+    <path d="M197 70 C184 56 172 34 168 10 C172 34 178 56 188 72 Z" fill="url(#wingGradL)" opacity="0.85"/>
+    <!-- Third inner -->
+    <path d="M198 66 C190 50 188 26 192 6 C192 28 194 50 200 68 Z" fill="url(#wingGradL)" opacity="0.8"/>
+    <!-- Wing body base -->
+    <path d="M202 108 C185 110 155 112 110 105 C80 98 60 86 55 72 C70 82 95 92 130 98 C160 104 185 106 202 108 Z" fill="url(#wingGradL)" opacity="0.7"/>
+    <!-- Feather tip details left -->
+    <path d="M193 82 C178 78 162 68 148 52 C155 66 168 76 182 84 Z" fill="#1a2880" opacity="0.4"/>
+    <path d="M191 87 C174 85 156 80 140 68 C150 80 168 88 184 90 Z" fill="#1a2880" opacity="0.3"/>
+  </g>
+
+  <!-- RIGHT WING -->
+  <g filter="url(#glow)">
+    <!-- Primary large feather -->
+    <path d="M225 78 C250 72 280 55 310 30 C295 52 280 68 262 80 Z" fill="url(#wingGradR)" opacity="0.95"/>
+    <!-- Outer sweeping feather -->
+    <path d="M227 82 C255 80 292 72 332 50 C312 70 282 82 258 86 Z" fill="url(#wingGradR)" opacity="0.9"/>
+    <!-- Far outer feather -->
+    <path d="M229 87 C262 90 302 90 345 78 C320 92 282 96 255 92 Z" fill="url(#wingGradR)" opacity="0.85"/>
+    <!-- Bottom sweep -->
+    <path d="M230 92 C258 100 298 106 340 100 C315 108 275 108 252 100 Z" fill="url(#wingGradR)" opacity="0.80"/>
+    <!-- Inner upper feather -->
+    <path d="M224 74 C242 62 262 44 278 22 C268 44 258 62 245 76 Z" fill="url(#wingGradR)" opacity="0.9"/>
+    <!-- Second inner -->
+    <path d="M223 70 C236 56 248 34 252 10 C248 34 242 56 232 72 Z" fill="url(#wingGradR)" opacity="0.85"/>
+    <!-- Third inner -->
+    <path d="M222 66 C230 50 232 26 228 6 C228 28 226 50 220 68 Z" fill="url(#wingGradR)" opacity="0.8"/>
+    <!-- Wing body base -->
+    <path d="M218 108 C235 110 265 112 310 105 C340 98 360 86 365 72 C350 82 325 92 290 98 C260 104 235 106 218 108 Z" fill="url(#wingGradR)" opacity="0.7"/>
+    <!-- Feather tip details right -->
+    <path d="M227 82 C242 78 258 68 272 52 C265 66 252 76 238 84 Z" fill="#1a2880" opacity="0.4"/>
+    <path d="M229 87 C246 85 264 80 280 68 C270 80 252 88 236 90 Z" fill="#1a2880" opacity="0.3"/>
+  </g>
+
+  <!-- CENTER BODY / SHIELD -->
+  <ellipse cx="210" cy="85" rx="22" ry="26" fill="#1a2880" opacity="0.15"/>
+  <ellipse cx="210" cy="85" rx="18" ry="21" fill="#1a2880" opacity="0.1"/>
+
+  <!-- BEJOICE text center -->
+  <text
+    x="210" y="91"
+    text-anchor="middle"
+    font-family="'Bebas Neue', 'Arial Narrow', Arial, sans-serif"
+    font-size="18"
+    font-weight="700"
+    letter-spacing="3"
+    fill="url(#goldText)"
+    filter="url(#glow)"
+  >BEJOICE</text>
+
+  <!-- Tagline below -->
+  <text
+    x="210" y="130"
+    text-anchor="middle"
+    font-family="'DM Sans', Arial, sans-serif"
+    font-size="11"
+    font-weight="600"
+    letter-spacing="4"
+    fill="#2a3fa8"
+    opacity="0.9"
+  >GROUP OF COMPANIES</text>
+
+  <!-- Subtle divider lines flanking tagline -->
+  <line x1="55" y1="127" x2="128" y2="127" stroke="#2a3fa8" stroke-width="0.8" opacity="0.5"/>
+  <line x1="292" y1="127" x2="365" y2="127" stroke="#2a3fa8" stroke-width="0.8" opacity="0.5"/>
+</svg>

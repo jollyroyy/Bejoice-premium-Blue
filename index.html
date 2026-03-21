@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bejoice — Global Freight Forwarding</title>
+    <meta name="description" content="Bejoice — Premium freight forwarding and logistics solutions across the globe, specializing in Saudi Arabia and the GCC region." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Cal.com: load + preload for near-instant open -->
+  <link rel="preconnect" href="https://app.cal.com" />
+  <link rel="dns-prefetch" href="https://app.cal.com" />
+  <script>
+    (function(C,A,L){
+      let p=function(a,ar){a.q.push(ar);};
+      let d=C.document;
+      C.Cal=C.Cal||function(){
+        let cal=C.Cal,ar=arguments;
+        if(!cal.loaded){
+          cal.ns={};cal.q=cal.q||[];
+          var s=d.createElement("script");
+          s.src=A; s.async=true;
+          d.head.appendChild(s);
+          cal.loaded=true;
+        }
+        if(ar[0]===L){
+          const api=function(){p(api,arguments);};
+          const ns=ar[1];api.q=api.q||[];
+          typeof ns==="string"?(cal.ns[ns]=api)&&p(api,ar):p(cal,ar);
+          return;
+        }
+        p(cal,ar);
+      };
+    })(window,"https://app.cal.com/embed/embed.js","init");
+
+    Cal("init","freight",{origin:"https://app.cal.com"});
+    Cal.ns.freight("ui",{
+      theme:"dark",
+      styles:{branding:{brandColor:"#c8a84e"}},
+      hideEventTypeDetails:false,
+      layout:"month_view"
+    });
+    Cal.ns.freight("preload",{calLink:"sudeshna-pal-ruww5f/freight-consultation"});
+
+    // Open helper — called from React buttons
+    window.__openCal = function(){
+      Cal.ns.freight("modal",{
+        calLink:"sudeshna-pal-ruww5f/freight-consultation",
+        config:{layout:"month_view"}
+      });
+    };
+  </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

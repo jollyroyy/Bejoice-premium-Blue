@@ -1,0 +1,45 @@
+export default function OceanFreight() {
+  return (
+    <section style={{
+      background: 'linear-gradient(135deg, #050508 0%, #080c14 50%, #050508 100%)',
+      padding: 'clamp(80px, 12vw, 140px) clamp(1.5rem, 8vw, 8rem)',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+
+      {/* Background glow accents */}
+      <div style={{
+        position: 'absolute', top: '-10%', left: '-5%',
+        width: '500px', height: '500px', borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(200,168,78,0.07) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+      <div style={{
+        position: 'absolute', bottom: '-10%', right: '-5%',
+        width: '400px', height: '400px', borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(0,80,180,0.08) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+
+      <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+
+        {/* Body */}
+        <p style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: 'clamp(16px, 1.8vw, 19px)',
+          fontWeight: 400,
+          color: 'rgba(255,255,255,0.92)',
+          lineHeight: 1.8,
+          maxWidth: '640px',
+        }}>
+          We handle exports from KSA &amp; Global imports through our strong network of partners
+          across <strong style={{ color: 'rgba(255,255,255,0.85)' }}>180 countries</strong>, managing FCL, LCL, hazardous,
+          reefer, and oversized cargo — powered by{' '}
+          <strong style={{ color: '#c8a84e' }}>Bejoice logistics experts</strong>.
+        </p>
+
+
+      </div>
+    </section>
+  )
+}
