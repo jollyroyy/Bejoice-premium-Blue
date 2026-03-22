@@ -29,13 +29,18 @@
 - `public/` — static assets (logo PNGs, frames, videos)
 - `public/bejoice-logo-white.png` — main logo used in Nav (white wings, transparent bg, 1509×839px)
 - `public/ai-assistant-female.png` — Layla avatar image
-- `public/globe-trade.mp4` — globe video (hero background, crossfades into JPEG scrubbing)
-- `public/frames-hero/` — JPEG frames for hero video scrubbing
+- `public/saudi-connected.mp4` — globe video (intro, slides up at GLOBE_EXIT=0.22)
+- `public/frames2/` — 289 JPEGs: ocean/ship footage (videoP 0.00–0.39)
+- `public/frames3/` — 169 JPEGs: air freight/plane footage (videoP 0.39–0.62)
+- `public/frames4/` — 32 JPEGs: Saudi team discussion/approval (videoP 0.62–0.70)
+- `public/frames5/` — 121 JPEGs: air cargo packing (videoP 0.70–0.84)
+- `public/frames6/` — 121 JPEGs: road/project cargo (videoP 0.84–1.00)
 
 ## Section Order (App.jsx)
 VideoHero → OceanFreight → Services → HeavyLift → HeavyCargo → WhyBejoice → KeyMarkets → Certifications → Testimonials → Contact → Footer
 
-> StatsBar was removed — stats are shown inside VideoHero's stat card
+> StatsBar removed. QuickQuoteSection removed from page bottom — only accessible via modal.
+> QuickQuoteModal opens via `onQuoteClick` prop on VideoHero hero CTA button.
 
 ## Brand Identity & Guardrails
 - **DO NOT** change brand colors without explicit instruction
@@ -50,12 +55,29 @@ VideoHero → OceanFreight → Services → HeavyLift → HeavyCargo → WhyBejo
 ### Hero Chapters
 Edit `CHAPTERS` array in `VideoHero.jsx`:
 ```js
-{ range: [0.0, 0.15], eyebrow, headline: ['LINE1','LINE2'], sub, showCta?, showStats?, align? }
+{ range: [0.00, 0.39], eyebrow, headline: ['LINE1','LINE2'], sub, align: 'right'|'left'|'center' }
 ```
-- `align: 'right'` → right-aligns the chapter (used for "THE WORLD'S OCEANS" and "CERTIFIED TO DELIVER")
-- All other chapters default to left-aligned
-- Chapter overlays use `justifyContent: 'center'` (vertical center of viewport)
-- h1 elements need `pointerEvents: 'all'` to receive hover events through the overlay
+- 5 chapters, each mapped 1:1 to a frame sequence (frames2–frames6)
+- Alignment alternates: right → left → center → right → left
+- `FADE = 0.022` — tight crossfade, chapter fully gone before next starts
+- Last chapter: no fade-out (exit overlay handles at videoP > 0.97)
+- `SCROLL_HEIGHT = 1800` vh, `GLOBE_EXIT = 0.22`
+
+### Quick Quote Modal
+- `src/components/QuickQuoteModal.jsx` — modal wrapper with animated heading
+- `src/components/QuickQuoteSection.jsx` — multi-step form (Sea/Air/Land/Customs/Project)
+- `inModal={true}` prop suppresses duplicate header inside QuickQuoteSection
+- Modal panel: NO maxHeight, NO inner scroll — backdrop scrolls (`alignItems: flex-start`)
+- Continue/Submit: full-width gold gradient, `qqm-continue-pulse` glow, `qqm-arrow-nudge` on →
+- Back: small secondary text link below Continue — NOT a full button
+- Form: input `1.1rem`, label `0.88rem`, input color `#ffffff`
+- Keyframes `qqm-continue-pulse` and `qqm-arrow-nudge` live in `src/index.css`
+
+### Cal.com Calendar (index.html)
+- Preloaded iframe injected via `DOMContentLoaded` script — zero delay on click
+- `window.__showCalModal()` shows the overlay
+- Close button is a sibling of iframe inner div (NOT inside it) — avoids pointer interception
+- cssText must use kebab-case (`align-items`, not `alignItems`)
 
 ### Shine Effects (index.css)
 Three shine classes — all use `::after` pseudo-element with `content: attr(data-text)`:
@@ -123,6 +145,9 @@ sharp('input.png').resize(w, h, { kernel: sharp.kernel.lanczos3 }).ensureAlpha()
 ### Bejoice-scroll relationship
 - Do NOT modify `C:/Users/ASUS/Desktop/Interactive Websit for Bejoice/bejoice-scroll/`
 - The two projects are entirely separate
+
+## Auto-Update Rule
+**Claude must update CLAUDE.md and MEMORY.md at the end of every session or after any significant architectural change — without being asked.** Update only the changed sections; do not rewrite unrelated content.
 
 ## Gotchas
 - `pointerEvents: 'none'` on chapter overlays blocks all mouse events — override with `pointerEvents: 'all'` on interactive children including `h1`

@@ -37,18 +37,27 @@ function CountUp({ target, suffix = '', duration = 900 }) {
 // Config
 // ─────────────────────────────────────────────────────────────────────────────
 const GLOBE_SRC    = '/saudi-connected.mp4'
-const SCROLL_HEIGHT = 1400
+const SCROLL_HEIGHT = 1800
 
 // ── JPEG frame sequences ──────────────────────────────────────────
 const FRAMES2_COUNT = 289
 const FRAMES3_COUNT = 169
-const TOTAL_FRAMES  = FRAMES2_COUNT + FRAMES3_COUNT   // 458
+const FRAMES4_COUNT = 32
+const FRAMES5_COUNT = 121
+const FRAMES6_COUNT = 121
+const TOTAL_FRAMES  = FRAMES2_COUNT + FRAMES3_COUNT + FRAMES4_COUNT + FRAMES5_COUNT + FRAMES6_COUNT  // 732
 
 const FRAME_URLS = [
   ...Array.from({ length: FRAMES2_COUNT }, (_, i) =>
     `/frames2/${String(i + 1).padStart(4, '0')}.jpg`),
   ...Array.from({ length: FRAMES3_COUNT }, (_, i) =>
     `/frames3/${String(i + 1).padStart(4, '0')}.jpg`),
+  ...Array.from({ length: FRAMES4_COUNT }, (_, i) =>
+    `/frames4/${String(i + 1).padStart(4, '0')}.jpg`),
+  ...Array.from({ length: FRAMES5_COUNT }, (_, i) =>
+    `/frames5/${String(i + 1).padStart(4, '0')}.jpg`),
+  ...Array.from({ length: FRAMES6_COUNT }, (_, i) =>
+    `/frames6/${String(i + 1).padStart(4, '0')}.jpg`),
 ]
 
 // Headings shown during the 4-second globe lock — alternate sides
@@ -56,39 +65,51 @@ const INTRO_SLIDES = [
   { headline: ['SMART FREIGHT', 'POWERED BY AI'], eyebrow: "Saudi Arabia's No.1 Logistics Partner", align: 'center', sub: ['Award-winning freight forwarder delivering seamless end-to-end logistics solutions', 'with reliability, efficiency, and the strength of a powerful global network.'] },
 ]
 
-// Fade window inside each chapter's own range — keeps chapters strictly sequential.
-// Chapter N is fully gone before chapter N+1 starts (zero overlap).
-const FADE = 0.045
+// Fade window in frames — how many frames to crossfade between chapters
+const FRAME_FADE = 18
 
-// Sequence: centre → right → left → centre → right
+// Chapters hardcoded to exact frame index boundaries.
+// frames2: 0–288 | frames3: 289–457 | frames4: 458–489 | frames5: 490–610 | frames6: 611–731
 const CHAPTERS = [
   {
-    range:    [0.00, 0.25],
-    eyebrow:  'Hydraulic Axle Transport · OOG & ODC Cargo',
-    headline: ['ENGINEERED', 'FOR EXTREMES'],
-    sub:      'Precision surveys and route modifications. Every path mapped and certified before moving.',
-    align:    'right',
+    // frames2 (indices 0–288): ship / ocean footage
+    frameRange: [10, 288],
+    eyebrow:    'Global Ocean Freight · FCL & LCL · 180+ Countries',
+    headline:   ['THE WORLD\'S OCEANS', 'WORK FOR YOU'],
+    sub:        'Full container load or groupage — we move cargo across every major seaport, on time, every time.',
+    align:      'right',
   },
   {
-    range:    [0.25, 0.50],
-    eyebrow:  'Route Survey & Modification · Technical Engineering',
-    headline: ['EVERY ROUTE,', 'ZERO OBSTACLES'],
-    sub:      'Millimetre-precision jacking and skidding backed by 25+ years of lift science.',
-    align:    'left',
+    // frames3 (indices 289–457): aircraft / air freight footage
+    frameRange: [289, 457],
+    eyebrow:    'Air Freight · Express & Charter · Worldwide Coverage',
+    headline:   ['BUILT FOR', 'SPEED'],
+    sub:        'Time-critical shipments handled with precision. Door-to-door air freight to 180+ destinations.',
+    align:      'left',
   },
   {
-    range:    [0.50, 0.75],
-    eyebrow:  'Customs Brokerage · Saudi Regulatory Compliance',
-    headline: ['CLEARED BEFORE', 'IT LANDS'],
-    sub:      'ZATCA-compliant and AEO-certified end-to-end customs clearance by Saudi experts.',
-    align:    'center',
+    // frames4 (indices 458–489): Saudi team / customs approval footage
+    frameRange: [458, 489],
+    eyebrow:    'Customs Clearance · ZATCA-Certified · AEO Status',
+    headline:   ['CLEARED.', 'COMPLIANT.'],
+    sub:        'Saudi-expert customs brokerage — ZATCA, AEO, and SASO certified. Zero border delays.',
+    align:      'center',
   },
   {
-    range:    [0.75, 1.00],
-    eyebrow:  'Wind Turbines · Transformers · Industrial Modules',
-    headline: ['WE MOVE', 'GIANTS'],
-    sub:      'Moving transformers, turbines, and mega-modules. We handle the cargo that defines your project.',
-    align:    'right',
+    // frames5 (indices 490–610): air cargo packing footage
+    frameRange: [490, 610],
+    eyebrow:    'Air Cargo Handling · Consolidation · Last-Mile',
+    headline:   ['PACKED SAFE,', 'DELIVERED RIGHT'],
+    sub:        'End-to-end cargo consolidation and handling — your freight secured from warehouse to aircraft.',
+    align:      'right',
+  },
+  {
+    // frames6 (indices 611–731): road / lorry / project cargo footage
+    frameRange: [611, 731],
+    eyebrow:    'Road & Project Cargo · KSA-GCC Corridors · Heavy Haul',
+    headline:   ['ENGINEERED FOR', 'ALL SEASONS'],
+    sub:        'From desert highways to mountain passes — our road fleet conquers every route across Saudi Arabia and the GCC.',
+    align:      'left',
   },
 ]
 
@@ -323,31 +344,33 @@ export default function VideoHero({ onQuoteClick }) {
     setIntroShowing(true)
   }, [])
 
-  // ── Strictly sequential chapter opacity (zero overlap) ───────────
-  const applyProgress = useCallback((p) => {
-    chaptersRef.current.forEach((el, i) => {
-      if (!el) return
-      const [start, end] = CHAPTERS[i].range
-      const isFirst = i === 0
-      const isLast  = i === CHAPTERS.length - 1
+  // ── Chapter opacity driven by exact frame index (hardcoded to footage) ──
+  const applyProgress = useCallback((frameIdx) => {
+    for (let i = 0; i < CHAPTERS.length; i++) {
+      const el = chaptersRef.current[i]
+      if (!el) continue
+
+      const [start, end] = CHAPTERS[i].frameRange
+      const isLast = i === CHAPTERS.length - 1
       let opacity = 0
 
-      if (isFirst) {
-        if      (p >= start + FADE && p < end - FADE) opacity = 1
-        else if (p >= start        && p < start + FADE) opacity = (p - start) / FADE
-        else if (p >= end - FADE   && p < end)          opacity = (end - p)   / FADE
+      if (frameIdx < 0) {
+        opacity = 0  // globe phase — keep all hidden
       } else if (isLast) {
-        if      (p >= start + FADE) opacity = 1
-        else if (p >= start)        opacity = (p - start) / FADE
+        // Last chapter fades in and stays; exit overlay covers the end
+        if      (frameIdx >= start + FRAME_FADE) opacity = 1
+        else if (frameIdx >= start)              opacity = (frameIdx - start) / FRAME_FADE
       } else {
-        if      (p >= start + FADE && p < end - FADE) opacity = 1
-        else if (p >= start        && p < start + FADE) opacity = (p - start) / FADE
-        else if (p >= end - FADE   && p < end)          opacity = (end - p)   / FADE
+        if      (frameIdx >= start + FRAME_FADE && frameIdx <= end - FRAME_FADE) opacity = 1
+        else if (frameIdx >= start              && frameIdx <  start + FRAME_FADE) opacity = (frameIdx - start) / FRAME_FADE
+        else if (frameIdx >  end - FRAME_FADE   && frameIdx <= end)                opacity = (end - frameIdx)   / FRAME_FADE
+        else opacity = 0
       }
 
+      opacity = Math.max(0, Math.min(1, opacity))
       el.style.opacity   = String(opacity)
-      el.style.transform = `translateY(${(1 - opacity) * 30}px)`
-    })
+      el.style.transform = `translateY(${(1 - opacity) * 28}px)`
+    }
   }, [])
 
   // ── Canvas: size to DPR viewport ─────────────────────────────────
@@ -436,7 +459,11 @@ export default function VideoHero({ onQuoteClick }) {
       // Fallback if already ready
       if (g.readyState >= 3) onCanPlay()
     }
-    chaptersRef.current.forEach(el => { if (el) el.style.opacity = '0' })
+    // Initialise all chapter overlays as hidden — RAF takes over on scroll
+    for (let i = 0; i < CHAPTERS.length; i++) {
+      const el = chaptersRef.current[i]
+      if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(28px)' }
+    }
   }, [])
 
   // ── Scroll: globe slides up, truck fades in — RAF lerp for silky motion ──
@@ -489,12 +516,13 @@ export default function VideoHero({ onQuoteClick }) {
       const frameIdx = Math.min(Math.round(videoP * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1)
       paintFrame(frameIdx)
 
-      applyProgress(videoP)
+      // Chapter headings driven by exact frame index — perfect sync
+      applyProgress(p <= GLOBE_EXIT ? -1 : frameIdx)
 
-      // ── Exit fade ──
+      // ── Exit fade — only after ALL frames shown (last 3% of scroll) ──
       if (exitOverlayRef.current) {
         exitOverlayRef.current.style.opacity = String(
-          Math.max(0, Math.min(1, (videoP - 0.88) / 0.12))
+          Math.max(0, Math.min(1, (videoP - 0.97) / 0.03))
         )
       }
 
@@ -686,11 +714,12 @@ export default function VideoHero({ onQuoteClick }) {
                 textAlign:     isCenter ? 'center' : isRight ? 'right'    : 'left',
                 padding:       'clamp(2rem,6vw,6rem)',
                 paddingBottom: 'clamp(220px,34vh,380px)',
-                opacity:0,
-                transform:'translateY(0px)',
+                /* NO opacity here — React re-renders would reset it.
+                   Initial opacity:0 is applied by the useEffect below.
+                   The RAF owns opacity from then on. */
                 pointerEvents:'none',
                 willChange:'opacity,transform',
-                transition:'none',           /* transitions driven by JS, not CSS */
+                transition:'none',
               }}
             >
               {/* Eyebrow */}
@@ -819,7 +848,6 @@ export default function VideoHero({ onQuoteClick }) {
           </div>
         </div>
 
-        <ProgressBar wrapperRef={wrapperRef} />
 
       </div>
 
@@ -849,8 +877,13 @@ function ProgressBar({ wrapperRef }) {
     return () => window.removeEventListener('scroll', update)
   }, [])
   return (
-    <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'2px', background:'rgba(255,255,255,0.06)', zIndex:10 }}>
-      <div ref={barRef} style={{ height:'100%', width:'0%', background:'linear-gradient(to right,#9a7a2e,#c8a84e,#e8cc7a)', transition:'width 0.08s linear' }} />
+    <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'3px', background:'transparent', zIndex:10 }}>
+      <div ref={barRef} style={{
+        height:'100%', width:'0%',
+        background:'linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0) 100%)',
+        transition:'width 0.08s linear',
+        boxShadow:'0 0 8px rgba(255,255,255,0.08)',
+      }} />
     </div>
   )
 }

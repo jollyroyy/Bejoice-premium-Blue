@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Nav from './components/Nav'
 import VideoHero from './components/VideoHero'
 import LogisticsTools from './components/LogisticsTools'
-import QuickQuoteSection from './components/QuickQuoteSection'
 import Services from './components/Services'
 import HeavyCargo from './components/HeavyCargo'
 import HeavyLift from './components/HeavyLift'
@@ -60,11 +59,10 @@ export default function App() {
     <div className="grain">
       <ScrollProgress />
       <GlobalInteractions />
-      <Nav />
+      <Nav onQuoteClick={() => setQuoteOpen(true)} />
       <main>
         <VideoHero onQuoteClick={() => setQuoteOpen(true)} />
         <LogisticsTools />
-        <QuickQuoteSection />
         <Services />
         <HeavyLift />
         <HeavyCargo />

@@ -18,38 +18,50 @@ const AIRPORTS = [
 ];
 
 const sharedInputCls = {
-  background: 'rgba(255,255,255,0.07)',
-  border: '1px solid rgba(255,255,255,0.15)',
+  background: 'rgba(255,255,255,0.09)',
+  border: '1px solid rgba(255,255,255,0.2)',
   borderRadius: '0.5rem',
-  padding: '0.85rem 1rem',
-  color: 'rgba(255,255,255,0.95)',
+  padding: '0.9rem 1rem',
+  color: '#ffffff',
   fontFamily: "'Plus Jakarta Sans', sans-serif",
-  fontSize: '1.05rem',
+  fontSize: '1.1rem',
   width: '100%',
   outline: 'none',
   transition: 'border-color 0.2s',
 };
 const labelCls = {
   fontFamily: "'Plus Jakarta Sans', sans-serif",
-  fontSize: '0.82rem',
+  fontSize: '0.88rem',
   fontWeight: 700,
   letterSpacing: '0.14em',
   textTransform: 'uppercase',
-  color: 'rgba(255,255,255,0.78)',
+  color: 'rgba(255,255,255,0.95)',
   marginBottom: '0.5rem',
   display: 'block',
 };
 
-function Field({ label, children }) {
+function Field({ label, children, error }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <label style={labelCls}>{label}</label>
       {children}
+      {error && (
+        <span style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: '0.75rem',
+          color: 'rgba(255,100,100,0.95)',
+          marginTop: '0.3rem',
+          display: 'flex', alignItems: 'center', gap: '4px',
+        }}>
+          ⚠ {error}
+        </span>
+      )}
     </div>
-  );
+  )
 }
 
-function Input({ placeholder, type = 'text', value, onChange, min, step }) {
+function Input({ placeholder, type = 'text', value, onChange, min, step, error }) {
+  const isDate = type === 'date'
   return (
     <input
       type={type}
@@ -58,11 +70,17 @@ function Input({ placeholder, type = 'text', value, onChange, min, step }) {
       onChange={onChange}
       min={min}
       step={step}
-      style={sharedInputCls}
-      onFocus={e => (e.target.style.borderColor = 'rgba(200,168,78,0.45)')}
-      onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.09)')}
+      style={{
+        ...sharedInputCls,
+        border: `1px solid ${error ? 'rgba(255,80,80,0.7)' : 'rgba(255,255,255,0.2)'}`,
+        colorScheme: 'dark',
+        ...(isDate ? { cursor: 'pointer' } : {}),
+      }}
+      onClick={e => { if (isDate && e.target.showPicker) { try { e.target.showPicker() } catch(_) {} } }}
+      onFocus={e => (e.target.style.borderColor = error ? 'rgba(255,80,80,0.9)' : 'rgba(200,168,78,0.6)')}
+      onBlur={e => (e.target.style.borderColor = error ? 'rgba(255,80,80,0.7)' : 'rgba(255,255,255,0.2)')}
     />
-  );
+  )
 }
 
 function Select({ value, onChange, options, placeholder }) {
@@ -207,43 +225,99 @@ function StepIndicator({ steps, current }) {
   );
 }
 
-function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading }) {
+function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading, validate }) {
+  const isLast = step === totalSteps - 1
+  const handleContinue = () => {
+    if (validate && !validate()) return
+    onNext()
+  }
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-      <button
-        onClick={onBack}
-        disabled={step === 0}
-        style={{
-          fontFamily: "'Plus Jakarta Sans', sans-serif",
-          fontSize: '0.88rem',
-          fontWeight: 500,
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          color: step === 0 ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.6)',
-          background: 'none',
-          border: `1px solid ${step === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.15)'}`,
-          borderRadius: '12px',
-          padding: '0.75rem 1.6rem',
-          cursor: step === 0 ? 'default' : 'pointer',
-          transition: 'all 0.2s',
-        }}
-      >
-        ← Back
-      </button>
-      <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '0.88rem', color: 'rgba(255,255,255,0.55)', letterSpacing: '0.08em' }}>
-        {step + 1} / {totalSteps}
-      </span>
-      {step < totalSteps - 1 ? (
-        <button onClick={onNext} className="qq-next-btn">
-          Continue →
+    <div style={{ marginTop: '1.8rem', paddingTop: '1.2rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      {isLast ? (
+        <button
+          onClick={() => { if (validate && !validate()) return; onSubmit() }}
+          disabled={loading}
+          style={{
+            width: '100%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
+            padding: '1.1rem 2rem',
+            minHeight: '54px',
+            background: loading
+              ? 'rgba(200,168,78,0.3)'
+              : 'linear-gradient(135deg, #f5d97a 0%, #e8cc7a 40%, #c8a84e 100%)',
+            color: '#050508',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '1rem', fontWeight: 900,
+            letterSpacing: '0.2em', textTransform: 'uppercase',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '14px',
+            cursor: loading ? 'default' : 'pointer',
+            position: 'relative', overflow: 'hidden',
+            animation: loading ? 'none' : 'qqm-continue-pulse 2s ease-in-out infinite',
+            transition: 'background 0.3s, transform 0.2s',
+          }}
+          onMouseEnter={e => { if (!loading) { e.currentTarget.style.background = 'linear-gradient(135deg,#fff2a8,#f5d97a,#e8cc7a)'; e.currentTarget.style.transform = 'translateY(-2px)' } }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#f5d97a,#e8cc7a,#c8a84e)'; e.currentTarget.style.transform = 'translateY(0)' }}
+        >
+          <span>{loading ? 'Sending your request…' : 'Submit Quote Request'}</span>
+          {!loading && (
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ animation: 'qqm-arrow-nudge 1.4s ease-in-out infinite' }}>
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          )}
         </button>
       ) : (
-        <button onClick={onSubmit} className="qq-submit-btn" disabled={loading}>
-          {loading ? 'Sending…' : 'Request Quote →'}
+        <button
+          onClick={handleContinue}
+          style={{
+            width: '100%',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
+            padding: '1.1rem 2rem',
+            minHeight: '54px',
+            background: 'linear-gradient(135deg, #f5d97a 0%, #e8cc7a 40%, #c8a84e 100%)',
+            color: '#050508',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '1rem', fontWeight: 900,
+            letterSpacing: '0.2em', textTransform: 'uppercase',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '14px',
+            cursor: 'pointer',
+            position: 'relative', overflow: 'hidden',
+            animation: 'qqm-continue-pulse 2s ease-in-out infinite',
+            transition: 'background 0.3s, transform 0.2s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#fff2a8,#f5d97a,#e8cc7a)'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.animation = 'none' }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#f5d97a,#e8cc7a,#c8a84e)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.animation = 'qqm-continue-pulse 2s ease-in-out infinite' }}
+        >
+          <span>Continue</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ animation: 'qqm-arrow-nudge 1.4s ease-in-out infinite' }}>
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      )}
+
+      {/* Back link — small, secondary */}
+      {step > 0 && (
+        <button
+          onClick={onBack}
+          style={{
+            display: 'block', margin: '0.9rem auto 0',
+            background: 'none', border: 'none',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '0.82rem', fontWeight: 500,
+            color: 'rgba(255,255,255,0.45)',
+            letterSpacing: '0.08em',
+            cursor: 'pointer',
+            transition: 'color 0.2s',
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.45)'}
+        >
+          ← Back to step {step}
         </button>
       )}
     </div>
-  );
+  )
 }
 
 // ─── SEA FREIGHT FORM ────────────────────────────────────────────────────────
@@ -262,6 +336,26 @@ function SeaForm({ onSuccess }) {
   const addContainer = () => setD(p => ({ ...p, containers: [...p.containers, { type: '20ft Dry Standard', qty: '1' }] }));
   const updContainer = (i, k, v) => setD(p => ({ ...p, containers: p.containers.map((c, idx) => idx === i ? { ...c, [k]: v } : c) }));
   const removeContainer = (i) => setD(p => ({ ...p, containers: p.containers.filter((_, idx) => idx !== i) }));
+
+  const [errors, setErrors] = useState({})
+  const validate = () => {
+    const e = {}
+    if (step === 0) {
+      if (!d.origin) e.origin = 'Origin port is required'
+      if (!d.destination) e.destination = 'Destination port is required'
+      if (!d.readyDate) e.readyDate = 'Cargo ready date is required'
+    }
+    if (step === 1) {
+      if (!d.commodity) e.commodity = 'Commodity description is required'
+    }
+    if (step === 3) {
+      if (!d.name.trim()) e.name = 'Full name is required'
+      if (!d.email.trim()) e.email = 'Email address is required'
+      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required'
+    }
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
 
   const CONTAINER_TYPES = ['20ft Dry Standard','40ft Dry Standard','40ft High Cube','20ft Reefer','40ft Reefer','20ft Open Top','40ft Open Top','20ft Flat Rack','40ft Flat Rack'];
 
@@ -290,16 +384,16 @@ function SeaForm({ onSuccess }) {
                 ))}
               </div>
             </Field>
-            <Field label="Cargo Ready Date">
-              <Input type="date" value={d.readyDate} onChange={e => up('readyDate', e.target.value)} />
+            <Field label="Cargo Ready Date *" error={errors.readyDate}>
+              <Input type="date" value={d.readyDate} onChange={e => { up('readyDate', e.target.value); setErrors(p => ({...p, readyDate: ''})) }} error={errors.readyDate} />
             </Field>
           </div>
           <div className="qq-grid-2" style={{ marginTop: '1rem' }}>
-            <Field label="Port of Loading (Origin)">
-              <Select value={d.origin} onChange={e => up('origin', e.target.value)} options={PORTS_SEA} placeholder="Select or type port…" />
+            <Field label="Port of Loading (Origin) *" error={errors.origin}>
+              <Select value={d.origin} onChange={e => { up('origin', e.target.value); setErrors(p => ({...p, origin: ''})) }} options={PORTS_SEA} placeholder="Select or type port…" />
             </Field>
-            <Field label="Port of Discharge (Destination)">
-              <Select value={d.destination} onChange={e => up('destination', e.target.value)} options={PORTS_SEA} placeholder="Select or type port…" />
+            <Field label="Port of Discharge (Destination) *" error={errors.destination}>
+              <Select value={d.destination} onChange={e => { up('destination', e.target.value); setErrors(p => ({...p, destination: ''})) }} options={PORTS_SEA} placeholder="Select or type port…" />
             </Field>
           </div>
         </div>
@@ -319,8 +413,8 @@ function SeaForm({ onSuccess }) {
             <button onClick={addContainer} className="qq-add-btn">+ Add Container</button>
           </div>
           <div className="qq-grid-3">
-            <Field label="Commodity">
-              <Input placeholder="e.g. Electronics" value={d.commodity} onChange={e => up('commodity', e.target.value)} />
+            <Field label="Commodity *" error={errors.commodity}>
+              <Input placeholder="e.g. Electronics" value={d.commodity} onChange={e => { up('commodity', e.target.value); setErrors(p => ({...p, commodity: ''})) }} error={errors.commodity} />
             </Field>
             <Field label="Total Weight (tons)">
               <Input type="number" min="0" step="0.1" placeholder="0.00" value={d.weight} onChange={e => up('weight', e.target.value)} />
@@ -396,10 +490,10 @@ function SeaForm({ onSuccess }) {
       )}
 
       {step === 3 && (
-        <ContactStep d={d} up={up} />
+        <ContactStep d={d} up={up} errors={errors} setErrors={setErrors} />
       )}
 
-      <NavButtons step={step} totalSteps={4} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={handleSubmit} loading={loading} />
+      <NavButtons step={step} totalSteps={4} onBack={() => { setStep(s => s - 1); setErrors({}) }} onNext={() => setStep(s => s + 1)} onSubmit={handleSubmit} loading={loading} validate={validate} />
     </div>
   );
 }
@@ -916,7 +1010,7 @@ const TABS = [
   { id: 'project', icon: '⚙️', label: 'Project Cargo',     sub: 'OOG · Heavy Lift' },
 ];
 
-export default function QuickQuoteSection({ sectionRef, lang = 'en' }) {
+export default function QuickQuoteSection({ sectionRef, lang = 'en', inModal = false }) {
   const ar = lang === 'ar';
   const [activeTab, setActiveTab] = useState('sea');
   const [successType, setSuccessType] = useState(null);
@@ -930,20 +1024,22 @@ export default function QuickQuoteSection({ sectionRef, lang = 'en' }) {
       <div className="tools-bg-line" />
 
       <div className="qq-inner">
-        {/* Header */}
-        <div className="tools-header">
-          <div className="chapter-label" style={{ justifyContent: 'center' }}>
-            {ar ? 'تسعير فوري' : 'Instant Pricing'}
+        {/* Header — hidden when rendered inside modal (modal has its own heading) */}
+        {!inModal && (
+          <div className="tools-header">
+            <div className="chapter-label" style={{ justifyContent: 'center' }}>
+              {ar ? 'تسعير فوري' : 'Instant Pricing'}
+            </div>
+            <h2 className="tools-title">
+              {ar ? 'عرض سعر سريع' : 'Quick Quote'}
+            </h2>
+            <p className="tools-subtitle">
+              {ar
+                ? 'شحن بحري، جوي، بري، تخليص جمركي أو مشاريع — احصل على عرض سعر مخصص في دقائق. بدون مكالمات. بدون انتظار.'
+                : 'Sea, air, land, customs or project cargo — get a tailored quote in minutes. No calls. No waiting. Just results.'}
+            </p>
           </div>
-          <h2 className="tools-title">
-            {ar ? 'عرض سعر سريع' : 'Quick Quote'}
-          </h2>
-          <p className="tools-subtitle">
-            {ar
-              ? 'شحن بحري، جوي، بري، تخليص جمركي أو مشاريع — احصل على عرض سعر مخصص في دقائق. بدون مكالمات. بدون انتظار.'
-              : 'Sea, air, land, customs or project cargo — get a tailored quote in minutes. No calls. No waiting. Just results.'}
-          </p>
-        </div>
+        )}
 
         {/* Tab selector */}
         <div className="qq-tabs">
