@@ -115,6 +115,42 @@ export default function HeavyCargo() {
           overflow: 'hidden', position: 'relative',
           padding: 'clamp(24px,3.5vw,48px)',
         }}>
+          {/* Meteor shower background */}
+          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', overflow:'hidden', borderRadius:28 }}>
+            {[
+              { left:'8%',  top:'-8%',  delay:'0s',   dur:'3.8s', w:1.5, len:120 },
+              { left:'22%', top:'-15%', delay:'1.2s', dur:'4.5s', w:1,   len:90  },
+              { left:'38%', top:'-5%',  delay:'2.6s', dur:'3.2s', w:2,   len:150 },
+              { left:'51%', top:'-20%', delay:'0.7s', dur:'5.0s', w:1,   len:80  },
+              { left:'65%', top:'-10%', delay:'3.4s', dur:'3.6s', w:1.5, len:110 },
+              { left:'75%', top:'-3%',  delay:'1.8s', dur:'4.2s', w:1,   len:95  },
+              { left:'88%', top:'-18%', delay:'0.3s', dur:'4.8s', w:2,   len:130 },
+              { left:'14%', top:'-25%', delay:'4.1s', dur:'3.5s', w:1,   len:85  },
+              { left:'56%', top:'-12%', delay:'2.0s', dur:'4.0s', w:1.5, len:105 },
+              { left:'92%', top:'-8%',  delay:'3.0s', dur:'3.9s', w:1,   len:70  },
+            ].map((m, i) => (
+              <div key={i} style={{
+                position: 'absolute',
+                left: m.left, top: m.top,
+                width: `${m.w}px`, height: `${m.len}px`,
+                background: `linear-gradient(180deg, rgba(255,215,105,0) 0%, rgba(255,215,105,0.55) 40%, rgba(200,168,78,0.85) 70%, rgba(255,255,255,0.5) 100%)`,
+                borderRadius: '999px',
+                transform: 'rotate(15deg)',
+                transformOrigin: 'top center',
+                animation: `meteorFall ${m.dur} linear ${m.delay} infinite`,
+                opacity: 0,
+              }} />
+            ))}
+            <style>{`
+              @keyframes meteorFall {
+                0%   { transform: rotate(15deg) translateY(0);    opacity: 0; }
+                5%   { opacity: 1; }
+                80%  { opacity: 0.6; }
+                100% { transform: rotate(15deg) translateY(110vh); opacity: 0; }
+              }
+            `}</style>
+          </div>
+
           {/* Shining border strips — all four sides */}
           <div style={{ position:'absolute', top:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
             background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
@@ -150,25 +186,33 @@ export default function HeavyCargo() {
           viewport={{ once: true, margin: "-100px 0px" }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
           className="mb-10 md:mb-16 lg:mb-20 flex flex-col items-end"
+          style={{ position: 'relative', zIndex: 1 }}
         >
           <div style={{
             width: '100%', padding: 0,
             textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end',
           }}>
-            <h2 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(3rem,7vw,6rem)',
-              letterSpacing: '0.07em', lineHeight: 1,
-              margin: 0,
-              background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
-              backgroundSize: '300% 100%',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
-              animation: 'headingSweep 4s ease-in-out infinite',
-            }}>
+            <motion.h2
+              className="no-reveal"
+              initial={{ x: -70, opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
+              whileInView={{ x: 0, opacity: 1, clipPath: 'inset(0 0% 0 0)' }}
+              viewport={{ once: true, margin: '-80px 0px' }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 'clamp(3rem,7vw,6rem)',
+                letterSpacing: '0.07em', lineHeight: 1,
+                margin: 0,
+                background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
+                backgroundSize: '300% 100%',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
+                animation: 'headingSweep 4s ease-in-out infinite',
+              }}
+            >
               CONSULTING FOR<br />GIGA PROJECTS
-            </h2>
+            </motion.h2>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 'clamp(14px,1.6vw,17px)',
@@ -189,7 +233,7 @@ export default function HeavyCargo() {
         <div className="gold-line mb-20" />
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(200,168,78,0.12)', perspective: '1200px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(200,168,78,0.12)', perspective: '1200px', position: 'relative', zIndex: 1 }}>
           {capabilities.map((c, i) => (
             <motion.div key={c.num}
               ref={el => cardsRef.current[i] = el}

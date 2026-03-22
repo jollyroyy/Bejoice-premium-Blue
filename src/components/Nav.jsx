@@ -82,15 +82,15 @@ export default function Nav({ onQuoteClick }) {
       style={{
         display: 'flex', flexDirection: 'column', gap: '0.5rem',
         background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-        borderRadius: '0.9rem', padding: '1.1rem 1rem',
+        borderRadius: '0.9rem', padding: 'clamp(0.85rem,2vw,1.1rem) clamp(0.75rem,1.8vw,1rem)',
         cursor: 'pointer', transition: 'all 0.22s', textAlign: 'left',
       }}
       onMouseEnter={e => { e.currentTarget.style.background = 'rgba(200,168,78,0.1)'; e.currentTarget.style.borderColor = 'rgba(200,168,78,0.35)' }}
       onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)' }}
     >
-      <span style={{ fontSize: '1.6rem', lineHeight: 1 }}>{icon}</span>
-      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '1rem', letterSpacing: '0.1em', color: '#ffffff', lineHeight: 1.1 }}>{label}</span>
-      <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.68rem', fontWeight: 500, color: 'rgba(200,168,78,0.7)', lineHeight: 1.4, letterSpacing: '0.02em' }}>{sub}</span>
+      <span style={{ fontSize: 'clamp(1.3rem,2.5vw,1.6rem)', lineHeight: 1 }}>{icon}</span>
+      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(0.88rem,2vw,1rem)', letterSpacing: '0.1em', color: '#ffffff', lineHeight: 1.1 }}>{label}</span>
+      <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.63rem,1.4vw,0.68rem)', fontWeight: 500, color: 'rgba(200,168,78,0.7)', lineHeight: 1.4, letterSpacing: '0.02em' }}>{sub}</span>
     </button>
   )
 
@@ -165,7 +165,7 @@ export default function Nav({ onQuoteClick }) {
               className={!menuOpen ? 'hamburger-btn' : ''}
               style={{
                 display: 'flex', alignItems: 'center', gap: '10px',
-                padding: '10px 18px 10px 14px',
+                padding: 'clamp(8px,1.5vw,10px) clamp(14px,2.5vw,18px) clamp(8px,1.5vw,10px) clamp(10px,2vw,14px)',
                 background: menuOpen ? 'rgba(200,168,78,0.14)' : 'rgba(255,255,255,0.04)',
                 border: `1.5px solid ${menuOpen ? 'rgba(200,168,78,0.7)' : 'rgba(200,168,78,0.45)'}`,
                 borderRadius: '100px', cursor: 'pointer', zIndex: 60,
@@ -176,10 +176,10 @@ export default function Nav({ onQuoteClick }) {
               onMouseEnter={e => { if (!menuOpen) { e.currentTarget.style.background = 'rgba(200,168,78,0.1)'; e.currentTarget.style.borderColor = 'rgba(200,168,78,0.7)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(200,168,78,0.2)' } }}
               onMouseLeave={e => { if (!menuOpen) { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(200,168,78,0.45)'; e.currentTarget.style.boxShadow = '0 0 0 rgba(200,168,78,0)' } }}
             >
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '20px' }}>
-                <span style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: '#c8a84e', width: '20px', transform: menuOpen ? 'translateY(6.5px) rotate(45deg)' : 'none', transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)' }}/>
-                <span className={!menuOpen ? 'bar-mid' : ''} style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: 'rgba(200,168,78,0.55)', width: '13px', opacity: menuOpen ? 0 : 1, transform: menuOpen ? 'scaleX(0)' : undefined, transition: 'all 0.25s ease' }}/>
-                <span style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: '#c8a84e', width: '20px', transform: menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none', transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)' }}/>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: 'clamp(18px,3vw,20px)' }}>
+                <span style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: '#c8a84e', width: 'clamp(18px,3vw,20px)', transform: menuOpen ? 'translateY(6.5px) rotate(45deg)' : 'none', transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)' }}/>
+                <span className={!menuOpen ? 'bar-mid' : ''} style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: 'rgba(200,168,78,0.55)', width: 'clamp(11px,2vw,13px)', opacity: menuOpen ? 0 : 1, transform: menuOpen ? 'scaleX(0)' : undefined, transition: 'all 0.25s ease' }}/>
+                <span style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: '#c8a84e', width: 'clamp(18px,3vw,20px)', transform: menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none', transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)' }}/>
               </div>
               <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#ffffff', textShadow: '0 0 12px rgba(255,255,255,0.35)', transition: 'color 0.3s ease', lineHeight: 1 }}>
                 {menuOpen ? 'Close' : 'Menu'}
@@ -198,7 +198,7 @@ export default function Nav({ onQuoteClick }) {
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(200,168,78,0.45)'; e.currentTarget.style.boxShadow = '0 2px 16px rgba(200,168,78,0.12), inset 0 1px 0 rgba(200,168,78,0.08)' }}
             >
               <button onClick={() => { if (lang === 'en') return; setLang('en'); document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/'; document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname}`; window.location.reload() }}
-                style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: '8px 13px', background: lang === 'en' ? 'rgba(200,168,78,0.22)' : 'transparent', border: 'none', borderRight: '1px solid rgba(200,168,78,0.3)', cursor: lang === 'en' ? 'default' : 'pointer', transition: 'background 0.25s ease', position: 'relative' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: 'clamp(6px,1.2vw,8px) clamp(9px,1.5vw,13px)', background: lang === 'en' ? 'rgba(200,168,78,0.22)' : 'transparent', border: 'none', borderRight: '1px solid rgba(200,168,78,0.3)', cursor: lang === 'en' ? 'default' : 'pointer', transition: 'background 0.25s ease', position: 'relative' }}
                 onMouseEnter={e => { if (lang !== 'en') e.currentTarget.style.background = 'rgba(200,168,78,0.1)' }}
                 onMouseLeave={e => { if (lang !== 'en') e.currentTarget.style.background = 'transparent' }}
               >
@@ -207,7 +207,7 @@ export default function Nav({ onQuoteClick }) {
                 {lang === 'en' && <span style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '20px', height: '2px', background: 'linear-gradient(90deg, transparent, #c8a84e, transparent)', borderRadius: '2px 2px 0 0' }} />}
               </button>
               <button onClick={() => { if (lang === 'ar') return; setLang('ar'); document.cookie = 'googtrans=/en/ar; path=/'; document.cookie = `googtrans=/en/ar; path=/; domain=.${window.location.hostname}`; window.location.reload() }}
-                style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: '8px 13px', background: lang === 'ar' ? 'rgba(200,168,78,0.22)' : 'transparent', border: 'none', cursor: lang === 'ar' ? 'default' : 'pointer', transition: 'background 0.25s ease', position: 'relative' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: 'clamp(6px,1.2vw,8px) clamp(9px,1.5vw,13px)', background: lang === 'ar' ? 'rgba(200,168,78,0.22)' : 'transparent', border: 'none', cursor: lang === 'ar' ? 'default' : 'pointer', transition: 'background 0.25s ease', position: 'relative' }}
                 onMouseEnter={e => { if (lang !== 'ar') e.currentTarget.style.background = 'rgba(200,168,78,0.1)' }}
                 onMouseLeave={e => { if (lang !== 'ar') e.currentTarget.style.background = 'transparent' }}
               >
@@ -255,7 +255,7 @@ export default function Nav({ onQuoteClick }) {
           </div>
           <button
             onClick={() => setMenuOpen(false)}
-            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '50%', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'rgba(255,255,255,0.45)', fontSize: '0.9rem', transition: 'all 0.2s', flexShrink: 0 }}
+            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '50%', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'rgba(255,255,255,0.45)', fontSize: '0.9rem', transition: 'all 0.2s', flexShrink: 0 }}
             onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }}
             onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
           >✕</button>
@@ -269,10 +269,10 @@ export default function Nav({ onQuoteClick }) {
               onClick={() => scrollTo(link.id)}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.6rem', width: '100%', textAlign: 'left',
-                fontFamily: "'Bebas Neue', sans-serif", fontSize: '1.15rem', fontWeight: 400,
+                fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(1rem,2.5vw,1.15rem)', fontWeight: 400,
                 letterSpacing: '0.12em', color: 'rgba(255,255,255,0.65)',
                 background: 'none', border: 'none', cursor: 'pointer',
-                padding: '0.7rem 0', borderBottom: '1px solid rgba(255,255,255,0.06)',
+                padding: 'clamp(0.65rem,2vw,0.7rem) 0', minHeight: '44px', borderBottom: '1px solid rgba(255,255,255,0.06)',
                 transition: 'color 0.2s',
               }}
               onMouseEnter={e => e.currentTarget.style.color = '#c8a84e'}
@@ -303,10 +303,10 @@ export default function Nav({ onQuoteClick }) {
         {/* Bottom bar */}
         <div style={{ padding: '1rem 1.4rem', borderTop: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.06em' }}>
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.62rem,1.2vw,0.7rem)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.06em' }}>
               Est. 2006 · Riyadh, KSA
             </span>
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '0.7rem', color: 'rgba(200,168,78,0.55)', letterSpacing: '0.08em' }}>
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.62rem,1.2vw,0.7rem)', color: 'rgba(200,168,78,0.55)', letterSpacing: '0.08em' }}>
               ZATCA · ISO 9001 · FIATA
             </span>
           </div>

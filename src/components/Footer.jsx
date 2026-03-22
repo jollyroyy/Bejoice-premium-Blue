@@ -188,11 +188,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <svg viewBox="0 0 32 32" fill="none" className="w-8 h-8">
-                <polygon points="16,2 30,26 2,26" stroke="#c8a84e" strokeWidth="1.5" fill="none"/>
-                <polygon points="16,8 26,24 6,24" fill="#c8a84e" opacity="0.2"/>
-              </svg>
-              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(17px,2.5vw,24px)', letterSpacing: '0.22em', color: '#ffffff' }}>BEJOICE</span>
+              <img src="/bejoice-logo-white.png" alt="Bejoice" style={{ height: 'clamp(36px,5vw,56px)', width: 'auto' }} />
+              <div style={{ borderLeft: '2px solid rgba(200,168,78,0.45)', paddingLeft: '12px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '15px', letterSpacing: '0.18em', color: '#ffffff' }}>BEJOICE</span>
+                <span className="shine-ltr" data-text="Connecting KSA to the World" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', color: '#ffe680', letterSpacing: '0.04em' }}>Connecting KSA to the World</span>
+              </div>
             </div>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.78)', lineHeight: 1.7, maxWidth: '280px', marginBottom: '28px' }}>
               Premium global freight forwarding and logistics solutions. Trusted by industry leaders across Saudi Arabia and beyond since 2006.
@@ -265,7 +265,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.4vw,14px)', color: 'rgba(255,255,255,0.55)' }}>
-            © 2025 Bejoice Global Logistics LLC. All rights reserved.
+            © 2026 Bejoice Global Logistics LLC. All rights reserved.
           </div>
           <div className="flex flex-wrap gap-6">
             {Object.keys(POLICIES).map(item => (

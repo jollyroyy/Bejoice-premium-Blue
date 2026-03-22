@@ -230,20 +230,26 @@ export default function Services() {
             }}>
               What We Offer
             </div>
-            <h2 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(3rem,7vw,6rem)',
-              letterSpacing: '0.07em', lineHeight: 1,
-              margin: 0,
-              background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
-              backgroundSize: '300% 100%',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
-              animation: 'headingSweep 4s ease-in-out infinite',
-            }}>
+            <motion.h2
+              className="no-reveal"
+              initial={{ x: -70, opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
+              animate={isInView ? { x: 0, opacity: 1, clipPath: 'inset(0 0% 0 0)' } : {}}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 'clamp(3rem,7vw,6rem)',
+                letterSpacing: '0.07em', lineHeight: 1,
+                margin: 0,
+                background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
+                backgroundSize: '300% 100%',
+                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
+                animation: 'headingSweep 4s ease-in-out infinite',
+              }}
+            >
               OUR SERVICES
-            </h2>
+            </motion.h2>
             <div style={{ width: 60, height: 2, margin: '1.4rem auto 0', background: 'linear-gradient(90deg, transparent, rgba(200,168,78,0.7), transparent)' }} />
           </div>
 

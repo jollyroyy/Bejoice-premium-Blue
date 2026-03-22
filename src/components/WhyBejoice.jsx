@@ -31,30 +31,97 @@ export default function WhyBejoice() {
       }}/>
 
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
+
+        {/* Outer card with meteor background */}
+        <div style={{
+          background: 'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
+          backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
+          border: '1px solid rgba(255,255,255,0.07)',
+          borderTop: '1px solid rgba(200,168,78,0.22)',
+          borderRadius: 28,
+          boxShadow: '0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,78,0.04) inset, 0 2px 0 rgba(200,168,78,0.15) inset, inset 0 0 80px rgba(200,168,78,0.015)',
+          overflow: 'hidden', position: 'relative',
+          padding: 'clamp(24px,3.5vw,48px)',
+        }}>
+
+          {/* Meteor shower */}
+          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', overflow:'hidden', borderRadius:28 }}>
+            {[
+              { left:'5%',  top:'-10%', delay:'0.4s', dur:'4.2s', w:1.5, len:110 },
+              { left:'18%', top:'-18%', delay:'2.1s', dur:'3.8s', w:1,   len:80  },
+              { left:'32%', top:'-6%',  delay:'1.0s', dur:'5.0s', w:2,   len:140 },
+              { left:'47%', top:'-22%', delay:'3.3s', dur:'3.5s', w:1,   len:90  },
+              { left:'60%', top:'-8%',  delay:'0.8s', dur:'4.6s', w:1.5, len:120 },
+              { left:'72%', top:'-14%', delay:'2.7s', dur:'3.9s', w:1,   len:75  },
+              { left:'84%', top:'-4%',  delay:'1.5s', dur:'4.3s', w:2,   len:130 },
+              { left:'93%', top:'-20%', delay:'3.8s', dur:'3.6s', w:1,   len:85  },
+              { left:'26%', top:'-28%', delay:'4.5s', dur:'4.0s', w:1.5, len:100 },
+              { left:'55%', top:'-16%', delay:'0.2s', dur:'4.8s', w:1,   len:95  },
+            ].map((m, i) => (
+              <div key={i} style={{
+                position: 'absolute', left: m.left, top: m.top,
+                width: `${m.w}px`, height: `${m.len}px`,
+                background: 'linear-gradient(180deg, rgba(255,215,105,0) 0%, rgba(255,215,105,0.55) 40%, rgba(200,168,78,0.85) 70%, rgba(255,255,255,0.5) 100%)',
+                borderRadius: '999px',
+                transform: 'rotate(15deg)', transformOrigin: 'top center',
+                animation: `wbMeteor ${m.dur} linear ${m.delay} infinite`,
+                opacity: 0,
+              }} />
+            ))}
+            <style>{`
+              @keyframes wbMeteor {
+                0%   { transform: rotate(15deg) translateY(0);    opacity: 0; }
+                5%   { opacity: 1; }
+                80%  { opacity: 0.6; }
+                100% { transform: rotate(15deg) translateY(110vh); opacity: 0; }
+              }
+            `}</style>
+          </div>
+
+          {/* Shining border strips */}
+          <div style={{ position:'absolute', top:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
+            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
+            backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite',
+          }}/>
+          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
+            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
+            backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite 2s',
+          }}/>
+          <div style={{ position:'absolute', left:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
+            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
+            backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 1s',
+          }}/>
+          <div style={{ position:'absolute', right:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
+            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
+            backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 3s',
+          }}/>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start" style={{ position:'relative', zIndex:1 }}>
           {/* Left */}
           <div>
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px 0px" }}
-              transition={{ type: "spring", stiffness: 100, damping: 20 }}
-            >
-              <div className="glass-card" style={{ marginBottom: '2rem', padding: 'clamp(20px,3vw,36px) clamp(20px,3vw,36px)', display: 'inline-block' }}>
-                <h2 style={{
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: 'clamp(3rem,7vw,6rem)',
-                  letterSpacing: '0.07em', lineHeight: 1,
-                  margin: 0,
-                  background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
-                  backgroundSize: '300% 100%',
-                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
-                  animation: 'headingSweep 4s ease-in-out infinite',
-                }}>
+            <div>
+              <div style={{ marginBottom: '2rem' }}>
+                <motion.h2
+                  className="no-reveal"
+                  initial={{ x: -70, opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
+                  whileInView={{ x: 0, opacity: 1, clipPath: 'inset(0 0% 0 0)' }}
+                  viewport={{ once: true, margin: '-80px 0px' }}
+                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                  style={{
+                    fontFamily: "'Bebas Neue', sans-serif",
+                    fontSize: 'clamp(3rem,7vw,6rem)',
+                    letterSpacing: '0.07em', lineHeight: 1,
+                    margin: 0,
+                    background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
+                    backgroundSize: '300% 100%',
+                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
+                    animation: 'headingSweep 4s ease-in-out infinite',
+                  }}
+                >
                   WHY<br />BEJOICE
-                </h2>
+                </motion.h2>
                 <style>{`
                   @keyframes headingSweep {
                     0%   { background-position: -100% center; }
@@ -73,15 +140,15 @@ export default function WhyBejoice() {
                 </p>
               </div>
 
-            </motion.div>
+            </div>
           </div>
 
           {/* Right: pillars */}
           <div className="space-y-px" style={{ perspective: '1000px' }}>
             {pillars.map((p, i) => (
               <motion.div key={p.title}
-                className="fade-up glass-card group p-8 flex gap-6 items-start"
-                style={{ transitionDelay: `${i * 90}ms` }}
+                className="fade-up group p-8 flex gap-6 items-start"
+                style={{ borderTop: '1px solid rgba(200,168,78,0.1)', transitionDelay: `${i * 90}ms` }}
                 whileHover={{
                   rotateX: -2,
                   rotateY: 4,
@@ -104,6 +171,7 @@ export default function WhyBejoice() {
             ))}
           </div>
         </div>
+        </div>{/* end outer card */}
 
       </div>
     </section>

@@ -973,6 +973,27 @@ body {
     font-size: 16px !important;
   }
 }
+/* ── HEAVY CARGO / WHY BEJOICE outer glass cards: fluid on mobile ── */
+@media (max-width: 767px) {
+  /* Reduce meteor card border-radius on small screens */
+  #heavy-cargo .max-w-7xl > div,
+  #why-us .max-w-7xl > div {
+    border-radius: 16px !important;
+  }
+  /* Capability grid: single column on mobile */
+  #heavy-cargo .grid-cols-1 { grid-template-columns: 1fr !important; }
+  /* Why Bejoice: stack heading + pillars vertically (already grid-cols-1 lg:grid-cols-2) */
+}
+
+/* ── FOOTER: stack columns cleanly on small phones ── */
+@media (max-width: 479px) {
+  footer .grid { grid-template-columns: 1fr !important; }
+  footer .col-span-2 { grid-column: span 1 !important; }
+}
+
+/* ── TESTIMONIALS: min tap target on dots ── */
+.testimonial-dot { min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+
 @media (max-width: 480px) {
   .qq-panel { padding: 0.9rem !important; }
   .qq-grid-4 { grid-template-columns: 1fr 1fr; }

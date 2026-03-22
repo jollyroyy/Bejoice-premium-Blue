@@ -93,7 +93,7 @@ export default function Testimonials() {
               <div className="ml-auto flex items-center gap-3">
                 {testimonials.map((_, i) => (
                   <button key={i} onClick={() => goTo(i)}
-                    style={{ height: '4px', width: i === active ? 'clamp(24px,3.5vw,36px)' : 'clamp(6px,0.8vw,10px)', borderRadius: i === active ? 0 : '50%', background: i === active ? '#c8a84e' : 'rgba(255,255,255,0.2)', transition: 'all 0.3s ease', border: 'none', cursor: 'pointer' }}
+                    style={{ height: '4px', width: i === active ? 'clamp(24px,3.5vw,36px)' : 'clamp(10px,1.2vw,14px)', borderRadius: i === active ? 0 : '50%', background: i === active ? '#c8a84e' : 'rgba(255,255,255,0.2)', transition: 'all 0.3s ease', border: 'none', cursor: 'pointer', padding: '10px 6px', boxSizing: 'content-box' }}
                   />
                 ))}
               </div>
@@ -101,7 +101,7 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px mt-px">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px mt-px" style={{ fontSize: 'clamp(12px,1.5vw,15px)' }}>
           {testimonials.map((t2, i) => (
             <button key={i} onClick={() => goTo(i)}
               className={`fade-up glass-card px-6 py-5 text-left transition-all duration-300 ${i === active ? 'border-gold/45 !bg-gold/6' : 'opacity-50 hover:opacity-80'}`}
