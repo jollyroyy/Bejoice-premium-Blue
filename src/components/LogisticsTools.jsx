@@ -180,7 +180,7 @@ function LoadCalculator() {
         {tab==='sea' && (
           <div style={{ display:'flex', flexDirection:'column', gap:'0.8rem' }}>
             {seaRows.map((r,i) => (
-              <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.6fr auto', gap:'0.35rem', alignItems:'end' }}>
+              <div key={i} className="sea-row-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.6fr auto', gap:'0.35rem', alignItems:'end' }}>
                 {['l','w','h'].map(f => (
                   <div key={f}>
                     <Lbl>{f.toUpperCase()} (cm)</Lbl>
@@ -257,7 +257,7 @@ function LoadCalculator() {
               </select>
             </div>
             {landRows.map((r,i)=>(
-              <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.8fr auto', gap:'0.35rem', alignItems:'end' }}>
+              <div key={i} className="land-row-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.8fr auto', gap:'0.35rem', alignItems:'end' }}>
                 {['l','w','h'].map(f=>(
                   <div key={f}>
                     <Lbl>{f.toUpperCase()} (cm)</Lbl>
@@ -516,7 +516,7 @@ export default function LogisticsTools() {
         </motion.div>
 
         {/* Two-column layout */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(1.5rem,3vw,3rem)', alignItems:'start' }}>
+        <div className="tools-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(1.5rem,3vw,3rem)', alignItems:'start' }}>
 
           {/* Left: calculator card */}
           <motion.div
@@ -583,6 +583,18 @@ export default function LogisticsTools() {
 
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .tools-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 540px) {
+          .sea-row-grid  { grid-template-columns: 1fr 1fr 1fr auto !important; }
+          .sea-row-grid > div:nth-child(4), .sea-row-grid > div:nth-child(5) { display: none; }
+          .land-row-grid { grid-template-columns: 1fr 1fr 1fr auto !important; }
+          .land-row-grid > div:nth-child(4), .land-row-grid > div:nth-child(5) { display: none; }
+        }
+      `}</style>
     </section>
   )
 }

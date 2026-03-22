@@ -62,7 +62,7 @@ export default function Testimonials() {
             <div className="section-num mb-5" style={{ textAlign: 'right' }}>05 — Client Voices</div>
             <h2 className="section-headline" style={{ textAlign: 'right' }}>
               <span className="shine-text" data-text="WHAT THEY">WHAT THEY</span><br />
-              <span style={{ color: 'rgba(200,168,78,0.78)' }}>SAY</span>
+              <span style={{ color: 'rgba(200,168,78,0.98)' }}>SAY</span>
             </h2>
           </div>
         </motion.div>
@@ -83,17 +83,17 @@ export default function Testimonials() {
             </blockquote>
             <div className="flex items-center gap-5 flex-wrap">
               <div className="w-14 h-14 flex-shrink-0 flex items-center justify-center"
-                style={{ background: 'rgba(200,168,78,0.12)', border: '1.5px solid rgba(200,168,78,0.35)', fontFamily: "'Bebas Neue', sans-serif", fontSize: '20px', letterSpacing: '0.05em', color: '#c8a84e' }}>
+                style={{ background: 'rgba(200,168,78,0.12)', border: '1.5px solid rgba(200,168,78,0.35)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(15px,2vw,22px)', letterSpacing: '0.05em', color: '#c8a84e' }}>
                 {t.initials}
               </div>
               <div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '15px', fontWeight: 600, color: '#ffffff' }}>{t.name}</div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', color: 'rgba(255,255,255,0.85)', marginTop: '3px' }}>{t.title} · {t.company}</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(13px,1.7vw,16px)', fontWeight: 600, color: '#ffffff' }}>{t.name}</div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.4vw,14px)', color: 'rgba(255,255,255,0.85)', marginTop: '3px' }}>{t.title} · {t.company}</div>
               </div>
               <div className="ml-auto flex items-center gap-3">
                 {testimonials.map((_, i) => (
                   <button key={i} onClick={() => goTo(i)}
-                    style={{ height: '4px', width: i === active ? '32px' : '8px', borderRadius: i === active ? 0 : '50%', background: i === active ? '#c8a84e' : 'rgba(255,255,255,0.2)', transition: 'all 0.3s ease', border: 'none', cursor: 'pointer' }}
+                    style={{ height: '4px', width: i === active ? 'clamp(24px,3.5vw,36px)' : 'clamp(6px,0.8vw,10px)', borderRadius: i === active ? 0 : '50%', background: i === active ? '#c8a84e' : 'rgba(255,255,255,0.2)', transition: 'all 0.3s ease', border: 'none', cursor: 'pointer' }}
                   />
                 ))}
               </div>
@@ -107,8 +107,8 @@ export default function Testimonials() {
               className={`fade-up glass-card px-6 py-5 text-left transition-all duration-300 ${i === active ? 'border-gold/45 !bg-gold/6' : 'opacity-50 hover:opacity-80'}`}
               style={{ transitionDelay: `${i * 55}ms` }}
             >
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '16px', letterSpacing: '0.1em', color: '#ffffff', marginBottom: '4px' }}>{t2.name.split(' ')[0]}</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.45)' }}>{t2.company.split(' ').slice(0, 2).join(' ')}</div>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(13px,1.7vw,17px)', letterSpacing: '0.1em', color: '#ffffff', marginBottom: '4px' }}>{t2.name.split(' ')[0]}</div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(9px,1.1vw,12px)', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.72)' }}>{t2.company.split(' ').slice(0, 2).join(' ')}</div>
             </button>
           ))}
         </div>

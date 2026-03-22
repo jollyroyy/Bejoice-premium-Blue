@@ -7,9 +7,7 @@ import VideoHero from './components/VideoHero'
 import LogisticsTools from './components/LogisticsTools'
 import Services from './components/Services'
 import HeavyCargo from './components/HeavyCargo'
-import HeavyLift from './components/HeavyLift'
 import WhyBejoice from './components/WhyBejoice'
-import KeyMarkets from './components/KeyMarkets'
 import Certifications from './components/Certifications'
 import Testimonials from './components/Testimonials'
 import Contact from './components/Contact'
@@ -18,6 +16,7 @@ import FloatingBookCTA from './components/FloatingBookCTA'
 import QuickQuoteModal from './components/QuickQuoteModal'
 import ScrollProgress from './components/ScrollProgress'
 import GlobalInteractions from './components/GlobalInteractions'
+import ScrollReveal from './components/ScrollReveal'
 import { LangProvider } from './context/LangContext'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -59,18 +58,17 @@ export default function App() {
     <div className="grain">
       <ScrollProgress />
       <GlobalInteractions />
+      <ScrollReveal />
       <Nav onQuoteClick={() => setQuoteOpen(true)} />
       <main>
         <VideoHero onQuoteClick={() => setQuoteOpen(true)} />
+        <Contact />
         <LogisticsTools />
         <Services />
-        <HeavyLift />
         <HeavyCargo />
         <WhyBejoice />
-        <KeyMarkets />
         <Certifications />
         <Testimonials />
-        <Contact />
       </main>
       <Footer />
       <FloatingBookCTA />

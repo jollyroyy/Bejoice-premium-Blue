@@ -1,8 +1,8 @@
 // hooks/useCalBooking.js
-// Cal.com is fully initialised in index.html — this hook just exposes openCalPopup()
+// Opens the preloaded Cal iframe modal (zero delay).
 export function useCalBooking() {
   const openCalPopup = () => {
-    if (window.__openCal) window.__openCal();
+    if (window.__showCalModal) window.__showCalModal();
   };
   return { openCalPopup };
 }

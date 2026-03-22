@@ -237,27 +237,14 @@ function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading, valid
         <button
           onClick={() => { if (validate && !validate()) return; onSubmit() }}
           disabled={loading}
+          className="btn-gold"
           style={{
-            width: '100%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
-            padding: '1.1rem 2rem',
-            minHeight: '54px',
-            background: loading
-              ? 'rgba(200,168,78,0.3)'
-              : 'linear-gradient(135deg, #f5d97a 0%, #e8cc7a 40%, #c8a84e 100%)',
-            color: '#050508',
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '1rem', fontWeight: 900,
-            letterSpacing: '0.2em', textTransform: 'uppercase',
-            border: '1px solid rgba(255,255,255,0.2)',
-            borderRadius: '14px',
+            width: '100%', justifyContent: 'center',
+            padding: '1.1rem 2rem', minHeight: '54px',
+            opacity: loading ? 0.6 : 1,
             cursor: loading ? 'default' : 'pointer',
-            position: 'relative', overflow: 'hidden',
             animation: loading ? 'none' : 'qqm-continue-pulse 2s ease-in-out infinite',
-            transition: 'background 0.3s, transform 0.2s',
           }}
-          onMouseEnter={e => { if (!loading) { e.currentTarget.style.background = 'linear-gradient(135deg,#fff2a8,#f5d97a,#e8cc7a)'; e.currentTarget.style.transform = 'translateY(-2px)' } }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#f5d97a,#e8cc7a,#c8a84e)'; e.currentTarget.style.transform = 'translateY(0)' }}
         >
           <span>{loading ? 'Sending your request…' : 'Submit Quote Request'}</span>
           {!loading && (
@@ -269,25 +256,12 @@ function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading, valid
       ) : (
         <button
           onClick={handleContinue}
+          className="btn-gold"
           style={{
-            width: '100%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px',
-            padding: '1.1rem 2rem',
-            minHeight: '54px',
-            background: 'linear-gradient(135deg, #f5d97a 0%, #e8cc7a 40%, #c8a84e 100%)',
-            color: '#050508',
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: '1rem', fontWeight: 900,
-            letterSpacing: '0.2em', textTransform: 'uppercase',
-            border: '1px solid rgba(255,255,255,0.2)',
-            borderRadius: '14px',
-            cursor: 'pointer',
-            position: 'relative', overflow: 'hidden',
+            width: '100%', justifyContent: 'center',
+            padding: '1.1rem 2rem', minHeight: '54px',
             animation: 'qqm-continue-pulse 2s ease-in-out infinite',
-            transition: 'background 0.3s, transform 0.2s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#fff2a8,#f5d97a,#e8cc7a)'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.animation = 'none' }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg,#f5d97a,#e8cc7a,#c8a84e)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.animation = 'qqm-continue-pulse 2s ease-in-out infinite' }}
         >
           <span>Continue</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ animation: 'qqm-arrow-nudge 1.4s ease-in-out infinite' }}>
@@ -575,7 +549,7 @@ function AirForm({ onSuccess }) {
           </div>
           <div style={{ marginTop: '1rem' }}>
             <label style={{ ...labelCls, marginBottom: '0.65rem' }}>Dimensions per Piece (cm)</label>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem' }}>
+            <div className="qq-grid-3" style={{ gap: '0.5rem' }}>
               {[['Length','length'],['Width','width'],['Height','height']].map(([lbl, key]) => (
                 <div key={key}>
                   <label style={{ ...labelCls, fontSize: '0.55rem', opacity: 0.6 }}>{lbl}</label>
@@ -607,7 +581,7 @@ function AirForm({ onSuccess }) {
           </div>
           <div style={{ marginTop: '1.25rem' }}>
             <label style={labelCls}>Service Level</label>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '0.5rem' }}>
+            <div className="qq-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '0.5rem' }}>
               {SERVICES.map(s => (
                 <div key={s.id} onClick={() => up('service', s.id)} className={`qq-service-card compact${d.service === s.id ? ' active' : ''}`}>
                   <div className="qq-service-title">{s.label}</div>
@@ -913,7 +887,7 @@ function ProjectForm({ onSuccess }) {
           </div>
           <div style={{ marginTop: '1rem' }}>
             <label style={{ ...labelCls, marginBottom: '0.65rem' }}>Dimensions — Longest Single Piece (metres)</label>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.5rem' }}>
+            <div className="qq-grid-3" style={{ gap: '0.5rem' }}>
               {[['Length (m)','length'],['Width (m)','width'],['Height (m)','height']].map(([lbl, key]) => (
                 <div key={key}>
                   <label style={{ ...labelCls, fontSize: '0.55rem', opacity: 0.6 }}>{lbl}</label>

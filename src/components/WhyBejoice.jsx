@@ -40,23 +40,39 @@ export default function WhyBejoice() {
               viewport={{ once: true, margin: "-100px 0px" }}
               transition={{ type: "spring", stiffness: 100, damping: 20 }}
             >
-              <div className="section-glass-header" style={{ display: 'inline-block', marginBottom: '2rem' }}>
-                <div className="section-num mb-5">02 — Our Edge</div>
-                <h2 className="section-headline">
-                  <span className="shine-text" data-text="WHY">WHY</span><br />
-                  <span style={{ color: 'rgba(200,168,78,0.78)' }}>BEJOICE</span>
+              <div className="glass-card" style={{ marginBottom: '2rem', padding: 'clamp(20px,3vw,36px) clamp(20px,3vw,36px)', display: 'inline-block' }}>
+                <h2 style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 'clamp(3rem,7vw,6rem)',
+                  letterSpacing: '0.07em', lineHeight: 1,
+                  margin: 0,
+                  background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
+                  backgroundSize: '300% 100%',
+                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
+                  animation: 'headingSweep 4s ease-in-out infinite',
+                }}>
+                  WHY<br />BEJOICE
                 </h2>
-                <p className="body-text max-w-sm" style={{ marginTop: '1.2rem' }}>
-                  Decades of experience meeting the demands of one of the world's most dynamic logistics corridors — with the discipline of a global operator.
+                <style>{`
+                  @keyframes headingSweep {
+                    0%   { background-position: -100% center; }
+                    100% { background-position: 200% center; }
+                  }
+                `}</style>
+                <p style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 'clamp(1.2rem,2.4vw,1.9rem)',
+                  letterSpacing: '0.06em', lineHeight: 1.2,
+                  color: 'rgba(255,215,105,0.95)',
+                  textShadow: '0 0 24px rgba(255,200,80,0.3)',
+                  marginTop: '1.2rem', marginBottom: '0.8rem',
+                }}>
+                  Rooted in the Kingdom, Driven by Global Standards
                 </p>
               </div>
 
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(80px, 18vw, 160px)', lineHeight: 1, letterSpacing: '0.05em', color: 'rgba(200,168,78,0.06)', userSelect: 'none', marginTop: '16px', marginLeft: '-8px' }}>
-                18
-              </div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(200,168,78,0.55)', marginTop: '-24px' }}>
-                Years of Excellence
-              </div>
             </motion.div>
           </div>
 
@@ -74,7 +90,7 @@ export default function WhyBejoice() {
                 }}
               >
                 <motion.div
-                  style={{ fontSize: '28px', color: '#c8a84e', flexShrink: 0, marginTop: '2px' }}
+                  style={{ fontSize: 'clamp(22px,3vw,32px)', color: '#c8a84e', flexShrink: 0, marginTop: '2px' }}
                   whileHover={{ rotate: 15, scale: 1.15 }}
                   transition={{ type: 'spring', stiffness: 350, damping: 18 }}
                 >

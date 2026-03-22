@@ -42,10 +42,9 @@ export default function Certifications() {
           className="mb-20"
         >
           <div className="section-glass-header" style={{ display: 'inline-block' }}>
-            <div className="section-num mb-5">04 — Trust &amp; Compliance</div>
             <h2 className="section-headline">
               <span className="shine-text" data-text="CERTIFIED">CERTIFIED</span><br />
-              <span style={{ color: 'rgba(200,168,78,0.78)' }}>TO DELIVER</span>
+              <span style={{ color: 'rgba(200,168,78,0.98)' }}>TO DELIVER</span>
             </h2>
           </div>
         </motion.div>

@@ -2,7 +2,7 @@ export default function HeavyLift() {
   return (
     <section style={{
       background: 'linear-gradient(135deg, #06080f 0%, #0a0e1a 45%, #060508 100%)',
-      padding: 'clamp(80px, 12vw, 140px) clamp(1.5rem, 8vw, 8rem)',
+      padding: 'clamp(40px, 8vw, 140px) clamp(1rem, 6vw, 8rem)',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -33,12 +33,12 @@ export default function HeavyLift() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
 
           {/* Glass Header Block */}
-          <div className="section-glass-header" style={{ display: 'inline-block', marginBottom: '48px' }}>
+          <div className="section-glass-header" style={{ marginBottom: 'clamp(24px, 5vw, 48px)' }}>
             {/* Eyebrow */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px' }}>
-              <div style={{ width: '44px', height: '1.5px', background: '#c8a84e', flexShrink: 0 }} />
+              <div style={{ width: 'clamp(32px,4.5vw,50px)', height: '1.5px', background: '#c8a84e', flexShrink: 0 }} />
               <span style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: '12px',
+                fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(10px,1.2vw,13px)',
                 letterSpacing: '0.35em', textTransform: 'uppercase',
                 color: '#c8a84e', fontWeight: 600,
               }}>
@@ -67,7 +67,7 @@ export default function HeavyLift() {
               textShadow: '0 2px 32px rgba(200,168,78,0.2)',
               cursor: 'default',
             }}>
-              <span style={{ color: 'rgba(200,168,78,0.78)' }}>DEFIES LIMITS</span>
+              <span style={{ color: 'rgba(200,168,78,0.98)' }}>DEFIES LIMITS</span>
             </h2>
 
             {/* Gold divider */}
@@ -119,12 +119,12 @@ export default function HeavyLift() {
             ].map(tag => (
               <span key={tag} style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: '11px', letterSpacing: '0.15em',
+                fontSize: 'clamp(9px,1.1vw,12px)', letterSpacing: '0.15em',
                 textTransform: 'uppercase', fontWeight: 600,
-                color: 'rgba(200,168,78,0.85)',
+                color: 'rgba(200,168,78,1)',
                 border: '1px solid rgba(200,168,78,0.25)',
                 borderRadius: '2px',
-                padding: '6px 14px',
+                padding: 'clamp(4px,0.6vw,8px) clamp(10px,1.4vw,16px)',
                 background: 'rgba(200,168,78,0.04)',
               }}>
                 {tag}

@@ -32,10 +32,7 @@ export default function OceanFreight() {
           lineHeight: 1.8,
           maxWidth: '640px',
         }}>
-          We handle exports from KSA &amp; Global imports through our strong network of partners
-          across <strong style={{ color: 'rgba(255,255,255,0.85)' }}>180 countries</strong>, managing FCL, LCL, hazardous,
-          reefer, and oversized cargo — powered by{' '}
-          <strong style={{ color: '#c8a84e' }}>Bejoice logistics experts</strong>.
+          From KSA exports to worldwide imports, our 180-country partner network moves every cargo type — FCL, LCL, hazardous, reefer &amp; oversized.
         </p>
 
 

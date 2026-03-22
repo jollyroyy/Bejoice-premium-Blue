@@ -1,5 +1,20 @@
 # Bejoice Premium — Claude Context
 
+## 🎨 STANDING RULE — USE FRONTEND-DESIGN SKILL
+**Always consult the `frontend-design` skill for any UI/styling work — new components, layout changes, visual improvements, or design decisions — without being asked.**
+- Invoke via `Skill tool: frontend-design` before writing any significant UI code
+- The skill ensures distinctive, non-generic aesthetics aligned with the Bejoice premium brand
+
+## 🔴 STANDING RULE — MOBILE-FIRST ALWAYS
+**Every single change — new component, style tweak, layout fix, or feature — MUST be mobile-optimized without being asked.**
+- Test mentally at 375px (iPhone SE), 390px (iPhone 14), 768px (iPad) before finalising
+- Never use fixed `px` widths without a `min()` or `clamp()` guard
+- Use `100svh` (with `100vh` fallback) for full-viewport sticky containers
+- All tap targets ≥ 44px; input `font-size ≥ 16px` (prevents iOS zoom)
+- Overlapping / z-index issues MUST be caught and fixed in the same change
+- If a component is hidden on mobile to save space, ensure it is accessible via another path (e.g. hamburger drawer)
+- Floating elements (chatbot, FABs) must not block primary content on any screen size
+
 ## About Bejoice
 - **Company:** Bejoice Group — Saudi Arabia's premier freight forwarding & logistics company
 - **Founded:** 2006, Riyadh, KSA

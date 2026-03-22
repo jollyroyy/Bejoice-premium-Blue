@@ -15,7 +15,7 @@ const MESSAGES = [
 ];
 
 const QUICK_REPLIES = [
-  { label: "📦 Get a Quote",       action: "quote" },
+  { label: "📦 Start Shipment",     action: "quote" },
   { label: "✈️ Air Freight",       action: "air"   },
   { label: "🚢 Sea Freight",       action: "sea"   },
   { label: "🏗️ Heavy Cargo",       action: "heavy" },
@@ -395,8 +395,10 @@ export default function FloatingBookCTA() {
   if (!visible) return null;
 
   return (
-    <div style={{
-      position: "fixed", bottom: 28, right: 28,
+    <div className="layla-fab-wrap" style={{
+      position: "fixed",
+      bottom: "max(16px, env(safe-area-inset-bottom, 16px))",
+      right: "clamp(12px, 4vw, 28px)",
       zIndex: 9999,
       display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 14,
     }}>
@@ -406,7 +408,7 @@ export default function FloatingBookCTA() {
       ══════════════════════════════════════ */}
       {open && (
         <div style={{
-          width: 380,
+          width: "min(380px, calc(100vw - 24px))",
           background: "linear-gradient(170deg, #0b1120 0%, #050508 100%)",
           border: "1px solid rgba(200,168,78,0.3)",
           borderRadius: 24,
@@ -462,7 +464,7 @@ export default function FloatingBookCTA() {
 
           {/* ── Messages ── */}
           <div className="ca-msgs" style={{
-            height: 360, overflowY: "scroll",
+            height: "min(360px, 45vh)", overflowY: "scroll",
             padding: "16px 16px 10px",
             display: "flex", flexDirection: "column", gap: 12,
             flex: "none",

@@ -62,8 +62,13 @@ export default function Nav({ onQuoteClick }) {
 
   const scrollToTop = () => {
     setMenuOpen(false)
-    if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.6 })
-    else window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { duration: 1.6 })
+    } else if (window.scrollY === 0) {
+      window.location.reload()
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   const handleQuote = () => {
@@ -111,18 +116,18 @@ export default function Nav({ onQuoteClick }) {
                 filter: 'drop-shadow(0 1px 8px rgba(0,0,0,0.8))',
               }}
             />
-            <div style={{ borderLeft: '2px solid rgba(200,168,78,0.45)', paddingLeft: '10px', marginLeft: '6px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '4px', alignSelf: 'stretch' }}>
+            <div className="nav-brand-text" style={{ borderLeft: '2px solid rgba(200,168,78,0.45)', paddingLeft: '10px', marginLeft: '6px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '4px', alignSelf: 'stretch' }}>
               <div style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: '17px',
+                fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(13px, 1.8vw, 17px)',
                 letterSpacing: '0.18em', color: '#ffffff',
                 textTransform: 'uppercase', lineHeight: 1, fontWeight: 700,
                 textShadow: '0 0 12px rgba(255,255,255,0.4), 0 1px 8px rgba(0,0,0,1)',
               }}>
                 Bejoice
               </div>
-              <div style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: '14px',
-                letterSpacing: '0.22em', textTransform: 'uppercase',
+              <div className="nav-tagline" style={{
+                fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(9px, 1.1vw, 14px)',
+                letterSpacing: '0.16em', textTransform: 'uppercase',
                 lineHeight: 1, fontWeight: 700, position: 'relative', display: 'inline-block',
               }}>
                 <span className="shine-ltr" data-text="Connecting KSA to the World"
@@ -139,21 +144,8 @@ export default function Nav({ onQuoteClick }) {
             {/* CTA — Book a Call */}
             <button
               onClick={openCalPopup}
-              style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: '13px',
-                letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 900,
-                color: '#050508', background: 'linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)',
-                border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', padding: 'clamp(9px,1.5vw,12px) clamp(12px,2.5vw,24px)',
-                display: 'flex', alignItems: 'center', gap: '8px',
-                borderRadius: '12px', position: 'relative', overflow: 'hidden',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)',
-                transition: 'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-                whiteSpace: 'nowrap',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 24px rgba(200,168,78,0.4), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)'; e.currentTarget.style.transform = 'translateY(-1.5px)'; e.currentTarget.style.background = 'linear-gradient(135deg, #fff2a8, #f5d97a, #e8cc7a)' }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.background = 'linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)' }}
-              onMouseDown={e => { e.currentTarget.style.transform = 'translateY(0) scale(0.98)' }}
-              onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1.5px)' }}
+              className="btn-gold nav-book-call"
+              style={{ padding: 'clamp(9px,1.5vw,12px) clamp(12px,2.5vw,22px)', whiteSpace: 'nowrap', fontSize: 'clamp(0.75rem,1.1vw,0.95rem)' }}
             >
               <div className="btn-shine-overlay" />
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -162,8 +154,8 @@ export default function Nav({ onQuoteClick }) {
                 <line x1="8" y1="2" x2="8" y2="6"/>
                 <line x1="3" y1="10" x2="21" y2="10"/>
               </svg>
-              <span className="shine-ltr hidden sm:inline" data-text="Book a Call with Freight Expert">Book a Call with Freight Expert</span>
-              <span className="shine-ltr sm:hidden" data-text="Book a Call">Book a Call</span>
+              <span className="hidden sm:inline">Book a Call with Freight Expert</span>
+              <span className="sm:hidden">Book a Call</span>
             </button>
 
             {/* Hamburger — premium pill button */}

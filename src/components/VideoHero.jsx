@@ -62,7 +62,7 @@ const FRAME_URLS = [
 
 // Headings shown during the 4-second globe lock — alternate sides
 const INTRO_SLIDES = [
-  { headline: ['SMART FREIGHT', 'POWERED BY AI'], eyebrow: "Saudi Arabia's No.1 Logistics Partner", align: 'center', sub: ['Award-winning freight forwarder delivering seamless end-to-end logistics solutions', 'with reliability, efficiency, and the strength of a powerful global network.'] },
+  { headline: ['SMART FREIGHT', 'POWERED BY AI'], eyebrow: "Elite Logistics Infrastructure", align: 'left', sub: ['Award-winning freight forwarder delivering seamless end-to-end logistics solutions', 'with reliability, efficiency, and the strength of a powerful global network.'] },
 ]
 
 // Fade window in frames — how many frames to crossfade between chapters
@@ -72,43 +72,76 @@ const FRAME_FADE = 18
 // frames2: 0–288 | frames3: 289–457 | frames4: 458–489 | frames5: 490–610 | frames6: 611–731
 const CHAPTERS = [
   {
-    // frames2 (indices 0–288): ship / ocean footage
-    frameRange: [10, 288],
-    eyebrow:    'Global Ocean Freight · FCL & LCL · 180+ Countries',
-    headline:   ['THE WORLD\'S OCEANS', 'WORK FOR YOU'],
-    sub:        'Full container load or groupage — we move cargo across every major seaport, on time, every time.',
-    align:      'right',
-  },
-  {
-    // frames3 (indices 289–457): aircraft / air freight footage
-    frameRange: [289, 457],
-    eyebrow:    'Air Freight · Express & Charter · Worldwide Coverage',
-    headline:   ['BUILT FOR', 'SPEED'],
-    sub:        'Time-critical shipments handled with precision. Door-to-door air freight to 180+ destinations.',
+    frameRange: [-20, -1],
+    headline:   ['ENGINEERED FOR', 'ALL ROADS'],
+    sub:        'Integrated trucking networks providing seamless last-mile excellence across the Arabian Peninsula.',
     align:      'left',
   },
   {
-    // frames4 (indices 458–489): Saudi team / customs approval footage
-    frameRange: [458, 489],
-    eyebrow:    'Customs Clearance · ZATCA-Certified · AEO Status',
-    headline:   ['CLEARED.', 'COMPLIANT.'],
-    sub:        'Saudi-expert customs brokerage — ZATCA, AEO, and SASO certified. Zero border delays.',
-    align:      'center',
-  },
-  {
-    // frames5 (indices 490–610): air cargo packing footage
-    frameRange: [490, 610],
-    eyebrow:    'Air Cargo Handling · Consolidation · Last-Mile',
-    headline:   ['PACKED SAFE,', 'DELIVERED RIGHT'],
-    sub:        'End-to-end cargo consolidation and handling — your freight secured from warehouse to aircraft.',
+    frameRange: [1, 59],
+    headline:   ['HEAVY LIFT / ODC', '/ OOG TRANSPORTATION'],
+    sub:        'Hydraulic axle transport for oversized and heavy equipment — wind turbines, transformers, industrial machinery, and large project cargo.',
     align:      'right',
   },
   {
-    // frames6 (indices 611–731): road / lorry / project cargo footage
-    frameRange: [611, 731],
-    eyebrow:    'Road & Project Cargo · KSA-GCC Corridors · Heavy Haul',
-    headline:   ['ENGINEERED FOR', 'ALL SEASONS'],
-    sub:        'From desert highways to mountain passes — our road fleet conquers every route across Saudi Arabia and the GCC.',
+    frameRange: [67, 125],
+    headline:   ['ROUTE MODIFICATION', 'FOR ODC TRANSPORTATION'],
+    sub:        'We remove, adjust, or bypass every obstacle — signals, cables, guardrails — so your cargo moves uninterrupted.',
+    align:      'right',
+  },
+  {
+    frameRange: [133, 191],
+    headline:   ['LAND', 'CORRIDORS'],
+    sub:        'Seamless cross-border land transport across the GCC, powered by a state-of-the-art fleet.',
+    align:      'left',
+  },
+  {
+    frameRange: [199, 257],
+    headline:   ['SAUDI ROOTS.', 'GLOBAL PRECISION.'],
+    sub:        'Experience the next evolution of Saudi logistics.',
+    align:      'right',
+  },
+  {
+    frameRange: [247, 305],
+    headline:   ['OCEAN', 'FREIGHT'],
+    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
+    align:      'left',
+  },
+  {
+    frameRange: [331, 389],
+    headline:   ['ZERO DELAYS.', 'ZERO COMPLIANCE SURPRISES.'],
+    sub:        'We handle the paperwork. You handle the business.',
+    align:      'right',
+  },
+  {
+    frameRange: [397, 455],
+    headline:   ['CUSTOM CLEARANCE', '& BROKERAGING'],
+    sub:        'Full documentation and customs handling to keep your cargo moving and your timeline intact.',
+    align:      'right',
+  },
+  {
+    frameRange: [463, 521],
+    headline:   ['PACKED SAFE,', 'DELIVERED RIGHT'],
+    sub:        'End-to-end cargo consolidation and handling — your freight secured from warehouse to aircraft.',
+    align:      'left',
+  },
+  {
+    frameRange: [529, 623],
+    headline:   ['AEROSPACE', 'LOGISTICS'],
+    sub:        "Time-critical delivery solutions via the Kingdom's primary aviation corridors.",
+    align:      'right',
+    vAlign:     'top',
+  },
+  {
+    frameRange: [631, 689],
+    headline:   ['ONSITE JACKING', '& SKIDDING'],
+    sub:        "Precision Placement Where Cranes Can't Go. Millimeter-accurate. No room for error — and we never make one.",
+    align:      'right',
+  },
+  {
+    frameRange: [661, 719],
+    headline:   ['TECHNICAL ENGINEERING', 'SOLUTIONS'],
+    sub:        'Lift plans, load calculations, and structural analysis to ensure every heavy move is safe and compliant.',
     align:      'left',
   },
 ]
@@ -249,63 +282,55 @@ function TrackCard() {
   return (
     <>
       {showModal && <TrackModal blNum={blNum} onClose={() => setShowModal(false)} />}
-      <div style={{
-        width:'100%',
-        background:'linear-gradient(135deg,rgba(180,190,210,0.08) 0%,rgba(120,130,160,0.05) 100%)',
-        backdropFilter:'blur(24px)', WebkitBackdropFilter:'blur(24px)',
-        border:'1px solid rgba(200,210,230,0.18)', borderRadius:'0.9rem',
-        padding:'0.55rem 1.2rem',
-        boxShadow:'0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.08)',
-        textAlign:'center', display:'flex', flexDirection:'column', justifyContent:'center',
+      <div className="track-card-inner" style={{
+        width:'100%', position:'relative', overflow:'hidden',
+        background:'linear-gradient(160deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 60%, rgba(200,168,78,0.02) 100%)',
+        backdropFilter:'blur(32px)', WebkitBackdropFilter:'blur(32px)',
+        border:'1px solid rgba(200,168,78,0.2)',
+        borderTop:'1px solid rgba(200,168,78,0.45)',
+        borderRadius:'14px',
+        padding:'1rem 1.1rem 0.9rem',
+        boxShadow:'0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07)',
+        display:'flex', flexDirection:'column', justifyContent:'center',
       }}>
-        <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.7rem', color:'rgba(220,228,240,0.95)', letterSpacing:'0.08em', lineHeight:1, margin:'0 0 0.25rem', textTransform:'uppercase', textShadow:'0 1px 8px rgba(0,0,0,0.6)' }}>
-          WHERE IS YOUR SHIPMENT?
+        {/* Gold top shimmer */}
+        <div style={{ position:'absolute', top:0, left:0, right:0, height:1, background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.8),transparent)', pointerEvents:'none' }}/>
+        {/* Corner glow */}
+        <div style={{ position:'absolute', top:0, right:0, width:60, height:60, background:'radial-gradient(circle at 100% 0%, rgba(200,168,78,0.12) 0%, transparent 70%)', pointerEvents:'none' }}/>
+
+        <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.25rem', color:'#ffffff', letterSpacing:'0.1em', lineHeight:1, margin:'0 0 0.18rem', textTransform:'uppercase', textShadow:'0 0 20px rgba(255,255,255,0.2)', textAlign:'center' }}>
+          Track Shipment
         </p>
-        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.65rem', color:'rgba(180,190,210,0.6)', margin:'0 0 0.65rem', lineHeight:1.4 }}>
-          Enter your BL / AWB / Container No. for an instant WhatsApp update.
+        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.6rem', color:'rgba(200,168,78,0.8)', margin:'0 0 0.6rem', letterSpacing:'0.15em', textTransform:'uppercase', fontWeight:600, textAlign:'center' }}>
+          BL · AWB · Container
         </p>
-        <div style={{ display:'flex', flexDirection:'column', gap:'0.55rem' }}>
-          <input type="text" placeholder="BL / AWB / Container No."
+
+        <div style={{ display:'flex', flexDirection:'column', gap:'0.45rem' }}>
+          <input type="text" placeholder="Enter reference number"
             value={blNum}
             onChange={e => { setBlNum(e.target.value); setInputErr(false) }}
             onKeyDown={e => e.key === 'Enter' && handleTrack()}
             style={{
               width:'100%', boxSizing:'border-box',
-              background:'rgba(255,255,255,0.05)',
-              border:`1px solid ${inputErr?'rgba(255,80,80,0.7)':'rgba(255,255,255,0.12)'}`,
-              borderRadius:'6px', padding:'0.7rem 1rem', color:'#fff',
-              fontFamily:"'DM Sans',sans-serif", fontSize:'0.88rem', outline:'none',
-              transition:'border-color 0.2s',
+              background:'rgba(255,255,255,0.04)',
+              border:`1px solid ${inputErr?'rgba(255,80,80,0.7)':'rgba(200,168,78,0.2)'}`,
+              borderRadius:'8px', padding:'0.6rem 0.85rem', color:'#fff',
+              fontFamily:"'DM Sans',sans-serif", fontSize:'0.82rem', outline:'none',
+              transition:'border-color 0.2s, background 0.2s',
+              letterSpacing:'0.04em',
             }}
-            onFocus={e => (e.target.style.borderColor='rgba(200,168,78,0.55)')}
-            onBlur={e  => (e.target.style.borderColor=inputErr?'rgba(255,80,80,0.7)':'rgba(255,255,255,0.12)')}
+            onFocus={e => { e.target.style.borderColor='rgba(200,168,78,0.6)'; e.target.style.background='rgba(200,168,78,0.06)' }}
+            onBlur={e  => { e.target.style.borderColor=inputErr?'rgba(255,80,80,0.7)':'rgba(200,168,78,0.2)'; e.target.style.background='rgba(255,255,255,0.04)' }}
           />
-          <button onClick={handleTrack}
-            style={{
-              width:'100%', boxSizing:'border-box',
-              display:'flex', alignItems:'center', justifyContent:'center', gap:'7px',
-              padding:'12px 22px',
-              background:'linear-gradient(135deg,#f5d97a,#e8cc7a,#c8a84e)',
-              color:'#050508',
-              fontFamily:"'DM Sans',sans-serif", fontSize:'13.5px', fontWeight:900,
-              letterSpacing:'0.12em', textTransform:'uppercase', border:'1px solid rgba(255,255,255,0.2)',
-              borderRadius:'10px', cursor:'pointer', position:'relative', overflow:'hidden',
-              boxShadow:'0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3)',
-              transition:'all 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-            }}
-            onMouseEnter={e=>{ e.currentTarget.style.boxShadow='0 8px 24px rgba(200,168,78,0.4), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)'; e.currentTarget.style.transform='translateY(-1.5px)'; e.currentTarget.style.background='linear-gradient(135deg,#fff2a8,#f5d97a,#e8cc7a)' }}
-            onMouseLeave={e=>{ e.currentTarget.style.boxShadow='0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3)'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.background='linear-gradient(135deg,#f5d97a,#e8cc7a,#c8a84e)' }}
-            onMouseDown={e=>{ e.currentTarget.style.transform='translateY(0) scale(0.98)' }}
-            onMouseUp={e=>{ e.currentTarget.style.transform='translateY(-1.5px)' }}
-          >
+          <button onClick={handleTrack} className="btn-gold" style={{ width:'auto', alignSelf:'center', justifyContent:'center', padding:'7px 20px', fontSize:'0.88rem' }}>
             <div className="btn-shine-overlay" />
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
             </svg>
-            TRACK NOW
+            Track Now
           </button>
         </div>
-        {inputErr && <p style={{ marginTop:'0.5rem', fontSize:'0.75rem', color:'rgba(255,100,100,0.9)', fontFamily:"'DM Sans',sans-serif" }}>Please enter a BL or AWB number</p>}
+        {inputErr && <p style={{ marginTop:'0.4rem', fontSize:'0.7rem', color:'rgba(255,100,100,0.9)', fontFamily:"'DM Sans',sans-serif" }}>Please enter a valid reference number</p>}
       </div>
     </>
   )
@@ -412,13 +437,27 @@ export default function VideoHero({ onQuoteClick }) {
     const ctx   = canvas.getContext('2d')
     const cw    = canvas.width
     const ch    = canvas.height
-    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
-    const w     = img.naturalWidth  * scale
-    const h     = img.naturalHeight * scale
+
+    // Portrait (mobile): contain — show full frame, no cropping
+    // Landscape (desktop): cover — fill the viewport edge-to-edge
+    const isPortrait = ch > cw
+    const scale = isPortrait
+      ? Math.min(cw / img.naturalWidth, ch / img.naturalHeight)   // contain
+      : Math.max(cw / img.naturalWidth, ch / img.naturalHeight)   // cover
+
+    const w = img.naturalWidth  * scale
+    const h = img.naturalHeight * scale
+    const x = (cw - w) / 2
+    const y = (ch - h) / 2
+
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'high'
-    ctx.clearRect(0, 0, cw, ch)
-    ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h)
+
+    // Fill letterbox bars with the site dark background
+    ctx.fillStyle = '#050508'
+    ctx.fillRect(0, 0, cw, ch)
+
+    ctx.drawImage(img, x, y, w, h)
   }, [])
 
   // ── Preload all frames immediately in parallel ────────────────────
@@ -519,6 +558,27 @@ export default function VideoHero({ onQuoteClick }) {
       // Chapter headings driven by exact frame index — perfect sync
       applyProgress(p <= GLOBE_EXIT ? -1 : frameIdx)
 
+      // ── Show "Engineered" during globe→frames transition (same fade as canvas) ──
+      if (p <= GLOBE_EXIT) {
+        const el = chaptersRef.current[0]
+        if (el) {
+          const eOp = Math.min(Math.max(0, (gp - 0.65) / 0.35), 1)
+          el.style.opacity   = String(eOp)
+          el.style.transform = `translateY(${(1 - eOp) * 28}px)`
+        }
+      }
+
+      // ── Hide track card + stats during heavy cargo footage (frames5+, idx >= 490) ──
+      if (heroCardsRef.current) {
+        const CARGO_FADE_START = 470
+        const CARGO_FADE_END   = 490
+        const cardsOp = frameIdx < CARGO_FADE_START ? 1
+          : frameIdx > CARGO_FADE_END ? 0
+          : 1 - (frameIdx - CARGO_FADE_START) / (CARGO_FADE_END - CARGO_FADE_START)
+        heroCardsRef.current.style.opacity      = String(cardsOp)
+        heroCardsRef.current.style.pointerEvents = cardsOp < 0.1 ? 'none' : 'all'
+      }
+
       // ── Exit fade — only after ALL frames shown (last 3% of scroll) ──
       if (exitOverlayRef.current) {
         exitOverlayRef.current.style.opacity = String(
@@ -553,7 +613,7 @@ export default function VideoHero({ onQuoteClick }) {
     <div ref={wrapperRef} id="hero" style={{ height:`${SCROLL_HEIGHT}vh`, position:'relative' }}>
 
       {/* ── STICKY VIEWPORT ── */}
-      <div style={{ position:'sticky', top:0, height:'100vh', overflow:'hidden' }}>
+      <div className="hero-sticky-viewport" style={{ position:'sticky', top:0, height:'100vh', overflow:'hidden' }}>
 
         {/* Dark base */}
         <div style={{ position:'absolute', inset:0, zIndex:0, background:'#050508' }} />
@@ -565,6 +625,7 @@ export default function VideoHero({ onQuoteClick }) {
           autoPlay
           muted
           playsInline
+          className="hero-globe-video"
           style={{
             position:'absolute', inset:0, zIndex:1,
             width:'100%', height:'100%',
@@ -605,27 +666,27 @@ export default function VideoHero({ onQuoteClick }) {
           return (
             <div key={introIdx}
               ref={introContainerRef}
+              className="hero-content-overlay"
               style={{
                 position:'absolute', inset:0, zIndex:5,
                 display:'flex', flexDirection:'column', justifyContent:'center',
                 alignItems:  isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                 textAlign:   isCenter ? 'center'  : isRight ? 'right'   : 'left',
-                padding:'clamp(2rem,6vw,6rem)',
-                paddingBottom:'clamp(220px,34vh,380px)',
+                padding:'clamp(1.2rem,5vw,6rem)',
+                paddingBottom:'clamp(160px,28vh,320px)',
                 pointerEvents:'none',
-                // animation:'introSlide 0.45s cubic-bezier(0.23,1,0.32,1)', // removed to avoid jump
               }}>
-              <div style={{
+              <div className="hero-eyebrow" style={{
                 fontFamily:"'DM Sans',sans-serif",
                 fontSize:'clamp(11px,1.1vw,14px)', letterSpacing:'0.32em',
                 textTransform:'uppercase', fontWeight:600,
-                color:'#ffe680',
-                textShadow:'0 0 18px rgba(200,168,78,0.9), 0 1px 14px rgba(0,0,0,1)',
-                background:'rgba(0,0,0,0.45)', backdropFilter:'blur(8px)', WebkitBackdropFilter:'blur(8px)',
+                color:'#ffffff',
+                textShadow:'0 0 20px rgba(255,255,255,0.4), 0 0 40px rgba(200,168,78,0.6), 0 1px 14px rgba(0,0,0,1)',
+                background:'rgba(0,0,0,0.55)', backdropFilter:'blur(10px)', WebkitBackdropFilter:'blur(10px)',
                 padding:'7px 18px', borderRadius:'3px',
                 marginBottom:'22px',
                 display:'inline-block',
-                border:'1px solid rgba(200,168,78,0.3)',
+                border:'1px solid rgba(255,255,255,0.25)',
               }}>
                 <span className="shine-ltr" data-text={slide.eyebrow}>{slide.eyebrow}</span>
               </div>
@@ -635,8 +696,10 @@ export default function VideoHero({ onQuoteClick }) {
                     fontFamily:"'Bebas Neue',sans-serif",
                     fontSize:'clamp(2rem,5.5vw,5.5rem)',
                     lineHeight:0.87, letterSpacing:'0.06em', margin:0,
-                    color: li % 2 === 0 ? '#ffffff' : 'rgba(200,168,78,0.90)',
-                    textShadow:'0 2px 48px rgba(0,0,0,0.95),0 0 120px rgba(0,0,0,0.6)',
+                    color: li % 2 === 0 ? '#ffffff' : 'rgba(255,215,105,1)',
+                    textShadow: li % 2 === 0
+                      ? '0 0 40px rgba(255,255,255,0.55), 0 2px 48px rgba(0,0,0,0.98), 0 0 120px rgba(0,0,0,0.7)'
+                      : '0 0 32px rgba(255,200,80,0.5), 0 2px 48px rgba(0,0,0,0.98)',
                     userSelect:'none',
                   }}>
                     {line}
@@ -649,12 +712,12 @@ export default function VideoHero({ onQuoteClick }) {
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
               }} />
               {slide.sub && (
-                <div style={{
+                <div className="hero-intro-sub" style={{
                   fontFamily:"'DM Sans',sans-serif",
                   fontSize:'clamp(12px,1.2vw,15px)', fontWeight:500,
-                  color:'rgba(255,255,255,0.95)', maxWidth:'600px',
+                  color:'#ffffff', maxWidth:'600px',
                   margin:'22px 0 0',
-                  textShadow:'0 1px 18px rgba(0,0,0,1)',
+                  textShadow:'0 0 24px rgba(255,255,255,0.25), 0 1px 18px rgba(0,0,0,1)',
                   letterSpacing:'0.18em', textTransform:'uppercase',
                   background:'rgba(0,0,0,0.4)', backdropFilter:'blur(8px)', WebkitBackdropFilter:'blur(8px)',
                   padding:'12px 20px', borderRadius:'4px',
@@ -669,33 +732,84 @@ export default function VideoHero({ onQuoteClick }) {
               )}
               {/* Quick Quote CTA */}
               <button
+                className="hero-intro-cta"
                 onClick={() => { if (onQuoteClick) onQuoteClick() }}
                 style={{
                   pointerEvents:'all',
                   marginTop:'32px',
-                  display:'inline-flex', alignItems:'center', gap:'12px',
-                  padding: '16px 36px',
-                  background:'linear-gradient(135deg,#f5d97a 0%,#e8cc7a 40%,#c8a84e 100%)',
-                  color:'#050508',
-                  fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(12px,1.1vw,14px)',
-                  fontWeight:900, letterSpacing:'0.22em', textTransform:'uppercase',
-                  border:'1px solid rgba(255,255,255,0.2)', borderRadius:'12px', cursor:'pointer',
+                  display:'inline-flex', alignItems:'center', gap:'10px',
+                  padding: 'clamp(11px,1.2vw,14px) clamp(18px,2vw,26px)',
+                  background:'linear-gradient(135deg, #ffe080 0%, #e8c85a 35%, #c8a84e 70%, #a8882e 100%)',
+                  color:'#000000',
+                  textShadow:'0 1px 0 rgba(255,255,255,0.3)',
+                  fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1rem,1.3vw,1.25rem)',
+                  letterSpacing:'0.2em', textTransform:'uppercase',
+                  border:'1px solid rgba(255,230,120,0.4)',
+                  borderBottom:'1px solid rgba(120,90,20,0.5)',
+                  borderRadius:'10px', cursor:'pointer',
                   position:'relative', overflow:'hidden',
-                  boxShadow:'0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)',
-                  transition:'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                  boxShadow:'0 6px 30px rgba(200,168,78,0.4), 0 2px 0 rgba(255,230,120,0.3) inset, 0 -2px 0 rgba(100,70,10,0.4) inset',
+                  transition:'all 0.35s cubic-bezier(0.23, 1, 0.32, 1)',
                   alignSelf: isCenter ? 'center' : undefined,
                 }}
-                onMouseEnter={e=>{ e.currentTarget.style.boxShadow='0 12px 48px rgba(200,168,78,0.4), 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.5)'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.background='linear-gradient(135deg,#fff2a8 0%,#f5d97a 40%,#e8cc7a 100%)' }}
-                onMouseLeave={e=>{ e.currentTarget.style.boxShadow='0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.background='linear-gradient(135deg,#f5d97a 0%,#e8cc7a 40%,#c8a84e 100%)' }}
-                onMouseDown={e=>{ e.currentTarget.style.transform='scale(0.98)' }}
+                onMouseEnter={e=>{ e.currentTarget.style.boxShadow='0 10px 48px rgba(200,168,78,0.55), 0 2px 0 rgba(255,240,150,0.4) inset, 0 -2px 0 rgba(100,70,10,0.4) inset'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.background='linear-gradient(135deg,#fff4a0 0%,#f5d970 35%,#daa83e 70%,#b88828 100%)' }}
+                onMouseLeave={e=>{ e.currentTarget.style.boxShadow='0 6px 30px rgba(200,168,78,0.4), 0 2px 0 rgba(255,230,120,0.3) inset, 0 -2px 0 rgba(100,70,10,0.4) inset'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.background='linear-gradient(135deg,#ffe080 0%,#e8c85a 35%,#c8a84e 70%,#a8882e 100%)' }}
+                onMouseDown={e=>{ e.currentTarget.style.transform='translateY(1px) scale(0.98)' }}
                 onMouseUp={e=>{ e.currentTarget.style.transform='translateY(-2px)' }}
               >
                 <div className="btn-shine-overlay" />
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
-                GET A QUICK QUOTE
+                START SHIPMENT
               </button>
+
+              {/* ── MOBILE ONLY: Track card + Stats inline below CTA ── */}
+              <div className="hero-mobile-cards" style={{ pointerEvents:'all', display:'none' }}>
+
+                {/* ── "OR" divider — visually separates Quote CTA from Track card ── */}
+                <div className="hero-mobile-divider">
+                  <div className="hero-mobile-divider-line" />
+                  <span className="hero-mobile-divider-text">OR</span>
+                  <div className="hero-mobile-divider-line" />
+                </div>
+
+                {/* ── Track card with section label ── */}
+                <div className="hero-mobile-track-section">
+                  <p className="hero-mobile-section-label">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    Track Your Shipment
+                  </p>
+                  <div className="hero-mobile-track">
+                    <TrackCard />
+                  </div>
+                </div>
+                {/* Stats row with label */}
+                <p className="hero-mobile-section-label" style={{ marginTop:'4px' }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                  By the Numbers
+                </p>
+                <div className="hero-mobile-stats">
+                  {[
+                    { v:'1500', suffix:'+', l:'Heavy Lift' },
+                    { v:'120',  suffix:'+', l:'Countries'  },
+                    { v:'25',   suffix:'+', l:'Years'      },
+                    { v:'24/7', suffix:'',  l:'Operations' },
+                    { v:'KSA',  suffix:'',  l:'Specialist' },
+                  ].map((s, idx, arr) => (
+                    <div key={s.l} style={{
+                      display:'flex', flexDirection:'column', alignItems:'center',
+                      flex:'1 1 0', padding:'6px 4px',
+                      borderRight: idx < arr.length-1 ? '1px solid rgba(200,210,230,0.1)' : 'none',
+                    }}>
+                      <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.5rem', letterSpacing:'0.04em', lineHeight:1, color:'#ffffff', textShadow:'0 0 16px rgba(255,255,255,0.5)' }}>
+                        <CountUp target={s.v} suffix={s.suffix} duration={800} />
+                      </div>
+                      <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'8px', letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(210,220,240,0.85)', fontWeight:600, marginTop:'3px', whiteSpace:'nowrap' }}>{s.l}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )
         })()}
@@ -704,16 +818,20 @@ export default function VideoHero({ onQuoteClick }) {
         {CHAPTERS.map((ch, i) => {
           const isCenter = ch.align === 'center'
           const isRight  = ch.align === 'right'
+          const isTop    = ch.vAlign === 'top'
           return (
             <div key={i}
               ref={el => chaptersRef.current[i] = el}
+              className="hero-content-overlay"
               style={{
                 position:'absolute', inset:0, zIndex:4,
-                display:'flex', flexDirection:'column', justifyContent:'center',
+                display:'flex', flexDirection:'column',
+                justifyContent: isTop ? 'flex-start' : 'center',
                 alignItems:    isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                 textAlign:     isCenter ? 'center' : isRight ? 'right'    : 'left',
-                padding:       'clamp(2rem,6vw,6rem)',
-                paddingBottom: 'clamp(220px,34vh,380px)',
+                padding:       'clamp(1.2rem,5vw,6rem)',
+                paddingTop:    isTop ? 'clamp(5rem,10vh,8rem)' : undefined,
+                paddingBottom: 'clamp(160px,28vh,320px)',
                 /* NO opacity here — React re-renders would reset it.
                    Initial opacity:0 is applied by the useEffect below.
                    The RAF owns opacity from then on. */
@@ -722,15 +840,6 @@ export default function VideoHero({ onQuoteClick }) {
                 transition:'none',
               }}
             >
-              {/* Eyebrow */}
-              <div style={{
-                fontFamily:"'DM Sans',sans-serif",
-                fontSize:'clamp(10px,1vw,12px)', letterSpacing:'0.34em',
-                textTransform:'uppercase', color:'rgba(200,168,78,0.72)',
-                marginBottom:'20px', textShadow:'0 1px 12px rgba(0,0,0,0.95)',
-              }}>
-                {ch.eyebrow}
-              </div>
 
               {/* Headline */}
               <div style={{ pointerEvents:'all', cursor:'default' }}>
@@ -739,8 +848,10 @@ export default function VideoHero({ onQuoteClick }) {
                     fontFamily:"'Bebas Neue',sans-serif",
                     fontSize:'clamp(2rem,5.5vw,5.5rem)',
                     lineHeight:0.87, letterSpacing:'0.06em', margin:0,
-                    color: li % 2 === 0 ? '#ffffff' : 'rgba(200,168,78,0.90)',
-                    textShadow:'0 2px 48px rgba(0,0,0,0.95),0 0 120px rgba(0,0,0,0.6)',
+                    color: li % 2 === 0 ? '#ffffff' : 'rgba(255,215,105,1)',
+                    textShadow: li % 2 === 0
+                      ? '0 0 40px rgba(255,255,255,0.55), 0 2px 48px rgba(0,0,0,0.98), 0 0 120px rgba(0,0,0,0.7)'
+                      : '0 0 32px rgba(255,200,80,0.5), 0 2px 48px rgba(0,0,0,0.98)',
                     userSelect:'none',
                   }}>
                     {line}
@@ -757,13 +868,13 @@ export default function VideoHero({ onQuoteClick }) {
 
               {/* Sub text */}
               {ch.sub && (
-                <p style={{
+                <p className="hero-chapter-sub" style={{
                   fontFamily:"'DM Sans',sans-serif",
                   fontSize:'clamp(13px,1.4vw,16px)', fontWeight:600,
-                  color:'rgba(255,255,255,1)', maxWidth:'520px',
+                  color:'#ffffff', maxWidth:'520px',
                   lineHeight:1.9, margin:'20px 0 0',
-                  textShadow:'0 0 20px rgba(255,255,255,0.35), 0 1px 18px rgba(0,0,0,1), 0 0 40px rgba(0,0,0,0.8)',
-                  background:'rgba(0,0,0,0.35)', backdropFilter:'blur(6px)', WebkitBackdropFilter:'blur(6px)',
+                  textShadow:'0 0 16px rgba(255,255,255,0.7), 0 0 32px rgba(255,255,255,0.3), 0 1px 18px rgba(0,0,0,1)',
+                  background:'rgba(0,0,0,0.68)', backdropFilter:'blur(10px)', WebkitBackdropFilter:'blur(10px)',
                   padding:'10px 16px', borderRadius:'4px',
                   letterSpacing:'0.22em', textTransform:'uppercase',
                   alignSelf: isCenter ? 'center' : undefined,
@@ -786,23 +897,24 @@ export default function VideoHero({ onQuoteClick }) {
         })}
 
         {/* ── Bottom bar — track card + stats ── */}
-        <div ref={heroCardsRef} style={{
-          position:'absolute', bottom:'clamp(20px,3vh,44px)', left:0, right:0, zIndex:5,
-          display:'flex', flexWrap:'wrap', gap:'clamp(10px,1.8vw,20px)',
-          alignItems:'stretch', justifyContent:'center',
-          padding:'0 clamp(1.5rem,5vw,5rem)', pointerEvents:'all',
+        <div ref={heroCardsRef} className="hero-bottom-bar" style={{
+          position:'absolute', bottom:'clamp(12px,2vh,44px)', left:0, right:0, zIndex:5,
+          display:'flex', flexWrap:'wrap', gap:'clamp(16px,2.5vw,32px)',
+          alignItems:'stretch', justifyContent:'flex-end',
+          padding:'0 clamp(8rem,20vw,32rem) 0 clamp(0.8rem,4vw,5rem)', pointerEvents:'all',
         }}>
-          <div style={{ flex:'0 1 360px', minWidth:0, maxWidth:'380px', display:'flex' }}>
+          <div className="hero-track-wrap" style={{ flex:'0 1 260px', minWidth:0, maxWidth:'270px', display:'flex' }}>
             <TrackCard />
           </div>
 
-          <div style={{
+          <div className="hero-stats-bar" style={{
             flex:'0 0 auto', display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'center',
             background:'linear-gradient(135deg,rgba(180,190,210,0.08) 0%,rgba(120,130,160,0.05) 100%)',
             border:'1px solid rgba(200,210,230,0.18)', borderRadius:'0.9rem',
             backdropFilter:'blur(24px)', WebkitBackdropFilter:'blur(24px)',
             boxShadow:'0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.08)',
-            overflow:'hidden',
+            overflow:'hidden', overflowX:'auto',
+            maxWidth:'100%',
           }}>
             {[
               { v:'1500', suffix:'+', l:'Heavy Lift' },
@@ -811,23 +923,23 @@ export default function VideoHero({ onQuoteClick }) {
               { v:'24/7', suffix:'',  l:'Operations' },
               { v:'KSA',  suffix:'',  l:'Specialist' },
             ].map((s, idx, arr) => (
-              <div key={s.l} style={{
+              <div key={s.l} className="hero-stat-cell" style={{
                 display:'flex', alignItems:'center', padding:'6px 10px',
                 borderRight: idx < arr.length-1 ? '1px solid rgba(200,210,230,0.1)' : 'none',
                 flexShrink:0,
               }}>
                 <div style={{ textAlign:'center' }}>
-                  <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'2.6rem', letterSpacing:'0.05em', lineHeight:1, color:'#ffffff', textShadow:'0 0 20px rgba(255,255,255,0.6),0 0 40px rgba(200,220,255,0.3),0 1px 6px rgba(0,0,0,0.8)' }}>
+                  <div className="hero-stat-number" style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'2.6rem', letterSpacing:'0.05em', lineHeight:1, color:'#ffffff', textShadow:'0 0 20px rgba(255,255,255,0.6),0 0 40px rgba(200,220,255,0.3),0 1px 6px rgba(0,0,0,0.8)' }}>
                     <CountUp target={s.v} suffix={s.suffix} duration={800} />
                   </div>
-                  <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13px', letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(210,220,240,0.9)', fontWeight:600, marginTop:'4px', whiteSpace:'nowrap' }}>{s.l}</div>
+                  <div className="hero-stat-label" style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13px', letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(210,220,240,0.9)', fontWeight:600, marginTop:'4px', whiteSpace:'nowrap' }}>{s.l}</div>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Cert marquee */}
-          <div style={{
+          <div className="hero-cert-marquee" style={{
             flex:'1 1 100%', padding:'1rem 0',
             background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.03) 50%,transparent)',
             borderTop:'1px solid rgba(200,168,78,0.15)',
@@ -856,6 +968,155 @@ export default function VideoHero({ onQuoteClick }) {
         @keyframes trackFadeIn  { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
         @keyframes scrollMarquee { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
         @keyframes introSlide   { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes trackScanBar { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+        @keyframes trackPulseRing { 0%{transform:scale(0.8);opacity:1} 100%{transform:scale(1.6);opacity:0} }
+
+        /* ── Globe video: contain (full frame) on portrait/mobile ── */
+        @media (max-width: 767px) and (orientation: portrait) {
+          .hero-globe-video { object-fit: contain !important; background: #050508; }
+        }
+
+        /* ════════════════════════════════════════════════════
+           MOBILE HERO — complete responsive layout
+        ════════════════════════════════════════════════════ */
+        @media (max-width: 767px) {
+
+          /* Overlay: stack from top, clear nav */
+          .hero-content-overlay {
+            justify-content: flex-start !important;
+            align-items: center !important;
+            text-align: center !important;
+            padding-top: 72px !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            padding-bottom: 1rem !important;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          /* Hide desktop bottom-bar — cards now inline below CTA */
+          .hero-bottom-bar { display: none !important; }
+
+          /* Show inline mobile card container */
+          .hero-mobile-cards {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 100% !important;
+            gap: 0 !important;
+            margin-top: 10px !important;
+          }
+
+          /* "OR" divider between Quote CTA and Track card */
+          .hero-mobile-divider {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            width: 100% !important;
+            margin: 14px 0 !important;
+          }
+          .hero-mobile-divider-line {
+            flex: 1;
+            height: 1px;
+            background: rgba(200,168,78,0.25);
+          }
+          .hero-mobile-divider-text {
+            font-family: 'DM Sans', sans-serif;
+            font-size: clamp(7px, 1.8vw, 9px);
+            font-weight: 700;
+            letter-spacing: 0.24em;
+            color: rgba(200,168,78,0.65);
+            text-transform: uppercase;
+            flex-shrink: 0;
+          }
+
+          /* Section labels (Track / By the Numbers) */
+          .hero-mobile-section-label {
+            display: flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+            font-family: 'DM Sans', sans-serif !important;
+            font-size: clamp(7px, 2vw, 9px) !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.18em !important;
+            text-transform: uppercase !important;
+            color: rgba(200,168,78,0.8) !important;
+            margin-bottom: 6px !important;
+          }
+          .hero-mobile-section-label svg {
+            width: 9px !important;
+            height: 9px !important;
+          }
+
+          /* Track section wrapper */
+          .hero-mobile-track-section { width: 100%; }
+          .hero-mobile-track { width: 100%; }
+          .track-card-inner {
+            flex-direction: column !important;
+            padding: 0.75rem 0.8rem !important;
+            text-align: left !important;
+            border-radius: 0.75rem !important;
+            background: rgba(10,14,28,0.82) !important;
+            border: 1px solid rgba(200,168,78,0.35) !important;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(200,168,78,0.08) !important;
+          }
+          /* "WHERE IS YOUR SHIPMENT?" heading — smaller on mobile */
+          .track-card-inner > p:first-child {
+            font-size: clamp(0.95rem, 4vw, 1.2rem) !important;
+            margin-bottom: 0.2rem !important;
+          }
+          .track-card-inner > p:nth-child(2) { display: none !important; } /* hide sub-label */
+          .track-card-inner > div { gap: 8px !important; }
+          /* Input: high-contrast, clearly visible */
+          .track-card-inner input {
+            font-size: 16px !important;
+            padding: 0.65rem 0.9rem !important;
+            background: rgba(255,255,255,0.10) !important;
+            border: 1.5px solid rgba(200,168,78,0.5) !important;
+            border-radius: 7px !important;
+            color: #ffffff !important;
+          }
+          .track-card-inner input::placeholder {
+            color: rgba(200,210,230,0.55) !important;
+          }
+          /* Track button — tighter on mobile */
+          .track-card-inner button {
+            padding: 10px 16px !important;
+            font-size: clamp(10px, 2.8vw, 12px) !important;
+          }
+
+          /* Stats row — spacious, below a label */
+          .hero-mobile-stats {
+            display: flex !important;
+            flex-direction: row !important;
+            width: 100% !important;
+            background: linear-gradient(135deg,rgba(180,190,210,0.08) 0%,rgba(120,130,160,0.05) 100%) !important;
+            border: 1px solid rgba(200,210,230,0.18) !important;
+            border-radius: 0.75rem !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            overflow: hidden !important;
+            margin-top: 14px !important;
+          }
+
+          /* Hero text */
+          .hero-eyebrow { font-size: 9px !important; letter-spacing: 0.16em !important; padding: 4px 10px !important; margin-bottom: 8px !important; }
+          .hero-intro-sub { display: none !important; }
+          .hero-chapter-sub { display: none !important; }
+          .hero-intro-cta {
+            width: auto !important;
+            max-width: 100% !important;
+            justify-content: center !important;
+            padding: clamp(10px,2.5vw,14px) clamp(18px,5vw,26px) !important;
+            font-size: clamp(10px,2.8vw,13px) !important;
+            margin-top: 10px !important;
+            align-self: center !important;
+            box-sizing: border-box !important;
+          }
+        }
+
+        @media (max-width: 479px) {
+          .hero-content-overlay { padding-top: 64px !important; }
+        }
       `}</style>
     </div>
   )

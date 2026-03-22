@@ -384,47 +384,53 @@ body {
 /* ── BUTTONS ── */
 .btn-gold {
   position: relative;
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: clamp(12px, 2.2vw, 16px) clamp(24px, 4.5vw, 42px);
-  background: linear-gradient(135deg, #f5d97a 0%, #e8cc7a 40%, #c8a84e 100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #050508;
-  font-family: 'DM Sans', sans-serif;
-  font-size: clamp(11.5px, 1.6vw, 13.5px); font-weight: 900;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  border-radius: 12px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: clamp(9px, 1.6vw, 12px) clamp(18px, 3vw, 30px);
+  background: linear-gradient(135deg, #ffe080 0%, #e8c85a 35%, #c8a84e 70%, #a8882e 100%);
+  border: 1px solid rgba(255,230,120,0.4);
+  border-bottom: 1px solid rgba(120,90,20,0.5);
+  color: #000000;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+  letter-spacing: 0.2em; text-transform: uppercase;
+  border-radius: 10px;
   cursor: pointer; overflow: hidden;
-  box-shadow: 
-    0 4px 20px rgba(0,0,0,0.4),
-    0 0 0 1px rgba(200,168,78,0.2),
-    inset 0 1px 0 rgba(255,255,255,0.4);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow:
+    0 6px 30px rgba(200,168,78,0.4),
+    inset 0 2px 0 rgba(255,230,120,0.35),
+    inset 0 -2px 0 rgba(100,70,10,0.4);
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .btn-gold::before {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  transform: translateX(-100%) skewX(-15deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.45), transparent);
+  transform: translateX(-150%) skewX(-15deg);
   animation: btnPremiumShine 4s infinite;
   z-index: 0;
 }
 @keyframes btnPremiumShine {
-  0% { transform: translateX(-150%) skewX(-15deg); }
-  25% { transform: translateX(150%) skewX(-15deg); }
-  100% { transform: translateX(150%) skewX(-15deg); }
+  0%   { transform: translateX(-150%) skewX(-15deg); }
+  25%  { transform: translateX(150%)  skewX(-15deg); }
+  100% { transform: translateX(150%)  skewX(-15deg); }
 }
-.btn-gold:hover { 
-  box-shadow: 
-    0 12px 32px rgba(200,168,78,0.45), 
-    0 0 0 1.5px rgba(200,168,78,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.5);
+.btn-gold:hover {
+  background: linear-gradient(135deg, #fff4a0 0%, #f5d970 35%, #daa83e 70%, #b88828 100%);
+  box-shadow:
+    0 10px 48px rgba(200,168,78,0.55),
+    inset 0 2px 0 rgba(255,240,150,0.45),
+    inset 0 -2px 0 rgba(100,70,10,0.4);
   transform: translateY(-2px);
-  background: linear-gradient(135deg, #fff2a8 0%, #f5d97a 40%, #e8cc7a 100%);
 }
 .btn-gold:hover::before {
   animation: btnPremiumShine 1.5s infinite;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
 }
+.btn-gold:active { transform: translateY(1px) scale(0.98); }
+.btn-gold--static:hover { transform: none !important; box-shadow: 0 6px 30px rgba(200,168,78,0.4), inset 0 2px 0 rgba(255,230,120,0.35), inset 0 -2px 0 rgba(100,70,10,0.4) !important; background: linear-gradient(135deg, #ffe080 0%, #e8c85a 35%, #c8a84e 70%, #a8882e 100%) !important; }
+.btn-gold--static:hover::before { animation: none !important; opacity: 0 !important; }
+.btn-gold--static:active { transform: none !important; }
 .btn-gold span, .btn-gold svg { position: relative; z-index: 1; }
 
 .btn-ghost {
@@ -463,19 +469,138 @@ body {
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
 }
 
-/* ── MOBILE RESPONSIVE ── */
+/* ── TABLET (641–1024px) ── */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .section-headline { font-size: clamp(2.6rem, 7vw, 5rem); }
+  .body-text { font-size: clamp(16px, 2vw, 18px); }
+  .section-glass-header { padding: 1.4rem 2rem; }
+}
+
+/* ── MOBILE RESPONSIVE (≤768px) ── */
 @media (max-width: 768px) {
   .section-headline { font-size: clamp(2.2rem, 10vw, 3.5rem); }
   .body-text { font-size: clamp(15px, 4vw, 17px); }
   .card-body { font-size: 15px; }
   .card-title { font-size: 1.35rem; }
   .glass-card { padding: 1.2rem 1rem !important; }
+  .section-glass-header { padding: 1.2rem 1.4rem; display: block !important; width: 100%; box-sizing: border-box; }
+
+  /* Hero stat card numbers — slightly smaller on mobile */
+  .hero-stat-number { font-size: 2rem !important; }
+
+  /* Touch targets — all interactive elements at least 44px tall */
+  button, a, input, select, textarea {
+    touch-action: manipulation;
+  }
+  input, select, textarea {
+    font-size: 16px !important; /* prevents iOS auto-zoom */
+  }
+
+  /* Scroll offset for sticky nav */
+  #services, #why-us, #contact, #certifications, #testimonials, #heavy-lift {
+    scroll-margin-top: 80px;
+  }
+
+  /* Social icon touch targets in footer */
+  footer button { min-width: 44px !important; min-height: 44px !important; }
+
+  /* WhyBejoice pillars — reduce gap on mobile */
+  .space-y-px > * + * { margin-top: 8px; }
+
+  /* Prevent overflow on sections */
+  section { overflow-x: hidden; }
+
+  /* mb-20 headings — reduce on mobile */
+  .mb-20 { margin-bottom: 2.5rem !important; }
+  .mb-16 { margin-bottom: 2rem !important; }
+}
+
+/* ── NAV: hide language toggle on mobile (saves space) ── */
+@media (max-width: 767px) {
+  .lang-toggle-wrap { display: none !important; }
+}
+
+/* ── NAV: fluid compact on tablets ── */
+@media (max-width: 640px) {
+  /* Book a Call: shorter label + tighter padding */
+  .nav-book-call {
+    padding: 9px 14px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.09em !important;
+    gap: 6px !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* ── NAV: compact layout on very small phones (≤479px) ── */
+@media (max-width: 479px) {
+  /* Shrink brand text — keep both "Bejoice" and tagline, just smaller */
+  .nav-brand-text {
+    display: flex !important;
+    padding-left: 5px !important;
+    margin-left: 3px !important;
+    gap: 2px !important;
+  }
+  .nav-brand-text > div:first-child {
+    font-size: 10px !important;
+    letter-spacing: 0.12em !important;
+  }
+  .nav-tagline {
+    display: inline-block !important;
+    font-size: 7px !important;
+    letter-spacing: 0.08em !important;
+  }
+  /* Book a Call → icon-only square pill to free up horizontal space */
+  .nav-book-call {
+    padding: 8px 9px !important;
+    gap: 0 !important;
+    border-radius: 9px !important;
+    flex-shrink: 0 !important;
+  }
+  .nav-book-call span { display: none !important; }
+  .nav-book-call svg { width: 13px !important; height: 13px !important; }
+}
+
+/* ── SMALL MOBILE (≤480px) ── */
+@media (max-width: 480px) {
+  .section-headline { font-size: clamp(1.9rem, 11vw, 2.8rem); }
+  .btn-gold, .btn-ghost { padding: 14px 20px !important; font-size: 11px !important; }
+  .section-glass-header { padding: 1rem 1.2rem; }
+
+  /* Track card inline layout on very small phones */
+  .hero-track-wrap > div {
+    flex-direction: row !important;
+    padding: 0.35rem 0.7rem !important;
+  }
+  .hero-track-wrap input { font-size: 13px !important; }
+}
+
+/* ── Floating chatbot (Layla): move to bottom-LEFT on mobile so it doesn't block right-side content ── */
+@media (max-width: 767px) {
+  .layla-fab-wrap {
+    right: auto !important;
+    left: clamp(10px, 3vw, 20px) !important;
+    align-items: flex-start !important;  /* panel opens leftward */
+  }
+}
+
+/* ── Hero sticky height: use small viewport height on mobile to avoid browser-chrome clipping ── */
+@media (max-width: 767px) {
+  .hero-sticky-viewport {
+    height: 100vh !important;       /* fallback */
+    height: 100svh !important;      /* svh = excludes browser chrome on iOS/Android */
+  }
+}
+
+/* ── Safe area insets (iPhone notch / home bar) ── */
+body {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* ── SECTION NUMBER ── */
 .section-num {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px; letter-spacing: 0.3em;
+  font-size: clamp(11px, 1.2vw, 14px); letter-spacing: 0.3em;
   color: var(--gold); opacity: 0.9;
 }
 
@@ -487,12 +612,13 @@ body {
   line-height: 0.92;
   letter-spacing: 0.06em;
   color: #ffffff;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+  text-shadow: 0 0 40px rgba(255,255,255,0.18), 0 2px 24px rgba(0,0,0,0.7);
   cursor: default;
   -webkit-font-smoothing: antialiased;
 }
 .section-headline .accent {
-  color: rgba(200,168,78,0.82);
+  color: rgba(255,215,105,1);
+  text-shadow: 0 0 32px rgba(255,200,80,0.4);
 }
 
 /* ── BODY TEXT ── */
@@ -500,26 +626,28 @@ body {
   font-family: 'DM Sans', sans-serif;
   font-size: clamp(17px, 1.9vw, 19px);
   font-weight: 500;
-  color: rgba(255,255,255,0.97);
+  color: #ffffff;
   line-height: 1.75;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6), 0 0 20px rgba(255,255,255,0.08);
 }
 
 /* ── CARD TITLE ── */
 .card-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.6rem;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
   letter-spacing: 0.1em;
   color: #ffffff;
+  text-shadow: 0 0 24px rgba(255,255,255,0.2), 0 1px 8px rgba(0,0,0,0.6);
 }
 
 /* ── CARD BODY ── */
 .card-body {
   font-family: 'DM Sans', sans-serif;
-  font-size: 17px;
+  font-size: clamp(14px, 1.6vw, 17px);
   font-weight: 500;
-  color: rgba(255,255,255,0.88);
+  color: #ffffff;
   line-height: 1.7;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
 }
 
 /* ============================================================
@@ -547,15 +675,15 @@ body {
 .tools-subtitle {
   font-family: 'DM Sans', sans-serif;
   font-size: clamp(1rem, 1.6vw, 1.1rem);
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.82);
   line-height: 1.8;
   margin-top: 1rem;
   max-width: 58ch;
 }
 .tools-footnote {
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.28);
+  font-size: clamp(0.68rem, 1vw, 0.82rem);
+  color: rgba(255,255,255,0.55);
   line-height: 1.7;
   text-align: center;
 }
@@ -564,7 +692,7 @@ body {
   align-items: center;
   gap: 0.75rem;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.72rem;
+  font-size: clamp(0.62rem, 0.9vw, 0.78rem);
   font-weight: 700;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -612,30 +740,30 @@ body {
   background: rgba(184,152,64,0.07);
   border-color: rgba(184,152,64,0.28);
 }
-.qq-tab-icon  { font-size: 1.3rem; line-height: 1; }
+.qq-tab-icon  { font-size: clamp(1.1rem, 1.6vw, 1.4rem); line-height: 1; }
 .qq-tab-label {
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 500;
+  font-size: clamp(0.72rem, 1.1vw, 0.9rem);
+  font-weight: 600;
   letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.72);
+  color: rgba(255,255,255,0.92);
 }
-.qq-tab.active .qq-tab-label { color: rgba(184,152,64,0.92); }
+.qq-tab.active .qq-tab-label { color: rgba(184,152,64,0.98); }
 .qq-tab-sub {
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.62rem;
+  font-size: clamp(0.56rem, 0.8vw, 0.68rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.32);
+  color: rgba(255,255,255,0.6);
 }
-.qq-tab.active .qq-tab-sub { color: rgba(184,152,64,0.55); }
+.qq-tab.active .qq-tab-sub { color: rgba(184,152,64,0.72); }
 
 /* Panel */
 .qq-panel {
   background: rgba(255,255,255,0.02) !important;
   border: 1px solid rgba(200,168,78,0.1) !important;
   border-radius: 1.25rem;
-  padding: 2.5rem;
+  padding: clamp(1.2rem, 3vw, 2.5rem);
   backdrop-filter: blur(22px);
   -webkit-backdrop-filter: blur(22px);
 }
@@ -650,6 +778,7 @@ body {
 /* Grids */
 .qq-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .qq-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.qq-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
 
 /* Type buttons */
 .qq-type-btn {
@@ -661,19 +790,19 @@ body {
   cursor: pointer;
   transition: all 0.2s;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.9rem;
+  font-size: clamp(0.78rem, 1.2vw, 0.95rem);
   font-weight: 600;
-  color: rgba(255,255,255,0.68);
+  color: rgba(255,255,255,0.9);
   text-align: center;
   line-height: 1.5;
 }
 .qq-type-btn span {
   display: block;
-  font-size: 0.66rem;
+  font-size: clamp(0.58rem, 0.85vw, 0.7rem);
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.62);
   margin-top: 0.15rem;
 }
 .qq-type-btn.active {
@@ -691,9 +820,9 @@ body {
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.6);
   background: none;
-  border: 1px dashed rgba(255,255,255,0.1);
+  border: 1px dashed rgba(255,255,255,0.2);
   border-radius: 0.4rem;
   padding: 0.45rem 1rem;
   cursor: pointer;
@@ -735,15 +864,15 @@ body {
   font-family: 'DM Sans', sans-serif;
   font-size: 0.82rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.82);
+  color: rgba(255,255,255,0.96);
   margin-bottom: 0.35rem;
   letter-spacing: 0.01em;
 }
-.qq-service-card.active .qq-service-title { color: rgba(184,152,64,0.92); }
+.qq-service-card.active .qq-service-title { color: rgba(184,152,64,0.98); }
 .qq-service-desc {
   font-family: 'DM Sans', sans-serif;
   font-size: 0.7rem;
-  color: rgba(255,255,255,0.42);
+  color: rgba(255,255,255,0.72);
   line-height: 1.55;
 }
 .qq-service-check {
@@ -769,7 +898,7 @@ body {
   justify-content: space-between;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.52);
+  color: rgba(255,255,255,0.82);
   padding: 0.3rem 0;
 }
 .qq-calc-row.highlight {
@@ -822,13 +951,31 @@ body {
 }
 .qq-submit-btn:disabled { opacity: 0.45; cursor: default; transform: none; }
 
+/* Continue / Submit button pulse & arrow animations (used in NavButtons) */
+@keyframes qqm-continue-pulse {
+  0%, 100% { box-shadow: 0 6px 28px rgba(200,168,78,0.35), inset 0 1px 0 rgba(255,255,255,0.35); }
+  50%       { box-shadow: 0 8px 40px rgba(200,168,78,0.65), 0 0 0 6px rgba(200,168,78,0.12), inset 0 1px 0 rgba(255,255,255,0.45); }
+}
+@keyframes qqm-arrow-nudge {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(5px); }
+}
+
 /* Mobile */
 @media (max-width: 768px) {
   .qq-panel { padding: 1.5rem; }
   .qq-grid-2, .qq-grid-3 { grid-template-columns: 1fr; }
+  .qq-grid-4 { grid-template-columns: 1fr 1fr; }
   .qq-services-grid { grid-template-columns: 1fr 1fr; }
   .qq-section { padding: 2rem 1.5rem; }
+  /* Inputs: prevent iOS zoom */
+  .qq-panel input, .qq-panel select, .qq-panel textarea {
+    font-size: 16px !important;
+  }
 }
 @media (max-width: 480px) {
-  .qq-services-grid { grid-template-columns: 1fr; }
+  .qq-panel { padding: 0.9rem !important; }
+  .qq-grid-4 { grid-template-columns: 1fr 1fr; }
+  .qq-services-grid { grid-template-columns: 1fr 1fr !important; }
+  .qq-tab { min-height: 44px; }
 }

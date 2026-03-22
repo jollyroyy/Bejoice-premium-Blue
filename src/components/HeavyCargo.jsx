@@ -105,6 +105,44 @@ export default function HeavyCargo() {
 
       <div className="max-w-7xl mx-auto">
 
+        <div style={{
+          background: 'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
+          backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
+          border: '1px solid rgba(255,255,255,0.07)',
+          borderTop: '1px solid rgba(200,168,78,0.22)',
+          borderRadius: 28,
+          boxShadow: '0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,78,0.04) inset, 0 2px 0 rgba(200,168,78,0.15) inset, inset 0 0 80px rgba(200,168,78,0.015)',
+          overflow: 'hidden', position: 'relative',
+          padding: 'clamp(24px,3.5vw,48px)',
+        }}>
+          {/* Shining border strips — all four sides */}
+          <div style={{ position:'absolute', top:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
+            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
+            backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite',
+          }}/>
+          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
+            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
+            backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite 2s',
+          }}/>
+          <div style={{ position:'absolute', left:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
+            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
+            backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 1s',
+          }}/>
+          <div style={{ position:'absolute', right:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
+            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
+            backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 3s',
+          }}/>
+          <style>{`
+            @keyframes borderSweepH {
+              0% { background-position: 200% center; }
+              100% { background-position: -200% center; }
+            }
+            @keyframes borderSweepV {
+              0% { background-position: center 200%; }
+              100% { background-position: center -200%; }
+            }
+          `}</style>
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
@@ -113,15 +151,38 @@ export default function HeavyCargo() {
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
           className="mb-10 md:mb-16 lg:mb-20 flex flex-col items-end"
         >
-          <div className="section-glass-header" style={{ textAlign: 'right' }}>
-            <div className="section-num mb-5" style={{ display: 'flex', justifyContent: 'flex-end' }}>02 — Heavy &amp; Project Cargo</div>
-            <h2 className="section-headline" style={{ textAlign: 'right' }}>
-              <span className="shine-text" data-text="ENGINEERED">ENGINEERED</span><br />
-              <span style={{ color: 'rgba(200,168,78,0.78)' }}>FOR THE IMPOSSIBLE</span>
+          <div style={{
+            width: '100%', padding: 0,
+            textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end',
+          }}>
+            <h2 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(3rem,7vw,6rem)',
+              letterSpacing: '0.07em', lineHeight: 1,
+              margin: 0,
+              background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
+              backgroundSize: '300% 100%',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
+              animation: 'headingSweep 4s ease-in-out infinite',
+            }}>
+              CONSULTING FOR<br />GIGA PROJECTS
             </h2>
-            <p className="body-text max-w-sm" style={{ marginTop: '1.2rem', textAlign: 'left' }}>
-              From mega-project turbines to out-of-gauge industrial modules — Bejoice delivers the technical expertise, specialised equipment, and regulatory precision to move what others can't.
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(14px,1.6vw,17px)',
+              color: 'rgba(255,255,255,0.7)',
+              marginTop: '16px', marginBottom: 0, maxWidth: '520px', lineHeight: 1.7,
+            }}>
+              End-to-end project cargo logistics for Saudi Arabia's most ambitious giga-developments — from NEOM to the Red Sea Project.
             </p>
+            <style>{`
+              @keyframes headingSweep {
+                0%   { background-position: -100% center; }
+                100% { background-position: 200% center; }
+              }
+            `}</style>
           </div>
         </motion.div>
 
@@ -132,7 +193,8 @@ export default function HeavyCargo() {
           {capabilities.map((c, i) => (
             <motion.div key={c.num}
               ref={el => cardsRef.current[i] = el}
-              className="fade-up glass-card p-6 md:p-8 lg:p-10 group cursor-default"
+              className="fade-up p-6 md:p-8 lg:p-10 group cursor-default"
+              style={{ borderTop: '1px solid rgba(200,168,78,0.1)' }}
               style={{ transitionDelay: `${i * 75}ms` }}
               whileHover={{
                 rotateY: i % 2 === 0 ? 3 : -3,
@@ -141,31 +203,16 @@ export default function HeavyCargo() {
                 transition: { type: 'spring', stiffness: 280, damping: 22 }
               }}
             >
-              <div style={{
-                fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(36px, 8vw, 56px)',
-                lineHeight: 1, letterSpacing: '0.06em',
-                color: 'rgba(200,168,78,0.12)', marginLeft: '-4px', marginBottom: '16px',
-                transition: 'color 0.4s',
-              }} className="group-hover:!text-gold/25">
-                {c.num}
-              </div>
               <div className="mb-6 transition-transform duration-300 group-hover:scale-110 origin-left">
                 {c.icon}
               </div>
               <h3 className="card-title mb-4">{c.title}</h3>
               <p className="card-body">{c.desc}</p>
-              <div className="flex items-center gap-3 mt-8 transition-all duration-300"
-                style={{ color: 'rgba(200,168,78,0.5)' }}
-                onMouseEnter={e => e.currentTarget.style.color = '#c8a84e'}
-                onMouseLeave={e => e.currentTarget.style.color = 'rgba(200,168,78,0.5)'}
-              >
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 500 }}>Learn More</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </div>
             </motion.div>
           ))}
         </div>
 
+        </div>{/* end outer glass-card */}
       </div>
     </section>
   )
