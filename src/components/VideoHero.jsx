@@ -36,9 +36,20 @@ function CountUp({ target, suffix = '', duration = 900 }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Config
 // ─────────────────────────────────────────────────────────────────────────────
-const GLOBE_SRC  = '/saudi-connected.mp4'   // cinematic globe intro
-const VIDEO_SRC  = '/hero-combined.mp4'     // scroll-scrubbed footage
-const SCROLL_HEIGHT = 1000                  // 1000 vh → 5 chapters × 200 vh
+const GLOBE_SRC    = '/saudi-connected.mp4'
+const SCROLL_HEIGHT = 1400
+
+// ── JPEG frame sequences ──────────────────────────────────────────
+const FRAMES2_COUNT = 289
+const FRAMES3_COUNT = 169
+const TOTAL_FRAMES  = FRAMES2_COUNT + FRAMES3_COUNT   // 458
+
+const FRAME_URLS = [
+  ...Array.from({ length: FRAMES2_COUNT }, (_, i) =>
+    `/frames2/${String(i + 1).padStart(4, '0')}.jpg`),
+  ...Array.from({ length: FRAMES3_COUNT }, (_, i) =>
+    `/frames3/${String(i + 1).padStart(4, '0')}.jpg`),
+]
 
 // Headings shown during the 4-second globe lock — alternate sides
 const INTRO_SLIDES = [
@@ -285,13 +296,13 @@ function TrackCard() {
 export default function VideoHero({ onQuoteClick }) {
   const wrapperRef      = useRef(null)
   const canvasRef       = useRef(null)
-  const videoRef        = useRef(null)     // hero-combined — scrubbed by scroll
-  const globeVideoRef   = useRef(null)     // saudi-connected — plays once as intro
+  const globeVideoRef   = useRef(null)
   const chaptersRef     = useRef([])
   const heroCardsRef    = useRef(null)
   const exitOverlayRef  = useRef(null)
   const introContainerRef = useRef(null)
-  const hasTransitioned = useRef(false)    // globe → truck transition guard
+  const framesRef       = useRef([])       // loaded Image objects
+  const lastIdxRef      = useRef(-1)       // last drawn frame index
   const [introIdx, setIntroIdx]         = useState(0)
   const [introShowing, setIntroShowing] = useState(true)  // heading visible/hidden
   const [introVisible, setIntroVisible] = useState(true)  // entire intro phase active
@@ -339,52 +350,70 @@ export default function VideoHero({ onQuoteClick }) {
     })
   }, [])
 
-  // ── Canvas paint ─────────────────────────────────────────────────
-  const paintVideo = useCallback((canvas, video) => {
-    if (!canvas || !video || !video.videoWidth) return
-    const ctx = canvas.getContext('2d')
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    const cw = canvas.clientWidth, ch = canvas.clientHeight
-    const scale = Math.max(cw / video.videoWidth, ch / video.videoHeight)
-    const w = video.videoWidth * scale, h = video.videoHeight * scale
-    ctx.imageSmoothingEnabled = true
-    ctx.imageSmoothingQuality = 'high'
-    ctx.clearRect(0, 0, cw * dpr, ch * dpr)
-    ctx.drawImage(video, (cw - w) / 2, (ch - h) / 2, w, h)
-  }, [])
-
+  // ── Canvas: size to DPR viewport ─────────────────────────────────
   useEffect(() => {
     const canvas = canvasRef.current
+    if (!canvas) return
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const resize = () => {
-      canvas.width  = window.innerWidth  * dpr
-      canvas.height = window.innerHeight * dpr
+      canvas.width        = Math.round(window.innerWidth  * dpr)
+      canvas.height       = Math.round(window.innerHeight * dpr)
       canvas.style.width  = window.innerWidth  + 'px'
       canvas.style.height = window.innerHeight + 'px'
-      canvas.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0)
-      paintVideo(canvas, videoRef.current)
+      // repaint after resize
+      const prev = lastIdxRef.current
+      lastIdxRef.current = -1
+      if (prev >= 0) paintFrame(prev)
     }
     resize()
     window.addEventListener('resize', resize)
     return () => window.removeEventListener('resize', resize)
-  }, [paintVideo])
+  }, [])   // paintFrame defined below — safe because effect runs after mount
 
+  // ── Draw one JPEG frame onto canvas ──────────────────────────────
+  const paintFrame = useCallback((idx) => {
+    const canvas = canvasRef.current
+    if (!canvas || canvas.width === 0) return
+    const frames = framesRef.current
+
+    // Use exact frame or nearest loaded one behind it
+    let img = null
+    for (let i = Math.min(idx, frames.length - 1); i >= 0; i--) {
+      const f = frames[i]
+      if (f && f.complete && f.naturalWidth > 0) { img = f; break }
+    }
+    if (!img) return
+    if (lastIdxRef.current === idx) return
+    lastIdxRef.current = idx
+
+    const ctx   = canvas.getContext('2d')
+    const cw    = canvas.width
+    const ch    = canvas.height
+    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
+    const w     = img.naturalWidth  * scale
+    const h     = img.naturalHeight * scale
+    ctx.imageSmoothingEnabled = true
+    ctx.imageSmoothingQuality = 'high'
+    ctx.clearRect(0, 0, cw, ch)
+    ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h)
+  }, [])
+
+  // ── Preload all frames immediately in parallel ────────────────────
   useEffect(() => {
-    const video = videoRef.current, canvas = canvasRef.current
-    if (!video || !canvas) return
-    const doPaint = () => paintVideo(canvas, video)
-    video.addEventListener('loadeddata', doPaint)
-    if ('requestVideoFrameCallback' in video) {
-      const loop = () => { doPaint(); video.requestVideoFrameCallback(loop) }
-      video.requestVideoFrameCallback(loop)
-    } else {
-      video.addEventListener('seeked', doPaint)
-    }
-    return () => {
-      video.removeEventListener('loadeddata', doPaint)
-      video.removeEventListener('seeked', doPaint)
-    }
-  }, [paintVideo])
+    const imgs = new Array(TOTAL_FRAMES)
+    framesRef.current = imgs
+    FRAME_URLS.forEach((url, i) => {
+      const img = new window.Image()
+      img.onload = () => {
+        // As soon as frame 0 loads, reveal the canvas (scroll will control opacity)
+        if (i === 0) {
+          paintFrame(0)
+        }
+      }
+      img.src = url
+      imgs[i] = img
+    })
+  }, [paintFrame])
 
   // ── Globe setup — fade in on load, canvas hidden, chapters hidden ──
   useEffect(() => {
@@ -455,12 +484,10 @@ export default function VideoHero({ onQuoteClick }) {
         canvas.style.opacity = String(cOpacity)
       }
 
-      // ── Truck scrubs after globe zone ──
-      const videoP = p <= GLOBE_EXIT ? 0 : (p - GLOBE_EXIT) / (1 - GLOBE_EXIT)
-      const video  = videoRef.current
-      if (video && video.readyState >= 2 && video.duration) {
-        video.currentTime = videoP * video.duration
-      }
+      // ── Frame scrub after globe zone ──
+      const videoP   = p <= GLOBE_EXIT ? 0 : (p - GLOBE_EXIT) / (1 - GLOBE_EXIT)
+      const frameIdx = Math.min(Math.round(videoP * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1)
+      paintFrame(frameIdx)
 
       applyProgress(videoP)
 
@@ -519,17 +546,7 @@ export default function VideoHero({ onQuoteClick }) {
           }}
         />
 
-        {/* ── TRUCK VIDEO — hidden, scrubbed by scroll ── */}
-        <video
-          ref={videoRef}
-          src={VIDEO_SRC}
-          preload="auto"
-          muted
-          playsInline
-          style={{ position:'absolute', width:0, height:0, opacity:0, pointerEvents:'none' }}
-        />
-
-        {/* ── CANVAS — shows current truck video frame ── */}
+        {/* ── CANVAS — shows JPEG frames scrubbed by scroll ── */}
         <canvas ref={canvasRef} style={{
           position:'absolute', inset:0, zIndex:2,
           opacity:0,                            /* revealed by GSAP transition */
