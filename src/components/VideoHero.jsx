@@ -716,7 +716,7 @@ export default function VideoHero({ onQuoteClick }) {
                 className="hero-intro-cta"
                 onClick={() => { if (onQuoteClick) onQuoteClick() }}
                 style={{
-                  pointerEvents:'all',
+                  pointerEvents:'auto',
                   marginTop:'32px',
                   display:'inline-flex', alignItems:'center', gap:'10px',
                   padding: 'clamp(11px,1.2vw,14px) clamp(18px,2vw,26px)',
@@ -746,7 +746,7 @@ export default function VideoHero({ onQuoteClick }) {
               </button>
 
               {/* ── MOBILE ONLY: Track card + Stats inline below CTA ── */}
-              <div className="hero-mobile-cards" style={{ pointerEvents:'all', display:'none' }}>
+              <div className="hero-mobile-cards" style={{ pointerEvents:'auto', display:'none' }}>
 
                 {/* ── "OR" divider — visually separates Quote CTA from Track card ── */}
                 <div className="hero-mobile-divider">
