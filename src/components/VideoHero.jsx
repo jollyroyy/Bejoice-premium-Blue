@@ -711,25 +711,6 @@ export default function VideoHero({ onQuoteClick }) {
                 background:'linear-gradient(90deg,rgba(200,168,78,0.85),rgba(200,168,78,0.08))',
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
               }} />
-              {slide.sub && (
-                <div className="hero-intro-sub" style={{
-                  fontFamily:"'DM Sans',sans-serif",
-                  fontSize:'clamp(12px,1.2vw,15px)', fontWeight:500,
-                  color:'#ffffff', maxWidth:'600px',
-                  margin:'22px 0 0',
-                  textShadow:'0 0 24px rgba(255,255,255,0.25), 0 1px 18px rgba(0,0,0,1)',
-                  letterSpacing:'0.18em', textTransform:'uppercase',
-                  background:'rgba(0,0,0,0.4)', backdropFilter:'blur(8px)', WebkitBackdropFilter:'blur(8px)',
-                  padding:'12px 20px', borderRadius:'4px',
-                  alignSelf: isCenter ? 'center' : undefined,
-                  textAlign: isCenter ? 'center' : 'left',
-                  lineHeight: 2,
-                }}>
-                  {(Array.isArray(slide.sub) ? slide.sub : [slide.sub]).map((line, li) => (
-                    <div key={li}>{line}</div>
-                  ))}
-                </div>
-              )}
               {/* Quick Quote CTA */}
               <button
                 className="hero-intro-cta"
@@ -866,22 +847,6 @@ export default function VideoHero({ onQuoteClick }) {
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
               }} />
 
-              {/* Sub text */}
-              {ch.sub && (
-                <p className="hero-chapter-sub" style={{
-                  fontFamily:"'DM Sans',sans-serif",
-                  fontSize:'clamp(13px,1.4vw,16px)', fontWeight:600,
-                  color:'#ffffff', maxWidth:'520px',
-                  lineHeight:1.9, margin:'20px 0 0',
-                  textShadow:'0 0 16px rgba(255,255,255,0.7), 0 0 32px rgba(255,255,255,0.3), 0 1px 18px rgba(0,0,0,1)',
-                  background:'rgba(0,0,0,0.68)', backdropFilter:'blur(10px)', WebkitBackdropFilter:'blur(10px)',
-                  padding:'10px 16px', borderRadius:'4px',
-                  letterSpacing:'0.22em', textTransform:'uppercase',
-                  alignSelf: isCenter ? 'center' : undefined,
-                }}>
-                  {ch.sub}
-                </p>
-              )}
 
               {/* Chapter counter */}
               <div style={{
