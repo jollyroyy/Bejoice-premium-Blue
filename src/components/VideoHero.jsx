@@ -438,12 +438,8 @@ export default function VideoHero({ onQuoteClick }) {
     const cw    = canvas.width
     const ch    = canvas.height
 
-    // Portrait (mobile): contain — show full frame, no cropping
-    // Landscape (desktop): slightly pulled back so footage isn't too zoomed/tight
-    const isPortrait = ch > cw
-    const scale = isPortrait
-      ? Math.min(cw / img.naturalWidth, ch / img.naturalHeight)         // contain
-      : Math.max(cw / img.naturalWidth, ch / img.naturalHeight) * 0.88  // cover, zoomed out
+    // Always cover — fill entire canvas, no black bars
+    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
 
     const w = img.naturalWidth  * scale
     const h = img.naturalHeight * scale
@@ -452,10 +448,6 @@ export default function VideoHero({ onQuoteClick }) {
 
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'high'
-
-    // Fill letterbox bars with the site dark background
-    ctx.fillStyle = '#050508'
-    ctx.fillRect(0, 0, cw, ch)
 
     ctx.drawImage(img, x, y, w, h)
   }, [])
@@ -468,7 +460,7 @@ export default function VideoHero({ onQuoteClick }) {
       const img = new window.Image()
       img.onload = () => {
         if (i === 0) {
-          paintFrame(39)
+          paintFrame(80)
           // Keep canvas hidden — RAF loop will reveal it once scrolling starts
         }
       }
