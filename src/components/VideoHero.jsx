@@ -404,10 +404,12 @@ export default function VideoHero({ onQuoteClick }) {
     if (!canvas) return
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const resize = () => {
-      canvas.width        = Math.round(window.innerWidth  * dpr)
-      canvas.height       = Math.round(window.innerHeight * dpr)
-      canvas.style.width  = window.innerWidth  + 'px'
-      canvas.style.height = window.innerHeight + 'px'
+      // Use parent's rendered size so canvas matches exactly — handles 100svh correctly
+      const parent = canvas.parentElement
+      const w = parent ? parent.offsetWidth  : window.innerWidth
+      const h = parent ? parent.offsetHeight : window.innerHeight
+      canvas.width  = Math.round(w * dpr)
+      canvas.height = Math.round(h * dpr)
       // repaint after resize
       const prev = lastIdxRef.current
       lastIdxRef.current = -1
@@ -623,6 +625,7 @@ export default function VideoHero({ onQuoteClick }) {
         {/* ── CANVAS — sits beneath globe, always ready ── */}
         <canvas ref={canvasRef} style={{
           position:'absolute', inset:0, zIndex:1,
+          width:'100%', height:'100%',
           opacity:0,
           willChange:'opacity',
         }} />
