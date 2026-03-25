@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView } from 'framer-motion'
 import clsx from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { SparklesCore } from './ui/sparkles'
+import { MeshGradient } from '@paper-design/shaders-react'
 
 function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -180,42 +180,23 @@ export default function Services() {
             background: 'linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.02) 100%)',
             backdropFilter: 'blur(32px)',
             WebkitBackdropFilter: 'blur(32px)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderTop: '1px solid rgba(200,168,78,0.3)',
+            border: '1px solid rgba(200,168,78,0.28)',
+            borderTop: '1px solid rgba(200,168,78,0.55)',
             borderRadius: 24,
             overflow: 'hidden',
-            boxShadow: '0 40px 100px rgba(0,0,0,0.6), inset 0 1px 0 rgba(200,168,78,0.12)',
+            boxShadow: '0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,78,0.06) inset, inset 0 1px 0 rgba(255,215,105,0.22), 0 0 50px rgba(200,168,78,0.06)',
             position: 'relative',
           }}
         >
-          {/* ── Sparkles background ── */}
-          <SparklesCore
-            background="transparent"
-            minSize={0.6}
-            maxSize={2}
-            particleDensity={50}
-            particleColor="rgba(200,168,78,0.9)"
-            speed={0.7}
+          {/* ── Mesh gradient shader background ── */}
+          <MeshGradient
             className="absolute inset-0 w-full h-full"
+            colors={['#050508', '#1a1208', '#c8a84e', '#0a0a0f', '#3d2a0a']}
+            speed={0.15}
+            backgroundColor="#050508"
+            style={{ opacity: 0.55 }}
           />
 
-          {/* ── Shining border strips — all four sides ── */}
-          <div style={{ position:'absolute', top:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'200% 100%', animation:'borderSweepH 3s ease-in-out infinite',
-          }}/>
-          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'200% 100%', animation:'borderSweepH 3s ease-in-out infinite 1.5s',
-          }}/>
-          <div style={{ position:'absolute', left:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'100% 200%', animation:'borderSweepV 3s ease-in-out infinite 0.75s',
-          }}/>
-          <div style={{ position:'absolute', right:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'100% 200%', animation:'borderSweepV 3s ease-in-out infinite 2.25s',
-          }}/>
 
           {/* ── Centered heading block ── */}
           <div style={{ textAlign: 'center', padding: 'clamp(2.5rem,5vw,4rem) clamp(1.5rem,5vw,4rem) clamp(1.5rem,3vw,2.5rem)', borderBottom: '1px solid rgba(200,168,78,0.1)', position: 'relative', zIndex: 2 }}>
@@ -337,14 +318,6 @@ export default function Services() {
         @keyframes headingSweep {
           0%   { background-position: -100% center; }
           100% { background-position: 200% center; }
-        }
-        @keyframes borderSweepH {
-          0%   { background-position: -100% 0; }
-          100% { background-position: 200% 0; }
-        }
-        @keyframes borderSweepV {
-          0%   { background-position: 0 -100%; }
-          100% { background-position: 0 200%; }
         }
         @media (max-width: 600px) {
           #services .services-grid > div { border-right: none !important; }

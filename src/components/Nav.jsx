@@ -116,26 +116,6 @@ export default function Nav({ onQuoteClick }) {
                 filter: 'drop-shadow(0 1px 8px rgba(0,0,0,0.8))',
               }}
             />
-            <div className="nav-brand-text" style={{ borderLeft: '2px solid rgba(200,168,78,0.45)', paddingLeft: '10px', marginLeft: '6px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '4px', alignSelf: 'stretch' }}>
-              <div style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(13px, 1.8vw, 17px)',
-                letterSpacing: '0.18em', color: '#ffffff',
-                textTransform: 'uppercase', lineHeight: 1, fontWeight: 700,
-                textShadow: '0 0 12px rgba(255,255,255,0.4), 0 1px 8px rgba(0,0,0,1)',
-              }}>
-                Bejoice
-              </div>
-              <div className="nav-tagline" style={{
-                fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(9px, 1.1vw, 14px)',
-                letterSpacing: '0.16em', textTransform: 'uppercase',
-                lineHeight: 1, fontWeight: 700, position: 'relative', display: 'inline-block',
-              }}>
-                <span className="shine-ltr" data-text="Connecting KSA to the World"
-                  style={{ color: '#ffe680', textShadow: '0 0 16px rgba(255,220,80,0.7), 0 0 32px rgba(200,168,78,0.4), 0 1px 8px rgba(0,0,0,0.8)' }}>
-                  Connecting KSA to the World
-                </span>
-              </div>
-            </div>
           </div>
 
           {/* Right side: CTA + Hamburger */}
@@ -250,7 +230,6 @@ export default function Nav({ onQuoteClick }) {
             <img src="/bejoice-logo-white.png" alt="Bejoice" style={{ height: '38px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.8))' }} />
             <div style={{ borderLeft: '1.5px solid rgba(200,168,78,0.35)', paddingLeft: '9px', marginLeft: '6px' }}>
               <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', letterSpacing: '0.18em', color: '#ffffff', textTransform: 'uppercase', fontWeight: 700, lineHeight: 1 }}>Bejoice</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '10px', letterSpacing: '0.18em', color: '#ffe680', textTransform: 'uppercase', fontWeight: 600, lineHeight: 1, marginTop: '3px' }}>Connecting KSA to the World</div>
             </div>
           </div>
           <button

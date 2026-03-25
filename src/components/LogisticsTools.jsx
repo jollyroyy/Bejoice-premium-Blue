@@ -486,116 +486,80 @@ export default function LogisticsTools() {
 
       <div style={{ maxWidth:'1400px', margin:'0 auto', position:'relative', zIndex:1 }}>
 
-        {/* Heading */}
+        {/* Single unified card — heading + calculator */}
         <motion.div
           initial={{ opacity:0, y:24 }}
           whileInView={{ opacity:1, y:0 }}
           viewport={{ once:true, margin:'-8%' }}
           transition={{ duration:0.9, ease:[0.16,1,0.3,1] }}
-          style={{ marginBottom:'3.5rem' }}
+          style={{ display:'flex', justifyContent:'center' }}
         >
-          <span style={{ display:'block', fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(10px,1.2vw,13px)', letterSpacing:'0.28em', textTransform:'uppercase', color:'rgba(200,168,78,0.85)', marginBottom:'1rem', fontWeight:700 }}>
-            Client Utilities
-          </span>
-          <h2 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(42px,7vw,90px)', letterSpacing:'0.05em', color:'rgba(255,255,255,0.95)', lineHeight:1, marginBottom:'1.2rem' }}>
-            Freight <span style={{ color:'#c8a84e' }}>Calculators</span>
-          </h2>
-          <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(15px,1.7vw,19px)', color:'rgba(255,255,255,0.82)', maxWidth:'55ch', lineHeight:1.8, fontWeight:500 }}>
-            Accurate CBM and chargeable weight estimates in real time — Sea, Air, Land or Warehouse — before you send us an enquiry.
-          </p>
+          <div style={{
+            width:'100%', maxWidth:'780px',
+            background:'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
+            backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
+            border:'1px solid rgba(200,168,78,0.35)',
+            borderTop:'1px solid rgba(255,215,105,0.65)',
+            borderRadius:28, overflow:'hidden', position:'relative',
+            padding:'clamp(2rem,5vw,4rem) clamp(1.5rem,4vw,3.5rem) clamp(2rem,4vw,3rem)',
+            boxShadow:[
+              '0 60px 120px rgba(0,0,0,0.75)',
+              '0 0 0 1px rgba(200,168,78,0.08) inset',
+              'inset 0 1px 0 rgba(255,215,105,0.30)',
+              '0 0 60px rgba(200,168,78,0.10)',
+              '0 0 120px rgba(200,168,78,0.05)',
+            ].join(', '),
+          }}>
+
+            {/* Corner accent — top-left */}
+            <div style={{ position:'absolute', top:0, left:0, width:120, height:120, pointerEvents:'none',
+              background:'radial-gradient(circle at 0% 0%, rgba(200,168,78,0.12) 0%, transparent 65%)' }}/>
+            {/* Corner accent — bottom-right */}
+            <div style={{ position:'absolute', bottom:0, right:0, width:200, height:200, pointerEvents:'none',
+              background:'radial-gradient(circle at 100% 100%, rgba(200,168,78,0.07) 0%, transparent 60%)' }}/>
+            {/* Top gold shimmer line */}
+            <div style={{ position:'absolute', top:0, left:0, right:0, height:1, pointerEvents:'none',
+              background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.6) 40%, rgba(200,168,78,0.8) 50%, rgba(200,168,78,0.6) 60%, transparent 100%)' }}/>
+
+            {/* ── Heading ── */}
+            <div style={{ textAlign:'center', marginBottom:'clamp(2rem,4vw,3.5rem)', position:'relative', zIndex:1 }}>
+              <h2 style={{
+                fontFamily:"'Bebas Neue',sans-serif",
+                fontSize:'clamp(1.8rem,4vw,3.2rem)',
+                letterSpacing:'0.07em', lineHeight:1,
+                margin:'0 0 clamp(0.6rem,1.5vw,1rem)',
+                background:'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
+                backgroundSize:'300% 100%',
+                WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent',
+                backgroundClip:'text',
+                filter:'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
+                animation:'headingSweep 4s ease-in-out infinite',
+              }}>
+                FREIGHT CALCULATOR
+              </h2>
+              <p style={{
+                fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(15px,1.9vw,19px)',
+                color:'#ffffff', maxWidth:500, margin:'0 auto', lineHeight:1.8,
+                fontWeight:500, textShadow:'0 0 20px rgba(255,255,255,0.12)',
+              }}>
+                Instant CBM &amp; chargeable weight — Sea, Air, Land or Warehouse.
+              </p>
+              <div style={{ width:48, height:1, margin:'clamp(1rem,2vw,1.6rem) auto 0', background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.5),transparent)' }}/>
+            </div>
+
+            {/* ── Calculator widget ── */}
+            <div style={{ position:'relative', zIndex:1 }}>
+              <LoadCalculator />
+            </div>
+
+          </div>
         </motion.div>
-
-        {/* Two-column layout */}
-        <div className="tools-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(1.5rem,3vw,3rem)', alignItems:'start' }}>
-
-          {/* Left: calculator card — premium bordered */}
-          <motion.div
-            initial={{ opacity:0, x:-24 }}
-            whileInView={{ opacity:1, x:0 }}
-            viewport={{ once:true, margin:'-8%' }}
-            transition={{ duration:0.9, ease:[0.16,1,0.3,1] }}
-            style={{
-              background: 'linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.02) 100%)',
-              backdropFilter: 'blur(32px)',
-              WebkitBackdropFilter: 'blur(32px)',
-              border: '1px solid rgba(255,255,255,0.07)',
-              borderTop: '1px solid rgba(200,168,78,0.28)',
-              borderRadius: '1.75rem',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: '520px',
-              position: 'relative',
-              boxShadow: '0 40px 100px rgba(0,0,0,0.6), inset 0 1px 0 rgba(200,168,78,0.12)',
-            }}
-          >
-            {/* Animated border sweeps */}
-            <div style={{ position:'absolute', top:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-              background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-              backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite',
-            }}/>
-            <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-              background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-              backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite 2s',
-            }}/>
-            <div style={{ position:'absolute', left:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-              background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-              backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 1s',
-            }}/>
-            <div style={{ position:'absolute', right:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-              background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-              backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 3s',
-            }}/>
-            <LoadCalculator />
-          </motion.div>
-
-          {/* Right: container guide card */}
-          <motion.div
-            initial={{ opacity:0, x:24 }}
-            whileInView={{ opacity:1, x:0 }}
-            viewport={{ once:true, margin:'-8%' }}
-            transition={{ duration:0.9, delay:0.12, ease:[0.16,1,0.3,1] }}
-            style={{ perspective: 800 }}
-          >
-            <motion.div
-              animate={{ rotateZ: [-0.8, 0.8, -0.8] }}
-              transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop' }}
-              whileHover={{ rotateZ: 0, scale: 1.02, transition: { duration: 0.3 } }}
-              style={{
-                background:'rgba(255,255,255,0.02)',
-                border:'1px solid rgba(255,255,255,0.07)',
-                borderRadius:'1.5rem',
-                padding:'clamp(2rem,4vw,3.5rem)',
-                transformOrigin: 'center center',
-                willChange: 'transform',
-              }}
-            >
-              <div style={{ display:'flex', alignItems:'center', gap:'14px', marginBottom:'2rem' }}>
-                <div style={{ width:52, height:52, borderRadius:'50%', background:'rgba(200,168,78,0.1)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'24px', flexShrink:0 }}>📦</div>
-                <h3 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(28px,3.5vw,40px)', letterSpacing:'0.1em', color:'#fff', margin:0 }}>Container Guide</h3>
-              </div>
-              {[
-                { name:'20ft Standard', cbm:'≤25 CBM', payload:'21,700 kg' },
-                { name:'40ft Standard', cbm:'≤67 CBM', payload:'26,500 kg' },
-                { name:'40ft High Cube', cbm:'≤76 CBM', payload:'26,500 kg' },
-              ].map((c,i) => (
-                <div key={i} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'1rem 0', borderBottom: i<2 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
-                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(15px,1.8vw,18px)', color:'rgba(255,255,255,0.82)', fontWeight:600 }}>{c.name}</span>
-                  <div style={{ display:'flex', gap:'0.8rem', alignItems:'center' }}>
-                    <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(14px,1.6vw,17px)', letterSpacing:'0.1em', color:'#c8a84e' }}>{c.cbm}</span>
-                    <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(12px,1.4vw,15px)', color:'rgba(255,255,255,0.45)' }}>{c.payload}</span>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </motion.div>
-
-        </div>
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .tools-grid { grid-template-columns: 1fr !important; }
+        @keyframes headingSweep {
+          0%   { background-position: -100% center; }
+          100% { background-position: 200% center; }
         }
         @media (max-width: 540px) {
           .sea-row-grid  { grid-template-columns: 1fr 1fr 1fr 0.6fr auto !important; }

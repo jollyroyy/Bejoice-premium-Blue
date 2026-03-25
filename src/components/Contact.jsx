@@ -117,37 +117,21 @@ export default function Contact() {
         background: 'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
         backdropFilter: 'blur(40px)',
         WebkitBackdropFilter: 'blur(40px)',
-        border: '1px solid rgba(255,255,255,0.07)',
-        borderTop: '1px solid rgba(200,168,78,0.22)',
+        border: '1px solid rgba(200,168,78,0.35)',
+        borderTop: '1px solid rgba(255,215,105,0.65)',
         borderRadius: 28,
         boxShadow: [
-          '0 60px 120px rgba(0,0,0,0.7)',
-          '0 0 0 1px rgba(200,168,78,0.04) inset',
-          '0 2px 0 rgba(200,168,78,0.15) inset',
-          'inset 0 0 80px rgba(200,168,78,0.015)',
+          '0 60px 120px rgba(0,0,0,0.75)',
+          '0 0 0 1px rgba(200,168,78,0.08) inset',
+          'inset 0 1px 0 rgba(255,215,105,0.30)',
+          '0 0 60px rgba(200,168,78,0.10)',
+          '0 0 120px rgba(200,168,78,0.05)',
         ].join(', '),
         overflow: 'hidden',
         position: 'relative',
         padding: 'clamp(2rem,5vw,4rem) clamp(1.5rem,4vw,3.5rem) clamp(2rem,4vw,3rem)',
       }}>
 
-        {/* ── Shining border strips — outer card all four sides ── */}
-        <div style={{ position:'absolute', top:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-          background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-          backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite',
-        }}/>
-        <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-          background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-          backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite 2s',
-        }}/>
-        <div style={{ position:'absolute', left:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-          background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-          backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 1s',
-        }}/>
-        <div style={{ position:'absolute', right:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-          background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-          backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 3s',
-        }}/>
 
         {/* Corner accent — top-left */}
         <div style={{ position:'absolute', top:0, left:0, width:120, height:120, pointerEvents:'none',
@@ -210,43 +194,16 @@ export default function Contact() {
                 background: 'linear-gradient(135deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.02) 100%)',
                 backdropFilter: 'blur(32px)',
                 WebkitBackdropFilter: 'blur(32px)',
-                /* Subtle multi-layer border */
-                border: '1px solid rgba(255,255,255,0.1)',
-                outline: '1px solid rgba(200,168,78,0.08)',
-                outlineOffset: '-1px',
+                border: '1px solid rgba(200,168,78,0.22)',
+                borderTop: '1px solid rgba(200,168,78,0.45)',
                 borderRadius: 20,
-                boxShadow: [
-                  '0 32px 80px rgba(0,0,0,0.6)',
-                  '0 0 0 1px rgba(200,168,78,0.05) inset',
-                  '0 1px 0 rgba(200,168,78,0.2) inset',
-                ].join(', '),
+                boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,78,0.05) inset, inset 0 1px 0 rgba(255,215,105,0.18), 0 0 40px rgba(200,168,78,0.05)',
                 overflow: 'hidden',
                 position: 'relative',
                 transition: 'transform 0.15s ease, box-shadow 0.3s ease',
                 willChange: 'transform',
               }}
             >
-              {/* ── Shining border strips — all four sides ── */}
-              {/* Top */}
-              <div style={{ position:'absolute', top:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-                background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-                backgroundSize:'200% 100%', animation:'borderSweepH 3s ease-in-out infinite',
-              }}/>
-              {/* Bottom */}
-              <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-                background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-                backgroundSize:'200% 100%', animation:'borderSweepH 3s ease-in-out infinite 1.5s',
-              }}/>
-              {/* Left */}
-              <div style={{ position:'absolute', left:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-                background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-                backgroundSize:'100% 200%', animation:'borderSweepV 3s ease-in-out infinite 0.75s',
-              }}/>
-              {/* Right */}
-              <div style={{ position:'absolute', right:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-                background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-                backgroundSize:'100% 200%', animation:'borderSweepV 3s ease-in-out infinite 2.25s',
-              }}/>
 
               {/* Sparkles background */}
               <SparklesCore
@@ -266,13 +223,6 @@ export default function Contact() {
                 zIndex: 1,
               }}/>
 
-              {/* Animated gold sweep line across top */}
-              <div style={{
-                height: 2, position: 'relative', zIndex: 2,
-                background: 'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.0) 10%, rgba(200,168,78,0.7) 50%, rgba(200,168,78,0.0) 90%, transparent 100%)',
-                backgroundSize: '200% 100%',
-                animation: 'contactBarSweep 3.5s ease-in-out infinite',
-              }}/>
 
               {/* Inner padding */}
               <div style={{ padding: 'clamp(1.6rem,4vw,2.8rem)', position: 'relative', zIndex: 2 }}>
@@ -360,43 +310,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* ── Contact info strip ── */}
-            <div className="fade-up" style={{
-              display:'flex', flexWrap:'wrap',
-              gap:'clamp(0.6rem,2vw,1.2rem)',
-              justifyContent:'center',
-              marginTop:'clamp(1.2rem,3vw,2rem)',
-            }}>
-              {CONTACT_INFO.map((item, i) => (
-                <div key={item.label} className="contact-info-card" style={{
-                  display:'flex', alignItems:'flex-start', gap:14,
-                  background:'rgba(255,255,255,0.03)',
-                  border:'1px solid rgba(255,255,255,0.09)',
-                  borderRadius:14,
-                  padding:'clamp(1rem,1.8vw,1.4rem) clamp(1.2rem,2.2vw,1.8rem)',
-                  flex:'1 1 160px', minWidth:'clamp(150px,22vw,200px)',
-                  transitionDelay:`${i*60}ms`,
-                  cursor: item.label !== 'Riyadh HQ' ? 'pointer' : 'default',
-                }}>
-                  <div style={{ fontSize:'clamp(16px,2vw,22px)', color:'rgba(200,168,78,0.95)', flexShrink:0, marginTop:2, filter:'drop-shadow(0 0 6px rgba(200,168,78,0.5))' }}>{item.icon}</div>
-                  <div>
-                    <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(9px,1vw,11px)', letterSpacing:'0.28em', textTransform:'uppercase', color:'rgba(200,168,78,0.95)', fontWeight:700, marginBottom:6 }}>{item.label}</div>
-                    {item.label === 'Email'
-                      ? item.value.split('\n').map(v => (
-                          <a key={v} href={`mailto:${v}`} style={{ display:'block', fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(12px,1.4vw,15px)', color:'rgba(255,255,255,0.92)', lineHeight:1.7, fontWeight:500, textDecoration:'none' }}
-                            onMouseEnter={e=>e.target.style.color='#c8a84e'} onMouseLeave={e=>e.target.style.color='rgba(255,255,255,0.92)'}>{v}</a>
-                        ))
-                      : item.label === 'Phone'
-                      ? item.value.split('\n').map(v => (
-                          <a key={v} href={`tel:${v.replace(/\s/g,'')}`} style={{ display:'block', fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(12px,1.4vw,15px)', color:'rgba(255,255,255,0.92)', lineHeight:1.7, fontWeight:500, textDecoration:'none' }}
-                            onMouseEnter={e=>e.target.style.color='#c8a84e'} onMouseLeave={e=>e.target.style.color='rgba(255,255,255,0.92)'}>{v}</a>
-                        ))
-                      : <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(12px,1.4vw,15px)', color:'rgba(255,255,255,0.92)', whiteSpace:'pre-line', lineHeight:1.7, fontWeight:500 }}>{item.value}</div>
-                    }
-                  </div>
-                </div>
-              ))}
-            </div>
           </>
         ) : (
           /* ── Success ── */
@@ -420,18 +333,6 @@ export default function Contact() {
 
       {/* ── Keyframes + responsive ── */}
       <style>{`
-        @keyframes borderSweepH {
-          0%   { background-position: -100% 0; }
-          100% { background-position: 200% 0; }
-        }
-        @keyframes borderSweepV {
-          0%   { background-position: 0 -100%; }
-          100% { background-position: 0 200%; }
-        }
-        @keyframes contactBarSweep {
-          0%   { background-position: -100% center; }
-          100% { background-position: 200% center; }
-        }
         .contact-info-card {
           transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
         }

@@ -62,7 +62,7 @@ const FRAME_URLS = [
 
 // Headings shown during the 4-second globe lock — alternate sides
 const INTRO_SLIDES = [
-  { headline: ['SMART FREIGHT', 'POWERED BY AI'], eyebrow: "Elite Logistics Infrastructure", align: 'left', sub: ['Award-winning freight forwarder delivering seamless end-to-end logistics solutions', 'with reliability, efficiency, and the strength of a powerful global network.'] },
+  { headline: ['SMART FREIGHT', 'POWERED BY AI'], eyebrow: "Connecting KSA with the World", align: 'left', sub: ['Award-winning freight forwarder delivering seamless end-to-end logistics solutions', 'with reliability, efficiency, and the strength of a powerful global network.'] },
 ]
 
 // Fade window in frames — how many frames to crossfade between chapters
@@ -439,11 +439,11 @@ export default function VideoHero({ onQuoteClick }) {
     const ch    = canvas.height
 
     // Portrait (mobile): contain — show full frame, no cropping
-    // Landscape (desktop): cover — fill the viewport edge-to-edge
+    // Landscape (desktop): slightly pulled back so footage isn't too zoomed/tight
     const isPortrait = ch > cw
     const scale = isPortrait
-      ? Math.min(cw / img.naturalWidth, ch / img.naturalHeight)   // contain
-      : Math.max(cw / img.naturalWidth, ch / img.naturalHeight)   // cover
+      ? Math.min(cw / img.naturalWidth, ch / img.naturalHeight)         // contain
+      : Math.max(cw / img.naturalWidth, ch / img.naturalHeight) * 0.88  // cover, zoomed out
 
     const w = img.naturalWidth  * scale
     const h = img.naturalHeight * scale
@@ -467,9 +467,9 @@ export default function VideoHero({ onQuoteClick }) {
     FRAME_URLS.forEach((url, i) => {
       const img = new window.Image()
       img.onload = () => {
-        // As soon as frame 0 loads, reveal the canvas (scroll will control opacity)
         if (i === 0) {
-          paintFrame(0)
+          paintFrame(39)
+          // Keep canvas hidden — RAF loop will reveal it once scrolling starts
         }
       }
       img.src = url
@@ -533,26 +533,29 @@ export default function VideoHero({ onQuoteClick }) {
         else                 setIntroVisible(false)
       }
       if (introContainerRef.current) {
-        introContainerRef.current.style.transform = `translateY(-${gp * 105}%)`
-        introContainerRef.current.style.opacity   = String(Math.max(0, 1 - gp * 1.2))
+        introContainerRef.current.style.opacity = String(Math.max(0, 1 - gp * 1.5))
       }
 
-      // ── Globe: slides up cleanly, no opacity change ──
+      // ── Globe: pure crossfade dissolve — no movement, no slide ──
       const globe = globeVideoRef.current
       if (globe) {
-        globe.style.transform = `translateY(-${gp * 100}%)`
+        globe.style.transform = 'none'
+        // Ease-in-out curve: slow start, accelerates mid, slow finish
+        const eased = gp < 0.5 ? 2 * gp * gp : 1 - Math.pow(-2 * gp + 2, 2) / 2
+        globe.style.opacity = String(Math.max(0, 1 - eased))
       }
 
-      // ── Canvas fades in gracefully in last 35% of globe zone ──
+      // ── Canvas: mirror dissolve — fades in as globe fades out ──
       const canvas = canvasRef.current
       if (canvas) {
-        const cOpacity = Math.min(Math.max(0, (gp - 0.65) / 0.35), 1)
-        canvas.style.opacity = String(cOpacity)
+        const eased = gp < 0.5 ? 2 * gp * gp : 1 - Math.pow(-2 * gp + 2, 2) / 2
+        canvas.style.opacity = String(Math.min(1, eased))
       }
 
-      // ── Frame scrub after globe zone ──
+      // ── Frame scrub after globe zone — starts at frame 39 ──
+      const BASE_FRAME = 39
       const videoP   = p <= GLOBE_EXIT ? 0 : (p - GLOBE_EXIT) / (1 - GLOBE_EXIT)
-      const frameIdx = Math.min(Math.round(videoP * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1)
+      const frameIdx = Math.min(BASE_FRAME + Math.round(videoP * (TOTAL_FRAMES - 1 - BASE_FRAME)), TOTAL_FRAMES - 1)
       paintFrame(frameIdx)
 
       // Chapter headings driven by exact frame index — perfect sync
@@ -568,15 +571,22 @@ export default function VideoHero({ onQuoteClick }) {
         }
       }
 
-      // ── Hide track card + stats during heavy cargo footage (frames5+, idx >= 490) ──
+      // ── Cards fade in sync with intro heading (gp) + cargo fade ──
       if (heroCardsRef.current) {
+        // Fade out in sync with intro text using same gp multiplier (1.5)
+        const gpOp = Math.max(0, 1 - gp * 1.5)
+
+        // Also fade during heavy cargo footage
         const CARGO_FADE_START = 470
         const CARGO_FADE_END   = 490
-        const cardsOp = frameIdx < CARGO_FADE_START ? 1
+        const cargoOp = frameIdx < CARGO_FADE_START ? 1
           : frameIdx > CARGO_FADE_END ? 0
           : 1 - (frameIdx - CARGO_FADE_START) / (CARGO_FADE_END - CARGO_FADE_START)
-        heroCardsRef.current.style.opacity      = String(cardsOp)
-        heroCardsRef.current.style.pointerEvents = cardsOp < 0.1 ? 'none' : 'all'
+
+        const finalOp = gpOp * cargoOp
+        heroCardsRef.current.style.opacity       = String(finalOp)
+        heroCardsRef.current.style.transform     = 'none'
+        heroCardsRef.current.style.pointerEvents = finalOp < 0.1 ? 'none' : 'all'
       }
 
       // ── Exit fade — only after ALL frames shown (last 3% of scroll) ──
@@ -618,7 +628,14 @@ export default function VideoHero({ onQuoteClick }) {
         {/* Dark base */}
         <div style={{ position:'absolute', inset:0, zIndex:0, background:'#050508' }} />
 
-        {/* ── GLOBE VIDEO — plays once as cinematic intro, no loop ── */}
+        {/* ── CANVAS — sits beneath globe, always ready ── */}
+        <canvas ref={canvasRef} style={{
+          position:'absolute', inset:0, zIndex:1,
+          opacity:0,
+          willChange:'opacity',
+        }} />
+
+        {/* ── GLOBE VIDEO — sits on top of canvas, slides away on scroll ── */}
         <video
           ref={globeVideoRef}
           src={GLOBE_SRC}
@@ -627,20 +644,13 @@ export default function VideoHero({ onQuoteClick }) {
           playsInline
           className="hero-globe-video"
           style={{
-            position:'absolute', inset:0, zIndex:1,
+            position:'absolute', inset:0, zIndex:2,
             width:'100%', height:'100%',
             objectFit:'cover', objectPosition:'center center',
             opacity:1, transformOrigin:'center center',
-            willChange:'transform,opacity,filter',
+            willChange:'transform,opacity',
           }}
         />
-
-        {/* ── CANVAS — shows JPEG frames scrubbed by scroll ── */}
-        <canvas ref={canvasRef} style={{
-          position:'absolute', inset:0, zIndex:2,
-          opacity:0,                            /* revealed by GSAP transition */
-          willChange:'opacity',
-        }} />
 
         {/* Exit overlay */}
         <div ref={exitOverlayRef} style={{
@@ -863,8 +873,8 @@ export default function VideoHero({ onQuoteClick }) {
 
         {/* ── Bottom bar — track card + stats ── */}
         <div ref={heroCardsRef} className="hero-bottom-bar" style={{
-          position:'absolute', bottom:'clamp(12px,2vh,44px)', left:0, right:0, zIndex:5,
-          display:'flex', flexWrap:'wrap', gap:'clamp(16px,2.5vw,32px)',
+          position:'absolute', bottom:'clamp(80px,12vh,160px)', left:0, right:0, zIndex:5,
+          display:'flex', flexWrap:'wrap', gap:'clamp(40px,6vw,80px)',
           alignItems:'stretch', justifyContent:'flex-end',
           padding:'0 clamp(8rem,20vw,32rem) 0 clamp(0.8rem,4vw,5rem)', pointerEvents:'all',
         }}>
@@ -903,26 +913,6 @@ export default function VideoHero({ onQuoteClick }) {
             ))}
           </div>
 
-          {/* Cert marquee */}
-          <div className="hero-cert-marquee" style={{
-            flex:'1 1 100%', padding:'1rem 0',
-            background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.03) 50%,transparent)',
-            borderTop:'1px solid rgba(200,168,78,0.15)',
-            position:'relative', overflow:'hidden',
-          }}>
-            <div style={{ position:'absolute', left:0, top:0, bottom:0, width:'10%', background:'linear-gradient(to right,#050508,transparent)', zIndex:2, pointerEvents:'none' }} />
-            <div style={{ position:'absolute', right:0, top:0, bottom:0, width:'10%', background:'linear-gradient(to left,#050508,transparent)', zIndex:2, pointerEvents:'none' }} />
-            <div style={{ display:'flex', alignItems:'center', width:'max-content', animation:'scrollMarquee 45s linear infinite' }}>
-              {[0,1].map(k => (
-                <div key={k} style={{ display:'flex', alignItems:'center', gap:'clamp(3rem,5vw,6rem)', paddingRight:'clamp(3rem,5vw,6rem)' }}>
-                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'12px', letterSpacing:'0.28em', textTransform:'uppercase', color:'rgba(255,255,255,0.5)', fontWeight:600, whiteSpace:'nowrap' }}>Certified By</span>
-                  {['ZATCA','ISO 9001','FIATA','IATA','AEO','SASO'].map(cert => (
-                    <span key={cert} style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(22px,3vw,36px)', letterSpacing:'0.25em', color:'rgba(200,168,78,0.82)', cursor:'default', whiteSpace:'nowrap' }}>{cert}</span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
 

@@ -36,10 +36,10 @@ export default function WhyBejoice() {
         <div style={{
           background: 'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
           backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
-          border: '1px solid rgba(255,255,255,0.07)',
-          borderTop: '1px solid rgba(200,168,78,0.22)',
+          border: '1px solid rgba(200,168,78,0.28)',
+          borderTop: '1px solid rgba(200,168,78,0.55)',
           borderRadius: 28,
-          boxShadow: '0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,78,0.04) inset, 0 2px 0 rgba(200,168,78,0.15) inset, inset 0 0 80px rgba(200,168,78,0.015)',
+          boxShadow: '0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,78,0.06) inset, inset 0 1px 0 rgba(255,215,105,0.22), 0 0 50px rgba(200,168,78,0.06)',
           overflow: 'hidden', position: 'relative',
           padding: 'clamp(24px,3.5vw,48px)',
         }}>
@@ -78,23 +78,6 @@ export default function WhyBejoice() {
             `}</style>
           </div>
 
-          {/* Shining border strips */}
-          <div style={{ position:'absolute', top:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite',
-          }}/>
-          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite 2s',
-          }}/>
-          <div style={{ position:'absolute', left:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 1s',
-          }}/>
-          <div style={{ position:'absolute', right:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 3s',
-          }}/>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start" style={{ position:'relative', zIndex:1 }}>
           {/* Left */}

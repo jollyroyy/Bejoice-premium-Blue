@@ -9,7 +9,6 @@ import Services from './components/Services'
 import HeavyCargo from './components/HeavyCargo'
 import WhyBejoice from './components/WhyBejoice'
 import Certifications from './components/Certifications'
-import Testimonials from './components/Testimonials'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import FloatingBookCTA from './components/FloatingBookCTA'
@@ -25,7 +24,10 @@ export default function App() {
   const [quoteOpen, setQuoteOpen] = useState(false)
   useEffect(() => {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+    // Force top immediately — before browser can restore position
     window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
   }, [])
 
   useEffect(() => {
@@ -38,6 +40,8 @@ export default function App() {
     })
 
     window.__lenis = lenis
+    // Snap to top after Lenis initialises — prevents drift on refresh
+    lenis.scrollTo(0, { immediate: true })
 
     // Correct Lenis ↔ GSAP ScrollTrigger bridge
     lenis.on('scroll', ScrollTrigger.update)
@@ -68,7 +72,6 @@ export default function App() {
         <HeavyCargo />
         <WhyBejoice />
         <Certifications />
-        <Testimonials />
       </main>
       <Footer />
       <FloatingBookCTA />

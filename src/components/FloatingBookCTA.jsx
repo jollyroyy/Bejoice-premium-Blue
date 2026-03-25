@@ -451,15 +451,22 @@ export default function FloatingBookCTA() {
             </div>
             <button
               onClick={() => setOpen(false)}
+              title="Close chat"
               style={{
-                background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)",
-                color: "rgba(255,255,255,0.55)", cursor: "pointer",
-                fontSize: 15, lineHeight: 1, padding: "5px 10px", borderRadius: 8,
+                background: "rgba(200,50,50,0.2)", border: "2px solid rgba(220,80,80,0.6)",
+                color: "#ff9999", cursor: "pointer",
+                width: 42, height: 42, borderRadius: 12, flexShrink: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
                 transition: "all 0.2s",
+                boxShadow: "0 0 12px rgba(200,50,50,0.25)",
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.07)"; e.currentTarget.style.color = "rgba(255,255,255,0.55)"; }}
-            >✕</button>
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,50,50,0.45)"; e.currentTarget.style.borderColor = "rgba(255,100,100,0.9)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "scale(1.08)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,50,50,0.2)"; e.currentTarget.style.borderColor = "rgba(220,80,80,0.6)"; e.currentTarget.style.color = "#ff9999"; e.currentTarget.style.transform = "scale(1)"; }}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/>
+              </svg>
+            </button>
           </div>
 
           {/* ── Messages ── */}
@@ -678,6 +685,27 @@ export default function FloatingBookCTA() {
           style={{ position: "relative", cursor: "pointer" }}
           onClick={() => setOpen(o => !o)}
         >
+          {/* Dismiss badge */}
+          <button
+            onClick={e => { e.stopPropagation(); setVisible(false); setOpen(false); }}
+            title="Dismiss Layla"
+            style={{
+              position: "absolute", top: -8, right: -8, zIndex: 10,
+              width: 26, height: 26, borderRadius: "50%",
+              background: "rgba(15,15,20,0.95)",
+              border: "2px solid rgba(220,70,70,0.7)",
+              color: "rgba(255,130,130,1)",
+              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.7), 0 0 8px rgba(200,60,60,0.3)",
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,50,50,0.9)"; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "scale(1.15)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(15,15,20,0.95)"; e.currentTarget.style.color = "rgba(255,130,130,1)"; e.currentTarget.style.transform = "scale(1)"; }}
+          >
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <line x1="1" y1="1" x2="9" y2="9"/><line x1="9" y1="1" x2="1" y2="9"/>
+            </svg>
+          </button>
           {/* Single soft pulse ring */}
           {!open && (
             <div style={{

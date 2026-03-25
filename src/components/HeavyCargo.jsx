@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
+import { SparklesCore } from './ui/sparkles'
 
 const capabilities = [
   {
@@ -88,6 +89,26 @@ const capabilities = [
 
 export default function HeavyCargo() {
   const cardsRef = useRef([])
+  const gigaCardRef = useRef(null)
+  const gigaGlowRef = useRef(null)
+
+  const handleGigaMouseMove = useCallback((e) => {
+    const card = gigaCardRef.current
+    const glow = gigaGlowRef.current
+    if (!card || !glow) return
+    const rect = card.getBoundingClientRect()
+    const px = ((e.clientX - rect.left) / rect.width) * 100
+    const py = ((e.clientY - rect.top) / rect.height) * 100
+    glow.style.background = `radial-gradient(600px circle at ${px}% ${py}%, rgba(200,168,78,0.10) 0%, rgba(200,168,78,0.04) 30%, transparent 65%)`
+    const rx = ((e.clientY - rect.top) / rect.height - 0.5) * 4
+    const ry = ((e.clientX - rect.left) / rect.width - 0.5) * -4
+    card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg)`
+  }, [])
+
+  const handleGigaMouseLeave = useCallback(() => {
+    if (gigaCardRef.current) gigaCardRef.current.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)'
+    if (gigaGlowRef.current) gigaGlowRef.current.style.background = 'transparent'
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -105,79 +126,39 @@ export default function HeavyCargo() {
 
       <div className="max-w-7xl mx-auto">
 
-        <div style={{
-          background: 'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
-          backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
-          border: '1px solid rgba(255,255,255,0.07)',
-          borderTop: '1px solid rgba(200,168,78,0.22)',
-          borderRadius: 28,
-          boxShadow: '0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,78,0.04) inset, 0 2px 0 rgba(200,168,78,0.15) inset, inset 0 0 80px rgba(200,168,78,0.015)',
-          overflow: 'hidden', position: 'relative',
-          padding: 'clamp(24px,3.5vw,48px)',
-        }}>
-          {/* Meteor shower background */}
-          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', overflow:'hidden', borderRadius:28 }}>
-            {[
-              { left:'8%',  top:'-8%',  delay:'0s',   dur:'3.8s', w:1.5, len:120 },
-              { left:'22%', top:'-15%', delay:'1.2s', dur:'4.5s', w:1,   len:90  },
-              { left:'38%', top:'-5%',  delay:'2.6s', dur:'3.2s', w:2,   len:150 },
-              { left:'51%', top:'-20%', delay:'0.7s', dur:'5.0s', w:1,   len:80  },
-              { left:'65%', top:'-10%', delay:'3.4s', dur:'3.6s', w:1.5, len:110 },
-              { left:'75%', top:'-3%',  delay:'1.8s', dur:'4.2s', w:1,   len:95  },
-              { left:'88%', top:'-18%', delay:'0.3s', dur:'4.8s', w:2,   len:130 },
-              { left:'14%', top:'-25%', delay:'4.1s', dur:'3.5s', w:1,   len:85  },
-              { left:'56%', top:'-12%', delay:'2.0s', dur:'4.0s', w:1.5, len:105 },
-              { left:'92%', top:'-8%',  delay:'3.0s', dur:'3.9s', w:1,   len:70  },
-            ].map((m, i) => (
-              <div key={i} style={{
-                position: 'absolute',
-                left: m.left, top: m.top,
-                width: `${m.w}px`, height: `${m.len}px`,
-                background: `linear-gradient(180deg, rgba(255,215,105,0) 0%, rgba(255,215,105,0.55) 40%, rgba(200,168,78,0.85) 70%, rgba(255,255,255,0.5) 100%)`,
-                borderRadius: '999px',
-                transform: 'rotate(15deg)',
-                transformOrigin: 'top center',
-                animation: `meteorFall ${m.dur} linear ${m.delay} infinite`,
-                opacity: 0,
-              }} />
-            ))}
-            <style>{`
-              @keyframes meteorFall {
-                0%   { transform: rotate(15deg) translateY(0);    opacity: 0; }
-                5%   { opacity: 1; }
-                80%  { opacity: 0.6; }
-                100% { transform: rotate(15deg) translateY(110vh); opacity: 0; }
-              }
-            `}</style>
-          </div>
+        <div
+          ref={gigaCardRef}
+          onMouseMove={handleGigaMouseMove}
+          onMouseLeave={handleGigaMouseLeave}
+          style={{
+            background: 'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
+            backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
+            border: '1px solid rgba(200,168,78,0.28)',
+            borderTop: '1px solid rgba(200,168,78,0.55)',
+            borderRadius: 28,
+            boxShadow: '0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,78,0.06) inset, inset 0 1px 0 rgba(255,215,105,0.22), 0 0 50px rgba(200,168,78,0.06)',
+            overflow: 'hidden', position: 'relative',
+            padding: 'clamp(24px,3.5vw,48px)',
+            transition: 'transform 0.15s ease',
+            willChange: 'transform',
+          }}>
+          {/* Sparkles background */}
+          <SparklesCore
+            background="transparent"
+            minSize={0.6}
+            maxSize={2}
+            particleDensity={60}
+            particleColor="rgba(200,168,78,0.9)"
+            speed={0.8}
+            className="absolute inset-0 w-full h-full"
+          />
 
-          {/* Shining border strips — all four sides */}
-          <div style={{ position:'absolute', top:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite',
+          {/* Mouse-follow glow */}
+          <div ref={gigaGlowRef} style={{
+            position:'absolute', inset:0, pointerEvents:'none',
+            borderRadius:28, transition:'background 0.1s ease', zIndex:1,
           }}/>
-          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'200% 100%', animation:'borderSweepH 4s ease-in-out infinite 2s',
-          }}/>
-          <div style={{ position:'absolute', left:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 1s',
-          }}/>
-          <div style={{ position:'absolute', right:0, top:0, bottom:0, width:2, zIndex:3, pointerEvents:'none',
-            background:'linear-gradient(180deg, transparent 0%, rgba(200,168,78,0.3) 20%, rgba(255,215,105,0.95) 50%, rgba(200,168,78,0.3) 80%, transparent 100%)',
-            backgroundSize:'100% 200%', animation:'borderSweepV 4s ease-in-out infinite 3s',
-          }}/>
-          <style>{`
-            @keyframes borderSweepH {
-              0% { background-position: 200% center; }
-              100% { background-position: -200% center; }
-            }
-            @keyframes borderSweepV {
-              0% { background-position: center 200%; }
-              100% { background-position: center -200%; }
-            }
-          `}</style>
+
 
         {/* Header */}
         <motion.div
