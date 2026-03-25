@@ -16,49 +16,49 @@ const services = [
   {
     num: '01', title: 'Air Freight',
     desc: 'Time-critical global air cargo with priority handling and real-time tracking. Express and charter options available.',
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 24L42 12L30 36L22 28L6 24Z" strokeLinejoin="round"/><path d="M22 28L24 42" strokeLinecap="round"/></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 24L42 12L30 36L22 28L6 24Z" strokeLinejoin="round" /><path d="M22 28L24 42" strokeLinecap="round" /></svg>),
     span: 'md:col-span-2',
-    videoPoster: '/frames3/frame_0001.jpg',
+    videoPoster: '/frames3/0001.jpg',
     videoFrames: { folder: 'frames3', count: 169 },
   },
   {
     num: '02', title: 'Sea Freight',
     desc: 'FCL and LCL ocean freight worldwide. Deep expertise in GCC port operations and customs clearance.',
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M8 30L12 18H36L40 30" strokeLinejoin="round"/><path d="M4 34C8 30 12 38 16 34C20 30 24 38 28 34C32 30 36 38 40 34" strokeLinecap="round"/><rect x="20" y="10" width="8" height="8" rx="0.5"/></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M8 30L12 18H36L40 30" strokeLinejoin="round" /><path d="M4 34C8 30 12 38 16 34C20 30 24 38 28 34C32 30 36 38 40 34" strokeLinecap="round" /><rect x="20" y="10" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-1',
-    videoPoster: '/frames2/frame_0001.jpg',
+    videoPoster: '/frames2/0001.jpg',
     videoFrames: { folder: 'frames2', count: 289 },
   },
   {
     num: '03', title: 'Road Transport',
     desc: 'Cross-border trucking across the GCC and beyond. Dedicated fleet with GPS tracking and temperature control.',
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><rect x="4" y="18" width="28" height="16" rx="1"/><path d="M32 24H40L44 30V34H32V24Z"/><circle cx="12" cy="36" r="4"/><circle cx="36" cy="36" r="4"/></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><rect x="4" y="18" width="28" height="16" rx="1" /><path d="M32 24H40L44 30V34H32V24Z" /><circle cx="12" cy="36" r="4" /><circle cx="36" cy="36" r="4" /></svg>),
     span: 'md:col-span-1',
-    videoPoster: '/frames6/frame_0001.jpg',
+    videoPoster: '/frames6/0001.jpg',
     videoFrames: { folder: 'frames6', count: 121 },
   },
   {
     num: '04', title: 'Customs Clearance',
     desc: 'ZATCA-certified customs brokerage. Seamless import/export documentation and full regulatory compliance.',
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><rect x="10" y="6" width="28" height="36" rx="2"/><path d="M16 16H32M16 22H32M16 28H26" strokeLinecap="round"/><circle cx="34" cy="34" r="7" fill="#050508" strokeWidth="1.5"/><path d="M30 34L33 37L38 31" strokeLinecap="round" strokeLinejoin="round"/></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><rect x="10" y="6" width="28" height="36" rx="2" /><path d="M16 16H32M16 22H32M16 28H26" strokeLinecap="round" /><circle cx="34" cy="34" r="7" fill="#050508" strokeWidth="1.5" /><path d="M30 34L33 37L38 31" strokeLinecap="round" strokeLinejoin="round" /></svg>),
     span: 'md:col-span-2',
-    videoPoster: '/frames4/frame_0001.jpg',
+    videoPoster: '/frames4/0001.jpg',
     videoFrames: { folder: 'frames4', count: 32 },
   },
   {
     num: '05', title: 'Warehousing',
     desc: 'Strategically located bonded warehouses across Saudi Arabia with advanced inventory management systems.',
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M4 20L24 8L44 20V42H4V20Z"/><rect x="18" y="28" width="12" height="14" rx="0.5"/><rect x="8" y="24" width="8" height="8" rx="0.5"/><rect x="32" y="24" width="8" height="8" rx="0.5"/></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M4 20L24 8L44 20V42H4V20Z" /><rect x="18" y="28" width="12" height="14" rx="0.5" /><rect x="8" y="24" width="8" height="8" rx="0.5" /><rect x="32" y="24" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-2',
-    videoPoster: '/frames5/frame_0001.jpg',
+    videoPoster: '/frames5/0001.jpg',
     videoFrames: { folder: 'frames5', count: 121 },
   },
   {
     num: '06', title: 'Project Cargo',
     desc: 'Heavy-lift and out-of-gauge logistics. From oil & gas equipment to industrial machinery.',
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 36L16 20L28 28L38 12" strokeLinecap="round" strokeLinejoin="round"/><path d="M32 12H38V18" strokeLinecap="round" strokeLinejoin="round"/><circle cx="8" cy="40" r="3"/><circle cx="24" cy="40" r="3"/><circle cx="40" cy="40" r="3"/></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 36L16 20L28 28L38 12" strokeLinecap="round" strokeLinejoin="round" /><path d="M32 12H38V18" strokeLinecap="round" strokeLinejoin="round" /><circle cx="8" cy="40" r="3" /><circle cx="24" cy="40" r="3" /><circle cx="40" cy="40" r="3" /></svg>),
     span: 'md:col-span-1',
-    videoPoster: '/frames6/frame_0060.jpg',
+    videoPoster: '/frames6/0060.jpg',
     videoFrames: { folder: 'frames6', count: 121 },
   },
 ]
@@ -76,7 +76,7 @@ function FrameCanvas({ folder, count, active }) {
     const step = Math.max(1, Math.floor(count / 36)) // cap at ~36 frames
     for (let i = 1; i <= count; i += step) {
       const img = new Image()
-      img.src = `/${folder}/frame_${String(i).padStart(4, '0')}.jpg`
+      img.src = `/${folder}/${String(i).padStart(4, '0')}.jpg`
       imgs.push(img)
     }
     imagesRef.current = imgs
@@ -144,22 +144,22 @@ export default function Services() {
   }
 
   const itemVariants = {
-    hidden: (i) => ({ 
-      opacity: 0, 
-      x: [ -80, 100, -60, 80, -90, 70 ][i % 6],
-      y: [ 100, 150, 80, 120, 90, 140 ][i % 6],
-      rotate: [ -14, 12, -8, 15, -18, 10 ][i % 6],
+    hidden: (i) => ({
+      opacity: 0,
+      x: [-80, 100, -60, 80, -90, 70][i % 6],
+      y: [100, 150, 80, 120, 90, 140][i % 6],
+      rotate: [-14, 12, -8, 15, -18, 10][i % 6],
       scale: 0.8
     }),
-    show: { 
-      opacity: 1, 
+    show: {
+      opacity: 1,
       x: 0,
-      y: 0, 
+      y: 0,
       rotate: 0,
       scale: 1,
-      transition: { 
-        type: "spring", stiffness: 70, damping: 14, mass: 1.2 
-      } 
+      transition: {
+        type: "spring", stiffness: 70, damping: 14, mass: 1.2
+      }
     }
   }
 
