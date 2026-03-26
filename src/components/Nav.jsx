@@ -76,6 +76,26 @@ export default function Nav({ onQuoteClick }) {
     setTimeout(() => onQuoteClick?.(), 350)
   }
 
+  const triggerGoogleTranslate = (targetLang) => {
+    // Try to use the hidden Google Translate combo — no page reload needed
+    const attempt = (tries = 0) => {
+      const combo = document.querySelector('.goog-te-combo')
+      if (combo) {
+        combo.value = targetLang === 'ar' ? 'ar' : ''
+        combo.dispatchEvent(new Event('change'))
+      } else if (tries < 10) {
+        setTimeout(() => attempt(tries + 1), 200)
+      }
+    }
+    attempt()
+  }
+
+  const switchLang = (l) => {
+    if (lang === l) return
+    setLang(l)
+    triggerGoogleTranslate(l)
+  }
+
   const toolCard = (icon, label, sub, onClick) => (
     <button
       onClick={onClick}
@@ -177,7 +197,7 @@ export default function Nav({ onQuoteClick }) {
               onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(200,168,78,0.75)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(200,168,78,0.28), inset 0 1px 0 rgba(200,168,78,0.12)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(200,168,78,0.45)'; e.currentTarget.style.boxShadow = '0 2px 16px rgba(200,168,78,0.12), inset 0 1px 0 rgba(200,168,78,0.08)' }}
             >
-              <button onClick={() => { if (lang === 'en') return; setLang('en'); document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/'; document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname}`; window.location.reload() }}
+              <button onClick={() => switchLang('en')}
                 style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: 'clamp(6px,1.2vw,8px) clamp(9px,1.5vw,13px)', background: lang === 'en' ? 'rgba(200,168,78,0.22)' : 'transparent', border: 'none', borderRight: '1px solid rgba(200,168,78,0.3)', cursor: lang === 'en' ? 'default' : 'pointer', transition: 'background 0.25s ease', position: 'relative' }}
                 onMouseEnter={e => { if (lang !== 'en') e.currentTarget.style.background = 'rgba(200,168,78,0.1)' }}
                 onMouseLeave={e => { if (lang !== 'en') e.currentTarget.style.background = 'transparent' }}
@@ -186,7 +206,7 @@ export default function Nav({ onQuoteClick }) {
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', fontWeight: 800, letterSpacing: '0.12em', lineHeight: 1, color: lang === 'en' ? '#e8cc7a' : 'rgba(200,168,78,0.65)', textShadow: lang === 'en' ? '0 0 12px rgba(232,204,122,0.6)' : 'none' }}>EN</span>
                 {lang === 'en' && <span style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '20px', height: '2px', background: 'linear-gradient(90deg, transparent, #c8a84e, transparent)', borderRadius: '2px 2px 0 0' }} />}
               </button>
-              <button onClick={() => { if (lang === 'ar') return; setLang('ar'); document.cookie = 'googtrans=/en/ar; path=/'; document.cookie = `googtrans=/en/ar; path=/; domain=.${window.location.hostname}`; window.location.reload() }}
+              <button onClick={() => switchLang('ar')}
                 style={{ display: 'flex', alignItems: 'center', gap: '7px', padding: 'clamp(6px,1.2vw,8px) clamp(9px,1.5vw,13px)', background: lang === 'ar' ? 'rgba(200,168,78,0.22)' : 'transparent', border: 'none', cursor: lang === 'ar' ? 'default' : 'pointer', transition: 'background 0.25s ease', position: 'relative' }}
                 onMouseEnter={e => { if (lang !== 'ar') e.currentTarget.style.background = 'rgba(200,168,78,0.1)' }}
                 onMouseLeave={e => { if (lang !== 'ar') e.currentTarget.style.background = 'transparent' }}
