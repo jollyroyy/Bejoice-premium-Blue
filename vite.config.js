@@ -9,6 +9,16 @@ export default defineConfig({
   publicDir: 'public',     // ← ADD THIS
   base: './',             // ← ADD THIS  
   build: {
-    assetsInlineLimit: 0   // ← ADD THIS (don't inline large JPGs)
+    assetsInlineLimit: 0,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          gsap: ['gsap'],
+          lenis: ['lenis'],
+        }
+      }
+    }
   }
 })

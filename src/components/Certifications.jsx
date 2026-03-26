@@ -41,11 +41,27 @@ export default function Certifications() {
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
           className="mb-20"
         >
-          <div className="section-glass-header" style={{ display: 'inline-block' }}>
-            <h2 className="section-headline">
-              <span className="shine-text" data-text="CERTIFIED">CERTIFIED</span><br />
-              <span style={{ color: 'rgba(200,168,78,0.98)' }}>TO DELIVER</span>
+          <div style={{ display: 'inline-block' }}>
+            <h2 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(3rem,7vw,6rem)',
+              letterSpacing: '0.07em', lineHeight: 1,
+              margin: 0,
+              background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
+              backgroundSize: '300% 100%',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
+              animation: 'headingSweep 4s ease-in-out infinite',
+            }}>
+              CERTIFIED<br />TO DELIVER
             </h2>
+            <style>{`
+              @keyframes headingSweep {
+                0%   { background-position: -100% center; }
+                100% { background-position: 200% center; }
+              }
+            `}</style>
           </div>
         </motion.div>
 

@@ -18,8 +18,8 @@ const services = [
     desc: 'Time-critical global air cargo with priority handling and real-time tracking. Express and charter options available.',
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 24L42 12L30 36L22 28L6 24Z" strokeLinejoin="round" /><path d="M22 28L24 42" strokeLinecap="round" /></svg>),
     span: 'md:col-span-2',
-    videoPoster: '/frames3/0001.jpg',
-    videoFrames: { folder: 'frames3', count: 169 },
+    videoPoster: '/frames5/0001.jpg',
+    videoFrames: { folder: 'frames5', count: 121 },
   },
   {
     num: '02', title: 'Sea Freight',

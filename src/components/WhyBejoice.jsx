@@ -44,38 +44,21 @@ export default function WhyBejoice() {
           padding: 'clamp(24px,3.5vw,48px)',
         }}>
 
-          {/* Meteor shower */}
+          {/* Ambient light layers (matches Request a Private Quote) */}
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', overflow:'hidden', borderRadius:28 }}>
-            {[
-              { left:'5%',  top:'-10%', delay:'0.4s', dur:'4.2s', w:1.5, len:110 },
-              { left:'18%', top:'-18%', delay:'2.1s', dur:'3.8s', w:1,   len:80  },
-              { left:'32%', top:'-6%',  delay:'1.0s', dur:'5.0s', w:2,   len:140 },
-              { left:'47%', top:'-22%', delay:'3.3s', dur:'3.5s', w:1,   len:90  },
-              { left:'60%', top:'-8%',  delay:'0.8s', dur:'4.6s', w:1.5, len:120 },
-              { left:'72%', top:'-14%', delay:'2.7s', dur:'3.9s', w:1,   len:75  },
-              { left:'84%', top:'-4%',  delay:'1.5s', dur:'4.3s', w:2,   len:130 },
-              { left:'93%', top:'-20%', delay:'3.8s', dur:'3.6s', w:1,   len:85  },
-              { left:'26%', top:'-28%', delay:'4.5s', dur:'4.0s', w:1.5, len:100 },
-              { left:'55%', top:'-16%', delay:'0.2s', dur:'4.8s', w:1,   len:95  },
-            ].map((m, i) => (
-              <div key={i} style={{
-                position: 'absolute', left: m.left, top: m.top,
-                width: `${m.w}px`, height: `${m.len}px`,
-                background: 'linear-gradient(180deg, rgba(255,215,105,0) 0%, rgba(255,215,105,0.55) 40%, rgba(200,168,78,0.85) 70%, rgba(255,255,255,0.5) 100%)',
-                borderRadius: '999px',
-                transform: 'rotate(15deg)', transformOrigin: 'top center',
-                animation: `wbMeteor ${m.dur} linear ${m.delay} infinite`,
-                opacity: 0,
-              }} />
-            ))}
-            <style>{`
-              @keyframes wbMeteor {
-                0%   { transform: rotate(15deg) translateY(0);    opacity: 0; }
-                5%   { opacity: 1; }
-                80%  { opacity: 0.6; }
-                100% { transform: rotate(15deg) translateY(110vh); opacity: 0; }
-              }
-            `}</style>
+            <div style={{
+              position:'absolute', inset:0,
+              background:'radial-gradient(ellipse 80% 50% at 50% -5%, rgba(200,168,78,0.1) 0%, transparent 60%)',
+            }}/>
+            <div style={{
+              position:'absolute', bottom:'-10%', right:'-5%',
+              width:'clamp(300px,50vw,600px)', height:'clamp(300px,50vw,600px)', borderRadius:'50%',
+              background:'radial-gradient(circle, rgba(200,168,78,0.04) 0%, transparent 65%)',
+            }}/>
+            <div style={{
+              position:'absolute', inset:0, opacity:0.4,
+              backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(200,168,78,0.02) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(200,168,78,0.02) 60px)',
+            }}/>
           </div>
 
 
