@@ -34,8 +34,9 @@ const services = [
     desc: 'Cross-border trucking across the GCC and beyond. Dedicated fleet with GPS tracking and temperature control.',
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><rect x="4" y="18" width="28" height="16" rx="1" /><path d="M32 24H40L44 30V34H32V24Z" /><circle cx="12" cy="36" r="4" /><circle cx="36" cy="36" r="4" /></svg>),
     span: 'md:col-span-1',
-    videoPoster: '/frames6/0001.jpg',
-    videoFrames: { folder: 'frames6', count: 121 },
+    videoPoster: '/hero-truck-poster.jpg',
+    videoFrames: null,
+    truckBg: '/hero-truck-poster.jpg',
   },
   {
     num: '04', title: 'Customs Clearance',
@@ -246,29 +247,49 @@ export default function Services() {
               gap: 0,
             }}
           >
-            {services.map((s, i) => (
+            {services.map((s, i) => {
+              const isActive = hoveredCard === s.num
+              return (
               <motion.div
                 key={s.num}
                 custom={i}
                 variants={itemVariants}
                 onHoverStart={() => setHoveredCard(s.num)}
                 onHoverEnd={() => setHoveredCard(null)}
+                onTouchStart={() => setHoveredCard(s.num)}
+                onTouchEnd={() => setTimeout(() => setHoveredCard(null), 600)}
                 style={{
                   position: 'relative', overflow: 'hidden',
                   padding: 'clamp(1.6rem,3vw,2.4rem)',
+                  minHeight: s.truckBg ? 'clamp(200px,40vw,280px)' : undefined,
                   borderRight: (i % 3 !== 2) ? '1px solid rgba(200,168,78,0.08)' : 'none',
                   borderBottom: (i < 3) ? '1px solid rgba(200,168,78,0.08)' : 'none',
                   cursor: 'default',
                   transition: 'background 0.3s ease',
-                  background: hoveredCard === s.num ? 'rgba(200,168,78,0.04)' : 'transparent',
+                  background: isActive ? 'rgba(200,168,78,0.04)' : 'transparent',
                 }}
               >
-                {/* Frame canvas bg on hover */}
-                <FrameCanvas folder={s.videoFrames.folder} count={s.videoFrames.count} active={hoveredCard === s.num} />
+                {/* Background layer */}
+                {s.truckBg ? (
+                  <div style={{
+                    position: 'absolute', inset: 0,
+                    backgroundImage: `url(${s.truckBg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center 60%',
+                    opacity: isActive ? 1 : 0.18,
+                    transition: 'opacity 0.55s ease',
+                    pointerEvents: 'none', zIndex: 0,
+                  }} />
+                ) : (
+                  <FrameCanvas folder={s.videoFrames.folder} count={s.videoFrames.count} active={isActive} />
+                )}
+
+                {/* Dark overlay — stronger on mobile (always on), lightens on active */}
                 <div style={{
                   position: 'absolute', inset: 0, pointerEvents: 'none',
-                  background: 'linear-gradient(160deg, rgba(5,5,8,0.82) 0%, rgba(5,5,8,0.65) 100%)',
-                  opacity: hoveredCard === s.num ? 1 : 0, transition: 'opacity 0.5s ease',
+                  background: 'linear-gradient(160deg, rgba(5,5,8,0.88) 0%, rgba(5,5,8,0.72) 100%)',
+                  opacity: s.truckBg ? (isActive ? 1 : 0.92) : (isActive ? 1 : 0),
+                  transition: 'opacity 0.5s ease',
                 }} />
 
                 <div style={{ position: 'relative', zIndex: 1 }}>
@@ -276,7 +297,7 @@ export default function Services() {
                   <div style={{
                     marginBottom: '1rem',
                     transition: 'transform 0.4s ease',
-                    transform: hoveredCard === s.num ? 'scale(1.1)' : 'scale(1)',
+                    transform: isActive ? 'scale(1.1)' : 'scale(1)',
                   }}>
                     {s.icon}
                   </div>
@@ -285,7 +306,7 @@ export default function Services() {
                     fontFamily: "'Bebas Neue', sans-serif",
                     fontSize: 'clamp(1.3rem,2.2vw,1.7rem)',
                     letterSpacing: '0.08em', lineHeight: 1.1,
-                    color: hoveredCard === s.num ? 'rgba(255,215,105,1)' : '#ffffff',
+                    color: isActive ? 'rgba(255,215,105,1)' : '#ffffff',
                     marginBottom: '0.6rem',
                     transition: 'color 0.3s ease',
                   }}>
@@ -293,7 +314,7 @@ export default function Services() {
                   </h3>
                   {/* Divider */}
                   <div style={{
-                    width: hoveredCard === s.num ? '40px' : '20px',
+                    width: isActive ? '40px' : '20px',
                     height: 1, marginBottom: '0.8rem',
                     background: 'linear-gradient(90deg, rgba(200,168,78,0.8), transparent)',
                     transition: 'width 0.4s ease',
@@ -309,7 +330,8 @@ export default function Services() {
                   </p>
                 </div>
               </motion.div>
-            ))}
+              )
+            })}
           </motion.div>
         </motion.div>
       </div>

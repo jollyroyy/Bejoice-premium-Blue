@@ -36,7 +36,7 @@ function CountUp({ target, suffix = '', duration = 900 }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Config
 // ─────────────────────────────────────────────────────────────────────────────
-const GLOBE_SRC    = '/saudi-connected.mp4'
+const GLOBE_SRC    = 'https://archive.org/download/saudi-connected/saudi-connected.mp4'
 const SCROLL_HEIGHT = 1800
 
 // ── JPEG frame sequences ──────────────────────────────────────────
