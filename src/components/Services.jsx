@@ -240,10 +240,11 @@ export default function Services() {
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? 'show' : 'hidden'}
+            className="services-grid"
             style={{
               position: 'relative', zIndex: 2,
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(260px, 100%), 1fr))',
               gap: 0,
             }}
           >
@@ -342,7 +343,17 @@ export default function Services() {
           100% { background-position: 200% center; }
         }
         @media (max-width: 600px) {
-          #services .services-grid > div { border-right: none !important; }
+          #services .services-grid > div {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(200,168,78,0.08) !important;
+            min-height: 160px !important;
+          }
+          #services .services-grid > div:last-child {
+            border-bottom: none !important;
+          }
+          #services .services-grid > div {
+            padding: 1.4rem 1.2rem !important;
+          }
         }
       `}</style>
     </section>

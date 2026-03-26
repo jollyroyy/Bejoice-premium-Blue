@@ -150,10 +150,9 @@ export default function Contact() {
 
         {/* ── Heading ── */}
         <div className="fade-up" style={{ textAlign:'center', marginBottom:'clamp(2rem,4vw,3.5rem)' }}>
-          <h2 style={{
+          <h2 className="contact-heading" style={{
             fontFamily:"'Bebas Neue',sans-serif",
-            fontSize:'clamp(1.8rem,4vw,3.2rem)',
-            whiteSpace:'nowrap',
+            fontSize:'clamp(1.4rem,4vw,3.2rem)',
             letterSpacing:'0.07em', lineHeight:1,
             margin:'0 0 clamp(0.6rem,1.5vw,1rem)',
             background:'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',

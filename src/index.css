@@ -1000,3 +1000,37 @@ body {
   .qq-services-grid { grid-template-columns: 1fr 1fr !important; }
   .qq-tab { min-height: 44px; }
 }
+
+/* ── MOBILE AUDIT FIXES (March 2026) ── */
+
+/* Contact: heading wraps on mobile, no overflow */
+@media (max-width: 480px) {
+  .contact-heading { font-size: 1.35rem !important; letter-spacing: 0.04em !important; }
+}
+
+/* Testimonials: larger tap targets on bottom client tabs */
+@media (max-width: 639px) {
+  #testimonials .grid-cols-2 button { padding: 1rem 0.75rem !important; }
+  #testimonials blockquote { font-size: 15px !important; }
+}
+
+/* WhyBejoice: heading centres on mobile */
+@media (max-width: 1023px) {
+  #why-us .grid > div:first-child { text-align: center; }
+}
+
+/* Certifications: reduce heading margin on mobile */
+@media (max-width: 639px) {
+  #certifications .mb-20 { margin-bottom: 2rem; }
+}
+
+/* Footer: proper 2-col layout between 480-768px */
+@media (min-width: 480px) and (max-width: 767px) {
+  footer .grid { grid-template-columns: 1fr 1fr !important; }
+  footer .col-span-2 { grid-column: span 2 !important; }
+}
+
+/* KeyMarkets: show tooltips on mobile */
+@media (max-width: 767px) {
+  #markets .group .absolute.bottom-full { opacity: 1 !important; bottom: auto; top: 100%; margin-top: 4px; }
+}

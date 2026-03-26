@@ -35,12 +35,12 @@ export default function HeavyLift() {
           {/* Glass Header Block */}
           <div className="section-glass-header" style={{ marginBottom: 'clamp(24px, 5vw, 48px)' }}>
             {/* Eyebrow */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px', flexWrap: 'wrap' }}>
               <div style={{ width: 'clamp(32px,4.5vw,50px)', height: '1.5px', background: '#c8a84e', flexShrink: 0 }} />
               <span style={{
                 fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(10px,1.2vw,13px)',
-                letterSpacing: '0.35em', textTransform: 'uppercase',
-                color: '#c8a84e', fontWeight: 600,
+                letterSpacing: 'clamp(0.08em,0.35em,0.35em)', textTransform: 'uppercase',
+                color: '#c8a84e', fontWeight: 600, lineHeight: 1.5,
               }}>
                 Heavy Lift · ODC · OOG · Project Cargo
               </span>
