@@ -56,7 +56,7 @@ export default function HeavyLift() {
               textShadow: '0 2px 32px rgba(0,0,0,0.5)',
               cursor: 'default',
             }}>
-              <span className="shine-text" data-text="WHEN THE LOAD">WHEN THE LOAD</span>
+              WHEN THE LOAD
             </h2>
             <h2 style={{
               fontFamily: "'Bebas Neue', sans-serif",

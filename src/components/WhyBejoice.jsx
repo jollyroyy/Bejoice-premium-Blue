@@ -78,15 +78,11 @@ export default function WhyBejoice() {
                     fontSize: 'clamp(3rem,7vw,6rem)',
                     letterSpacing: '0.07em', lineHeight: 1,
                     margin: 0,
-                    background: 'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
-                    backgroundSize: '300% 100%',
-                    WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
+                    color: '#ffffff',
                     filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
-                    animation: 'headingSweep 4s ease-in-out infinite',
                   }}
                 >
-                  WHY<br />BEJOICE
+                  <span style={{ color: '#ffffff' }}>WHY</span><br /><span style={{ color: '#c8a84e' }}>BEJOICE</span>
                 </motion.h2>
                 <style>{`
                   @keyframes headingSweep {

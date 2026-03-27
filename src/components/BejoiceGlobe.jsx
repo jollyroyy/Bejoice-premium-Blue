@@ -265,7 +265,7 @@ export default function BejoiceGlobe() {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }}
           style={{ textAlign: 'center', marginBottom: 'clamp(1.5rem,3vw,3rem)' }}
         >
-          <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.75rem', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'#c8a84e', display:'block', marginBottom:'0.9rem' }}>
+          <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'1rem', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'#c8a84e', display:'block', marginBottom:'0.9rem' }}>
             OUR OFFICES
           </span>
           <h2 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(2rem,5.5vw,4.8rem)', color:'#ffffff', letterSpacing:'0.04em', lineHeight:1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
@@ -345,7 +345,7 @@ export default function BejoiceGlobe() {
                   display:'block',
                 }} />
                 <div>
-                  <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(1rem,2.5vw,1.25rem)', fontWeight:500, color:'rgba(255,255,255,0.82)', lineHeight:1.2 }}>{o.city}</div>
+                  <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(1.3rem,3.5vw,1.6rem)', fontWeight:500, color:'rgba(255,255,255,0.82)', lineHeight:1.2 }}>{o.city}</div>
                 </div>
               </motion.div>
             ))}

@@ -54,10 +54,8 @@ body { top: 0 !important; }
   background-clip: text;
   -webkit-text-fill-color: transparent;
   pointer-events: none;
-  animation: shineLTR 4s ease-in-out infinite;
+  animation: none;
 }
-
-/* ── SHINE SWEEP — auto left-to-right sweep, always running ── */
 
 /* White text shine */
 .shine-text {
@@ -90,10 +88,10 @@ body { top: 0 !important; }
   background-clip: text;
   -webkit-text-fill-color: transparent;
   pointer-events: none;
-  animation: shineLTR 4s ease-in-out infinite;
+  animation: none;
 }
 
-/* Gold text shine — soft warm-gold flash instead of harsh white */
+/* Gold text shine */
 .shine-gold::after {
   background: linear-gradient(
     90deg,
@@ -108,7 +106,7 @@ body { top: 0 !important; }
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shineLTR 5s ease-in-out infinite;
+  animation: none;
 }
 
 

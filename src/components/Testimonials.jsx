@@ -61,7 +61,7 @@ export default function Testimonials() {
           <div className="section-glass-header" style={{ textAlign: 'right' }}>
             <div className="section-num mb-5" style={{ textAlign: 'right' }}>05 — Client Voices</div>
             <h2 className="section-headline" style={{ textAlign: 'right' }}>
-              <span className="shine-text" data-text="WHAT THEY">WHAT THEY</span><br />
+              <span style={{ color: '#ffffff' }}>WHAT THEY</span><br />
               <span style={{ color: 'rgba(200,168,78,0.98)' }}>SAY</span>
             </h2>
           </div>
