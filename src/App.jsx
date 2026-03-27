@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -6,6 +6,7 @@ import Nav from './components/Nav'
 import VideoHero from './components/VideoHero'
 import LogisticsTools from './components/LogisticsTools'
 import Services from './components/Services'
+const BejoiceGlobe = lazy(() => import('./components/BejoiceGlobe'))
 import HeavyCargo from './components/HeavyCargo'
 import WhyBejoice from './components/WhyBejoice'
 import Certifications from './components/Certifications'
@@ -69,6 +70,9 @@ export default function App() {
         <Contact />
         <LogisticsTools />
         <Services />
+        <Suspense fallback={null}>
+          <BejoiceGlobe />
+        </Suspense>
         <HeavyCargo />
         <WhyBejoice />
         <Certifications />

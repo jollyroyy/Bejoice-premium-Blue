@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 const INCOTERMS = ['EXW','FCA','FAS','FOB','CFR','CIF','CPT','CIP','DAP','DPU','DDP'];
@@ -105,6 +105,85 @@ function Select({ value, onChange, options, placeholder }) {
         <option key={o} value={o} style={{ background: '#0a0a0f' }}>{o}</option>
       ))}
     </select>
+  );
+}
+
+// Fully custom dropdown — bypasses OS native styling
+function UnitDropdown({ value, onChange, options }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  const selected = options.find(o => o.value === value) || options[0];
+
+  return (
+    <div ref={ref} style={{ position: 'relative', minWidth: '150px', flexShrink: 0, userSelect: 'none' }}>
+      {/* Trigger */}
+      <div
+        onClick={() => setOpen(o => !o)}
+        style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem',
+          background: '#0d1020',
+          border: `1px solid ${open ? 'rgba(200,168,78,0.8)' : 'rgba(200,168,78,0.35)'}`,
+          borderRadius: open ? '0.4rem 0.4rem 0 0' : '0.4rem',
+          padding: '0.32rem 0.65rem',
+          color: '#c8a84e',
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+          fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.08em',
+          cursor: 'pointer',
+          transition: 'border-color 0.2s',
+        }}
+      >
+        <span>{selected.label}</span>
+        <svg
+          width="10" height="10" viewBox="0 0 24 24" fill="none"
+          stroke="#c8a84e" strokeWidth="2.5"
+          style={{ flexShrink: 0, transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        >
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </div>
+
+      {/* Dropdown panel */}
+      {open && (
+        <div style={{
+          position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 9999,
+          background: '#0d1020',
+          border: '1px solid rgba(200,168,78,0.5)',
+          borderTop: 'none',
+          borderRadius: '0 0 0.4rem 0.4rem',
+          overflow: 'hidden',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.8)',
+        }}>
+          {options.map(o => (
+            <div
+              key={o.value}
+              onClick={() => { onChange(o.value); setOpen(false); }}
+              style={{
+                padding: '0.55rem 0.65rem',
+                color: o.value === value ? '#c8a84e' : 'rgba(255,255,255,0.75)',
+                background: o.value === value ? 'rgba(200,168,78,0.1)' : 'transparent',
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                fontSize: '0.82rem', fontWeight: o.value === value ? 700 : 500,
+                letterSpacing: '0.06em',
+                cursor: 'pointer',
+                transition: 'background 0.15s, color 0.15s',
+                borderBottom: '1px solid rgba(255,255,255,0.04)',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(200,168,78,0.15)'; e.currentTarget.style.color = '#c8a84e'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = o.value === value ? 'rgba(200,168,78,0.1)' : 'transparent'; e.currentTarget.style.color = o.value === value ? '#c8a84e' : 'rgba(255,255,255,0.75)'; }}
+            >
+              {o.label}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -479,7 +558,7 @@ function AirForm({ onSuccess }) {
   const [d, setD] = useState({
     origin: '', destination: '', readyDate: '',
     cargoType: 'General',
-    pieces: '', weight: '', length: '', width: '', height: '',
+    pieces: '', weight: '', length: '', width: '', height: '', dimUnit: 'cm',
     commodity: '', hazardous: false, lithiumBattery: false, perishable: false,
     service: 'Standard',
     customs: false, insurance: false, pickup: false, delivery: false,
@@ -492,7 +571,8 @@ function AirForm({ onSuccess }) {
     const w = parseFloat(d.width) || 0;
     const h = parseFloat(d.height) || 0;
     const qty = parseInt(d.pieces) || 1;
-    return ((l * w * h) / 5000 * qty).toFixed(2);
+    const divisor = d.dimUnit === 'mm' ? 5000000 : 5000;
+    return ((l * w * h) / divisor * qty).toFixed(2);
   };
   const chargeable = () => {
     const vw = parseFloat(volWeight());
@@ -548,7 +628,17 @@ function AirForm({ onSuccess }) {
             </Field>
           </div>
           <div style={{ marginTop: '1rem' }}>
-            <label style={{ ...labelCls, marginBottom: '0.65rem' }}>Dimensions per Piece (cm)</label>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <label style={{ ...labelCls, marginBottom: 0 }}>Dimensions per Piece</label>
+              <UnitDropdown
+                value={d.dimUnit}
+                onChange={v => up('dimUnit', v)}
+                options={[
+                  { value: 'cm', label: 'Centimeters (cm)' },
+                  { value: 'mm', label: 'Millimeters (mm)' },
+                ]}
+              />
+            </div>
             <div className="qq-grid-3" style={{ gap: '0.5rem' }}>
               {[['Length','length'],['Width','width'],['Height','height']].map(([lbl, key]) => (
                 <div key={key}>

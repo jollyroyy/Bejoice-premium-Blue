@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // ── helpers ────────────────────────────────────────────────────────────────
@@ -43,19 +44,165 @@ const lbl = {
 
 function Lbl({ children }) { return <span style={lbl}>{children}</span> }
 
+const UNITS = ['mm','cm','m','in','ft']
+
 function UnitSelect({ value, onChange }) {
+  const [open, setOpen] = useState(false)
+  const [pos, setPos]   = useState({ top: 0, left: 0, width: 0 })
+  const triggerRef = useRef(null)
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (triggerRef.current && !triggerRef.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const handleOpen = () => {
+    const rect = triggerRef.current.getBoundingClientRect()
+    setPos({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX, width: rect.width })
+    setOpen(o => !o)
+  }
+
   return (
-    <select
-      value={value}
-      onChange={e => onChange(e.target.value)}
-      style={{ ...inp, padding: '0.6rem 0.4rem', fontSize: '0.88rem', cursor: 'pointer' }}
-    >
-      <option value="mm">mm</option>
-      <option value="cm">cm</option>
-      <option value="m">m</option>
-      <option value="in">in</option>
-      <option value="ft">ft</option>
-    </select>
+    <div style={{ position: 'relative', width: '100%', userSelect: 'none' }}>
+      <div
+        ref={triggerRef}
+        onClick={handleOpen}
+        style={{
+          ...inp,
+          padding: '0.6rem 1.8rem 0.6rem 0.6rem',
+          fontSize: '0.88rem',
+          cursor: 'pointer',
+          color: '#c8a84e',
+          border: `1px solid ${open ? 'rgba(200,168,78,0.8)' : 'rgba(200,168,78,0.35)'}`,
+          borderRadius: '0.5rem',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          background: '#0d1020',
+          transition: 'border-color 0.2s',
+          position: 'relative',
+        }}
+      >
+        <span style={{ fontWeight: 700, letterSpacing: '0.1em' }}>{value}</span>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#c8a84e" strokeWidth="2.5"
+          style={{ position: 'absolute', right: '0.5rem', transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </div>
+
+      {open && createPortal(
+        <div style={{
+          position: 'absolute', top: pos.top, left: pos.left, width: pos.width, zIndex: 99999,
+          background: '#0d1020',
+          border: '1px solid rgba(200,168,78,0.5)',
+          borderRadius: '0.5rem',
+          overflow: 'hidden',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.95)',
+        }}>
+          {UNITS.map(u => (
+            <div key={u}
+              onClick={() => { onChange(u); setOpen(false) }}
+              style={{
+                padding: '0.5rem 0.7rem',
+                color: u === value ? '#c8a84e' : 'rgba(255,255,255,0.7)',
+                background: u === value ? 'rgba(200,168,78,0.12)' : 'transparent',
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '0.88rem', fontWeight: u === value ? 700 : 400,
+                letterSpacing: '0.08em', cursor: 'pointer',
+                borderBottom: '1px solid rgba(255,255,255,0.04)',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(200,168,78,0.18)'; e.currentTarget.style.color = '#c8a84e' }}
+              onMouseLeave={e => { e.currentTarget.style.background = u === value ? 'rgba(200,168,78,0.12)' : 'transparent'; e.currentTarget.style.color = u === value ? '#c8a84e' : 'rgba(255,255,255,0.7)' }}
+            >{u}</div>
+          ))}
+        </div>,
+        document.body
+      )}
+    </div>
+  )
+}
+
+const TRUCK_OPTS = [
+  { value: '3.5t', label: '3.5t Pickup (18 CBM)' },
+  { value: '10t',  label: '10t Truck (40 CBM)'   },
+  { value: '20t',  label: '20t Truck (80 CBM)'   },
+  { value: '40t',  label: '40t Semi (120 CBM)'   },
+]
+
+function TruckSelect({ value, onChange }) {
+  const [open, setOpen] = useState(false)
+  const [pos, setPos]   = useState({ top: 0, left: 0, width: 0 })
+  const triggerRef = useRef(null)
+  const selected = TRUCK_OPTS.find(o => o.value === value) || TRUCK_OPTS[0]
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (triggerRef.current && !triggerRef.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const handleOpen = () => {
+    const rect = triggerRef.current.getBoundingClientRect()
+    setPos({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX, width: rect.width })
+    setOpen(o => !o)
+  }
+
+  return (
+    <div style={{ position: 'relative', width: '100%', userSelect: 'none' }}>
+      <div
+        ref={triggerRef}
+        onClick={handleOpen}
+        style={{
+          ...inp,
+          padding: '0.65rem 2rem 0.65rem 0.9rem',
+          fontSize: '0.95rem',
+          cursor: 'pointer',
+          color: '#c8a84e',
+          border: `1px solid ${open ? 'rgba(200,168,78,0.8)' : 'rgba(200,168,78,0.35)'}`,
+          borderRadius: '0.5rem',
+          background: '#0d1020',
+          position: 'relative',
+          transition: 'border-color 0.2s',
+        }}
+      >
+        <span>{selected.label}</span>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#c8a84e" strokeWidth="2.5"
+          style={{ position: 'absolute', right: '0.7rem', top: '50%', transform: open ? 'translateY(-50%) rotate(180deg)' : 'translateY(-50%) rotate(0deg)', transition: 'transform 0.2s' }}>
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </div>
+
+      {open && createPortal(
+        <div style={{
+          position: 'absolute', top: pos.top, left: pos.left, width: pos.width, zIndex: 99999,
+          background: '#0d1020',
+          border: '1px solid rgba(200,168,78,0.5)',
+          borderRadius: '0.5rem',
+          overflow: 'hidden',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.95)',
+        }}>
+          {TRUCK_OPTS.map(o => (
+            <div key={o.value}
+              onClick={() => { onChange(o.value); setOpen(false) }}
+              style={{
+                padding: '0.6rem 0.9rem',
+                color: o.value === value ? '#c8a84e' : 'rgba(255,255,255,0.7)',
+                background: o.value === value ? 'rgba(200,168,78,0.12)' : 'transparent',
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: '0.95rem', cursor: 'pointer',
+                borderBottom: '1px solid rgba(255,255,255,0.04)',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(200,168,78,0.18)'; e.currentTarget.style.color = '#c8a84e' }}
+              onMouseLeave={e => { e.currentTarget.style.background = o.value === value ? 'rgba(200,168,78,0.12)' : 'transparent'; e.currentTarget.style.color = o.value === value ? '#c8a84e' : 'rgba(255,255,255,0.7)' }}
+            >{o.label}</div>
+          ))}
+        </div>,
+        document.body
+      )}
+    </div>
   )
 }
 
@@ -270,12 +417,7 @@ function LoadCalculator() {
           <div style={{ display:'flex', flexDirection:'column', gap:'0.9rem' }}>
             <div>
               <Lbl>Truck Type</Lbl>
-              <select style={{...inp, padding:'0.65rem', fontSize:'0.95rem'}} value={truckType} onChange={e=>setTruckType(e.target.value)}>
-                <option value="3.5t">3.5t Pickup (18 CBM)</option>
-                <option value="10t">10t Truck (40 CBM)</option>
-                <option value="20t">20t Truck (80 CBM)</option>
-                <option value="40t">40t Semi (120 CBM)</option>
-              </select>
+              <TruckSelect value={truckType} onChange={setTruckType} />
             </div>
             {landRows.map((r,i)=>(
               <div key={i} className="land-row-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.7fr 0.8fr auto', gap:'0.4rem', alignItems:'end' }}>

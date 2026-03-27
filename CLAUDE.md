@@ -78,6 +78,10 @@ Edit `CHAPTERS` array in `VideoHero.jsx`:
 - Last chapter: no fade-out (exit overlay handles at videoP > 0.97)
 - `SCROLL_HEIGHT = 1800` vh, `GLOBE_EXIT = 0.22`
 
+### Globe Video (VideoHero.jsx)
+- `GLOBE_SRC = '/saudi-connected.mp4'` — served from local `public/` folder (NOT Internet Archive)
+- Progressive frame loading: first 80 frames eager, rest via `requestIdleCallback`, scroll-ahead buffer of 80 frames
+
 ### Quick Quote Modal
 - `src/components/QuickQuoteModal.jsx` — modal wrapper with animated heading
 - `src/components/QuickQuoteSection.jsx` — multi-step form (Sea/Air/Land/Customs/Project)
@@ -87,6 +91,7 @@ Edit `CHAPTERS` array in `VideoHero.jsx`:
 - Back: small secondary text link below Continue — NOT a full button
 - Form: input `1.1rem`, label `0.88rem`, input color `#ffffff`
 - Keyframes `qqm-continue-pulse` and `qqm-arrow-nudge` live in `src/index.css`
+- Air Freight dimensions: `dimUnit` state (`'cm'`|`'mm'`), dropdown shows "Centimeters (cm)" / "Millimeters (mm)" — `minWidth: 140px` ensures full text visible; volWeight divisor = 5000 (cm) or 5,000,000 (mm)
 
 ### Cal.com Calendar (index.html)
 - Preloaded iframe injected via `DOMContentLoaded` script — zero delay on click

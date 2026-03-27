@@ -36,7 +36,7 @@ function CountUp({ target, suffix = '', duration = 900 }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Config
 // ─────────────────────────────────────────────────────────────────────────────
-const GLOBE_SRC    = 'https://archive.org/download/saudi-connected/saudi-connected.mp4'
+const GLOBE_SRC    = '/saudi-connected.mp4'
 const SCROLL_HEIGHT = 1800
 
 // ── JPEG frame sequences ──────────────────────────────────────────
@@ -454,22 +454,44 @@ export default function VideoHero({ onQuoteClick }) {
     ctx.drawImage(img, x, y, w, h)
   }, [])
 
-  // ── Preload all frames immediately in parallel ────────────────────
-  useEffect(() => {
-    const imgs = new Array(TOTAL_FRAMES)
-    framesRef.current = imgs
-    FRAME_URLS.forEach((url, i) => {
+  // ── Progressive frame loader ──────────────────────────────────────
+  // loadedUpToRef tracks the highest index we've kicked off loading for
+  const loadedUpToRef = useRef(-1)
+
+  const loadFrameRange = useCallback((from, to) => {
+    const imgs = framesRef.current
+    const end  = Math.min(to, TOTAL_FRAMES - 1)
+    for (let i = Math.max(0, from); i <= end; i++) {
+      if (imgs[i]) continue          // already loading/loaded
       const img = new window.Image()
-      img.onload = () => {
-        if (i === 0) {
-          paintFrame(80)
-          // Keep canvas hidden — RAF loop will reveal it once scrolling starts
-        }
-      }
-      img.src = url
+      img.src = FRAME_URLS[i]
       imgs[i] = img
-    })
-  }, [paintFrame])
+      if (i > loadedUpToRef.current) loadedUpToRef.current = i
+    }
+  }, [])
+
+  // Phase 1 — eager: load first 80 frames (covers globe→canvas crossfade)
+  useEffect(() => {
+    framesRef.current = new Array(TOTAL_FRAMES)
+    loadFrameRange(0, 79)
+    // Phase 2 — idle background: load all remaining frames when browser is free
+    const scheduleIdle = (start) => {
+      if (start >= TOTAL_FRAMES) return
+      const handle = requestIdleCallback
+        ? requestIdleCallback(() => { loadFrameRange(start, start + 49); scheduleIdle(start + 50) }, { timeout: 2000 })
+        : setTimeout(() => { loadFrameRange(start, start + 49); scheduleIdle(start + 50) }, 200)
+      return handle
+    }
+    scheduleIdle(80)
+  }, [loadFrameRange])
+
+  // Phase 3 — scroll-ahead: called from RAF loop to stay 80 frames ahead
+  const loadAhead = useCallback((frameIdx) => {
+    const target = Math.min(frameIdx + 80, TOTAL_FRAMES - 1)
+    if (target > loadedUpToRef.current) {
+      loadFrameRange(loadedUpToRef.current + 1, target)
+    }
+  }, [loadFrameRange])
 
   // ── Globe setup — fade in on load, canvas hidden, chapters hidden ──
   useEffect(() => {
@@ -550,6 +572,7 @@ export default function VideoHero({ onQuoteClick }) {
       const BASE_FRAME = 39
       const videoP   = p <= GLOBE_EXIT ? 0 : (p - GLOBE_EXIT) / (1 - GLOBE_EXIT)
       const frameIdx = Math.min(BASE_FRAME + Math.round(videoP * (TOTAL_FRAMES - 1 - BASE_FRAME)), TOTAL_FRAMES - 1)
+      loadAhead(frameIdx)
       paintFrame(frameIdx)
 
       // Chapter headings driven by exact frame index — perfect sync
@@ -610,7 +633,7 @@ export default function VideoHero({ onQuoteClick }) {
       window.removeEventListener('scroll', onScroll)
       if (rafId) cancelAnimationFrame(rafId)
     }
-  }, [applyProgress])
+  }, [applyProgress, loadAhead])
 
   // ─────────────────────────────────────────────────────────────────
   return (
