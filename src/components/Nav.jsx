@@ -18,6 +18,7 @@ export default function Nav({ onQuoteClick }) {
   const { openCalPopup } = useCalBooking()
   const { lang, setLang } = useLang()
   const [scrolled, setScrolled]   = useState(false)
+  const [pastHero, setPastHero]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
   const drawerRef                 = useRef(null)
   const backdropRef               = useRef(null)
@@ -25,6 +26,25 @@ export default function Nav({ onQuoteClick }) {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80)
     window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Detect when scrollytelling hero ends (1800vh)
+  useEffect(() => {
+    const update = (scrollY) => {
+      const heroEnd = (1800 / 100) * window.innerHeight
+      setPastHero(scrollY > heroEnd)
+    }
+    const attach = () => {
+      if (window.__lenis) {
+        window.__lenis.on('scroll', ({ scroll }) => update(scroll))
+      } else {
+        setTimeout(attach, 200)
+      }
+    }
+    attach()
+    const onScroll = () => update(window.scrollY || document.documentElement.scrollTop)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -62,13 +82,7 @@ export default function Nav({ onQuoteClick }) {
 
   const scrollToTop = () => {
     setMenuOpen(false)
-    if (window.__lenis) {
-      window.__lenis.scrollTo(0, { duration: 1.6 })
-    } else if (window.scrollY === 0) {
-      window.location.reload()
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    window.location.reload()
   }
 
   const handleQuote = () => {
@@ -99,21 +113,25 @@ export default function Nav({ onQuoteClick }) {
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
         transition: 'all 0.5s ease',
-        padding: scrolled ? '14px 0' : '22px 0',
-        background: scrolled ? 'rgba(5,5,8,0.88)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.07)' : 'none',
+        padding: '12px 0',
+        background: pastHero ? 'rgba(5,5,8,0.92)' : 'transparent',
+        backdropFilter: pastHero ? 'blur(18px)' : 'none',
+        WebkitBackdropFilter: pastHero ? 'blur(18px)' : 'none',
+        borderBottom: 'none',
       }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
 
           {/* Logo */}
-          <div onClick={scrollToTop} style={{ display: 'flex', alignItems: 'center', gap: '0px', cursor: 'pointer' }}>
+          <div onClick={scrollToTop} style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-380px' }}>
             <img
               src="/bejoice-logo-white.png"
               alt="Bejoice"
               style={{
-                height: 'clamp(36px, 5vw, 56px)', width: 'auto', objectFit: 'contain', display: 'block',
-                filter: 'drop-shadow(0 1px 8px rgba(0,0,0,0.8))',
+                height: 'clamp(82px, 11.2vw, 128px)',
+                width: 'clamp(315px, 42vw, 630px)',
+                objectFit: 'contain',
+                display: 'block',
+                filter: 'brightness(1.45) contrast(1.1) drop-shadow(0 2px 14px rgba(0,0,0,0.6)) drop-shadow(0 0 28px rgba(255,255,255,0.12))',
               }}
             />
           </div>
@@ -227,7 +245,7 @@ export default function Nav({ onQuoteClick }) {
         {/* Header row */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.2rem 1.4rem', borderBottom: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0px' }}>
-            <img src="/bejoice-logo-white.png" alt="Bejoice" style={{ height: '38px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.8))' }} />
+            <img src="/bejoice-logo-white.png" alt="Bejoice" style={{ height: '52px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.8))' }} />
             <div style={{ borderLeft: '1.5px solid rgba(200,168,78,0.35)', paddingLeft: '9px', marginLeft: '6px' }}>
               <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', letterSpacing: '0.18em', color: '#ffffff', textTransform: 'uppercase', fontWeight: 700, lineHeight: 1 }}>Bejoice</div>
             </div>

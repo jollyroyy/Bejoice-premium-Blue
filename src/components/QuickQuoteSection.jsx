@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import Container3DViewer, { CONTAINER_SPECS, WEIGHT_TABLE, WeightDistributionGuide } from './Container3DViewer';
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 const INCOTERMS = ['EXW','FCA','FAS','FOB','CFR','CIF','CPT','CIP','DAP','DPU','DDP'];
@@ -374,6 +375,99 @@ function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading, valid
 }
 
 // ─── SEA FREIGHT FORM ────────────────────────────────────────────────────────
+// Maps container type label → 3D viewer key
+const CTYPE_MAP = {
+  '20ft Dry Standard': '20ft', '40ft Dry Standard': '40ft', '40ft High Cube': '40hc',
+  '20ft Reefer': '20ft', '40ft Reefer': '40ft', '20ft Open Top': '20ft',
+  '40ft Open Top': '40ft', '20ft Flat Rack': '20ft', '40ft Flat Rack': '40ft',
+}
+
+// Inline cargo-dimensions + 3D viewer panel used in Sea form
+function CargoLoad3D({ containerType, compact }) {
+  const [items, setItems] = useState([
+    { l: 120, w: 80, h: 80, weight: 200, qty: 5, unit: 'cm', stackable: true }
+  ])
+  const updCI   = (i, k, v) => setItems(p => p.map((c, idx) => idx === i ? { ...c, [k]: v } : c))
+  const addCI   = () => setItems(p => [...p, { l: 100, w: 80, h: 80, weight: 150, qty: 3, unit: 'cm', stackable: true }])
+  const removeCI = (i) => setItems(p => p.filter((_, idx) => idx !== i))
+
+  const iS = { background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.14)', borderRadius:'0.4rem', padding:'0.45rem 0.6rem', color:'#fff', fontFamily:"'DM Sans',sans-serif", fontSize:'0.9rem', width:'100%', outline:'none', boxSizing:'border-box' }
+  const lS = { fontFamily:"'DM Sans',sans-serif", fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(255,255,255,0.55)', marginBottom:'0.3rem', display:'block' }
+
+  return (
+    <div style={{ marginTop: '1.5rem', borderTop: '1px solid rgba(200,168,78,0.14)', paddingTop: '1.2rem' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:'1rem' }}>
+        <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1rem', color:'#c8a84e', letterSpacing:2 }}>3D LOAD CALCULATOR</span>
+        <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:9, color:'rgba(255,255,255,0.28)', letterSpacing:1 }}>OPTIONAL — DRAG TO ROTATE</span>
+      </div>
+
+      {/* Cargo items */}
+      {items.map((item, idx) => (
+        <div key={idx} style={{ background:'rgba(255,255,255,0.025)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:'0.6rem', padding:'0.8rem', marginBottom:'0.6rem' }}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.6rem' }}>
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:700, color:'#c8a84e', letterSpacing:1.5 }}>
+              BOX {idx + 1}
+            </span>
+            <div style={{ display:'flex', gap:6, alignItems:'center' }}>
+              <select value={item.unit} onChange={e => updCI(idx,'unit',e.target.value)} style={{ ...iS, width:'auto', padding:'0.3rem 0.5rem', fontSize:'0.75rem' }}>
+                <option value="cm">cm</option>
+                <option value="in">in</option>
+              </select>
+              {items.length > 1 && (
+                <button onClick={() => removeCI(idx)} style={{ background:'none', border:'none', color:'rgba(255,255,255,0.25)', cursor:'pointer', fontSize:'1rem', minWidth:28, minHeight:28 }}>×</button>
+              )}
+            </div>
+          </div>
+
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:'0.4rem', marginBottom:'0.5rem' }}>
+            {[['L','l'],['W','w'],['H','h']].map(([lbl,key]) => (
+              <div key={key}>
+                <span style={lS}>{lbl} ({item.unit})</span>
+                <input type="number" min="1" value={item[key]} onChange={e => updCI(idx, key, Math.max(1,+e.target.value||1))} style={iS} />
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0.4rem', marginBottom:'0.6rem' }}>
+            <div>
+              <span style={lS}>Weight (kg)</span>
+              <input type="number" min="0" value={item.weight} onChange={e => updCI(idx,'weight',Math.max(0,+e.target.value||0))} style={iS} />
+            </div>
+            <div>
+              <span style={lS}>Qty</span>
+              <div style={{ display:'flex', gap:3 }}>
+                <button onClick={() => updCI(idx,'qty',Math.max(1,item.qty-1))} style={{ width:28, flexShrink:0, background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:6, color:'#fff', cursor:'pointer', fontSize:14 }}>−</button>
+                <input type="number" min="1" value={item.qty} onChange={e => updCI(idx,'qty',Math.max(1,+e.target.value||1))} style={{ ...iS, textAlign:'center' }} />
+                <button onClick={() => updCI(idx,'qty',item.qty+1)} style={{ width:28, flexShrink:0, background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:6, color:'#fff', cursor:'pointer', fontSize:14 }}>+</button>
+              </div>
+            </div>
+          </div>
+
+          {/* Stackable toggle */}
+          <button onClick={() => updCI(idx,'stackable',!item.stackable)} style={{ display:'flex', alignItems:'center', gap:8, background:'none', border:'none', cursor:'pointer', padding:0 }}>
+            <span style={{ width:34, height:18, borderRadius:9, position:'relative', flexShrink:0, background: item.stackable?'rgba(200,168,78,0.65)':'rgba(255,255,255,0.1)', transition:'background .2s', display:'block' }}>
+              <span style={{ position:'absolute', top:2, width:14, height:14, borderRadius:7, background:'#fff', left:item.stackable?18:2, transition:'left .2s' }} />
+            </span>
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:11, color: item.stackable?'rgba(255,255,255,0.65)':'rgba(255,255,255,0.38)' }}>
+              {item.stackable ? 'Stackable' : 'Non-stackable'}
+            </span>
+          </button>
+        </div>
+      ))}
+
+      <button onClick={addCI} style={{ width:'100%', padding:'0.5rem', borderRadius:7, border:'1px dashed rgba(200,168,78,0.3)', background:'transparent', color:'rgba(200,168,78,0.6)', fontFamily:"'DM Sans',sans-serif", fontSize:12, fontWeight:600, cursor:'pointer', letterSpacing:1, marginBottom:'1rem' }}>
+        + ADD BOX TYPE
+      </button>
+
+      {/* 3D Viewer */}
+      <Container3DViewer items={items} containerType={containerType} compact={true} />
+
+      {/* ── Weight Distribution Guide ── */}
+      <WeightDistributionGuide items={items} containerType={containerType} />
+    </div>
+  )
+}
+
 function SeaForm({ onSuccess }) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -487,6 +581,8 @@ function SeaForm({ onSuccess }) {
               </Field>
             </div>
           )}
+          {/* 3D Load Calculator */}
+          <CargoLoad3D containerType={CTYPE_MAP[d.containers[0]?.type] || '20ft'} compact />
         </div>
       )}
 
@@ -514,6 +610,8 @@ function SeaForm({ onSuccess }) {
           <div style={{ marginTop: '1rem' }}>
             <CheckToggle label="Hazardous / DG Cargo" checked={d.hazardous} onChange={v => up('hazardous', v)} />
           </div>
+          {/* 3D Load Calculator */}
+          <CargoLoad3D containerType="20ft" compact />
         </div>
       )}
 

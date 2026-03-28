@@ -3,11 +3,23 @@ import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
 const OFFICES = [
-  { name: 'Riyadh HQ', city: 'Riyadh',  lat: 24.7136, lng: 46.6753, primary: true  },
-  { name: 'Jeddah',    city: 'Jeddah',  lat: 21.4858, lng: 39.1925, primary: false },
-  { name: 'Dammam',    city: 'Dammam',  lat: 26.4207, lng: 50.0888, primary: false },
-  { name: 'Dubai Hub', city: 'Dubai',   lat: 25.2048, lng: 55.2708, primary: false },
-  { name: 'Doha',      city: 'Doha',    lat: 25.2854, lng: 51.5310, primary: false },
+  // HQ — Dubai, UAE
+  { name: 'Dubai HQ',        city: 'Dubai',    country: 'UAE',   lat: 25.2048, lng: 55.2708, type: 'hq'      },
+  // KSA offices
+  { name: 'Riyadh Office',   city: 'Riyadh',   country: 'KSA',   lat: 24.7136, lng: 46.6753, type: 'office'  },
+  { name: 'Jeddah Office',   city: 'Jeddah',   country: 'KSA',   lat: 21.4858, lng: 39.1925, type: 'office'  },
+  { name: 'Dammam Office',   city: 'Dammam',   country: 'KSA',   lat: 26.4207, lng: 50.0888, type: 'office'  },
+  // Partner offices
+  { name: 'Mumbai Partner',  city: 'Mumbai',   country: 'India', lat: 19.0760, lng: 72.8777, type: 'partner' },
+  { name: 'Shanghai Partner',city: 'Shanghai', country: 'China', lat: 31.2304, lng: 121.4737,type: 'partner' },
+];
+
+// Country region highlights — center lat/lng + approximate radius on the globe
+const COUNTRIES = [
+  { name: 'UAE',   lat: 24.0,  lng: 54.5,  radius: 0.04, color: 0xffe680, type: 'hq'      },
+  { name: 'KSA',   lat: 24.0,  lng: 44.5,  radius: 0.12, color: 0xc8a84e, type: 'office'  },
+  { name: 'India', lat: 22.0,  lng: 78.5,  radius: 0.14, color: 0x5ec4d4, type: 'partner' },
+  { name: 'China', lat: 35.0,  lng: 105.0, radius: 0.18, color: 0x5ec4d4, type: 'partner' },
 ];
 
 function latLngToVec3(lat, lng, r = 1) {
@@ -19,6 +31,23 @@ function latLngToVec3(lat, lng, r = 1) {
      r * Math.sin(phi) * Math.sin(theta),
   );
 }
+
+// Radial gradient shader for country region glow discs
+const REGION_VERT = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }`;
+const REGION_FRAG = `
+  uniform vec3 glowColor;
+  uniform float opacity;
+  varying vec2 vUv;
+  void main() {
+    float d = distance(vUv, vec2(0.5));
+    float alpha = smoothstep(0.5, 0.08, d) * opacity;
+    gl_FragColor = vec4(glowColor, alpha);
+  }`;
 
 const ATM_VERT = `
   varying vec3 vNormal; varying vec3 vPosition;
@@ -138,18 +167,92 @@ export default function BejoiceGlobe() {
     group.add(markerGroup);
     const dotObjects  = [];
 
+    const pulseRings = [];
     OFFICES.forEach(o => {
       const pos = latLngToVec3(o.lat, o.lng, 1.022);
 
+      const isHQ = o.type === 'hq';
+      const isPartner = o.type === 'partner';
+      const dotColor = isHQ ? 0xffe680 : isPartner ? 0x5ec4d4 : 0xc8a84e;
+      const dotSize = isHQ ? 0.018 : 0.012;
+
       const dot = new THREE.Mesh(
-        new THREE.SphereGeometry(0.013, 16, 16),
-        new THREE.MeshBasicMaterial({ color: 0xffe8a0 }),
+        new THREE.SphereGeometry(dotSize, 16, 16),
+        new THREE.MeshBasicMaterial({ color: dotColor }),
       );
       dot.position.copy(pos);
-      dot.userData = { office: o.name };
+      dot.userData = { office: o.name, type: o.type, country: o.country };
       markerGroup.add(dot);
       dotObjects.push(dot);
 
+      // HQ gets a subtle pulsing ring
+      if (isHQ) {
+        const ringGeo = new THREE.RingGeometry(0.028, 0.035, 32);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0xffe680, transparent: true, opacity: 0.6, side: THREE.DoubleSide });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.position.copy(pos);
+        ring.lookAt(pos.clone().multiplyScalar(2));
+        markerGroup.add(ring);
+        pulseRings.push(ring);
+      }
+
+      // Partner offices get a small outer ring
+      if (isPartner) {
+        const ringGeo = new THREE.RingGeometry(0.02, 0.025, 24);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x5ec4d4, transparent: true, opacity: 0.4, side: THREE.DoubleSide });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.position.copy(pos);
+        ring.lookAt(pos.clone().multiplyScalar(2));
+        markerGroup.add(ring);
+      }
+    });
+
+    // Country region glows — soft discs on globe surface
+    COUNTRIES.forEach(c => {
+      const pos = latLngToVec3(c.lat, c.lng, 1.005);
+      const geo = new THREE.PlaneGeometry(c.radius * 2, c.radius * 2);
+      const mat = new THREE.ShaderMaterial({
+        uniforms: {
+          glowColor: { value: new THREE.Color(c.color) },
+          opacity: { value: c.type === 'hq' ? 0.35 : 0.2 },
+        },
+        vertexShader: REGION_VERT,
+        fragmentShader: REGION_FRAG,
+        transparent: true,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      });
+      const disc = new THREE.Mesh(geo, mat);
+      disc.position.copy(pos);
+      disc.lookAt(pos.clone().multiplyScalar(2));
+      group.add(disc);
+    });
+
+    // Connection arcs from HQ to all other offices
+    const hqPos = latLngToVec3(OFFICES[0].lat, OFFICES[0].lng, 1.0);
+    const arcMeshes = [];
+    OFFICES.slice(1).forEach(o => {
+      const destPos = latLngToVec3(o.lat, o.lng, 1.0);
+      // Great circle arc via midpoint lifted above the surface
+      const mid = hqPos.clone().add(destPos).multiplyScalar(0.5);
+      const dist = hqPos.distanceTo(destPos);
+      const lift = 1.0 + dist * 0.35;
+      mid.normalize().multiplyScalar(lift);
+
+      const curve = new THREE.QuadraticBezierCurve3(hqPos.clone(), mid, destPos.clone());
+      const pts = curve.getPoints(48);
+      const geo = new THREE.BufferGeometry().setFromPoints(pts);
+      const isPartner = o.type === 'partner';
+      const mat = new THREE.LineBasicMaterial({
+        color: isPartner ? 0x5ec4d4 : 0xc8a84e,
+        transparent: true,
+        opacity: 0.28,
+        linewidth: 1,
+      });
+      const arc = new THREE.Line(geo, mat);
+      group.add(arc);
+      arcMeshes.push(arc);
     });
 
     // Lighting
@@ -169,8 +272,12 @@ export default function BejoiceGlobe() {
       mouse2.x =  ((e.clientX - rect.left) / rect.width)  * 2 - 1;
       mouse2.y = -((e.clientY - rect.top)  / rect.height) * 2 + 1;
       raycaster.setFromCamera(mouse2, camera);
-      setHovered(raycaster.intersectObjects(dotObjects).length
-        ? raycaster.intersectObjects(dotObjects)[0].object.userData.office : null);
+      const hits = raycaster.intersectObjects(dotObjects);
+      if (hits.length) {
+        const d = hits[0].object.userData;
+        const suffix = d.type === 'hq' ? ' · HQ' : d.type === 'partner' ? ' · Partner' : '';
+        setHovered(d.office + suffix);
+      } else setHovered(null);
     };
     el.addEventListener('mousemove', onMouseMove);
 
@@ -229,6 +336,16 @@ export default function BejoiceGlobe() {
 
 
       fillLight.intensity = 0.75 + 0.2 * Math.sin(t * 2.3 + 0.7);
+      // Pulse HQ ring
+      pulseRings.forEach(ring => {
+        const s = 1 + 0.15 * Math.sin(t * 1.8);
+        ring.scale.set(s, s, 1);
+        ring.material.opacity = 0.35 + 0.25 * Math.sin(t * 1.8);
+      });
+      // Subtle arc breathing
+      arcMeshes.forEach(arc => {
+        arc.material.opacity = 0.18 + 0.12 * Math.sin(t * 1.2);
+      });
       renderer.render(scene, camera);
     };
     tick();
@@ -266,7 +383,7 @@ export default function BejoiceGlobe() {
           style={{ textAlign: 'center', marginBottom: 'clamp(1.5rem,3vw,3rem)' }}
         >
           <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'1rem', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'#c8a84e', display:'block', marginBottom:'0.9rem' }}>
-            OUR OFFICES
+            GLOBAL PRESENCE
           </span>
           <h2 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(2rem,5.5vw,4.8rem)', color:'#ffffff', letterSpacing:'0.04em', lineHeight:1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
             BEJOICE CONNECTS SAUDI TO THE WORLD
@@ -329,26 +446,54 @@ export default function BejoiceGlobe() {
             </div>
           </motion.div>
 
-          {/* Office list */}
+          {/* Office list — grouped */}
           <motion.div
             initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}
             viewport={{ once:true }} transition={{ duration:0.7, delay:0.4 }}
-            style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:'1.2rem 2rem' }}
+            style={{ width:'100%', maxWidth:600 }}
           >
-            {OFFICES.map(o => (
-              <motion.div key={o.name} whileHover={{ y:-4 }} transition={{ type:'spring', stiffness:300, damping:20 }}
-                style={{ display:'flex', alignItems:'center', gap:'0.75rem', minHeight: 44 }}>
-                <span style={{
-                  width: 9, height: 9,
-                  borderRadius:'50%', flexShrink:0,
-                  background: 'rgba(200,168,78,0.5)',
-                  display:'block',
-                }} />
-                <div>
-                  <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(1.3rem,3.5vw,1.6rem)', fontWeight:500, color:'rgba(255,255,255,0.82)', lineHeight:1.2 }}>{o.city}</div>
-                </div>
-              </motion.div>
-            ))}
+            {/* HQ */}
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'0.7rem', marginBottom:'1rem' }}>
+              <span style={{ width:12, height:12, borderRadius:'50%', background:'#ffe680', flexShrink:0, boxShadow:'0 0 8px rgba(255,230,128,0.5)' }} />
+              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,3vw,1.4rem)', color:'#ffe680', letterSpacing:'0.08em' }}>DUBAI, UAE — HEADQUARTERS</span>
+            </div>
+
+            {/* Separator */}
+            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'0.6rem 0' }}>
+              <div style={{ flex:1, height:1, background:'rgba(200,168,78,0.15)' }} />
+              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:12, fontWeight:600, color:'rgba(200,168,78,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>KSA Offices</span>
+              <div style={{ flex:1, height:1, background:'rgba(200,168,78,0.15)' }} />
+            </div>
+
+            <div style={{ display:'flex', justifyContent:'center', gap:'1.5rem 2.5rem', flexWrap:'wrap', marginBottom:'1rem' }}>
+              {OFFICES.filter(o => o.type === 'office').map(o => (
+                <motion.div key={o.name} whileHover={{ y:-3 }} transition={{ type:'spring', stiffness:300, damping:20 }}
+                  style={{ display:'flex', alignItems:'center', gap:'0.6rem', minHeight:44 }}>
+                  <span style={{ width:8, height:8, borderRadius:'50%', background:'#c8a84e', flexShrink:0 }} />
+                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.95rem,2.5vw,1.15rem)', fontWeight:500, color:'rgba(255,255,255,0.75)' }}>{o.city}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Partner offices separator */}
+            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'0.6rem 0' }}>
+              <div style={{ flex:1, height:1, background:'rgba(94,196,212,0.15)' }} />
+              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:12, fontWeight:600, color:'rgba(94,196,212,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>Partner Offices</span>
+              <div style={{ flex:1, height:1, background:'rgba(94,196,212,0.15)' }} />
+            </div>
+
+            <div style={{ display:'flex', justifyContent:'center', gap:'1.5rem 2.5rem', flexWrap:'wrap' }}>
+              {OFFICES.filter(o => o.type === 'partner').map(o => (
+                <motion.div key={o.name} whileHover={{ y:-3 }} transition={{ type:'spring', stiffness:300, damping:20 }}
+                  style={{ display:'flex', alignItems:'center', gap:'0.6rem', minHeight:44 }}>
+                  <span style={{ width:8, height:8, borderRadius:'50%', background:'#5ec4d4', flexShrink:0, opacity:0.7 }} />
+                  <div>
+                    <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.95rem,2.5vw,1.15rem)', fontWeight:500, color:'rgba(255,255,255,0.75)' }}>{o.city}</span>
+                    <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, color:'rgba(94,196,212,0.5)', marginLeft:6 }}>{o.country}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>

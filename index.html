@@ -21,6 +21,9 @@
   <link rel="preconnect" href="https://cal.com" />
   <link rel="preconnect" href="https://app.cal.com" />
   <link rel="dns-prefetch" href="https://cal.com" />
+  <!-- Force scroll to top before any rendering — prevents browser scroll restoration -->
+  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
+
   <script>
     // Inject hidden preloaded iframe immediately — calendar loads in bg before user clicks
     document.addEventListener('DOMContentLoaded', function() {

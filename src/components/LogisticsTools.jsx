@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import Container3DViewer, { WeightDistributionGuide } from './Container3DViewer'
 
 // ── helpers ────────────────────────────────────────────────────────────────
 const CONTAINER = (cbm) =>
@@ -22,7 +23,7 @@ const inp = {
   border:       '1px solid rgba(255,255,255,0.15)',
   borderRadius: '0.5rem',
   padding:      '0.65rem 0.9rem',
-  color:        '#fff',
+  color:        'rgba(255,255,255,0.95)',
   fontFamily:   "'DM Sans', sans-serif",
   fontSize:     '1rem',
   outline:      'none',
@@ -37,7 +38,7 @@ const lbl = {
   fontWeight:    700,
   letterSpacing: '0.14em',
   textTransform: 'uppercase',
-  color:         'rgba(255,255,255,0.72)',
+  color:         'rgba(255,255,255,0.95)',
   display:       'block',
   marginBottom:  '0.35rem',
 }
@@ -102,7 +103,7 @@ function UnitSelect({ value, onChange }) {
         }}>
           {UNITS.map(u => (
             <div key={u}
-              onClick={() => { onChange(u); setOpen(false) }}
+              onMouseDown={(e) => { e.preventDefault(); onChange(u); setOpen(false) }}
               style={{
                 padding: '0.5rem 0.7rem',
                 color: u === value ? '#c8a84e' : 'rgba(255,255,255,0.7)',
@@ -220,7 +221,7 @@ function LoadCalculator() {
   const [results, setResults] = useState(null)
 
   // sea
-  const [seaRows,   setSeaRows]   = useState([{ l:'', w:'', h:'', qty:'1', unit:'cm' }])
+  const [seaRows,   setSeaRows]   = useState([{ l:'', w:'', h:'', qty:'1', unit:'cm', stackable:true }])
   const [seaWeight, setSeaWeight] = useState('')
 
   // air
@@ -234,7 +235,10 @@ function LoadCalculator() {
   const [whRows,  setWhRows]  = useState([{ l:'', w:'', h:'', qty:'1', unit:'cm' }])
   const [whDays,  setWhDays]  = useState('30')
 
+  const hasCalculated = useRef(false)
+
   const calculate = () => {
+    hasCalculated.current = true
     if (tab === 'sea') {
       let totalCBM = 0
       const totalKg = parseFloat(seaWeight) || 0
@@ -275,6 +279,13 @@ function LoadCalculator() {
       setResults({ tab:'warehouse', cbm:cbm.toFixed(3), days, cost:(cbm*days*0.35).toFixed(2) })
     }
   }
+
+  // Auto-recalculate whenever any input changes (only after first manual calculate)
+  useEffect(() => {
+    if (!hasCalculated.current) return
+    calculate()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab, seaRows, seaWeight, airRows, landRows, truckType, whRows, whDays])
 
   const exportCSV = () => {
     if (!results) return
@@ -342,28 +353,53 @@ function LoadCalculator() {
         {tab==='sea' && (
           <div style={{ display:'flex', flexDirection:'column', gap:'0.9rem' }}>
             {seaRows.map((r,i) => (
-              <div key={i} className="sea-row-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.7fr auto', gap:'0.4rem', alignItems:'end' }}>
-                {['l','w','h'].map(f => (
-                  <div key={f}>
-                    <Lbl>{f.toUpperCase()}</Lbl>
-                    <input style={inp} type="number" value={r[f]} placeholder="0"
-                      onChange={e=>setSeaRows(rows=>rows.map((row,idx)=>idx===i?{...row,[f]:e.target.value}:row))} />
+              <div key={i} style={{ background:'rgba(255,255,255,0.02)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:'0.6rem', padding:'0.75rem', display:'flex', flexDirection:'column', gap:'0.5rem' }}>
+                <div className="sea-row-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.7fr auto', gap:'0.4rem', alignItems:'end' }}>
+                  {['l','w','h'].map(f => (
+                    <div key={f}>
+                      <Lbl>{f.toUpperCase()}</Lbl>
+                      <input style={inp} type="number" value={r[f]} placeholder="0"
+                        onChange={e=>setSeaRows(rows=>rows.map((row,idx)=>idx===i?{...row,[f]:e.target.value}:row))} />
+                    </div>
+                  ))}
+                  <div>
+                    <Lbl>Qty</Lbl>
+                    <input style={inp} type="number" value={r.qty}
+                      onChange={e=>setSeaRows(rows=>rows.map((row,idx)=>idx===i?{...row,qty:e.target.value}:row))} />
                   </div>
-                ))}
-                <div>
-                  <Lbl>Qty</Lbl>
-                  <input style={inp} type="number" value={r.qty}
-                    onChange={e=>setSeaRows(rows=>rows.map((row,idx)=>idx===i?{...row,qty:e.target.value}:row))} />
+                  <div>
+                    <Lbl>Unit</Lbl>
+                    <UnitSelect value={r.unit} onChange={v=>setSeaRows(rows=>rows.map((row,idx)=>idx===i?{...row,unit:v}:row))} />
+                  </div>
+                  {seaRows.length>1 && removeBtn(()=>setSeaRows(r=>r.filter((_,idx)=>idx!==i)))}
                 </div>
-                <div>
-                  <Lbl>Unit</Lbl>
-                  <UnitSelect value={r.unit} onChange={v=>setSeaRows(rows=>rows.map((row,idx)=>idx===i?{...row,unit:v}:row))} />
-                </div>
-                {seaRows.length>1 && removeBtn(()=>setSeaRows(r=>r.filter((_,idx)=>idx!==i)))}
+
+                {/* Stackable checkbox */}
+                <label style={{ display:'flex', alignItems:'center', gap:'0.55rem', cursor:'pointer', userSelect:'none', width:'fit-content' }}>
+                  <div
+                    onClick={() => setSeaRows(rows => rows.map((row,idx) => idx===i ? {...row, stackable:!row.stackable} : row))}
+                    style={{
+                      width:18, height:18, borderRadius:4, flexShrink:0,
+                      border: `1.5px solid ${r.stackable ? '#c8a84e' : 'rgba(255,255,255,0.25)'}`,
+                      background: r.stackable ? 'rgba(200,168,78,0.2)' : 'rgba(255,255,255,0.04)',
+                      display:'flex', alignItems:'center', justifyContent:'center',
+                      transition:'all 0.2s',
+                    }}
+                  >
+                    {r.stackable && (
+                      <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                        <path d="M2 6l3 3 5-5" stroke="#c8a84e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                  </div>
+                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.92rem', fontWeight:600, color: r.stackable ? 'rgba(200,168,78,0.9)' : 'rgba(255,255,255,0.4)', transition:'color 0.2s' }}>
+                    {r.stackable ? 'Stackable' : 'Non-stackable'}
+                  </span>
+                </label>
               </div>
             ))}
             <div style={{ display:'flex', gap:'0.8rem', alignItems:'flex-end' }}>
-              {addRowBtn(()=>setSeaRows(r=>[...r,{l:'',w:'',h:'',qty:'1',unit:'cm'}]))}
+              {addRowBtn(()=>setSeaRows(r=>[...r,{l:'',w:'',h:'',qty:'1',unit:'cm',stackable:true}]))}
               <div style={{ flex:1 }}>
                 <Lbl>Total Weight (kg)</Lbl>
                 <input style={inp} type="number" value={seaWeight} placeholder="0" onChange={e=>setSeaWeight(e.target.value)} />
@@ -406,7 +442,7 @@ function LoadCalculator() {
               </div>
             ))}
             {addRowBtn(()=>setAirRows(r=>[...r,{l:'',w:'',h:'',qty:'1',unit:'cm',actual:''}]))}
-            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.78rem', color:'rgba(255,255,255,0.4)', margin:0 }}>
+            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.78rem', color:'rgba(255,255,255,0.75)', margin:0 }}>
               Volumetric weight = L×W×H ÷ 5000 (in cm) per piece
             </p>
           </div>
@@ -480,7 +516,7 @@ function LoadCalculator() {
                 <input style={inp} type="number" value={whDays} placeholder="30" onChange={e=>setWhDays(e.target.value)} />
               </div>
             </div>
-            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.78rem', color:'rgba(255,255,255,0.4)', margin:0 }}>
+            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.78rem', color:'rgba(255,255,255,0.75)', margin:0 }}>
               Rate: $0.35 / CBM / day (indicative)
             </p>
           </div>
@@ -504,7 +540,7 @@ function LoadCalculator() {
 
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0.9rem', marginBottom:'1.2rem' }}>
               <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)' }}>
-                <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.55)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>
+                <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>
                   {results.tab==='air' ? 'Chargeable Wt' : 'Total Volume'}
                 </span>
                 <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color:'#fff', letterSpacing:'0.04em' }}>
@@ -515,17 +551,17 @@ function LoadCalculator() {
 
               {results.loadPct && (
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.55)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Usage Efficiency</span>
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Usage Efficiency</span>
                   <div style={{ display:'flex', alignItems:'baseline', gap:'0.2rem' }}>
                     <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color: results.loadPct>90 ? '#ff5050' : '#fff' }}>{results.loadPct}</span>
-                    <span style={{ fontSize:'0.9rem', color:'rgba(255,255,255,0.45)', fontFamily:"'Bebas Neue',sans-serif" }}>%</span>
+                    <span style={{ fontSize:'0.9rem', color:'rgba(255,255,255,0.85)', fontFamily:"'Bebas Neue',sans-serif" }}>%</span>
                   </div>
                 </div>
               )}
 
               {results.tab==='air' && (
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)', gridColumn:'span 2' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.55)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.4rem', letterSpacing:'0.1em' }}>Billing Basis</span>
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.4rem', letterSpacing:'0.1em' }}>Billing Basis</span>
                   <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.1rem', color:'#c8a84e', letterSpacing:'0.05em' }}>
                     {results.basis} Weight — {results.basis==='Volumetric' ? results.volWeight : results.actWeight} kg
                   </span>
@@ -534,22 +570,22 @@ function LoadCalculator() {
 
               {results.tab==='land' && (<>
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.55)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Volume Fill</span>
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Volume Fill</span>
                   <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color: results.volPct>90?'#ff5050':'#fff' }}>
-                    {results.volPct}<span style={{ fontSize:'0.9rem', color:'rgba(255,255,255,0.45)', fontFamily:"'Bebas Neue',sans-serif" }}>%</span>
+                    {results.volPct}<span style={{ fontSize:'0.9rem', color:'rgba(255,255,255,0.85)', fontFamily:"'Bebas Neue',sans-serif" }}>%</span>
                   </span>
                 </div>
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.55)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Weight Fill</span>
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Weight Fill</span>
                   <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color: results.wtPct>90?'#ff5050':'#fff' }}>
-                    {results.wtPct}<span style={{ fontSize:'0.9rem', color:'rgba(255,255,255,0.45)', fontFamily:"'Bebas Neue',sans-serif" }}>%</span>
+                    {results.wtPct}<span style={{ fontSize:'0.9rem', color:'rgba(255,255,255,0.85)', fontFamily:"'Bebas Neue',sans-serif" }}>%</span>
                   </span>
                 </div>
               </>)}
 
               {results.tab==='warehouse' && (
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)', gridColumn:'span 2' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.55)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Indicative Cost</span>
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Indicative Cost</span>
                   <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color:'#fff' }}>
                     ${results.cost}<span style={{ fontSize:'0.8rem', marginLeft:'0.3rem', color:'#c8a84e' }}>USD</span>
                   </span>
@@ -559,7 +595,7 @@ function LoadCalculator() {
 
             {results.loadPct && (
               <div style={{ marginBottom:'1.2rem' }}>
-                <div style={{ display:'flex', justifyContent:'space-between', fontSize:'0.7rem', color:'rgba(255,255,255,0.45)', marginBottom:'0.5rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase' }}>
+                <div style={{ display:'flex', justifyContent:'space-between', fontSize:'0.7rem', color:'rgba(255,255,255,0.85)', marginBottom:'0.5rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase' }}>
                   <span>Container Capacity</span><span>{results.loadPct}%</span>
                 </div>
                 <div style={{ height:'6px', background:'rgba(255,255,255,0.08)', borderRadius:'4px', overflow:'hidden' }}>
@@ -579,6 +615,35 @@ function LoadCalculator() {
                 <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.15rem', color:'#fff', letterSpacing:'0.05em' }}>{results.container}</span>
               </div>
             )}
+
+            {/* ── 3D Container Visualisation (Sea tab only) ── */}
+            {results.tab === 'sea' && (() => {
+              const totalKg = parseFloat(results.weight) || 0
+              const perRow = totalKg / Math.max(1, seaRows.length)
+              const items3d = seaRows.map(r => {
+                const f = TO_CM[r.unit] || 1
+                return {
+                  l: Math.max(1, (parseFloat(r.l)||50)*f),
+                  w: Math.max(1, (parseFloat(r.w)||50)*f),
+                  h: Math.max(1, (parseFloat(r.h)||50)*f),
+                  weight: perRow,
+                  qty: parseInt(r.qty)||1,
+                  unit: 'cm',
+                  stackable: r.stackable !== false,
+                }
+              })
+              const ctbm = parseFloat(results.cbm) || 0
+              const ctype = ctbm <= 25 ? '20ft' : ctbm <= 67 ? '40ft' : '40hc'
+              return (
+                <div style={{ marginTop:'1.4rem', borderTop:'1px solid rgba(200,168,78,0.15)', paddingTop:'1.2rem' }}>
+                  <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'0.95rem', color:'#c8a84e', letterSpacing:2, marginBottom:'0.8rem' }}>
+                    3D CONTAINER LOAD VISUALISATION
+                  </div>
+                  <Container3DViewer items={items3d} containerType={ctype} compact={true} />
+                  <WeightDistributionGuide items={items3d} containerType={ctype} />
+                </div>
+              )
+            })()}
 
             <div style={{ display:'flex', gap:'0.7rem' }}>
               <button onClick={exportCSV}
@@ -637,7 +702,7 @@ export default function LogisticsTools() {
           style={{ display:'flex', justifyContent:'center' }}
         >
           <div style={{
-            width:'100%', maxWidth:'780px',
+            width:'100%', maxWidth:'1080px',
             background:'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
             backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
             border:'1px solid rgba(200,168,78,0.35)',
@@ -667,7 +732,7 @@ export default function LogisticsTools() {
             <div style={{ textAlign:'center', marginBottom:'clamp(2rem,4vw,3.5rem)', position:'relative', zIndex:1 }}>
               <h2 style={{
                 fontFamily:"'Bebas Neue',sans-serif",
-                fontSize:'clamp(1.8rem,4vw,3.2rem)',
+                fontSize:'clamp(2.4rem,5.5vw,4.8rem)',
                 letterSpacing:'0.07em', lineHeight:1,
                 margin:'0 0 clamp(0.6rem,1.5vw,1rem)',
                 background:'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
@@ -677,12 +742,12 @@ export default function LogisticsTools() {
                 filter:'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
                 animation:'headingSweep 4s ease-in-out infinite',
               }}>
-                FREIGHT CALCULATOR
+                CONTAINER LOAD CALCULATOR
               </h2>
               <p style={{
                 fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(15px,1.9vw,19px)',
-                color:'#ffffff', maxWidth:500, margin:'0 auto', lineHeight:1.8,
-                fontWeight:500, textShadow:'0 0 20px rgba(255,255,255,0.12)',
+                color:'#ffffff', maxWidth:700, margin:'0 auto', lineHeight:1.8,
+                fontWeight:500, textShadow:'0 0 24px rgba(255,255,255,0.25)', opacity:0.95,
               }}>
                 Instant CBM &amp; chargeable weight — Sea, Air, Land or Warehouse.
               </p>
