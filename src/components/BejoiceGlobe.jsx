@@ -478,6 +478,11 @@ export default function BejoiceGlobe() {
                 </motion.div>
               ))}
             </div>
+
+            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.9rem,2vw,1.05rem)', color:'rgba(200,168,78,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', textAlign:'center', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}>
+              Strategically connected to Global Partners
+            </p>
+
           </motion.div>
         </div>
       </div>

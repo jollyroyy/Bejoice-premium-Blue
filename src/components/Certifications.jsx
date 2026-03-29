@@ -30,8 +30,19 @@ export default function Certifications() {
 
   return (
     <section id="certifications" ref={sectionRef} className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
+      {/* Ambient */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.06) 0%, transparent 50%)' }}/>
+        style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.07) 0%, transparent 50%)' }}/>
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,168,78,0.02) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,168,78,0.02) 80px)',
+      }}/>
+
+      {/* Watermark */}
+      <div style={{
+        position: 'absolute', left: '-0.5rem', bottom: '-1rem',
+        fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(100px,20vw,240px)',
+        lineHeight: 1, color: 'rgba(200,168,78,0.025)', pointerEvents: 'none', userSelect: 'none', letterSpacing: '0.04em',
+      }}>CERTIFIED</div>
 
       <div className="max-w-7xl mx-auto">
         <motion.div
@@ -41,54 +52,120 @@ export default function Certifications() {
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
           className="mb-20"
         >
-          <div style={{ display: 'inline-block' }}>
-            <h2 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(3rem,7vw,6rem)',
-              letterSpacing: '0.07em', lineHeight: 1,
-              margin: 0,
-              color: '#ffffff',
-              filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
-            }}>
-              <span style={{ color: '#ffffff' }}>CERTIFIED</span><br /><span style={{ color: '#c8a84e' }}>TO DELIVER</span>
-            </h2>
-            <style>{`
-              @keyframes headingSweep {
-                0%   { background-position: -100% center; }
-                100% { background-position: 200% center; }
-              }
-            `}</style>
+          {/* Eyebrow */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+            <div style={{ width: 40, height: '1.5px', background: '#c8a84e' }} />
+            <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#c8a84e', fontWeight: 600 }}>
+              Industry Accreditations
+            </span>
           </div>
+          <h2 style={{
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: 'clamp(3rem,7vw,6rem)',
+            letterSpacing: '0.07em', lineHeight: 1,
+            margin: 0,
+            color: '#ffffff',
+            filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.25))',
+          }}>
+            <span style={{ color: '#ffffff' }}>CERTIFIED</span><br /><span style={{ color: '#c8a84e' }}>TO DELIVER</span>
+          </h2>
+          <div style={{ width: 60, height: 2, background: 'linear-gradient(90deg, #c8a84e, transparent)', marginTop: 20 }} />
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(200,168,78,0.10)', perspective: '1200px' }}>
+        {/* ── Cert grid ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px"
+          style={{ background: 'rgba(200,168,78,0.10)', perspective: '1200px', borderRadius: 4, overflow: 'hidden' }}>
           {certs.map((c, i) => (
             <motion.div key={c.code}
-              className="fade-up glass-card p-6 md:p-8 lg:p-10 group cursor-default relative overflow-hidden"
-              style={{ transitionDelay: `${i * 65}ms` }}
+              className="fade-up group cursor-default relative overflow-hidden"
+              style={{
+                transitionDelay: `${i * 65}ms`,
+                background: 'linear-gradient(145deg, rgba(8,8,18,0.98) 0%, rgba(12,10,22,0.98) 100%)',
+                padding: 'clamp(1.6rem,3vw,2.6rem)',
+              }}
               whileHover={{
-                rotateY: i % 3 === 0 ? 4 : i % 3 === 1 ? -2 : 3,
+                rotateY: i % 3 === 0 ? 3 : i % 3 === 1 ? -2 : 3,
                 rotateX: -2,
                 z: 20,
                 transition: { type: 'spring', stiffness: 280, damping: 22 }
               }}
             >
-              <div className="absolute top-0 left-0 right-0 h-px"
-                style={{ background: `linear-gradient(90deg, transparent, ${c.color}90, transparent)` }}/>
-              <div className="inline-flex items-center px-3 py-1.5 mb-6"
-                style={{ background: `${c.color}18`, border: `1.5px solid ${c.color}50`, borderRadius: 0 }}>
-                <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '15px', letterSpacing: '0.2em', color: c.color }}>
-                  {c.code}
-                </span>
+              {/* Animated top border */}
+              <div className="absolute top-0 left-0 right-0" style={{ height: 2, overflow: 'hidden' }}>
+                <div style={{
+                  height: '100%',
+                  background: `linear-gradient(90deg, transparent 0%, ${c.color} 50%, transparent 100%)`,
+                  animation: `certScan${i} 3s ease-in-out infinite`,
+                }} />
               </div>
-              <h3 className="card-title mb-4 leading-tight">{c.name}</h3>
-              <p className="card-body">{c.desc}</p>
+
+              {/* Corner glow */}
+              <div className="absolute top-0 right-0 w-24 h-24 pointer-events-none"
+                style={{ background: `radial-gradient(circle at 100% 0%, ${c.color}15 0%, transparent 70%)` }}/>
+
+              {/* Bottom hover glow */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{ background: `radial-gradient(ellipse at 50% 100%, ${c.color}0a 0%, transparent 65%)` }}/>
+                style={{ background: `radial-gradient(ellipse at 50% 100%, ${c.color}12 0%, transparent 65%)` }}/>
+
+              {/* Badge */}
+              <div style={{ marginBottom: 20 }}>
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center',
+                  padding: '6px 14px 5px',
+                  background: `${c.color}14`,
+                  border: `1px solid ${c.color}45`,
+                  borderRadius: 3,
+                  position: 'relative', overflow: 'hidden',
+                }}>
+                  {/* Badge shimmer */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                    style={{ background: `linear-gradient(90deg, transparent, ${c.color}20, transparent)`, animation: 'shimmerSlide 1.5s ease-in-out infinite' }}/>
+                  <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, letterSpacing: '0.25em', color: c.color, position: 'relative', zIndex: 1 }}>
+                    {c.code}
+                  </span>
+                </div>
+              </div>
+
+              {/* Title */}
+              <h3 style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 'clamp(13px,1.4vw,16px)',
+                fontWeight: 700, letterSpacing: '0.02em',
+                color: 'rgba(255,255,255,0.92)',
+                marginBottom: 12, lineHeight: 1.35,
+                transition: 'color 0.3s',
+              }}
+                className="group-hover:text-white"
+              >{c.name}</h3>
+
+              {/* Desc */}
+              <p style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 'clamp(12px,1.2vw,14px)',
+                color: 'rgba(255,255,255,0.52)',
+                lineHeight: 1.75, margin: 0,
+              }}>{c.desc}</p>
+
+              {/* Bottom accent line */}
+              <div className="mt-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ height: 1, background: `linear-gradient(90deg, ${c.color}40, transparent)` }}/>
             </motion.div>
           ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes shimmerSlide {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(200%); }
+        }
+        ${certs.map((c, i) => `
+          @keyframes certScan${i} {
+            0%,100% { opacity: 0.4; transform: scaleX(0.3) translateX(-100%); }
+            50% { opacity: 1; transform: scaleX(1) translateX(0); }
+          }
+        `).join('')}
+      `}</style>
     </section>
   )
 }

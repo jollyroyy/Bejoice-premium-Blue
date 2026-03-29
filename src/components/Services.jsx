@@ -18,15 +18,14 @@ const services = [
     desc: 'Time-critical global air cargo with priority handling and real-time tracking. Express and charter options available.',
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 24L42 12L30 36L22 28L6 24Z" strokeLinejoin="round" /><path d="M22 28L24 42" strokeLinecap="round" /></svg>),
     span: 'md:col-span-2',
-    videoPoster: '/frames5/0001.jpg',
-    videoFrames: { folder: 'frames5', count: 121 },
+    videoBg: '/air-cargo.mp4',
   },
   {
     num: '02', title: 'Sea Freight',
     desc: 'FCL and LCL ocean freight worldwide. Deep expertise in GCC port operations and customs clearance.',
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M8 30L12 18H36L40 30" strokeLinejoin="round" /><path d="M4 34C8 30 12 38 16 34C20 30 24 38 28 34C32 30 36 38 40 34" strokeLinecap="round" /><rect x="20" y="10" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-1',
-    videoPoster: '/frames2/0001.jpg',
+    videoPoster: '/frames2/0160.jpg',
     videoFrames: { folder: 'frames2', count: 289 },
   },
   {
@@ -51,16 +50,14 @@ const services = [
     desc: 'Strategically located bonded warehouses across Saudi Arabia with advanced inventory management systems.',
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M4 20L24 8L44 20V42H4V20Z" /><rect x="18" y="28" width="12" height="14" rx="0.5" /><rect x="8" y="24" width="8" height="8" rx="0.5" /><rect x="32" y="24" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-2',
-    videoPoster: '/frames5/0001.jpg',
-    videoFrames: { folder: 'frames5', count: 121 },
+    truckBg: '/warehouse.png',
   },
   {
     num: '06', title: 'Project Cargo',
     desc: 'Heavy-lift and out-of-gauge logistics. From oil & gas equipment to industrial machinery.',
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 36L16 20L28 28L38 12" strokeLinecap="round" strokeLinejoin="round" /><path d="M32 12H38V18" strokeLinecap="round" strokeLinejoin="round" /><circle cx="8" cy="40" r="3" /><circle cx="24" cy="40" r="3" /><circle cx="40" cy="40" r="3" /></svg>),
     span: 'md:col-span-1',
-    videoPoster: '/frames6/0060.jpg',
-    videoFrames: { folder: 'frames6', count: 121 },
+    truckBg: '/project-cargo.jpg',
   },
 ]
 
@@ -267,7 +264,20 @@ export default function Services() {
                 }}
               >
                 {/* Background layer */}
-                {s.truckBg ? (
+                {s.videoBg ? (
+                  <video
+                    src={s.videoBg}
+                    autoPlay loop muted playsInline
+                    style={{
+                      position: 'absolute', inset: 0,
+                      width: '100%', height: '100%',
+                      objectFit: 'cover', objectPosition: 'center',
+                      opacity: isActive ? 1 : 0.22,
+                      transition: 'opacity 0.55s ease',
+                      pointerEvents: 'none', zIndex: 0,
+                    }}
+                  />
+                ) : s.truckBg ? (
                   <div style={{
                     position: 'absolute', inset: 0,
                     backgroundImage: `url(${s.truckBg})`,
@@ -285,7 +295,7 @@ export default function Services() {
                 <div style={{
                   position: 'absolute', inset: 0, pointerEvents: 'none',
                   background: 'linear-gradient(160deg, rgba(5,5,8,0.88) 0%, rgba(5,5,8,0.72) 100%)',
-                  opacity: s.truckBg ? (isActive ? 1 : 0.92) : (isActive ? 1 : 0),
+                  opacity: s.videoBg ? (isActive ? 0.5 : 0.78) : s.truckBg ? (isActive ? 1 : 0.92) : (isActive ? 1 : 0),
                   transition: 'opacity 0.5s ease',
                 }} />
 

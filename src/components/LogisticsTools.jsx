@@ -413,7 +413,7 @@ function LoadCalculator() {
           <div style={{ display:'flex', flexDirection:'column', gap:'0.9rem' }}>
             {airRows.map((r,i) => (
               <div key={i} style={{ display:'flex', flexDirection:'column', gap:'0.5rem', padding:'0.8rem', background:'rgba(255,255,255,0.03)', borderRadius:'0.6rem', border:'1px solid rgba(255,255,255,0.07)' }}>
-                <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.7fr', gap:'0.4rem' }}>
+                <div className="air-row-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.7fr', gap:'0.4rem' }}>
                   {['l','w','h'].map(f => (
                     <div key={f}>
                       <Lbl>{f.toUpperCase()}</Lbl>
@@ -489,7 +489,7 @@ function LoadCalculator() {
         {tab==='warehouse' && (
           <div style={{ display:'flex', flexDirection:'column', gap:'0.9rem' }}>
             {whRows.map((r,i)=>(
-              <div key={i} style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.7fr auto', gap:'0.4rem', alignItems:'end' }}>
+              <div key={i} className="wh-row-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 0.6fr 0.7fr auto', gap:'0.4rem', alignItems:'end' }}>
                 {['l','w','h'].map(f=>(
                   <div key={f}>
                     <Lbl>{f.toUpperCase()}</Lbl>
@@ -665,9 +665,9 @@ function LoadCalculator() {
       </div>
 
       {/* ── Calculate button ── */}
-      <div style={{ padding:'1rem 1.4rem', borderTop:'1px solid rgba(255,255,255,0.08)', flexShrink:0 }}>
+      <div style={{ padding:'1rem 1.4rem', borderTop:'1px solid rgba(255,255,255,0.08)', flexShrink:0, display:'flex', justifyContent:'center' }}>
         <button onClick={calculate}
-          style={{ width:'100%', padding:'1rem', background:'linear-gradient(135deg,#ffe080 0%,#c8a84e 50%,#a8843e 100%)', border:'none', borderRadius:'0.85rem', color:'#050508', fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.25rem', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.3s', boxShadow:'0 10px 32px rgba(200,168,78,0.3), inset 0 2px 0 rgba(255,230,120,0.3)' }}
+          style={{ width:'auto', padding:'0.85rem 2rem', background:'linear-gradient(135deg,#ffe080 0%,#c8a84e 50%,#a8843e 100%)', border:'none', borderRadius:'0.85rem', color:'#050508', fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.25rem', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.3s', boxShadow:'0 10px 32px rgba(200,168,78,0.3), inset 0 2px 0 rgba(255,230,120,0.3)' }}
           onMouseEnter={e=>{e.currentTarget.style.opacity='0.9'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 16px 40px rgba(200,168,78,0.4)'}}
           onMouseLeave={e=>{e.currentTarget.style.opacity='1'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 10px 32px rgba(200,168,78,0.3)'}}>
           GENERATE AI ANALYSIS
@@ -764,8 +764,14 @@ export default function LogisticsTools() {
           100% { background-position: 200% center; }
         }
         @media (max-width: 540px) {
-          .sea-row-grid  { grid-template-columns: 1fr 1fr 1fr 0.6fr auto !important; }
-          .land-row-grid { grid-template-columns: 1fr 1fr 1fr 0.6fr auto !important; }
+          /* Sea: L W H / Qty Unit [remove] */
+          .sea-row-grid  { grid-template-columns: 1fr 1fr 1fr !important; }
+          /* Air: L W H / Qty Unit */
+          .air-row-grid  { grid-template-columns: 1fr 1fr 1fr !important; }
+          /* Land: L W H Qty / Unit kg/pc [remove] */
+          .land-row-grid { grid-template-columns: 1fr 1fr 1fr 1fr !important; }
+          /* Warehouse: L W H / Qty Unit [remove] */
+          .wh-row-grid   { grid-template-columns: 1fr 1fr 1fr !important; }
         }
       `}</style>
     </section>
