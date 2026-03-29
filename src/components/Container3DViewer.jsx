@@ -59,39 +59,96 @@ function shadeColor(hex, amount) {
   return rgbStr(Math.max(0, r - amount), Math.max(0, g - amount), Math.max(0, b - amount))
 }
 
-// ── Greedy 3-axis bin packer ──────────────────────────────────────────────────
+// ── Intelligent 3D bin packer (extreme-point algorithm) ───────────────────────
+// Tries all 6 orientations per box, scores positions by gravity + compactness,
+// produces realistic cargo layouts with heaviest items on the floor.
 function packItems(items, spec, scale) {
-  const out = []
-  let px = 0, py = 0, pz = 0, rowD = 0, layerH = 0
+  const TO_CM = { cm: 1, mm: 0.1, m: 100, in: 2.54, ft: 30.48 }
+  const CL = spec.length, CW = spec.width, CH = spec.height
 
+  // Expand items × qty into individual box descriptors
+  const allBoxes = []
   items.forEach((item, idx) => {
-    const color = COLORS[idx % COLORS.length]
-    const f = item.unit === 'in' ? 2.54 : 1
-    const lCm = Math.max(1, item.l * f)
-    const wCm = Math.max(1, item.w * f)
-    const hCm = Math.max(1, item.h * f)
-    // Clamp to container dimensions
-    const cl = Math.min(lCm, spec.length)
-    const cw = Math.min(wCm, spec.width)
-    const ch = Math.min(hCm, spec.height)
-    const sw = cl * scale
-    const sd = cw * scale
-    const sh = ch * scale
-    const maxW = spec.length * scale
-    const maxD = spec.width * scale
-    const maxH = spec.height * scale
+    const f = TO_CM[item.unit] ?? 1
+    const cl = Math.min(Math.max(1, item.l * f), CL)
+    const cw = Math.min(Math.max(1, item.w * f), CW)
+    const ch = Math.min(Math.max(1, item.h * f), CH)
     const cap = Math.min(item.qty, 60)
-
-    for (let q = 0; q < cap; q++) {
-      if (px + sw > maxW + 0.5) { px = 0; pz += rowD; rowD = 0 }
-      if (pz + sd > maxD + 0.5) { pz = 0; py += layerH; layerH = 0; px = 0; rowD = 0 }
-      if (py + sh > maxH + 0.5) return
-      out.push({ x: px, y: py, z: pz, w: sw, d: sd, h: sh, color, stackable: item.stackable })
-      rowD = Math.max(rowD, sd)
-      layerH = Math.max(layerH, sh)
-      px += sw
-    }
+    for (let q = 0; q < cap; q++)
+      allBoxes.push({ l: cl, w: cw, h: ch, color: COLORS[idx % COLORS.length], weight: item.weight || 1, stackable: item.stackable })
   })
+
+  // Sort: heaviest first (sits on the floor), then largest volume
+  allBoxes.sort((a, b) => (b.weight - a.weight) || (b.l * b.w * b.h - a.l * a.w * a.h))
+
+  // Unique orientations for a box (l=length along X, w=depth along Z, h=height along Y)
+  const orientations = (l, w, h) => {
+    const seen = new Set()
+    return [[l,w,h],[l,h,w],[w,l,h],[w,h,l],[h,l,w],[h,w,l]].filter(([a,b,c]) => {
+      const k = `${a.toFixed(1)},${b.toFixed(1)},${c.toFixed(1)}`
+      return seen.has(k) ? false : (seen.add(k), true)
+    })
+  }
+
+  // Placed boxes in cm-space: { x,y,z,l,w,h }
+  const placed = []
+
+  const overlaps = (x, y, z, l, w, h) => {
+    for (const p of placed) {
+      if (x < p.x + p.l - 0.01 && x + l > p.x + 0.01 &&
+          y < p.y + p.h - 0.01 && y + h > p.y + 0.01 &&
+          z < p.z + p.w - 0.01 && z + w > p.z + 0.01) return true
+    }
+    return false
+  }
+  const fits = (x, y, z, l, w, h) => x + l <= CL + 0.01 && y + h <= CH + 0.01 && z + w <= CW + 0.01
+
+  // Extreme points: candidate bottom-left-front corners to try
+  let pts = [{ x: 0, y: 0, z: 0 }]
+
+  const out = []
+
+  for (const box of allBoxes) {
+    let best = null, bestScore = Infinity
+
+    for (const pt of pts) {
+      for (const [bl, bw, bh] of orientations(box.l, box.w, box.h)) {
+        const { x, y, z } = pt
+        if (!fits(x, y, z, bl, bw, bh)) continue
+        if (overlaps(x, y, z, bl, bw, bh)) continue
+        // Score: minimise height first (gravity), then depth, then length
+        const score = y * 1e8 + z * 1e4 + x
+        if (score < bestScore) { bestScore = score; best = { x, y, z, l: bl, w: bw, h: bh } }
+      }
+    }
+
+    if (!best) continue
+
+    placed.push(best)
+    out.push({
+      x: best.x * scale, y: best.y * scale, z: best.z * scale,
+      w: best.l * scale, h: best.h * scale, d: best.w * scale,
+      color: box.color, stackable: box.stackable,
+    })
+
+    // Generate new extreme points from the three exposed faces
+    pts.push(
+      { x: best.x + best.l, y: best.y,       z: best.z       },  // right of box
+      { x: best.x,          y: best.y + best.h, z: best.z     },  // on top of box
+      { x: best.x,          y: best.y,       z: best.z + best.w }, // behind box
+    )
+
+    // Remove points that now lie inside any placed box
+    pts = pts.filter(pt => {
+      for (const p of placed) {
+        if (pt.x >= p.x - 0.01 && pt.x < p.x + p.l - 0.01 &&
+            pt.y >= p.y - 0.01 && pt.y < p.y + p.h - 0.01 &&
+            pt.z >= p.z - 0.01 && pt.z < p.z + p.w - 0.01) return false
+      }
+      return true
+    })
+  }
+
   return out
 }
 
@@ -105,52 +162,39 @@ function drawFace(ctx, pts, fill, stroke) {
   ctx.fill()
   if (stroke) {
     ctx.strokeStyle = stroke
-    ctx.lineWidth = 0.5
+    ctx.lineWidth = 1.2
     ctx.stroke()
   }
 }
 
-// ── Draw a 3D box with rotation ───────────────────────────────────────────────
+// ── Draw a 3D box with rotation — all 6 faces, painter's algorithm ────────────
 function drawBox(ctx, ox, oy, x, y, z, w, h, d, topCol, frontCol, rightCol, stroke, rX, rY) {
   const p = (bx, by, bz) => {
     const [ix, iy] = isoProject(bx, by, bz, rX, rY)
     return [ox + ix, oy + iy]
   }
+  const pDepth = (bx, by, bz) => project(bx, by, bz, rX, rY)[2]
 
   // 8 corners
   const corners = [
-    [x, y, z], [x+w, y, z], [x+w, y, z+d], [x, y, z+d],
-    [x, y+h, z], [x+w, y+h, z], [x+w, y+h, z+d], [x, y+h, z+d],
+    [x,   y,   z  ], [x+w, y,   z  ], [x+w, y,   z+d], [x,   y,   z+d],
+    [x,   y+h, z  ], [x+w, y+h, z  ], [x+w, y+h, z+d], [x,   y+h, z+d],
   ]
   const pc = corners.map(c => p(...c))
 
-  // Determine which faces are visible using face normals
-  // Top face (y+h): normal (0,1,0) rotated
-  const [, topNy] = project(0, 1, 0, rX, rY)
-  // Front face (z+d): normal (0,0,1) rotated
-  const [, frontNy, frontNz] = project(0, 0, 1, rX, rY)
-  // Right face (x+w): normal (1,0,0) rotated
-  const [rightNx] = project(1, 0, 0, rX, rY)
-  // Back face: normal (0,0,-1)
-  const [, backNy, backNz] = project(0, 0, -1, rX, rY)
-  // Left face: normal (-1,0,0)
-  const [leftNx] = project(-1, 0, 0, rX, rY)
-  // Bottom face: normal (0,-1,0)
-  const [, botNy] = project(0, -1, 0, rX, rY)
+  // All 6 faces with their center-point depth for sorting
+  const faces = [
+    { pts: [pc[4],pc[5],pc[6],pc[7]], cx: x+w/2, cy: y+h,   cz: z+d/2, col: topCol                   }, // top
+    { pts: [pc[3],pc[2],pc[6],pc[7]], cx: x+w/2, cy: y+h/2, cz: z+d,   col: frontCol                  }, // front
+    { pts: [pc[1],pc[2],pc[6],pc[5]], cx: x+w,   cy: y+h/2, cz: z+d/2, col: rightCol                  }, // right
+    { pts: [pc[0],pc[1],pc[5],pc[4]], cx: x+w/2, cy: y+h/2, cz: z,     col: shadeColor(frontCol, 50)  }, // back
+    { pts: [pc[0],pc[3],pc[7],pc[4]], cx: x,     cy: y+h/2, cz: z+d/2, col: shadeColor(rightCol, 20)  }, // left
+    { pts: [pc[0],pc[1],pc[2],pc[3]], cx: x+w/2, cy: y,     cz: z+d/2, col: shadeColor(topCol, 40)    }, // bottom
+  ]
 
-  // Draw back-facing faces first, then front-facing
-  // Back face (z=0 plane)
-  if (backNz > 0) drawFace(ctx, [pc[0], pc[1], pc[5], pc[4]], shadeColor(frontCol, 50), stroke)
-  // Left face (x=0 plane)
-  if (leftNx < 0) drawFace(ctx, [pc[0], pc[3], pc[7], pc[4]], shadeColor(rightCol, 20), stroke)
-  // Bottom face
-  if (botNy < 0) drawFace(ctx, [pc[0], pc[1], pc[2], pc[3]], shadeColor(topCol, 40), stroke)
-  // Top face
-  if (topNy < 0) drawFace(ctx, [pc[4], pc[5], pc[6], pc[7]], topCol, stroke)
-  // Front face (z+d plane)
-  if (frontNz > 0) drawFace(ctx, [pc[3], pc[2], pc[6], pc[7]], frontCol, stroke)
-  // Right face (x+w plane)
-  if (rightNx > 0) drawFace(ctx, [pc[1], pc[2], pc[6], pc[5]], rightCol, stroke)
+  // Sort back-to-front by projected depth so closer faces paint on top
+  faces.sort((a, b) => pDepth(a.cx, a.cy, a.cz) - pDepth(b.cx, b.cy, b.cz))
+  faces.forEach(f => drawFace(ctx, f.pts, f.col, stroke))
 }
 
 // ── Draw container shell (back faces first) ──────────────────────────────────
@@ -402,13 +446,14 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
 
   const spec = CONTAINER_SPECS[containerType] || CONTAINER_SPECS['20ft']
 
-  const DISPLAY_SIZE = compact ? 100 : 120
+  const DISPLAY_SIZE = compact ? 200 : 380
   const scale = DISPLAY_SIZE / Math.max(spec.length, spec.width, spec.height)
 
   const packed = useMemo(() => packItems(items || [], spec, scale), [items, spec, scale])
 
   const totalCBM = useMemo(() => (items || []).reduce((s, i) => {
-    const f = i.unit === 'in' ? 2.54 : 1
+    const TO_CM = { cm: 1, mm: 0.1, m: 100, in: 2.54, ft: 30.48 }
+    const f = TO_CM[i.unit] ?? 1
     return s + i.l*f * i.w*f * i.h*f / 1e6 * i.qty
   }, 0), [items])
   const totalWeight = useMemo(() => (items || []).reduce((s, i) => s + i.weight * i.qty, 0), [items])
@@ -483,7 +528,7 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
           const frontCol = box.color
           const rightCol = shadeColor(box.color, 35)
           drawBox(ctx, 0, 0, box.x + offX, box.y + offY, box.z + offZ, box.w, box.h, box.d,
-            topCol, frontCol, rightCol, 'rgba(0,0,0,0.18)', rX, rY)
+            topCol, frontCol, rightCol, 'rgba(0,0,0,0.72)', rX, rY)
         })
 
         // Draw front container faces on top
@@ -574,7 +619,7 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
     }
   }, [])
 
-  const viewH = compact ? 200 : 240
+  const viewH = compact ? 340 : 560
 
   return (
     <div style={{ width: '100%' }}>
@@ -586,8 +631,8 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
           ['LOAD', utilization.toFixed(0) + '%'],
         ].map(([k, v]) => (
           <div key={k} style={{ background: 'rgba(200,168,78,0.05)', border: '1px solid rgba(200,168,78,0.13)', borderRadius: 7, padding: '8px 6px', textAlign: 'center' }}>
-            <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 18, color: '#ffe680', letterSpacing: 1 }}>{v}</div>
-            <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 9, color: 'rgba(255,255,255,0.35)', letterSpacing: .6, marginTop: 1 }}>{k}</div>
+            <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 20, color: '#ffe680', letterSpacing: 1 }}>{v}</div>
+            <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.55)', letterSpacing: .6, marginTop: 1 }}>{k}</div>
           </div>
         ))}
       </div>
@@ -605,7 +650,7 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
         />
       </div>
 
-      <div style={{ textAlign: 'center', fontFamily: 'DM Sans,sans-serif', fontSize: 9, color: 'rgba(255,255,255,0.22)', marginTop: 4 }}>
+      <div style={{ textAlign: 'center', fontFamily: 'DM Sans,sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>
         DRAG TO ROTATE · SCROLL / PINCH TO ZOOM · {packed.length} units packed · {spec.label}
       </div>
 
@@ -615,7 +660,7 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
           {(items || []).map((item, idx) => (
             <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ width: 12, height: 12, borderRadius: 3, background: COLORS[idx % COLORS.length], flexShrink: 0, boxShadow: `0 0 6px ${COLORS[idx % COLORS.length]}88` }} />
-              <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.6)', fontWeight: 500 }}>
+              <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.75)', fontWeight: 500 }}>
                 Item {idx + 1} · {item.qty}pc{item.qty !== 1 ? 's' : ''} · <span style={{ color: COLORS[idx % COLORS.length] }}>{item.stackable ? 'Stackable' : 'Non-stackable'}</span>
               </span>
             </div>
@@ -624,7 +669,7 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
       )}
 
       {totalWeight > spec.maxWeight && (
-        <div style={{ marginTop: 8, padding: '8px 12px', background: 'rgba(239,68,68,0.07)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 7, fontFamily: 'DM Sans,sans-serif', fontSize: 11, color: '#f87171' }}>
+        <div style={{ marginTop: 8, padding: '8px 12px', background: 'rgba(239,68,68,0.07)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 7, fontFamily: 'DM Sans,sans-serif', fontSize: 13, color: '#f87171' }}>
           ⚠ Weight ({totalWeight.toLocaleString()} kg) exceeds {spec.label} limit ({spec.maxWeight.toLocaleString()} kg)
         </div>
       )}

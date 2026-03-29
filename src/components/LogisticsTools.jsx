@@ -16,7 +16,7 @@ const TRUCK_CAP = {
   '40t':  { vol: 120, wt: 40000 },
 }
 
-const TO_CM = { mm: 0.1, cm: 1, m: 100, in: 2.54, ft: 30.48 }
+const TO_CM = { cm: 1, m: 100, in: 2.54, ft: 30.48 }
 
 const inp = {
   background:   'rgba(255,255,255,0.07)',
@@ -45,7 +45,7 @@ const lbl = {
 
 function Lbl({ children }) { return <span style={lbl}>{children}</span> }
 
-const UNITS = ['mm','cm','m','in','ft']
+const UNITS = ['cm','m','in','ft']
 
 function UnitSelect({ value, onChange }) {
   const [open, setOpen] = useState(false)
@@ -636,7 +636,7 @@ function LoadCalculator() {
               const ctype = ctbm <= 25 ? '20ft' : ctbm <= 67 ? '40ft' : '40hc'
               return (
                 <div style={{ marginTop:'1.4rem', borderTop:'1px solid rgba(200,168,78,0.15)', paddingTop:'1.2rem' }}>
-                  <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'0.95rem', color:'#c8a84e', letterSpacing:2, marginBottom:'0.8rem' }}>
+                  <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'2rem', color:'#c8a84e', letterSpacing:3, marginBottom:'0.8rem', textAlign:'center' }}>
                     3D CONTAINER LOAD VISUALISATION
                   </div>
                   <Container3DViewer items={items3d} containerType={ctype} compact={true} />
@@ -735,12 +735,7 @@ export default function LogisticsTools() {
                 fontSize:'clamp(2.4rem,5.5vw,4.8rem)',
                 letterSpacing:'0.07em', lineHeight:1,
                 margin:'0 0 clamp(0.6rem,1.5vw,1rem)',
-                background:'linear-gradient(100deg, #ffffff 0%, rgba(255,255,255,0.9) 25%, rgba(255,215,105,1) 45%, #ffffff 55%, rgba(255,215,105,1) 75%, rgba(200,168,78,0.9) 100%)',
-                backgroundSize:'300% 100%',
-                WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent',
-                backgroundClip:'text',
-                filter:'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
-                animation:'headingSweep 4s ease-in-out infinite',
+                color:'#ffffff',
               }}>
                 CONTAINER LOAD CALCULATOR
               </h2>

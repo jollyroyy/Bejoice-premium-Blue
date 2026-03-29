@@ -459,38 +459,22 @@ export default function BejoiceGlobe() {
             </div>
 
             {/* Separator */}
-            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'0.6rem 0' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'1.6rem 0 0.6rem' }}>
               <div style={{ flex:1, height:1, background:'rgba(200,168,78,0.15)' }} />
-              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:12, fontWeight:600, color:'rgba(200,168,78,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>KSA Offices</span>
+              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:12, fontWeight:600, color:'rgba(200,168,78,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>Branch Offices</span>
               <div style={{ flex:1, height:1, background:'rgba(200,168,78,0.15)' }} />
             </div>
 
-            <div style={{ display:'flex', justifyContent:'center', gap:'1.5rem 2.5rem', flexWrap:'wrap', marginBottom:'1rem' }}>
-              {OFFICES.filter(o => o.type === 'office').map(o => (
-                <motion.div key={o.name} whileHover={{ y:-3 }} transition={{ type:'spring', stiffness:300, damping:20 }}
-                  style={{ display:'flex', alignItems:'center', gap:'0.6rem', minHeight:44 }}>
-                  <span style={{ width:8, height:8, borderRadius:'50%', background:'#c8a84e', flexShrink:0 }} />
-                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.95rem,2.5vw,1.15rem)', fontWeight:500, color:'rgba(255,255,255,0.75)' }}>{o.city}</span>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Partner offices separator */}
-            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'0.6rem 0' }}>
-              <div style={{ flex:1, height:1, background:'rgba(94,196,212,0.15)' }} />
-              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:12, fontWeight:600, color:'rgba(94,196,212,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>Partner Offices</span>
-              <div style={{ flex:1, height:1, background:'rgba(94,196,212,0.15)' }} />
-            </div>
-
-            <div style={{ display:'flex', justifyContent:'center', gap:'1.5rem 2.5rem', flexWrap:'wrap' }}>
-              {OFFICES.filter(o => o.type === 'partner').map(o => (
-                <motion.div key={o.name} whileHover={{ y:-3 }} transition={{ type:'spring', stiffness:300, damping:20 }}
-                  style={{ display:'flex', alignItems:'center', gap:'0.6rem', minHeight:44 }}>
-                  <span style={{ width:8, height:8, borderRadius:'50%', background:'#5ec4d4', flexShrink:0, opacity:0.7 }} />
-                  <div>
-                    <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.95rem,2.5vw,1.15rem)', fontWeight:500, color:'rgba(255,255,255,0.75)' }}>{o.city}</span>
-                    <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, color:'rgba(94,196,212,0.5)', marginLeft:6 }}>{o.country}</span>
-                  </div>
+            <div style={{ display:'flex', justifyContent:'center', gap:'1rem 2rem', flexWrap:'wrap', marginBottom:'0.5rem' }}>
+              {[
+                { label:'Saudi Arabia', flag:'🇸🇦' },
+                { label:'UAE',          flag:'🇦🇪' },
+                { label:'India',        flag:'🇮🇳' },
+                { label:'China',        flag:'🇨🇳' },
+              ].map(({ label }) => (
+                <motion.div key={label} whileHover={{ y:-3 }} transition={{ type:'spring', stiffness:300, damping:20 }}
+                  style={{ display:'flex', alignItems:'center', minHeight:44 }}>
+                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.95rem,2.5vw,1.1rem)', fontWeight:600, color:'rgba(255,255,255,0.82)' }}>{label}</span>
                 </motion.div>
               ))}
             </div>

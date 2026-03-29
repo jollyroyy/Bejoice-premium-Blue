@@ -2,8 +2,7 @@ import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 
 const pillars = [
-  { icon: '◈', title: 'ZATCA Certified', desc: 'Fully compliant with Saudi Zakat, Tax and Customs Authority — ensuring zero delays at border crossings.' },
-  { icon: '◉', title: 'Real-Time Visibility', desc: 'End-to-end shipment tracking with live status updates, proactive alerts, and dedicated account managers.' },
+{ icon: '◉', title: 'Real-Time Visibility', desc: 'End-to-end shipment tracking with live status updates, proactive alerts, and dedicated account managers.' },
   { icon: '◆', title: 'GCC Network', desc: 'Deeply rooted partnerships with port authorities, carriers, and customs brokers across all GCC countries.' },
   { icon: '◐', title: 'Risk Management', desc: 'Comprehensive cargo insurance and contingency planning to protect your supply chain at every stage.' },
 ]
@@ -90,16 +89,6 @@ export default function WhyBejoice() {
                     100% { background-position: 200% center; }
                   }
                 `}</style>
-                <p style={{
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: 'clamp(1.2rem,2.4vw,1.9rem)',
-                  letterSpacing: '0.06em', lineHeight: 1.2,
-                  color: 'rgba(255,215,105,0.95)',
-                  textShadow: '0 0 24px rgba(255,200,80,0.3)',
-                  marginTop: '1.2rem', marginBottom: '0.8rem',
-                }}>
-                  Rooted in the Kingdom, Driven by Global Standards
-                </p>
               </div>
 
             </div>

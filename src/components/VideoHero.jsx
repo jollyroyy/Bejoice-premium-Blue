@@ -55,7 +55,7 @@ const FRAME_URLS = [
   ...Array.from({ length: FRAMES4_COUNT }, (_, i) =>
     `/frames4/${String(i + 1).padStart(4, '0')}.jpg`),
   ...Array.from({ length: FRAMES5_COUNT }, (_, i) =>
-    `/frames5/${String(i + 1).padStart(4, '0')}.jpg`),
+    `/frames5/${String(i + 1).padStart(4, '0')}.png`),
   ...Array.from({ length: FRAMES6_COUNT }, (_, i) =>
     `/frames6/${String(i + 1).padStart(4, '0')}.jpg`),
 ]
@@ -268,71 +268,91 @@ function TrackModal({ blNum, onClose }) {
   )
 }
 
-function TrackCard() {
-  const [blNum, setBlNum]       = useState('')
-  const [inputErr, setInputErr] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-
-  const handleTrack = () => {
-    if (!blNum.trim()) { setInputErr(true); return }
-    setInputErr(false)
-    setShowModal(true)
+function FreightCalcCard() {
+  const scroll = () => {
+    const el = document.getElementById('container-calculator') || document.getElementById('logistics-tools')
+    if (el) el.scrollIntoView({ behavior:'smooth', block:'start' })
   }
-
   return (
-    <>
-      {showModal && <TrackModal blNum={blNum} onClose={() => setShowModal(false)} />}
-      <div className="track-card-inner" style={{
-        width:'100%', position:'relative', overflow:'hidden',
-        background:'linear-gradient(160deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 60%, rgba(200,168,78,0.02) 100%)',
-        backdropFilter:'blur(32px)', WebkitBackdropFilter:'blur(32px)',
-        border:'1px solid rgba(200,168,78,0.2)',
-        borderTop:'1px solid rgba(200,168,78,0.45)',
-        borderRadius:'14px',
-        padding:'1rem 1.1rem 0.9rem',
-        boxShadow:'0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07)',
-        display:'flex', flexDirection:'column', justifyContent:'center',
-      }}>
-        {/* Gold top shimmer */}
-        <div style={{ position:'absolute', top:0, left:0, right:0, height:1, background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.8),transparent)', pointerEvents:'none' }}/>
-        {/* Corner glow */}
-        <div style={{ position:'absolute', top:0, right:0, width:60, height:60, background:'radial-gradient(circle at 100% 0%, rgba(200,168,78,0.12) 0%, transparent 70%)', pointerEvents:'none' }}/>
+    <div className="track-card-inner" style={{
+      width:'100%', position:'relative', overflow:'hidden',
+      background:'linear-gradient(145deg, rgba(200,168,78,0.07) 0%, rgba(10,8,20,0.6) 50%, rgba(255,255,255,0.015) 100%)',
+      backdropFilter:'blur(32px)', WebkitBackdropFilter:'blur(32px)',
+      border:'1px solid rgba(200,168,78,0.28)',
+      borderTop:'1px solid rgba(200,168,78,0.55)',
+      borderRadius:'14px',
+      padding:'1rem 1.1rem 0.9rem',
+      boxShadow:'0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,215,100,0.1), 0 0 24px rgba(200,168,78,0.06)',
+      display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
+    }}>
+      {/* Animated gold top line */}
+      <div style={{ position:'absolute', top:0, left:0, right:0, height:1, background:'linear-gradient(90deg,transparent,rgba(255,215,100,1),transparent)', pointerEvents:'none', animation:'calcSweep 3s ease-in-out infinite' }}/>
+      {/* Bottom-left corner glow */}
+      <div style={{ position:'absolute', bottom:0, left:0, width:70, height:70, background:'radial-gradient(circle at 0% 100%, rgba(200,168,78,0.14) 0%, transparent 70%)', pointerEvents:'none' }}/>
 
-        <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.25rem', color:'#ffffff', letterSpacing:'0.1em', lineHeight:1, margin:'0 0 0.18rem', textTransform:'uppercase', textShadow:'0 0 20px rgba(255,255,255,0.2)', textAlign:'center' }}>
-          Track Shipment
+      {/* Header row: title + live dot */}
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'0.65rem' }}>
+        <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.25rem', color:'#ffe680', letterSpacing:'0.1em', lineHeight:1, margin:0, textTransform:'uppercase', textShadow:'0 0 18px rgba(255,215,100,0.45)', textAlign:'center' }}>
+          Freight Calculator
         </p>
-        <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.6rem', color:'rgba(200,168,78,0.8)', margin:'0 0 0.6rem', letterSpacing:'0.15em', textTransform:'uppercase', fontWeight:600, textAlign:'center' }}>
-          BL · AWB · Container
-        </p>
-
-        <div style={{ display:'flex', flexDirection:'column', gap:'0.45rem' }}>
-          <input type="text" placeholder="Enter reference number"
-            value={blNum}
-            onChange={e => { setBlNum(e.target.value); setInputErr(false) }}
-            onKeyDown={e => e.key === 'Enter' && handleTrack()}
-            style={{
-              width:'100%', boxSizing:'border-box',
-              background:'rgba(255,255,255,0.04)',
-              border:`1px solid ${inputErr?'rgba(255,80,80,0.7)':'rgba(200,168,78,0.2)'}`,
-              borderRadius:'8px', padding:'0.6rem 0.85rem', color:'#fff',
-              fontFamily:"'DM Sans',sans-serif", fontSize:'0.82rem', outline:'none',
-              transition:'border-color 0.2s, background 0.2s',
-              letterSpacing:'0.04em',
-            }}
-            onFocus={e => { e.target.style.borderColor='rgba(200,168,78,0.6)'; e.target.style.background='rgba(200,168,78,0.06)' }}
-            onBlur={e  => { e.target.style.borderColor=inputErr?'rgba(255,80,80,0.7)':'rgba(200,168,78,0.2)'; e.target.style.background='rgba(255,255,255,0.04)' }}
-          />
-          <button onClick={handleTrack} className="btn-gold" style={{ width:'auto', alignSelf:'center', justifyContent:'center', padding:'7px 20px', fontSize:'0.88rem' }}>
-            <div className="btn-shine-overlay" />
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-            </svg>
-            Track Now
-          </button>
-        </div>
-        {inputErr && <p style={{ marginTop:'0.4rem', fontSize:'0.7rem', color:'rgba(255,100,100,0.9)', fontFamily:"'DM Sans',sans-serif" }}>Please enter a valid reference number</p>}
       </div>
-    </>
+
+      <button onClick={scroll} className="btn-gold btn-gold--static" style={{
+        width:'100%', justifyContent:'center', padding:'7px 14px', fontSize:'0.84rem',
+        letterSpacing:'0.12em',
+      }}>
+        <div className="btn-shine-overlay" />
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        <span style={{ whiteSpace:'nowrap' }}>Calculate Now</span>
+      </button>
+
+      <style>{`
+        @keyframes calcPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+        @keyframes calcSweep { 0%{background-position:-200% center} 100%{background-position:200% center} }
+      `}</style>
+    </div>
+  )
+}
+
+function TrackCard() {
+  return (
+    <div className="track-card-inner" style={{
+      width:'100%', position:'relative', overflow:'hidden',
+      background:'linear-gradient(160deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 60%, rgba(200,168,78,0.02) 100%)',
+      backdropFilter:'blur(32px)', WebkitBackdropFilter:'blur(32px)',
+      border:'1px solid rgba(200,168,78,0.2)',
+      borderTop:'1px solid rgba(200,168,78,0.45)',
+      borderRadius:'14px',
+      padding:'1rem 1.1rem 0.9rem',
+      boxShadow:'0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07)',
+      display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
+    }}>
+      {/* Gold top shimmer */}
+      <div style={{ position:'absolute', top:0, left:0, right:0, height:1, background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.8),transparent)', pointerEvents:'none' }}/>
+      {/* Corner glow */}
+      <div style={{ position:'absolute', top:0, right:0, width:60, height:60, background:'radial-gradient(circle at 100% 0%, rgba(200,168,78,0.12) 0%, transparent 70%)', pointerEvents:'none' }}/>
+
+      <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.25rem', color:'#ffffff', letterSpacing:'0.1em', lineHeight:1, margin:'0 0 0.18rem', textTransform:'uppercase', textShadow:'0 0 20px rgba(255,255,255,0.2)', textAlign:'center' }}>
+        Track Shipment
+      </p>
+      <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.6rem', color:'rgba(200,168,78,0.8)', margin:'0 0 0.75rem', letterSpacing:'0.15em', textTransform:'uppercase', fontWeight:600, textAlign:'center' }}>
+        BL · AWB · Container
+      </p>
+
+      <button
+        onClick={() => window.open('https://www.track-trace.com/', '_blank', 'noopener,noreferrer')}
+        className="btn-gold"
+        style={{ width:'auto', justifyContent:'center', padding:'7px 20px', fontSize:'0.88rem' }}
+      >
+        <div className="btn-shine-overlay" />
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        Track Now
+      </button>
+    </div>
   )
 }
 
@@ -451,7 +471,10 @@ export default function VideoHero({ onQuoteClick }) {
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'high'
 
+    // HDR-like enhancement: boost contrast, saturation & brightness
+    ctx.filter = 'contrast(1.15) saturate(1.25) brightness(1.05)'
     ctx.drawImage(img, x, y, w, h)
+    ctx.filter = 'none'
   }, [])
 
   // ── Progressive frame loader ──────────────────────────────────────
@@ -789,8 +812,9 @@ export default function VideoHero({ onQuoteClick }) {
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
                     Track Your Shipment
                   </p>
-                  <div className="hero-mobile-track">
-                    <TrackCard />
+                  <div className="hero-mobile-track" style={{ display:'flex', gap:10 }}>
+                    <div style={{ flex:1 }}><TrackCard /></div>
+                    <div style={{ flex:1 }}><FreightCalcCard /></div>
                   </div>
                 </div>
                 {/* Stats row with label */}
@@ -800,7 +824,6 @@ export default function VideoHero({ onQuoteClick }) {
                 </p>
                 <div className="hero-mobile-stats">
                   {[
-                    { v:'1500', suffix:'+', l:'Heavy Lift' },
                     { v:'120',  suffix:'+', l:'Countries'  },
                     { v:'25',   suffix:'+', l:'Years'      },
                     { v:'24/7', suffix:'',  l:'Operations' },
@@ -896,8 +919,13 @@ export default function VideoHero({ onQuoteClick }) {
           alignItems:'stretch', justifyContent:'flex-end',
           padding:'0 clamp(8rem,20vw,32rem) 0 clamp(0.8rem,4vw,5rem)', pointerEvents:'all',
         }}>
-          <div className="hero-track-wrap" style={{ flex:'0 1 260px', minWidth:0, maxWidth:'270px', display:'flex' }}>
-            <TrackCard />
+          <div style={{ display:'flex', gap:'clamp(8px,1.5vw,14px)', flex:'0 1 auto', minWidth:0 }}>
+            <div className="hero-track-wrap" style={{ flex:'0 1 230px', minWidth:0, maxWidth:'240px', display:'flex' }}>
+              <TrackCard />
+            </div>
+            <div className="hero-track-wrap" style={{ flex:'0 1 230px', minWidth:0, maxWidth:'240px', display:'flex' }}>
+              <FreightCalcCard />
+            </div>
           </div>
 
           <div className="hero-stats-bar" style={{
@@ -910,7 +938,6 @@ export default function VideoHero({ onQuoteClick }) {
             maxWidth:'100%',
           }}>
             {[
-              { v:'1500', suffix:'+', l:'Heavy Lift' },
               { v:'120',  suffix:'+', l:'Countries'  },
               { v:'25',   suffix:'+', l:'Years'      },
               { v:'24/7', suffix:'',  l:'Operations' },

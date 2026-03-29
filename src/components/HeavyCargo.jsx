@@ -218,8 +218,9 @@ export default function HeavyCargo() {
                 ref={el => cardsRef.current[i] = el}
                 className="fade-up p-6 md:p-8 lg:p-10 group cursor-default"
                 style={{
+                  background: '#000000',
                   borderTop: '1px solid rgba(200,168,78,0.1)',
-                  transitionDelay: `${i * 75}ms`,       // ← FIXED: merged here
+                  transitionDelay: `${i * 75}ms`,
                 }}
                 whileHover={{
                   rotateY: i % 2 === 0 ? 3 : -3,
