@@ -3,11 +3,6 @@ dist/
 .env
 *.local
 
-# Large video files — host separately on CDN/Netlify
-public/*.mp4
-public/*.webm
-public/*.mov
-
 # Unused/backup frame sequences — too large for Vercel
 public/frames1/
 public/frames1_backup/
