@@ -120,11 +120,17 @@ Three shine classes — all use `::after` pseudo-element with `content: attr(dat
 
 ### Layla AI Chatbot (FloatingBookCTA.jsx)
 - Bottom-right fixed position, zIndex 9999
-- Knowledge base in `KB` object, responses in `RESPONSES` object
-- Chat panel: `overflowY: 'scroll'`, height 360px — fully scrollable
+- **RAG system**: `src/data/laylaKnowledgeBase.js` — 30 Sea Freight PDF chunks, always consulted first via `retrieveChunks(query, topN=2, threshold=1)` before KB/RESPONSES
+- **Session memory**: `_memory` object tracks name, company, origin, destination, cargo type, mode, container type, incoterm, weight, volume, urgency — updated on every message via `updateMemory()`
+- **Personalization**: `personalizeOpening()` prepends "Hi [Name]!" when name is known; `buildContextHint()` appends route/cargo context to all logistics responses
+- RAG skipped only for social messages (greetings, thanks, goodbye) matched by `isSocial` regex
+- Name acknowledgement handler fires when user shares their name — "Nice to meet you, [Name]!"
+- Knowledge base covers: B/L types, FCL/LCL, container specs, demurrage rates (KSA/UAE/Oman/Qatar), all 11 INCO Terms, sea import procedure, Letter of Credit, SABER/SASO, customs, CBM calc, transit times, DG cargo, cargo insurance
+- Chat panel: `overflowY: 'scroll'`, height `min(360px, 45svh)` — fully scrollable
 - Avatar: `public/ai-assistant-female.png`
-- Quick replies: Get a Quote, Air Freight, Sea Freight, Heavy Cargo, Saudi Logistics, Market Updates, Talk to Expert
+- Quick replies: Start Shipment, Air Freight, Sea Freight, Heavy Cargo, Saudi Logistics, Market Updates, Talk to Expert
 - CTA actions: `"call"` → opens Cal.com popup | `"quote"` → scrolls to contact section
+- **Mobile**: CSS class `ca-panel-mobile` (width: calc(100vw - 16px) at ≤480px), `ca-msgs-mobile` (height: min(320px, 42svh)), `ca-bubble-mobile`, `ca-qr-btn-mobile`, `ca-fab-mobile`; input font-size 16px (prevents iOS zoom); all tap targets ≥ 44px; send button 44×44px
 
 ### Logo (Nav.jsx)
 - `public/bejoice-logo-white.png` — white wings on transparent bg

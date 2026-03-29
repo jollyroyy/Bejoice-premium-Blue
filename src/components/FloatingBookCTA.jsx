@@ -1,6 +1,7 @@
 // FloatingBookCTA.jsx — Layla AI freight assistant for Bejoice Premium
 import { useState, useEffect, useRef } from "react";
 import { useCalBooking } from "../hooks/useCalBooking";
+import { retrieveChunks } from "../data/laylaKnowledgeBase";
 
 const CAL_LINK = "sudeshna-pal-ruww5f/freight-consultation";
 
@@ -174,8 +175,148 @@ const RESPONSES = {
 let _lastTopic = null
 let _topicHistory = []
 
+// ── Layla session memory — remembers the full chat context ──────
+const _memory = {
+  name: null,           // user's name
+  company: null,        // company name
+  origin: null,         // origin country/city
+  destination: null,    // destination country/city
+  cargoType: null,      // type of goods
+  mode: null,           // sea / air / land / heavy
+  weight: null,         // weight if mentioned
+  volume: null,         // CBM if mentioned
+  containerType: null,  // FCL/LCL/20ft/40ft etc
+  incoterm: null,       // EXW/FOB/CIF etc
+  urgency: null,        // urgent / standard
+  concerns: [],         // topics the user has asked about (history)
+  quoteRequested: false,
+  callRequested: false,
+}
+
+function updateMemory(rawInput) {
+  const t = rawInput.toLowerCase()
+
+  // Name: "my name is X" / "I'm X" / "call me X"
+  const nameMatch = rawInput.match(/(?:my name is|i am|i'm|call me)\s+([A-Za-z][a-z]*(?: [A-Za-z][a-z]*)?)/i)
+  if (nameMatch) _memory.name = nameMatch[1].trim().replace(/\b\w/g, c => c.toUpperCase())
+
+  // Company: "from [company]" / "I work at X" / "our company X"
+  const companyMatch = rawInput.match(/(?:i work (?:at|for)|our company(?: is)?|company(?: is)?|from)\s+([A-Za-z][A-Za-z0-9 &.-]{2,30})/i)
+  if (companyMatch) _memory.company = companyMatch[1].trim()
+
+  // Origin country/city
+  const originMatch = rawInput.match(/(?:from|shipping from|origin[:\s]+|out of|departing from)\s+([A-Za-z][a-z ]*(?: [A-Za-z][a-z]*)*?)(?:\s+to\b|\s*,|$)/i)
+  if (originMatch && originMatch[1].length > 1) _memory.origin = originMatch[1].trim()
+
+  // Destination country/city
+  const destMatch = rawInput.match(/(?:\bto\b|shipping to|going to|destination[:\s]+|deliver(?:ing)? to|arrive(?:s)? in)\s+([A-Za-z][a-z]*(?: [A-Za-z][a-z]*)*?)(?:\s*,|\s+via\b|$)/i)
+  if (destMatch && destMatch[1].length > 1) _memory.destination = destMatch[1].trim()
+
+  // Transport mode
+  if (/\b(sea freight|ocean freight|ship|vessel|container|fcl|lcl|maritime)\b/.test(t)) _memory.mode = 'sea'
+  else if (/\b(air freight|airfreight|plane|aircraft|fly|flight|awb)\b/.test(t)) _memory.mode = 'air'
+  else if (/\b(road|truck|land freight|overland|lorry|trailer)\b/.test(t)) _memory.mode = 'land'
+  else if (/\b(heavy lift|project cargo|oog|out.of.gauge|oversized|odc)\b/.test(t)) _memory.mode = 'heavy'
+
+  // Cargo type — capture noun phrase after key verbs
+  const cargoMatch = rawInput.match(/(?:shipping|import(?:ing)?|export(?:ing)?|moving|transporting|sending|cargo(?:\s+is)?|goods(?:\s+are)?)\s+(?:some\s+|a\s+)?([A-Za-z][a-z0-9 -]{2,30}?)(?:\s+from|\s+to|\s+via|[.,]|$)/i)
+  if (cargoMatch && cargoMatch[1].length > 2) _memory.cargoType = cargoMatch[1].trim()
+
+  // Container type
+  if (/\b(20\s*ft|20-?foot|twenty.foot)\b/.test(t)) _memory.containerType = '20ft'
+  else if (/\b(40\s*hc|40.high.cube|high cube)\b/.test(t)) _memory.containerType = '40HC'
+  else if (/\b(40\s*ft|40-?foot|forty.foot)\b/.test(t)) _memory.containerType = '40ft'
+  else if (/\bfcl\b/.test(t)) _memory.containerType = 'FCL'
+  else if (/\blcl\b/.test(t)) _memory.containerType = 'LCL'
+
+  // Incoterm
+  const incotermMatch = t.match(/\b(exw|fca|fas|fob|cfr|cif|cpt|cip|dap|dpu|ddp)\b/)
+  if (incotermMatch) _memory.incoterm = incotermMatch[1].toUpperCase()
+
+  // Weight
+  const weightMatch = rawInput.match(/(\d[\d,.]*)\s*(kg|kgs|tonnes?|tons?|lbs?|pounds?)\b/i)
+  if (weightMatch) _memory.weight = `${weightMatch[1]} ${weightMatch[2]}`
+
+  // Volume
+  const volMatch = rawInput.match(/(\d[\d,.]*)\s*(cbm|cubic\s*met(?:re|er)s?|m3)\b/i)
+  if (volMatch) _memory.volume = `${volMatch[1]} CBM`
+
+  // Urgency
+  if (/\b(urgent|asap|immediately|emergency|rush|next day|tomorrow|today)\b/.test(t)) _memory.urgency = 'urgent'
+  else if (/\b(flexible|no rush|whenever|not urgent|standard)\b/.test(t)) _memory.urgency = 'standard'
+
+  // Track quote/call intent
+  if (/\b(quote|price|rate|how much|cost estimate)\b/.test(t)) _memory.quoteRequested = true
+  if (/\b(call|speak|talk|human|agent|expert|book)\b/.test(t)) _memory.callRequested = true
+}
+
+/** Build a personalized prefix based on what we know about the user */
+function personalizeOpening() {
+  if (_memory.name) return `Hi ${_memory.name}! `
+  return ''
+}
+
+/** Build a context hint to append to RAG responses */
+function buildContextHint() {
+  const parts = []
+  if (_memory.origin && _memory.destination) {
+    parts.push(`your **${_memory.origin} → ${_memory.destination}** route`)
+  } else if (_memory.destination) {
+    parts.push(`your shipment **to ${_memory.destination}**`)
+  } else if (_memory.origin) {
+    parts.push(`your shipment **from ${_memory.origin}**`)
+  }
+  if (_memory.cargoType) parts.push(`**${_memory.cargoType}** cargo`)
+  if (_memory.weight) parts.push(`**${_memory.weight}**`)
+  if (_memory.volume) parts.push(`**${_memory.volume}**`)
+  if (_memory.mode) parts.push(`via **${_memory.mode} freight**`)
+  if (_memory.containerType) parts.push(`in a **${_memory.containerType}** container`)
+  if (_memory.incoterm) parts.push(`under **${_memory.incoterm}** terms`)
+
+  if (parts.length === 0) return null
+  return `*For ${parts.join(', ')} — our team can give you exact figures. Just say the word!*`
+}
+
 function getBotResponse(input) {
   const text = input.toLowerCase().trim()
+
+  // ── Update session memory with anything the user shares ──────
+  updateMemory(input)
+
+  // ── RAG: Always consult Sea Freight knowledge base first ──────
+  // Skip RAG only for purely social messages (greetings, thanks, goodbye, personal questions)
+  const isSocial = /^(hi\b|hello\b|hey\b|salam|marhaba|howdy|thank|thanks|bye|goodbye|see you|good night|how are you|how r u|who are you|what are you|are you|tell me about yourself|you are |you're |i love|date me|marry me|joke|weather|what time|what day|food|hungry)/.test(text)
+
+  if (!isSocial) {
+    // Threshold=1 — retrieve whenever ANY keyword overlaps
+    const ragChunks = retrieveChunks(text, 2, 1)
+    if (ragChunks.length > 0) {
+      const primary = ragChunks[0]
+      const secondary = ragChunks[1]
+      _lastTopic = 'sea'
+      const greeting = personalizeOpening()
+      let responseText = greeting + primary.content
+      if (secondary && secondary.id !== primary.id) {
+        responseText += `\n\n---\n\n${secondary.content}`
+      }
+      // Append personalized context hint based on session memory
+      const ctxHint = buildContextHint()
+      if (ctxHint) responseText += `\n\n${ctxHint}`
+
+      const hasCTA = /demurrage|detention|rate|cost|price|quote|charges|how much/.test(text)
+      return {
+        text: responseText,
+        cta: hasCTA ? { label: 'Get Accurate Quote', action: 'quote' } : { label: 'Ask a Specialist', action: 'call' },
+      }
+    }
+  }
+
+  // ── Name acknowledgement — if user just shared their name ────
+  if (_memory.name && /(?:my name is|i am|i'm|call me)\s+[a-z]/i.test(input)) {
+    return {
+      text: `Nice to meet you, **${_memory.name}**! 😊 I'll remember that.\n\nI'm Layla — Bejoice's freight assistant. I'm here to help with sea freight, air cargo, customs clearance, heavy lift, and everything logistics in Saudi Arabia.\n\nWhat can I help you with today?`,
+    }
+  }
 
   // ── Saudi market & logistics knowledge base ──
   const SAUDI_KB = {
@@ -245,13 +386,25 @@ function getBotResponse(input) {
     }
   }
 
-  // If we got a topic match, use it
+  // If we got a topic match, use it — and personalize with memory
   if (topic && RESPONSES[topic]) {
     _lastTopic = topic
     if (!_topicHistory.includes(topic)) _topicHistory.push(topic)
     const pool = RESPONSES[topic]
     const arr = Array.isArray(pool) ? pool : [pool]
-    return pick(arr)
+    const response = pick(arr)
+    // Personalize: prepend name if we know it, and append context hint for logistics topics
+    const logisticsTopics = ['quote','air','sea','heavy','customs','warehousing','insurance','market','saudi','tracking']
+    if (_memory.name || (logisticsTopics.includes(topic) && buildContextHint())) {
+      const greeting = personalizeOpening()
+      const ctxHint = logisticsTopics.includes(topic) ? buildContextHint() : null
+      const baseText = typeof response.text === 'function' ? response.text() : response.text
+      return {
+        ...response,
+        text: `${greeting}${baseText}${ctxHint ? `\n\n${ctxHint}` : ''}`,
+      }
+    }
+    return response
   }
 
   // Compound question detection: if multiple logistics topics matched
@@ -404,13 +557,14 @@ if (typeof document !== "undefined" && !document.getElementById(STYLE_ID)) {
       flex: 1; background: rgba(255,255,255,0.05);
       border: 1px solid rgba(200,168,78,0.2); border-radius: 24px;
       color: #fff; font-family: 'DM Sans', sans-serif;
-      font-size: 13px; padding: 10px 16px; outline: none;
+      font-size: 16px; padding: 10px 16px; outline: none;
       transition: border-color 0.2s;
+      -webkit-appearance: none;
     }
     .ca-input-field::placeholder { color: rgba(255,255,255,0.3); }
     .ca-input-field:focus { border-color: rgba(200,168,78,0.5); background: rgba(255,255,255,0.07); }
     .ca-send-btn {
-      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
       background: linear-gradient(135deg, #e8cc7a, #c8a84e);
       border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
       color: #050508; transition: transform 0.2s, box-shadow 0.2s;
@@ -418,6 +572,33 @@ if (typeof document !== "undefined" && !document.getElementById(STYLE_ID)) {
     }
     .ca-send-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 6px 20px rgba(200,168,78,0.6); }
     .ca-send-btn:disabled { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.2); box-shadow: none; cursor: default; transform: none; }
+    /* ── Mobile overrides ── */
+    @media (max-width: 480px) {
+      .ca-panel-mobile {
+        width: calc(100vw - 16px) !important;
+        right: 8px !important;
+        left: 8px !important;
+        border-radius: 20px !important;
+      }
+      .ca-msgs-mobile {
+        height: min(320px, 42svh) !important;
+      }
+      .ca-bubble-mobile {
+        max-width: 200px !important;
+        font-size: 12.5px !important;
+        padding: 10px 14px !important;
+      }
+      .ca-qr-mobile {
+        gap: 5px !important;
+      }
+      .ca-qr-btn-mobile {
+        font-size: 11px !important;
+        padding: 5px 10px !important;
+      }
+      .ca-fab-mobile {
+        right: 8px !important;
+      }
+    }
   `;
   document.head.appendChild(s);
 }
@@ -538,10 +719,10 @@ export default function FloatingBookCTA() {
   if (!visible) return null;
 
   return (
-    <div className="layla-fab-wrap" style={{
+    <div className="layla-fab-wrap ca-fab-mobile" style={{
       position: "fixed",
       bottom: "max(16px, env(safe-area-inset-bottom, 16px))",
-      right: "clamp(12px, 4vw, 28px)",
+      right: "clamp(8px, 4vw, 28px)",
       zIndex: 9999,
       display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 14,
     }}>
@@ -550,8 +731,8 @@ export default function FloatingBookCTA() {
           CHAT PANEL
       ══════════════════════════════════════ */}
       {open && (
-        <div style={{
-          width: "min(380px, calc(100vw - 24px))",
+        <div className="ca-panel-mobile" style={{
+          width: "min(380px, calc(100vw - 16px))",
           background: "linear-gradient(170deg, #0b1120 0%, #050508 100%)",
           border: "1px solid rgba(200,168,78,0.3)",
           borderRadius: 24,
@@ -613,8 +794,8 @@ export default function FloatingBookCTA() {
           </div>
 
           {/* ── Messages ── */}
-          <div className="ca-msgs" style={{
-            height: "min(360px, 45vh)", overflowY: "scroll",
+          <div className="ca-msgs ca-msgs-mobile" style={{
+            height: "min(360px, 45svh)", overflowY: "scroll",
             padding: "16px 16px 10px",
             display: "flex", flexDirection: "column", gap: 12,
             flex: "none",
@@ -652,12 +833,13 @@ export default function FloatingBookCTA() {
                     style={{
                       background: "linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)",
                       color: "#050508", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 12,
-                      padding: "10px 20px", fontSize: 12, fontWeight: 900,
+                      padding: "11px 20px", fontSize: 12, fontWeight: 900,
                       cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
                       letterSpacing: "0.1em", textTransform: "uppercase",
                       boxShadow: "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)",
                       transition: "all 0.3s cubic-bezier(0.23, 1, 0.32, 1)",
                       position: 'relative', overflow: 'hidden',
+                      minHeight: 44,
                     }}
                     onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1.5px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(200,168,78,0.4), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #fff2a8, #f5d97a, #e8cc7a)"; }}
                     onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)"; }}
@@ -692,7 +874,7 @@ export default function FloatingBookCTA() {
           </div>
 
           {/* ── Quick replies ── */}
-          <div style={{
+          <div className="ca-qr-mobile" style={{
             padding: "8px 16px 10px",
             display: "flex", flexWrap: "wrap", gap: 7,
             borderTop: "1px solid rgba(200,168,78,0.1)",
@@ -702,12 +884,14 @@ export default function FloatingBookCTA() {
               <button
                 key={r.label}
                 onClick={() => handleQuickReply(r.action, r.label)}
+                className="ca-qr-btn-mobile"
                 style={{
                   background: "rgba(200,168,78,0.07)", color: "#e8cc7a",
                   border: "1px solid rgba(200,168,78,0.22)", borderRadius: 22,
-                  padding: "5px 12px", fontSize: 12, fontWeight: 600,
+                  padding: "6px 12px", fontSize: 12, fontWeight: 600,
                   cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
                   transition: "all 0.18s",
+                  minHeight: 36,
                 }}
                 onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,168,78,0.18)"; e.currentTarget.style.borderColor = "rgba(200,168,78,0.55)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,168,78,0.07)"; e.currentTarget.style.borderColor = "rgba(200,168,78,0.22)"; e.currentTarget.style.transform = "translateY(0)"; }}
@@ -761,6 +945,7 @@ export default function FloatingBookCTA() {
       {!open && showBubble && (
         <div
           onClick={() => setOpen(true)}
+          className="ca-bubble-mobile"
           style={{
             background: "linear-gradient(135deg, rgba(12,14,26,0.96), rgba(5,5,8,0.98))",
             color: "#f0e6c8",
