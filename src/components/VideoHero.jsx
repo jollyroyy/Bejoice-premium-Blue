@@ -38,45 +38,26 @@ function CountUp({ target, suffix = '', duration = 900 }) {
 // ─────────────────────────────────────────────────────────────────────────────
 const SCROLL_HEIGHT = 1800
 
-// ── JPEG frame sequences ──────────────────────────────────────────
-// frames1: 0–184   (185) globe/intro
-// frames7: 185–319 (135) Bejoice enhanced images, starting from 0011
-// frames2: 320–608 (289) heavy transport road
-// frames3: 609–777 (169) air freight
-// frames4: 778–809  (32) customs team
-// frames5: 810–930 (121) air cargo packing
-// frames6: 931–1051 (121) road / project cargo
-// TOTAL: 1052
+// ── Frame sequences (3 clean segments, no duplication) ───────────────
+// frames1: 0–184   (185) globe/intro JPEGs
+// frames2: 185–430 (246) enhanced Bejoice PNGs — files 0044–0289
+// frames6: 431–551 (121) road / project cargo JPEGs
+// TOTAL: 552
 const FRAMES1_COUNT = 185
-const FRAMES7_COUNT = 135
-const FRAMES7_START = 11   // start from file 0011
-const FRAMES2_COUNT = 289
-const FRAMES3_COUNT = 169
-const FRAMES4_COUNT = 32
-const FRAMES5_COUNT = 121
+const FRAMES2_COUNT = 246
+const FRAMES2_START = 44   // start from file 0044
 const FRAMES6_COUNT = 121
-const TOTAL_FRAMES  = FRAMES1_COUNT + FRAMES7_COUNT + FRAMES2_COUNT + FRAMES3_COUNT + FRAMES4_COUNT + FRAMES5_COUNT + FRAMES6_COUNT  // 1052
+const TOTAL_FRAMES  = FRAMES1_COUNT + FRAMES2_COUNT + FRAMES6_COUNT  // 576
 
 const FRAME_URLS = [
-  // frames1: 0001–0185 — idx 0–184 (globe/intro)
-  ...Array.from({ length: FRAMES1_COUNT }, (_, i) =>
-    `/frames1/${String(i + 1).padStart(4, '0')}.jpg`),
-  // frames7: 0011–0145 — idx 185–319 (starts at file 0011 for seamless blend)
-  ...Array.from({ length: FRAMES7_COUNT }, (_, i) =>
-    `/frames7/${String(FRAMES7_START + i).padStart(4, '0')}.png`),
-  // frames2: 0001–0289 — idx 320–608
+  // frames1 intro sequence (idx 0–184)
+  ...Array.from({ length: FRAMES1_COUNT }, (_, i) => 
+    `/frames1/${String(i + 1).padStart(4, '0')}.jpg`
+  ),
+  // frames2 seg: 185–454
   ...Array.from({ length: FRAMES2_COUNT }, (_, i) =>
-    `/frames2/${String(i + 1).padStart(4, '0')}.jpg`),
-  // frames3: 0001–0169 — idx 609–777
-  ...Array.from({ length: FRAMES3_COUNT }, (_, i) =>
-    `/frames3/${String(i + 1).padStart(4, '0')}.jpg`),
-  // frames4: 0001–0032 — idx 778–809
-  ...Array.from({ length: FRAMES4_COUNT }, (_, i) =>
-    `/frames4/${String(i + 1).padStart(4, '0')}.jpg`),
-  // frames5: 0001–0121 — idx 810–930
-  ...Array.from({ length: FRAMES5_COUNT }, (_, i) =>
-    `/frames5/${String(i + 1).padStart(4, '0')}.png`),
-  // frames6: 0001–0121 — idx 931–1051
+    `/frames2/${String(FRAMES2_START + i).padStart(4, '0')}.png`),
+  // frames6 seg: 455–575
   ...Array.from({ length: FRAMES6_COUNT }, (_, i) =>
     `/frames6/${String(i + 1).padStart(4, '0')}.jpg`),
 ]
@@ -85,90 +66,66 @@ const FRAME_URLS = [
 // Fade window in frames — how many frames to crossfade between chapters
 const FRAME_FADE = 18
 
-// Chapters hardcoded to exact frame index boundaries.
-// frames1:0–184 | frames7:185–319 | frames2:320–608 | frames3:609–777 | frames4:778–809 | frames5:810–930 | frames6:931–1051
+// Chapters mapped to 3-segment sequence.
+// frames1:0–184 | frames2:185–430 | frames6:431–551
+// Each chapter window ≥ 45 frames; non-overlapping; FRAME_FADE=18 on each edge.
 const CHAPTERS = [
-  // ── frames1: 0–184 — globe/intro ──
+  // ── frames1: 0–184 ──
   {
     frameRange: [0, 184],
+    eyebrow:    'CONNECTING KSA TO THE WORLD',
     headline:   ['SMART FREIGHT', 'POWERED BY AI'],
     sub:        'Award-winning freight forwarder delivering seamless end-to-end logistics with reliability and global reach.',
     align:      'left',
+    showCTA:    true,
   },
-  // ── frames7: 185–319 (starts file 0011 for seamless blend) ──
+  // ── frames2: 185–430 — 5 evenly-spaced chapters (~45 frames each) ──
   {
-    frameRange: [185, 319],
+    frameRange: [185, 229],
+    eyebrow:    '180+ COUNTRIES · 25+ YEARS EXPERIENCE',
     headline:   ['CONNECTING KSA', 'TO THE WORLD'],
     sub:        "Saudi Arabia's premier freight forwarder — delivering seamless logistics across 180+ countries.",
     align:      'right',
   },
-  // ── frames2: 320–608 ──
   {
-    frameRange: [321, 379],
+    frameRange: [237, 281],
+    eyebrow:    'HEAVY CARGO & PROJECT LOGISTICS',
     headline:   ['HEAVY LIFT / ODC', '/ OOG TRANSPORTATION'],
     sub:        'Hydraulic axle transport for oversized and heavy equipment — wind turbines, transformers, industrial machinery, and large project cargo.',
     align:      'right',
   },
   {
-    frameRange: [387, 445],
-    headline:   ['ROUTE MODIFICATION', 'FOR ODC TRANSPORTATION'],
-    sub:        'We remove, adjust, or bypass every obstacle — signals, cables, guardrails — so your cargo moves uninterrupted.',
-    align:      'right',
-  },
-  {
-    frameRange: [453, 511],
+    frameRange: [289, 333],
+    eyebrow:    'GCC ROAD NETWORK',
     headline:   ['LAND', 'CORRIDORS'],
     sub:        'Seamless cross-border land transport across the GCC, powered by a state-of-the-art fleet.',
     align:      'left',
   },
   {
-    frameRange: [519, 577],
-    headline:   ['SAUDI ROOTS.', 'GLOBAL PRECISION.'],
-    sub:        'Experience the next evolution of Saudi logistics.',
-    align:      'right',
-  },
-  {
-    frameRange: [567, 625],
-    headline:   ['OCEAN', 'FREIGHT'],
-    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
-    align:      'left',
-  },
-  // ── frames3: 609–777 ──
-  {
-    frameRange: [651, 709],
+    frameRange: [341, 385],
+    eyebrow:    'CUSTOMS CLEARANCE · ZATCA CERTIFIED',
     headline:   ['ZERO DELAYS.', 'ZERO COMPLIANCE SURPRISES.'],
     sub:        'We handle the paperwork. You handle the business.',
     align:      'right',
   },
   {
-    frameRange: [717, 775],
-    headline:   ['CUSTOM CLEARANCE', '& BROKERAGING'],
-    sub:        'Full documentation and customs handling to keep your cargo moving and your timeline intact.',
-    align:      'right',
-  },
-  // ── frames5: 810–930 ──
-  {
-    frameRange: [783, 841],
-    headline:   ['PACKED SAFE,', 'DELIVERED RIGHT'],
-    sub:        'End-to-end cargo consolidation and handling — your freight secured from warehouse to aircraft.',
+    frameRange: [393, 430],
+    eyebrow:    'SEA FREIGHT · FCL & LCL',
+    headline:   ['OCEAN', 'FREIGHT'],
+    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
     align:      'left',
   },
+  // ── frames6: 431–551 — 2 chapters ──
   {
-    frameRange: [849, 930],
-    headline:   ['AEROSPACE', 'LOGISTICS'],
-    sub:        "Time-critical delivery solutions via the Kingdom's primary aviation corridors.",
-    align:      'right',
-    vAlign:     'top',
-  },
-  // ── frames6: 931–1051 ──
-  {
-    frameRange: [951, 1009],
+    frameRange: [439, 489],
+    eyebrow:    'PRECISION HEAVY LIFT · 1500+ OPERATIONS',
     headline:   ['ONSITE JACKING', '& SKIDDING'],
     sub:        "Precision Placement Where Cranes Can't Go. Millimeter-accurate. No room for error — and we never make one.",
     align:      'right',
   },
   {
-    frameRange: [981, 1039],
+    frameRange: [497, 551],
+    eyebrow:    'ENGINEERING · ISO 9001 CERTIFIED',
     headline:   ['TECHNICAL ENGINEERING', 'SOLUTIONS'],
     sub:        'Lift plans, load calculations, and structural analysis to ensure every heavy move is safe and compliant.',
     align:      'left',
@@ -297,91 +254,152 @@ function TrackModal({ blNum, onClose }) {
   )
 }
 
-function FreightCalcCard() {
-  const scroll = () => {
-    const el = document.getElementById('container-calculator') || document.getElementById('logistics-tools')
-    if (el) el.scrollIntoView({ behavior:'smooth', block:'start' })
-  }
-  return (
-    <div className="track-card-inner" style={{
-      width:'100%', position:'relative', overflow:'hidden',
-      background:'linear-gradient(145deg, rgba(200,168,78,0.07) 0%, rgba(10,8,20,0.6) 50%, rgba(255,255,255,0.015) 100%)',
-      backdropFilter:'blur(32px)', WebkitBackdropFilter:'blur(32px)',
-      border:'1px solid rgba(200,168,78,0.28)',
-      borderTop:'1px solid rgba(200,168,78,0.55)',
-      borderRadius:'14px',
-      padding:'1rem 1.1rem 0.9rem',
-      boxShadow:'0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,215,100,0.1), 0 0 24px rgba(200,168,78,0.06)',
-      display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
-    }}>
-      {/* Animated gold top line */}
-      <div style={{ position:'absolute', top:0, left:0, right:0, height:1, background:'linear-gradient(90deg,transparent,rgba(255,215,100,1),transparent)', pointerEvents:'none', animation:'calcSweep 3s ease-in-out infinite' }}/>
-      {/* Bottom-left corner glow */}
-      <div style={{ position:'absolute', bottom:0, left:0, width:70, height:70, background:'radial-gradient(circle at 0% 100%, rgba(200,168,78,0.14) 0%, transparent 70%)', pointerEvents:'none' }}/>
+function SleekCard({ children, className = '', style = {} }) {
+  const cardRef = useRef(null)
 
-      {/* Header row: title + live dot */}
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'0.65rem' }}>
-        <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.25rem', color:'#ffe680', letterSpacing:'0.1em', lineHeight:1, margin:0, textTransform:'uppercase', textShadow:'0 0 18px rgba(255,215,100,0.45)', textAlign:'center' }}>
-          Freight Calculator
-        </p>
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotateX = ((y - centerY) / centerY) * -5 // Increased tilt for more interactivity
+    const rotateY = ((x - centerX) / centerX) * 5
+    
+    cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`
+  }
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return
+    cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)'
+  }
+
+  return (
+    <div 
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`sleek-card ${className} premium-card-shine`} 
+      style={{
+        width:'100%', height:'100%', flex:'1 1 auto', position:'relative', overflow:'hidden',
+        background:'rgba(10, 10, 14, 0.55)', 
+        backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
+        border:'1px solid rgba(255, 215, 120, 0.12)', 
+        borderRadius:'14px',
+        padding:'1rem 1.25rem',
+        boxShadow:'0 24px 64px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px rgba(200,168,78,0.04)',
+        display:'flex', flexDirection:'column',
+        transition:'transform 0.15s ease-out, box-shadow 0.4s ease, border-color 0.4s ease',
+        willChange:'transform',
+        ...style
+      }}
+    >
+      <div className="card-glow-overlay" style={{
+        position:'absolute', inset:0, pointerEvents:'none',
+        background:'radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, -20%), rgba(255,215,120,0.08), transparent 75%)',
+        opacity:0.6
+      }} />
+      <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(255,215,120,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
+      <div className="card-shine-anim" />
+      <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+function FreightCalcCard() {
+  const [cbm, setCbm]           = useState('')
+  const [ctype, setCtype]       = useState('20ft')
+  const [result, setResult]     = useState(null)
+
+  const calculate = () => {
+    const vol = parseFloat(cbm)
+    if (!vol || vol <= 0) { setResult({ error: true }); return }
+    const cap = CONTAINER_CAPS[ctype]
+    const needed = Math.ceil(vol / cap)
+    const utilPct = Math.round((vol / (needed * cap)) * 100)
+    setResult({ vol, cap, needed, utilPct, ctype })
+  }
+
+  const labelStyle = {
+    fontFamily:"'Inter',sans-serif", fontSize:'13px', letterSpacing:'0.08em', fontWeight:600,
+    textTransform:'uppercase', color:'rgba(255,255,255,0.5)', marginBottom:'6px',
+    display:'block',
+  }
+
+  return (
+    <SleekCard style={{ gap: '1rem' }}>
+      <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.6rem', color:'var(--gold-light)', letterSpacing:'0.1em', margin:0, textTransform:'uppercase', textAlign:'center' }}>
+        Container Advisor
+      </p>
+
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px' }}>
+        <div>
+          <span style={labelStyle}>Type</span>
+          <select value={ctype} onChange={e => { setCtype(e.target.value); setResult(null) }}
+            className="sleek-select" style={{ fontSize:'15px', padding:'10px 14px', borderRadius:'10px' }}>
+            <option value="20ft">20′ Std</option>
+            <option value="40ft">40′ Std</option>
+            <option value="40HC">40′ HC</option>
+          </select>
+        </div>
+        <div>
+          <span style={labelStyle}>Volume</span>
+          <input
+            type="number" min="0" step="0.1"
+            placeholder="CBM"
+            value={cbm}
+            onChange={e => { setCbm(e.target.value); setResult(null) }}
+            onKeyDown={e => e.key === 'Enter' && calculate()}
+            className="sleek-input" style={{ fontSize:'15px', padding:'10px 14px', borderRadius:'10px' }}
+          />
+        </div>
       </div>
 
-      <button onClick={scroll} className="btn-gold btn-gold--static" style={{
-        width:'100%', justifyContent:'center', padding:'7px 14px', fontSize:'0.84rem',
-        letterSpacing:'0.12em',
+      <button onClick={calculate} className="btn-gold" style={{
+        width:'auto', alignSelf:'center', padding:'12px 36px', fontSize:'1rem', borderRadius:'10px', fontWeight:700
       }}>
-        <div className="btn-shine-overlay" />
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-        </svg>
-        <span style={{ whiteSpace:'nowrap' }}>Calculate Now</span>
+        Calculate
       </button>
 
-      <style>{`
-        @keyframes calcPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
-        @keyframes calcSweep { 0%{background-position:-200% center} 100%{background-position:200% center} }
-      `}</style>
-    </div>
+      {result && (
+        <div style={{
+          marginTop:'8px', padding:'10px 16px', borderRadius:'8px',
+          background: result.needed > 1 ? 'rgba(200,168,78,0.15)' : 'rgba(34,197,94,0.15)',
+          border: `1px solid ${result.needed > 1 ? 'rgba(200,168,78,0.4)' : 'rgba(34,197,94,0.4)'}`,
+        }}>
+          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'14px', color:'#fff', margin:0, textAlign:'center', fontWeight:600 }}>
+            {result.needed > 1 ? `⚠ ${result.needed} Units Needed` : `✓ Fits 1 × ${result.ctype}`}
+          </p>
+        </div>
+      )}
+    </SleekCard>
   )
 }
 
 function TrackCard() {
   return (
-    <div className="track-card-inner" style={{
-      width:'100%', position:'relative', overflow:'hidden',
-      background:'linear-gradient(160deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 60%, rgba(200,168,78,0.02) 100%)',
-      backdropFilter:'blur(32px)', WebkitBackdropFilter:'blur(32px)',
-      border:'1px solid rgba(200,168,78,0.2)',
-      borderTop:'1px solid rgba(200,168,78,0.45)',
-      borderRadius:'14px',
-      padding:'1rem 1.1rem 0.9rem',
-      boxShadow:'0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07)',
-      display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',
-    }}>
-      {/* Gold top shimmer */}
-      <div style={{ position:'absolute', top:0, left:0, right:0, height:1, background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.8),transparent)', pointerEvents:'none' }}/>
-      {/* Corner glow */}
-      <div style={{ position:'absolute', top:0, right:0, width:60, height:60, background:'radial-gradient(circle at 100% 0%, rgba(200,168,78,0.12) 0%, transparent 70%)', pointerEvents:'none' }}/>
-
-      <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.25rem', color:'#ffffff', letterSpacing:'0.1em', lineHeight:1, margin:'0 0 0.18rem', textTransform:'uppercase', textShadow:'0 0 20px rgba(255,255,255,0.2)', textAlign:'center' }}>
-        Track Shipment
-      </p>
-      <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.6rem', color:'rgba(200,168,78,0.8)', margin:'0 0 0.75rem', letterSpacing:'0.15em', textTransform:'uppercase', fontWeight:600, textAlign:'center' }}>
-        BL · AWB · Container
-      </p>
-
-      <button
-        onClick={() => window.open('https://www.track-trace.com/', '_blank', 'noopener,noreferrer')}
-        className="btn-gold"
-        style={{ width:'auto', justifyContent:'center', padding:'7px 20px', fontSize:'0.88rem' }}
-      >
-        <div className="btn-shine-overlay" />
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        Track Now
-      </button>
-    </div>
+    <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
+        <div>
+          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing:'0.08em', margin:0, lineHeight:1.1 }}>
+            SHIPMENT TRACKING
+          </p>
+          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.5)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
+            Real-Time Global Visibility
+          </p>
+        </div>
+        <button
+          onClick={() => window.open('https://www.track-trace.com/', '_blank', 'noopener,noreferrer')}
+          className="btn-gold"
+          style={{ padding:'12px 28px', fontSize:'1rem', borderRadius:'10px', whiteSpace:'nowrap', flexShrink:0, fontWeight:700 }}
+        >
+          Track Now
+        </button>
+      </div>
+    </SleekCard>
   )
 }
 
@@ -499,20 +517,36 @@ export default function VideoHero({ onQuoteClick }) {
     }
   }, [])
 
-  // Phase 1 — eager: load first 80 frames (covers globe→canvas crossfade)
+  // Phase 1 — Immediate: Load frame 0 urgently
   useEffect(() => {
     framesRef.current = new Array(TOTAL_FRAMES)
-    loadFrameRange(0, 149)
+    const firstImg = new window.Image()
+    firstImg.src = FRAME_URLS[0]
+    firstImg.onload = () => {
+      framesRef.current[0] = firstImg
+      // If we haven't scrolled yet, paint it instantly
+      if (lastIdxRef.current === -1) {
+        paintFrame(0)
+        // Ensure first chapter is visible before showing the app
+        applyProgress(FRAME_FADE)
+        // Signal root to fade in (prevents FOUT/flash)
+        if (typeof window.__markHeroReady === 'function') window.__markHeroReady()
+      }
+    }
+    
+    // Phase 1b — Eager batch: load first 30 frames (smaller chunk for less lag)
+    loadFrameRange(1, 30)
+
     // Phase 2 — idle background: load all remaining frames when browser is free
     const scheduleIdle = (start) => {
       if (start >= TOTAL_FRAMES) return
       const handle = requestIdleCallback
-        ? requestIdleCallback(() => { loadFrameRange(start, start + 49); scheduleIdle(start + 50) }, { timeout: 2000 })
-        : setTimeout(() => { loadFrameRange(start, start + 49); scheduleIdle(start + 50) }, 200)
+        ? requestIdleCallback(() => { loadFrameRange(start, start + 39); scheduleIdle(start + 40) }, { timeout: 3000 })
+        : setTimeout(() => { loadFrameRange(start, start + 39); scheduleIdle(start + 40) }, 300)
       return handle
     }
-    scheduleIdle(150)
-  }, [loadFrameRange])
+    scheduleIdle(31)
+  }, [loadFrameRange, paintFrame])
 
   // Phase 3 — scroll-ahead: called from RAF loop to stay 80 frames ahead
   const loadAhead = useCallback((frameIdx) => {
@@ -532,6 +566,12 @@ export default function VideoHero({ onQuoteClick }) {
     }
     // Show first chapter fully visible on load (past the fade-in window)
     applyProgress(FRAME_FADE)
+    
+    // Safety check: if frame 0 took too long or errored, show it anyway after a timeout
+    const timer = setTimeout(() => {
+      if (typeof window.__markHeroReady === 'function') window.__markHeroReady()
+    }, 1200)
+    return () => clearTimeout(timer)
   }, [applyProgress])
 
   // ── Scroll: pure frame scrub — canvas drives everything from frame 0 ──
@@ -546,15 +586,14 @@ export default function VideoHero({ onQuoteClick }) {
     const lerp = (a, b, t) => a + (b - a) * t
 
     const render = () => {
-      // Frames use targetP directly — zero lag, instant response to scroll
-      const frameIdx = Math.min(Math.round(targetP * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1)
+      // Overlays and Frames use smoothP — gentle lerp for cinematic coherence
+      smoothP = lerp(smoothP, targetP, 0.1) 
+
+      const frameIdx = Math.min(Math.round(smoothP * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1)
       loadAhead(frameIdx)
       paintFrame(frameIdx)
 
-      // Overlays use smoothP — gentle lerp for cinematic text transitions
-      smoothP = lerp(smoothP, targetP, 0.12)
-
-      // Chapter headings driven by frame index (instant sync with frames)
+      // Chapter headings driven by smooth frame index
       applyProgress(frameIdx)
 
       // ── Hero cards fade ──
@@ -596,12 +635,29 @@ export default function VideoHero({ onQuoteClick }) {
       if (!rafId) rafId = requestAnimationFrame(render)
     }
 
+    // High-DPI Canvas Resizing
+    const handleResize = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      const { width, height } = canvas.getBoundingClientRect();
+      if (canvas.width !== Math.floor(width * dpr) || canvas.height !== Math.floor(height * dpr)) {
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        paintFrame(Math.min(Math.round(targetP * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1))
+      }
+    };
+
+    window.addEventListener('resize', handleResize)
+    handleResize()
     window.addEventListener('scroll', onScroll, { passive: true })
+    
     return () => {
+      window.removeEventListener('resize', handleResize)
       window.removeEventListener('scroll', onScroll)
       if (rafId) cancelAnimationFrame(rafId)
     }
-  }, [applyProgress, loadAhead])
+  }, [applyProgress, loadAhead, paintFrame])
 
   // ─────────────────────────────────────────────────────────────────
   return (
@@ -665,6 +721,26 @@ export default function VideoHero({ onQuoteClick }) {
               }}
             >
 
+              {/* Eyebrow */}
+              {ch.eyebrow && (
+                <div className="hero-eyebrow" style={{
+                  display:'inline-flex', alignItems:'center', gap:'8px',
+                  fontFamily:"'DM Sans',sans-serif",
+                  fontSize:'clamp(10px,1.1vw,13px)', letterSpacing:'0.22em',
+                  textTransform:'uppercase', fontWeight:600,
+                  color:'rgba(255,224,120,1)',
+                  background:'rgba(200,168,78,0.18)',
+                  border:'1px solid rgba(255,215,100,0.55)',
+                  borderRadius:'2px', padding:'5px 14px',
+                  marginBottom:'14px',
+                  alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
+                  backdropFilter:'blur(8px)',
+                  userSelect:'none', pointerEvents:'none',
+                }}>
+                  {ch.eyebrow}
+                </div>
+              )}
+
               {/* Headline */}
               <div style={{ pointerEvents:'all', cursor:'default' }}>
                 {ch.headline.map((line, li) => (
@@ -690,7 +766,6 @@ export default function VideoHero({ onQuoteClick }) {
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
               }} />
 
-
               {/* Chapter counter */}
               <div style={{
                 marginTop:'16px', fontFamily:"'Bebas Neue',sans-serif",
@@ -700,6 +775,29 @@ export default function VideoHero({ onQuoteClick }) {
               }}>
                 {String(i+1).padStart(2,'0')} / {String(CHAPTERS.length).padStart(2,'0')}
               </div>
+
+              {/* Start Shipment CTA — first chapter only */}
+              {ch.showCTA && (
+                <button
+                  className="hero-intro-cta btn-gold"
+                  onClick={onQuoteClick}
+                  style={{
+                    marginTop:'28px',
+                    alignSelf: isRight ? 'flex-end' : isCenter ? 'center' : 'flex-start',
+                    display:'flex', alignItems:'center', gap:'10px',
+                    fontFamily:"'Bebas Neue',sans-serif",
+                    fontSize:'clamp(13px,1.4vw,16px)', letterSpacing:'0.18em',
+                    padding:'14px 32px', borderRadius:'3px', cursor:'pointer',
+                    pointerEvents:'all',
+                  }}
+                >
+                  START SHIPMENT
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0 }}>
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <div className="btn-shine-overlay" />
+                </button>
+              )}
             </div>
           )
         })}
@@ -707,27 +805,27 @@ export default function VideoHero({ onQuoteClick }) {
         {/* ── Bottom bar — track card + stats ── */}
         <div ref={heroCardsRef} className="hero-bottom-bar" style={{
           position:'absolute', bottom:'clamp(80px,12vh,160px)', left:0, right:0, zIndex:5,
-          display:'flex', flexWrap:'wrap', gap:'clamp(40px,6vw,80px)',
-          alignItems:'stretch', justifyContent:'flex-end',
+          display:'flex', flexWrap:'wrap', gap:'clamp(60px,8vw,120px)', // Increased gap
+          alignItems:'stretch', justifyContent:'flex-end', // Use stretch for consistent height
           padding:'0 clamp(8rem,20vw,32rem) 0 clamp(0.8rem,4vw,5rem)', pointerEvents:'all',
         }}>
-          <div style={{ display:'flex', gap:'clamp(8px,1.5vw,14px)', flex:'0 1 auto', minWidth:0 }}>
-            <div className="hero-track-wrap" style={{ flex:'0 1 230px', minWidth:0, maxWidth:'240px', display:'flex' }}>
+          <div style={{ display:'flex', gap:'clamp(16px,2vw,24px)', flex:'0 1 auto', minWidth:0, alignItems:'stretch' }}>
+            <div className="hero-track-wrap" style={{ flex:'0 1 auto', minWidth:0, display:'flex', alignItems:'stretch' }}>
               <TrackCard />
             </div>
-            <div className="hero-track-wrap" style={{ flex:'0 1 230px', minWidth:0, maxWidth:'240px', display:'flex' }}>
+            <div className="hero-track-wrap" style={{ flex:'0 1 auto', minWidth:0, display:'flex', alignItems:'stretch' }}>
               <FreightCalcCard />
             </div>
           </div>
 
           <div className="hero-stats-bar" style={{
             flex:'0 0 auto', display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'center',
-            background:'linear-gradient(135deg,rgba(180,190,210,0.08) 0%,rgba(120,130,160,0.05) 100%)',
-            border:'1px solid rgba(200,210,230,0.18)', borderRadius:'0.9rem',
+            background:'rgba(15, 15, 20, 0.4)',
+            border:'1px solid rgba(255, 255, 255, 0.08)', borderRadius:'8px',
             backdropFilter:'blur(24px)', WebkitBackdropFilter:'blur(24px)',
-            boxShadow:'0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.08)',
-            overflow:'hidden', overflowX:'auto',
-            maxWidth:'100%',
+            boxShadow:'0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)',
+            overflow:'hidden',
+            height: '100%', minHeight: '80px', // Matches SleekCard height naturally
           }}>
             {[
               { v:'120',  suffix:'+', l:'Countries'  },
@@ -736,15 +834,21 @@ export default function VideoHero({ onQuoteClick }) {
               { v:'KSA',  suffix:'',  l:'Specialist' },
             ].map((s, idx, arr) => (
               <div key={s.l} className="hero-stat-cell" style={{
-                display:'flex', alignItems:'center', padding:'6px 10px',
-                borderRight: idx < arr.length-1 ? '1px solid rgba(200,210,230,0.1)' : 'none',
+                display:'flex', alignItems:'center', padding:'5px 12px',
+                borderRight: idx < arr.length-1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
                 flexShrink:0,
               }}>
                 <div style={{ textAlign:'center' }}>
-                  <div className="hero-stat-number" style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'2.6rem', letterSpacing:'0.05em', lineHeight:1, color:'#ffffff', textShadow:'0 0 20px rgba(255,255,255,0.6),0 0 40px rgba(200,220,255,0.3),0 1px 6px rgba(0,0,0,0.8)' }}>
-                    <CountUp target={s.v} suffix={s.suffix} duration={800} />
+                  <div className="hero-stat-number" style={{ 
+                    fontFamily:"'Bebas Neue',sans-serif", fontSize:'2.5rem', letterSpacing:'0.04em', lineHeight:1, 
+                    background:'linear-gradient(135deg, #fff 0%, #FFD700 30%, #FFA500 60%, #FFD700 100%)',
+                    WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent',
+                    filter:'drop-shadow(0 0 15px rgba(255,215,100,0.4)) brightness(1.2)',
+                    fontWeight: 900
+                  }}>
+                    <CountUp target={s.v} suffix={s.suffix} duration={1000} />
                   </div>
-                  <div className="hero-stat-label" style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'13px', letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(210,220,240,0.9)', fontWeight:600, marginTop:'4px', whiteSpace:'nowrap' }}>{s.l}</div>
+                  <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize:'14px', letterSpacing:'0.12em', textTransform:'uppercase', color:'#FFD700', fontWeight:700, marginTop:'4px', whiteSpace:'nowrap', textShadow:'0 0 10px rgba(255,215,0,0.4)', opacity: 0.9 }}>{s.l}</div>
                 </div>
               </div>
             ))}
@@ -762,6 +866,51 @@ export default function VideoHero({ onQuoteClick }) {
         @keyframes introSlide   { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
         @keyframes trackScanBar { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
         @keyframes trackPulseRing { 0%{transform:scale(0.8);opacity:1} 100%{transform:scale(1.6);opacity:0} }
+
+        .sleek-input, .sleek-select {
+          width: 100%;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 4px;
+          color: #fff;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.72rem;
+          padding: 4px 8px;
+          outline: none;
+          transition: all 0.2s ease;
+        }
+        .sleek-input:focus, .sleek-select:focus {
+          background: rgba(255,255,255,0.08);
+          border-color: var(--gold-muted);
+        }
+        .sleek-select option { background: #0a0a0e; color: #fff; }
+
+        .premium-card-shine:hover {
+          transform: translateY(-2px);
+          border-color: rgba(255, 215, 120, 0.25) !important;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 20px rgba(200,168,78,0.08) !important;
+        }
+        .card-shine-anim {
+          position: absolute;
+          top: 0; left: -150%;
+          width: 100%; height: 100%;
+          background: linear-gradient(
+            120deg,
+            transparent,
+            rgba(255, 255, 255, 0.03) 30%,
+            rgba(255, 255, 255, 0.08) 50%,
+            rgba(255, 255, 255, 0.03) 70%,
+            transparent
+          );
+          transform: skewX(-25deg);
+          animation: card-shine 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          pointer-events: none;
+        }
+        @keyframes card-shine {
+          0% { left: -150%; }
+          20% { left: 150%; }
+          100% { left: 150%; }
+        }
 
         /* ── Globe video: contain (full frame) on portrait/mobile ── */
         @media (max-width: 767px) and (orientation: portrait) {
@@ -842,36 +991,38 @@ export default function VideoHero({ onQuoteClick }) {
           /* Track section wrapper */
           .hero-mobile-track-section { width: 100%; }
           .hero-mobile-track { width: 100%; }
-          .track-card-inner {
+          .sleek-card {
             flex-direction: column !important;
-            padding: 0.75rem 0.8rem !important;
+            padding: 0.65rem 0.8rem !important;
             text-align: left !important;
-            border-radius: 0.75rem !important;
+            border-radius: 0.6rem !important;
             background: rgba(10,14,28,0.82) !important;
-            border: 1px solid rgba(200,168,78,0.35) !important;
-            box-shadow: 0 2px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(200,168,78,0.08) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05) !important;
           }
           /* "WHERE IS YOUR SHIPMENT?" heading — smaller on mobile */
-          .track-card-inner > p:first-child {
-            font-size: clamp(0.95rem, 4vw, 1.2rem) !important;
-            margin-bottom: 0.2rem !important;
+          .sleek-card p {
+            font-size: 1rem !important;
           }
-          .track-card-inner > p:nth-child(2) { display: none !important; } /* hide sub-label */
-          .track-card-inner > div { gap: 8px !important; }
+          .hero-mobile-section-label svg {
+            width: 9px !important;
+            height: 9px !important;
+          }
+          .sleek-card > div { gap: 8px !important; }
           /* Input: high-contrast, clearly visible */
-          .track-card-inner input {
+          .sleek-card input {
             font-size: 16px !important;
             padding: 0.65rem 0.9rem !important;
             background: rgba(255,255,255,0.10) !important;
-            border: 1.5px solid rgba(200,168,78,0.5) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
             border-radius: 7px !important;
             color: #ffffff !important;
           }
-          .track-card-inner input::placeholder {
+          .sleek-card input::placeholder {
             color: rgba(200,210,230,0.55) !important;
           }
           /* Track button — tighter on mobile */
-          .track-card-inner button {
+          .sleek-card button {
             padding: 10px 16px !important;
             font-size: clamp(10px, 2.8vw, 12px) !important;
           }

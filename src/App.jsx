@@ -4,14 +4,14 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Nav from './components/Nav'
 import VideoHero from './components/VideoHero'
-import LogisticsTools from './components/LogisticsTools'
-import Services from './components/Services'
-const BejoiceGlobe = lazy(() => import('./components/BejoiceGlobe'))
 import HeavyCargo from './components/HeavyCargo'
-import WhyBejoice from './components/WhyBejoice'
-import Certifications from './components/Certifications'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
+const LogisticsTools = lazy(() => import('./components/LogisticsTools'))
+const Services = lazy(() => import('./components/Services'))
+const BejoiceGlobe = lazy(() => import('./components/BejoiceGlobe'))
+const WhyBejoice = lazy(() => import('./components/WhyBejoice'))
+const Certifications = lazy(() => import('./components/Certifications'))
+const Contact = lazy(() => import('./components/Contact'))
+const Footer = lazy(() => import('./components/Footer'))
 import FloatingBookCTA from './components/FloatingBookCTA'
 import QuickQuoteModal from './components/QuickQuoteModal'
 import ScrollProgress from './components/ScrollProgress'
@@ -67,17 +67,19 @@ export default function App() {
       <Nav onQuoteClick={() => setQuoteOpen(true)} />
       <main>
         <VideoHero onQuoteClick={() => setQuoteOpen(true)} />
-        <Contact />
-        <LogisticsTools />
-        <Services />
         <Suspense fallback={null}>
+          <Contact />
+          <LogisticsTools />
+          <Services />
           <BejoiceGlobe />
+          <HeavyCargo />
+          <WhyBejoice />
+          <Certifications />
         </Suspense>
-        <HeavyCargo />
-        <WhyBejoice />
-        <Certifications />
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
       <FloatingBookCTA />
       {quoteOpen && <QuickQuoteModal onClose={() => setQuoteOpen(false)} />}
     </div>

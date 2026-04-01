@@ -4,10 +4,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Container3DViewer, { WeightDistributionGuide } from './Container3DViewer'
 
 // ── helpers ────────────────────────────────────────────────────────────────
-const CONTAINER = (cbm) =>
-  cbm <= 25 ? '20ft Standard (≤25 CBM)' :
-  cbm <= 67 ? '40ft Standard (≤67 CBM)' :
-              '40ft High Cube (≤76 CBM)'
+const CONTAINER = (cbm, wt = 0) => {
+  if (cbm > 76 || wt > 26450) {
+    const nV = Math.ceil(cbm / 76), nW = Math.ceil(wt / 26450)
+    const n = Math.max(nV, nW)
+    return `${n} x 40ft High Cube Containers Recommended`
+  }
+  return cbm <= 25 ? '20ft Standard (≤25 CBM)' :
+         cbm <= 67 ? '40ft Standard (≤67 CBM)' :
+                     '40ft High Cube (≤76 CBM)'
+}
 
 const TRUCK_CAP = {
   '3.5t': { vol: 18,  wt: 3500  },
@@ -19,17 +25,17 @@ const TRUCK_CAP = {
 const TO_CM = { cm: 1, m: 100, in: 2.54, ft: 30.48 }
 
 const inp = {
-  background:   'rgba(255,255,255,0.07)',
-  border:       '1px solid rgba(255,255,255,0.15)',
-  borderRadius: '0.5rem',
-  padding:      '0.65rem 0.9rem',
-  color:        'rgba(255,255,255,0.95)',
+  background:   'var(--obsidian-100)',
+  border:       '1px solid rgba(255,255,255,0.08)',
+  borderRadius: '4px',
+  padding:      '0.75rem 1rem',
+  color:        'var(--cream)',
   fontFamily:   "'DM Sans', sans-serif",
-  fontSize:     '1rem',
+  fontSize:     '0.95rem',
   outline:      'none',
   width:        '100%',
   boxSizing:    'border-box',
-  transition:   'border-color 0.2s',
+  transition:   'all 0.3s ease',
 }
 
 const lbl = {
@@ -247,7 +253,7 @@ function LoadCalculator() {
         const lcm = (parseFloat(r.l)||0)*f, wcm = (parseFloat(r.w)||0)*f, hcm = (parseFloat(r.h)||0)*f
         totalCBM += (lcm*wcm*hcm/1e6)*(parseInt(r.qty)||1)
       }
-      setResults({ tab:'sea', cbm:totalCBM.toFixed(3), weight:totalKg, container:CONTAINER(totalCBM), loadPct:Math.min(100,(totalCBM/76*100)).toFixed(1) })
+      setResults({ tab:'sea', cbm:totalCBM.toFixed(3), weight:totalKg, container:CONTAINER(totalCBM, totalKg), loadPct:Math.min(100,(totalCBM/76*100)).toFixed(1) })
     } else if (tab === 'air') {
       let totalVol = 0, totalAct = 0
       for (const r of airRows) {
@@ -666,10 +672,8 @@ function LoadCalculator() {
 
       {/* ── Calculate button ── */}
       <div style={{ padding:'1rem 1.4rem', borderTop:'1px solid rgba(255,255,255,0.08)', flexShrink:0, display:'flex', justifyContent:'center' }}>
-        <button onClick={calculate}
-          style={{ width:'auto', padding:'0.85rem 2rem', background:'linear-gradient(135deg,#ffe080 0%,#c8a84e 50%,#a8843e 100%)', border:'none', borderRadius:'0.85rem', color:'#050508', fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.25rem', letterSpacing:'0.18em', cursor:'pointer', transition:'all 0.3s', boxShadow:'0 10px 32px rgba(200,168,78,0.3), inset 0 2px 0 rgba(255,230,120,0.3)' }}
-          onMouseEnter={e=>{e.currentTarget.style.opacity='0.9'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow='0 16px 40px rgba(200,168,78,0.4)'}}
-          onMouseLeave={e=>{e.currentTarget.style.opacity='1'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 10px 32px rgba(200,168,78,0.3)'}}>
+        <button onClick={calculate} className="btn-gold" style={{ width:'auto' }}>
+          <div className="btn-shine-overlay" />
           GENERATE AI ANALYSIS
         </button>
       </div>

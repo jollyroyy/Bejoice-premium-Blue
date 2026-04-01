@@ -18,13 +18,16 @@ export default function ContainerCalculator() {
   , [items])
   const totalWeight = useMemo(() => items.reduce((s, i) => s + i.weight * i.qty, 0), [items])
   const containerCBM = (container.length * container.width * container.height) / 1e6
+  const containersVol = Math.ceil(totalCBM / containerCBM)
+  const containersWeight = Math.ceil(totalWeight / container.maxWeight)
+  const totalContainersNeeded = Math.max(1, containersVol, containersWeight)
   const utilization = Math.min(100, (totalCBM / containerCBM) * 100)
 
   const updateItem = (id, field, val) => setItems(prev => prev.map(i => i.id === id ? { ...i, [field]: val } : i))
   const addItem = () => setItems(prev => [...prev, { id: Date.now(), l: 100, w: 80, h: 80, weight: 150, qty: 3, unit: 'cm', stackable: true }])
   const removeItem = (id) => setItems(prev => prev.filter(i => i.id !== id))
 
-  const utilizationColor = utilization > 95 ? '#ef4444' : utilization > 75 ? '#f59e0b' : '#c8a84e'
+  const utilizationColor = (totalContainersNeeded > 1 || utilization > 95) ? '#ef4444' : utilization > 75 ? '#f59e0b' : '#c8a84e'
 
   return (
     <section id="container-calculator" style={{
@@ -295,10 +298,16 @@ export default function ContainerCalculator() {
               <div style={{ marginBottom: 12 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                   <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.35)', letterSpacing: 1 }}>
-                    {utilization > 100 ? '⚠ Exceeds volume' : utilization > 95 ? '⚠ Almost full' : `${(containerCBM - totalCBM).toFixed(1)} m³ remaining`}
+                    {totalContainersNeeded > 1 
+                      ? `⚠ ${totalContainersNeeded} x ${container.label} recommended` 
+                      : (utilization > 95 ? '⚠ Almost full' : `${(containerCBM - totalCBM).toFixed(1)} m³ remaining`)
+                    }
                   </span>
                   <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: utilizationColor }}>
-                    {totalCBM.toFixed(2)} / {containerCBM.toFixed(0)} m³
+                    {totalContainersNeeded > 1 
+                      ? `${totalCBM.toFixed(2)} m³ TOTAL` 
+                      : `${totalCBM.toFixed(2)} / ${containerCBM.toFixed(0)} m³`
+                    }
                   </span>
                 </div>
                 <div style={{ height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 2, overflow: 'hidden' }}>

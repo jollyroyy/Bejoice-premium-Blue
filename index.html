@@ -15,12 +15,16 @@
     <meta name="twitter:title" content="Bejoice — Saudi's Leading Smart Freight, AI Powered" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- display=block: browser waits for font before rendering text (no FOUT) -->
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=block" rel="stylesheet" />
+    <!-- Preload critical first frame for zero-delay hero load -->
+    <link rel="preload" as="image" href="/frames1/0001.jpg" />
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;700&display=swap" as="style" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <!-- Cal.com: preconnect for speed -->
   <link rel="preconnect" href="https://cal.com" />
   <link rel="preconnect" href="https://app.cal.com" />
   <link rel="dns-prefetch" href="https://cal.com" />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <!-- Force scroll to top before any rendering — prevents browser scroll restoration -->
   <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
 
@@ -126,8 +130,17 @@
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
   </head>
-  <body>
-    <div id="root"></div>
+  <body style="background: #030306;">
+    <div id="root" style="opacity: 0; transition: opacity 0.5s ease-out; background: #030306;"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // Signal to fade in the app once critical hero assets are ready
+      window.__markHeroReady = function() {
+        requestAnimationFrame(() => {
+          const root = document.getElementById('root');
+          if (root) root.style.opacity = '1';
+        });
+      };
+    </script>
   </body>
 </html>

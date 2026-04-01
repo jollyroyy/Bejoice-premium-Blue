@@ -3,11 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --gold: #b89840;          /* base gold — slightly muted from original */
-  --gold-light: #ceaa5c;    /* mid-gold — was #e8cc7a (too bright/yellow) */
-  --gold-dark: #8a6c26;
-  --obsidian: #050508;
-  --obsidian-50: #0d0d14;
+  /* Premium Gold Palette — multi-layered & shimmering */
+  --gold: #c8a84e;          /* core gold */
+  --gold-light: #f5d970;    /* shimmer highlight */
+  --gold-dark: #8a6820;     /* deep metallic */
+  --gold-muted: rgba(200, 168, 78, 0.45);
+  
+  /* Obsidian Palette — deeper blacks for contrast */
+  --obsidian: #030306;
+  --obsidian-50: #08080d;
+  --obsidian-100: #0c0c14;
+  
+  /* Cream Palette */
   --cream: #ffffff;
   --cream-muted: #d0c8b8;
 }
@@ -119,6 +126,9 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Cinematic Vignette for all sections */
+  background-image: radial-gradient(circle at center, rgba(12, 12, 20, 0) 0%, rgba(3, 3, 6, 0.8) 100%);
+  background-attachment: fixed;
 }
 
 /* ── SCROLLBAR ── */
@@ -212,12 +222,14 @@ body {
 
 /* ── GLASS CARD ── */
 .glass-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: inset 0 0 20px rgba(255,255,255,0.02), 0 8px 32px rgba(0,0,0,0.5), 0 0 0 0px rgba(200,168,78,0);
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 
+    inset 0 0 32px rgba(255,255,255,0.01),
+    0 12px 48px rgba(0,0,0,0.5);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
 }
 .glass-card::before {
@@ -225,18 +237,21 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(200,168,78,0.18) 0%, rgba(200,168,78,0) 50%, rgba(200,168,78,0.08) 100%);
+  background: linear-gradient(135deg, rgba(200,168,78,0.2) 0%, transparent 50%, rgba(200,168,78,0.1) 100%);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
   pointer-events: none;
   z-index: 0;
 }
 .glass-card:hover::before { opacity: 1; }
 .glass-card:hover {
-  background: rgba(200,168,78,0.05);
-  border-color: rgba(200,168,78,0.35);
-  box-shadow: inset 0 0 24px rgba(200,168,78,0.07), 0 12px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,78,0.12);
-  transform: translateY(-4px);
+  background: rgba(200,168,78,0.03);
+  border-color: rgba(200,168,78,0.4);
+  box-shadow: 
+    inset 0 0 40px rgba(200,168,78,0.05),
+    0 20px 60px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(200,168,78,0.15);
+  transform: translateY(-6px) scale(1.01);
 }
 
 /* ── SECTION GLASS HEADER ── */
@@ -366,23 +381,30 @@ body {
 /* ── BUTTONS ── */
 .btn-gold {
   position: relative;
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: clamp(9px, 1.6vw, 12px) clamp(18px, 3vw, 30px);
-  background: linear-gradient(135deg, #ffe080 0%, #e8c85a 35%, #c8a84e 70%, #a8882e 100%);
-  border: 1px solid rgba(255,230,120,0.4);
-  border-bottom: 1px solid rgba(120,90,20,0.5);
-  color: #000000;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: clamp(10px, 1.8vw, 14px) clamp(20px, 3.5vw, 36px);
+  /* Liquid Gold Gradient — multi-stop for metallic feel */
+  background: linear-gradient(135deg, 
+    #fff4a0 0%, 
+    #f5d970 25%, 
+    #daa83e 50%, 
+    #b88828 75%, 
+    #8a6820 100%
+  );
+  background-size: 200% 100%;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-bottom: 2px solid rgba(0,0,0,0.3);
+  color: #000;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
-  letter-spacing: 0.2em; text-transform: uppercase;
-  border-radius: 10px;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  letter-spacing: 0.22em; text-transform: uppercase;
+  border-radius: 4px; /* More architectural than 10px */
   cursor: pointer; overflow: hidden;
   box-shadow:
-    0 6px 30px rgba(200,168,78,0.4),
-    inset 0 2px 0 rgba(255,230,120,0.35),
-    inset 0 -2px 0 rgba(100,70,10,0.4);
-  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    0 10px 40px rgba(200,168,78,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 1;
 }
 .btn-gold::before {
   content: '';
@@ -398,12 +420,12 @@ body {
   100% { transform: translateX(150%)  skewX(-15deg); }
 }
 .btn-gold:hover {
-  background: linear-gradient(135deg, #fff4a0 0%, #f5d970 35%, #daa83e 70%, #b88828 100%);
+  background-position: 100% 0%;
   box-shadow:
-    0 10px 48px rgba(200,168,78,0.55),
-    inset 0 2px 0 rgba(255,240,150,0.45),
-    inset 0 -2px 0 rgba(100,70,10,0.4);
-  transform: translateY(-2px);
+    0 15px 50px rgba(200,168,78,0.5),
+    0 0 20px rgba(245,217,112,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  transform: translateY(-3px) scale(1.02);
 }
 .btn-gold:hover::before {
   animation: btnPremiumShine 1.5s infinite;
@@ -416,26 +438,29 @@ body {
 .btn-gold span, .btn-gold svg { position: relative; z-index: 1; }
 
 .btn-ghost {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: clamp(12px, 2.2vw, 16px) clamp(24px, 4.5vw, 42px);
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: clamp(12px, 2vw, 16px) clamp(24px, 4vw, 48px);
   background: rgba(255, 255, 255, 0.03);
-  border: 1.5px solid rgba(255,255,255,0.15);
-  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
   font-family: 'DM Sans', sans-serif;
-  font-size: clamp(11.5px, 1.6vw, 13.5px); font-weight: 900;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  border-radius: 12px;
+  font-size: clamp(12px, 1.4vw, 14px); font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  border-radius: 4px;
   cursor: pointer;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative; overflow: hidden;
 }
 .btn-ghost:hover {
-  border-color: rgba(200,168,78,0.6);
-  background: rgba(200,168,78,0.08);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 16px rgba(200,168,78,0.15);
+  border-color: var(--gold);
+  background: rgba(200, 168, 78, 0.12);
+  box-shadow: 
+    0 12px 40px rgba(0,0,0,0.4),
+    0 0 20px rgba(200,168,78,0.2);
   transform: translateY(-2px);
-  color: #ffe680;
+  color: var(--gold-light);
 }
 
 .btn-shine-overlay {
@@ -592,25 +617,33 @@ body {
   font-size: clamp(2.8rem, 7vw, 6.5rem);
   font-weight: 700;
   line-height: 0.92;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: #ffffff;
-  text-shadow: 0 0 40px rgba(255,255,255,0.18), 0 2px 24px rgba(0,0,0,0.7);
+  text-shadow: 
+    0 0 40px rgba(255,255,255,0.15), 
+    0 2px 32px rgba(0,0,0,0.8);
   cursor: default;
   -webkit-font-smoothing: antialiased;
+  position: relative;
 }
 .section-headline .accent {
-  color: rgba(255,215,105,1);
-  text-shadow: 0 0 32px rgba(255,200,80,0.4);
+  color: var(--gold-light);
+  text-shadow: 0 0 32px rgba(200,168,78,0.4);
+  background: linear-gradient(135deg, #fff4a0 0%, #ceaa5c 50%, #8a6820 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ── BODY TEXT ── */
 .body-text {
   font-family: 'DM Sans', sans-serif;
-  font-size: clamp(17px, 1.9vw, 19px);
-  font-weight: 500;
-  color: #ffffff;
-  line-height: 1.75;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.6), 0 0 20px rgba(255,255,255,0.08);
+  font-size: clamp(17px, 1.9vw, 20px); /* Slightly larger for luxury feel */
+  font-weight: 400;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.4);
 }
 
 /* ── CARD TITLE ── */
@@ -1012,7 +1045,36 @@ body {
   footer .col-span-2 { grid-column: span 2 !important; }
 }
 
-/* KeyMarkets: show tooltips on mobile */
+/* ── KeyMarkets: show tooltips on mobile ── */
 @media (max-width: 767px) {
   #markets .group .absolute.bottom-full { opacity: 1 !important; bottom: auto; top: 100%; margin-top: 4px; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ── PREVENT GSAP FLASH (FOUT/FLASH FIX) ──
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Pre-hide elements that GSAP will reveal to prevent the "final state" flash */
+main section:not(#hero-wrapper),
+.glass-card,
+.contact-glass-card,
+.section-headline,
+.gold-line {
+  opacity: 0;
+}
+
+/* 
+   Explicitly ensure Hero Heading & Nav are VISIBLE during first paint.
+   This avoids the black flash or delay the user requested to fix.
+*/
+#hero-wrapper, 
+#hero-wrapper *,
+.hero-content-overlay,
+.hero-content-overlay * {
+  visibility: visible !important;
+}
+
+#root {
+  background: #030306;
+}
+

@@ -1,30 +1,9 @@
-import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 
-const pillars = [
-{ icon: '◉', title: 'Real-Time Visibility', desc: 'End-to-end shipment tracking with live status updates, proactive alerts, and dedicated account managers.' },
-  { icon: '◆', title: 'GCC Network', desc: 'Deeply rooted partnerships with port authorities, carriers, and customs brokers across all GCC countries.' },
-  { icon: '◐', title: 'Risk Management', desc: 'Comprehensive cargo insurance and contingency planning to protect your supply chain at every stage.' },
-]
-
 export default function WhyBejoice() {
-  const sectionRef = useRef(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) e.target.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'))
-        })
-      },
-      { threshold: 0.08 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
 
   return (
-    <section id="why-us" ref={sectionRef} className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
+    <section id="why-us" className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{
         backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,168,78,0.03) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,168,78,0.03) 80px)`,
       }}/>
@@ -61,65 +40,25 @@ export default function WhyBejoice() {
           </div>
 
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start" style={{ position:'relative', zIndex:1 }}>
-          {/* Left */}
-          <div>
-            <div>
-              <div style={{ marginBottom: '2rem' }}>
-                <motion.h2
-                  className="no-reveal"
-                  initial={{ x: -70, opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
-                  whileInView={{ x: 0, opacity: 1, clipPath: 'inset(0 0% 0 0)' }}
-                  viewport={{ once: true, margin: '-80px 0px' }}
-                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-                  style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: 'clamp(3rem,7vw,6rem)',
-                    letterSpacing: '0.07em', lineHeight: 1,
-                    margin: 0,
-                    color: '#ffffff',
-                    filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
-                  }}
-                >
-                  <span style={{ color: '#ffffff' }}>WHY</span><br /><span style={{ color: '#c8a84e' }}>BEJOICE</span>
-                </motion.h2>
-                <style>{`
-                  @keyframes headingSweep {
-                    0%   { background-position: -100% center; }
-                    100% { background-position: 200% center; }
-                  }
-                `}</style>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Right: pillars */}
-          <div className="space-y-px" style={{ perspective: '1000px' }}>
-            {pillars.map((p, i) => (
-              <motion.div key={p.title}
-                className="fade-up group p-8 flex gap-6 items-start"
-                style={{ borderTop: '1px solid rgba(200,168,78,0.1)', transitionDelay: `${i * 90}ms` }}
-                whileHover={{
-                  rotateX: -2,
-                  rotateY: 4,
-                  z: 16,
-                  transition: { type: 'spring', stiffness: 280, damping: 22 }
-                }}
-              >
-                <motion.div
-                  style={{ fontSize: 'clamp(22px,3vw,32px)', color: '#c8a84e', flexShrink: 0, marginTop: '2px' }}
-                  whileHover={{ rotate: 15, scale: 1.15 }}
-                  transition={{ type: 'spring', stiffness: 350, damping: 18 }}
-                >
-                  {p.icon}
-                </motion.div>
-                <div>
-                  <h3 className="card-title mb-3">{p.title}</h3>
-                  <p className="card-body">{p.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+        <div style={{ position:'relative', zIndex:1, textAlign:'center' }}>
+          <div style={{ marginBottom: '2rem' }}>
+            <motion.h2
+              className="no-reveal"
+              initial={{ x: -70, opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
+              whileInView={{ x: 0, opacity: 1, clipPath: 'inset(0 0% 0 0)' }}
+              viewport={{ once: true, margin: '-80px 0px' }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 'clamp(3rem,7vw,6rem)',
+                letterSpacing: '0.07em', lineHeight: 1,
+                margin: 0,
+                color: '#ffffff',
+                filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
+              }}
+            >
+              <span style={{ color: '#ffffff' }}>WHY</span><br /><span style={{ color: '#c8a84e' }}>BEJOICE</span>
+            </motion.h2>
           </div>
         </div>
         </div>{/* end outer card */}
