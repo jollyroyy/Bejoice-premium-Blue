@@ -36,110 +36,139 @@ function CountUp({ target, suffix = '', duration = 900 }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Config
 // ─────────────────────────────────────────────────────────────────────────────
-const GLOBE_SRC    = '/saudi-connected.mp4'
 const SCROLL_HEIGHT = 1800
 
 // ── JPEG frame sequences ──────────────────────────────────────────
+// frames1: 0–184   (185) globe/intro
+// frames7: 185–319 (135) Bejoice enhanced images, starting from 0011
+// frames2: 320–608 (289) heavy transport road
+// frames3: 609–777 (169) air freight
+// frames4: 778–809  (32) customs team
+// frames5: 810–930 (121) air cargo packing
+// frames6: 931–1051 (121) road / project cargo
+// TOTAL: 1052
+const FRAMES1_COUNT = 185
+const FRAMES7_COUNT = 135
+const FRAMES7_START = 11   // start from file 0011
 const FRAMES2_COUNT = 289
 const FRAMES3_COUNT = 169
 const FRAMES4_COUNT = 32
 const FRAMES5_COUNT = 121
 const FRAMES6_COUNT = 121
-const TOTAL_FRAMES  = FRAMES2_COUNT + FRAMES3_COUNT + FRAMES4_COUNT + FRAMES5_COUNT + FRAMES6_COUNT  // 732
+const TOTAL_FRAMES  = FRAMES1_COUNT + FRAMES7_COUNT + FRAMES2_COUNT + FRAMES3_COUNT + FRAMES4_COUNT + FRAMES5_COUNT + FRAMES6_COUNT  // 1052
 
 const FRAME_URLS = [
+  // frames1: 0001–0185 — idx 0–184 (globe/intro)
+  ...Array.from({ length: FRAMES1_COUNT }, (_, i) =>
+    `/frames1/${String(i + 1).padStart(4, '0')}.jpg`),
+  // frames7: 0011–0145 — idx 185–319 (starts at file 0011 for seamless blend)
+  ...Array.from({ length: FRAMES7_COUNT }, (_, i) =>
+    `/frames7/${String(FRAMES7_START + i).padStart(4, '0')}.png`),
+  // frames2: 0001–0289 — idx 320–608
   ...Array.from({ length: FRAMES2_COUNT }, (_, i) =>
     `/frames2/${String(i + 1).padStart(4, '0')}.jpg`),
+  // frames3: 0001–0169 — idx 609–777
   ...Array.from({ length: FRAMES3_COUNT }, (_, i) =>
     `/frames3/${String(i + 1).padStart(4, '0')}.jpg`),
+  // frames4: 0001–0032 — idx 778–809
   ...Array.from({ length: FRAMES4_COUNT }, (_, i) =>
     `/frames4/${String(i + 1).padStart(4, '0')}.jpg`),
+  // frames5: 0001–0121 — idx 810–930
   ...Array.from({ length: FRAMES5_COUNT }, (_, i) =>
     `/frames5/${String(i + 1).padStart(4, '0')}.png`),
+  // frames6: 0001–0121 — idx 931–1051
   ...Array.from({ length: FRAMES6_COUNT }, (_, i) =>
     `/frames6/${String(i + 1).padStart(4, '0')}.jpg`),
 ]
 
 // Headings shown during the 4-second globe lock — alternate sides
-const INTRO_SLIDES = [
-  { headline: ['SMART FREIGHT', 'POWERED BY AI'], eyebrow: "Connecting KSA with the World", align: 'left', sub: ['Award-winning freight forwarder delivering seamless end-to-end logistics solutions', 'with reliability, efficiency, and the strength of a powerful global network.'] },
-]
-
 // Fade window in frames — how many frames to crossfade between chapters
 const FRAME_FADE = 18
 
 // Chapters hardcoded to exact frame index boundaries.
-// frames2: 0–288 | frames3: 289–457 | frames4: 458–489 | frames5: 490–610 | frames6: 611–731
+// frames1:0–184 | frames7:185–319 | frames2:320–608 | frames3:609–777 | frames4:778–809 | frames5:810–930 | frames6:931–1051
 const CHAPTERS = [
+  // ── frames1: 0–184 — globe/intro ──
   {
-    frameRange: [-20, -1],
-    headline:   ['ENGINEERED FOR', 'ALL ROADS'],
-    sub:        'Integrated trucking networks providing seamless last-mile excellence across the Arabian Peninsula.',
+    frameRange: [0, 184],
+    headline:   ['SMART FREIGHT', 'POWERED BY AI'],
+    sub:        'Award-winning freight forwarder delivering seamless end-to-end logistics with reliability and global reach.',
     align:      'left',
   },
+  // ── frames7: 185–319 (starts file 0011 for seamless blend) ──
   {
-    frameRange: [1, 59],
+    frameRange: [185, 319],
+    headline:   ['CONNECTING KSA', 'TO THE WORLD'],
+    sub:        "Saudi Arabia's premier freight forwarder — delivering seamless logistics across 180+ countries.",
+    align:      'right',
+  },
+  // ── frames2: 320–608 ──
+  {
+    frameRange: [321, 379],
     headline:   ['HEAVY LIFT / ODC', '/ OOG TRANSPORTATION'],
     sub:        'Hydraulic axle transport for oversized and heavy equipment — wind turbines, transformers, industrial machinery, and large project cargo.',
     align:      'right',
   },
   {
-    frameRange: [67, 125],
+    frameRange: [387, 445],
     headline:   ['ROUTE MODIFICATION', 'FOR ODC TRANSPORTATION'],
     sub:        'We remove, adjust, or bypass every obstacle — signals, cables, guardrails — so your cargo moves uninterrupted.',
     align:      'right',
   },
   {
-    frameRange: [133, 191],
+    frameRange: [453, 511],
     headline:   ['LAND', 'CORRIDORS'],
     sub:        'Seamless cross-border land transport across the GCC, powered by a state-of-the-art fleet.',
     align:      'left',
   },
   {
-    frameRange: [199, 257],
+    frameRange: [519, 577],
     headline:   ['SAUDI ROOTS.', 'GLOBAL PRECISION.'],
     sub:        'Experience the next evolution of Saudi logistics.',
     align:      'right',
   },
   {
-    frameRange: [247, 305],
+    frameRange: [567, 625],
     headline:   ['OCEAN', 'FREIGHT'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
     align:      'left',
   },
+  // ── frames3: 609–777 ──
   {
-    frameRange: [331, 389],
+    frameRange: [651, 709],
     headline:   ['ZERO DELAYS.', 'ZERO COMPLIANCE SURPRISES.'],
     sub:        'We handle the paperwork. You handle the business.',
     align:      'right',
   },
   {
-    frameRange: [397, 455],
+    frameRange: [717, 775],
     headline:   ['CUSTOM CLEARANCE', '& BROKERAGING'],
     sub:        'Full documentation and customs handling to keep your cargo moving and your timeline intact.',
     align:      'right',
   },
+  // ── frames5: 810–930 ──
   {
-    frameRange: [463, 521],
+    frameRange: [783, 841],
     headline:   ['PACKED SAFE,', 'DELIVERED RIGHT'],
     sub:        'End-to-end cargo consolidation and handling — your freight secured from warehouse to aircraft.',
     align:      'left',
   },
   {
-    frameRange: [529, 623],
+    frameRange: [849, 930],
     headline:   ['AEROSPACE', 'LOGISTICS'],
     sub:        "Time-critical delivery solutions via the Kingdom's primary aviation corridors.",
     align:      'right',
     vAlign:     'top',
   },
+  // ── frames6: 931–1051 ──
   {
-    frameRange: [631, 689],
+    frameRange: [951, 1009],
     headline:   ['ONSITE JACKING', '& SKIDDING'],
     sub:        "Precision Placement Where Cranes Can't Go. Millimeter-accurate. No room for error — and we never make one.",
     align:      'right',
   },
   {
-    frameRange: [661, 719],
+    frameRange: [981, 1039],
     headline:   ['TECHNICAL ENGINEERING', 'SOLUTIONS'],
     sub:        'Lift plans, load calculations, and structural analysis to ensure every heavy move is safe and compliant.',
     align:      'left',
@@ -360,34 +389,13 @@ function TrackCard() {
 // Main VideoHero
 // ─────────────────────────────────────────────────────────────────────────────
 export default function VideoHero({ onQuoteClick }) {
-  const wrapperRef      = useRef(null)
-  const canvasRef       = useRef(null)
-  const globeVideoRef   = useRef(null)
-  const chaptersRef     = useRef([])
-  const heroCardsRef    = useRef(null)
-  const exitOverlayRef  = useRef(null)
-  const introContainerRef = useRef(null)
-  const framesRef       = useRef([])       // loaded Image objects
-  const lastIdxRef      = useRef(-1)       // last drawn frame index
-  const [introIdx, setIntroIdx]         = useState(0)
-  const [introShowing, setIntroShowing] = useState(true)  // heading visible/hidden
-  const [introVisible, setIntroVisible] = useState(true)  // entire intro phase active
-  const [fontsReady, setFontsReady]     = useState(false) // hide until fonts loaded
-
-  // ── Wait for Bebas Neue + DM Sans to load before showing any heading ──
-  useEffect(() => {
-    document.fonts.load("1em 'Bebas Neue'").then(() =>
-      document.fonts.load("1em 'DM Sans'")
-    ).then(() => setFontsReady(true))
-    .catch(() => setFontsReady(true)) // fallback: show anyway if fonts fail
-  }, [])
-
-  // ── Cycle intro slides on timers — no scroll lock, video responds freely ──
-  useEffect(() => {
-    // Only one intro slide — SMART FREIGHT shows immediately at top
-    setIntroIdx(0)
-    setIntroShowing(true)
-  }, [])
+  const wrapperRef     = useRef(null)
+  const canvasRef      = useRef(null)
+  const chaptersRef    = useRef([])
+  const heroCardsRef   = useRef(null)
+  const exitOverlayRef = useRef(null)
+  const framesRef      = useRef([])   // decoded ImageBitmap / Image objects
+  const lastIdxRef     = useRef(-1)   // last drawn frame index
 
   // ── Chapter opacity driven by exact frame index (hardcoded to footage) ──
   const applyProgress = useCallback((frameIdx) => {
@@ -399,9 +407,7 @@ export default function VideoHero({ onQuoteClick }) {
       const isLast = i === CHAPTERS.length - 1
       let opacity = 0
 
-      if (frameIdx < 0) {
-        opacity = 0  // globe phase — keep all hidden
-      } else if (isLast) {
+      if (isLast) {
         // Last chapter fades in and stays; exit overlay covers the end
         if      (frameIdx >= start + FRAME_FADE) opacity = 1
         else if (frameIdx >= start)              opacity = (frameIdx - start) / FRAME_FADE
@@ -496,7 +502,7 @@ export default function VideoHero({ onQuoteClick }) {
   // Phase 1 — eager: load first 80 frames (covers globe→canvas crossfade)
   useEffect(() => {
     framesRef.current = new Array(TOTAL_FRAMES)
-    loadFrameRange(0, 79)
+    loadFrameRange(0, 149)
     // Phase 2 — idle background: load all remaining frames when browser is free
     const scheduleIdle = (start) => {
       if (start >= TOTAL_FRAMES) return
@@ -505,139 +511,78 @@ export default function VideoHero({ onQuoteClick }) {
         : setTimeout(() => { loadFrameRange(start, start + 49); scheduleIdle(start + 50) }, 200)
       return handle
     }
-    scheduleIdle(80)
+    scheduleIdle(150)
   }, [loadFrameRange])
 
   // Phase 3 — scroll-ahead: called from RAF loop to stay 80 frames ahead
   const loadAhead = useCallback((frameIdx) => {
-    const target = Math.min(frameIdx + 80, TOTAL_FRAMES - 1)
+    const target = Math.min(frameIdx + 150, TOTAL_FRAMES - 1)
     if (target > loadedUpToRef.current) {
       loadFrameRange(loadedUpToRef.current + 1, target)
     }
   }, [loadFrameRange])
 
-  // ── Globe setup — fade in on load, canvas hidden, chapters hidden ──
+  // ── Init: canvas visible, show first chapter heading immediately ──
   useEffect(() => {
-    if (canvasRef.current)     canvasRef.current.style.opacity  = '0'
-    if (globeVideoRef.current) {
-      const g = globeVideoRef.current
-      g.style.opacity   = '0'
-      g.style.transform = 'translateY(0px) scale(1.04)'
-      g.style.transition = 'opacity 1.2s ease'
-      // Fade in once video can play
-      const onCanPlay = () => {
-        requestAnimationFrame(() => {
-          g.style.opacity = '1'
-          g.style.transform = 'translateY(0px)'
-          // Remove transition after fade-in so RAF controls transform directly
-          setTimeout(() => { g.style.transition = 'none' }, 1300)
-        })
-      }
-      g.addEventListener('canplaythrough', onCanPlay, { once: true })
-      // Fallback if already ready
-      if (g.readyState >= 3) onCanPlay()
-    }
-    // Initialise all chapter overlays as hidden — RAF takes over on scroll
+    if (canvasRef.current) canvasRef.current.style.opacity = '1'
+    // Hide all chapters first
     for (let i = 0; i < CHAPTERS.length; i++) {
       const el = chaptersRef.current[i]
       if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(28px)' }
     }
-  }, [])
+    // Show first chapter fully visible on load (past the fade-in window)
+    applyProgress(FRAME_FADE)
+  }, [applyProgress])
 
-  // ── Scroll: globe slides up, truck fades in — RAF lerp for silky motion ──
+  // ── Scroll: pure frame scrub — canvas drives everything from frame 0 ──
   useEffect(() => {
     const wrapper = wrapperRef.current
     if (!wrapper) return
-    const GLOBE_EXIT = 0.22   // globe fully gone by 22% scroll
 
-    let targetP  = 0          // raw scroll progress
-    let currentP = 0          // lerped progress (drives visuals)
+    let targetP  = 0
+    let smoothP  = 0   // lerped — for text/overlay animations only
     let rafId    = null
-    let lastIntroVisible = true
 
     const lerp = (a, b, t) => a + (b - a) * t
 
     const render = () => {
-      // Smooth lerp — 0.09 = silky, higher = snappier
-      currentP = lerp(currentP, targetP, 0.09)
-
-      const p  = currentP
-      const gp = Math.min(p / GLOBE_EXIT, 1)
-
-      // ── Intro heading ──
-      const nowIntroVisible = p < GLOBE_EXIT + 0.05
-      if (nowIntroVisible !== lastIntroVisible) {
-        lastIntroVisible = nowIntroVisible
-        if (nowIntroVisible) setIntroVisible(true)
-        else                 setIntroVisible(false)
-      }
-      if (introContainerRef.current) {
-        introContainerRef.current.style.opacity = String(Math.max(0, 1 - gp * 1.5))
-      }
-
-      // ── Globe: pure crossfade dissolve — no movement, no slide ──
-      const globe = globeVideoRef.current
-      if (globe) {
-        globe.style.transform = 'none'
-        // Ease-in-out curve: slow start, accelerates mid, slow finish
-        const eased = gp < 0.5 ? 2 * gp * gp : 1 - Math.pow(-2 * gp + 2, 2) / 2
-        globe.style.opacity = String(Math.max(0, 1 - eased))
-      }
-
-      // ── Canvas: mirror dissolve — fades in as globe fades out ──
-      const canvas = canvasRef.current
-      if (canvas) {
-        const eased = gp < 0.5 ? 2 * gp * gp : 1 - Math.pow(-2 * gp + 2, 2) / 2
-        canvas.style.opacity = String(Math.min(1, eased))
-      }
-
-      // ── Frame scrub after globe zone — starts at frame 39 ──
-      const BASE_FRAME = 39
-      const videoP   = p <= GLOBE_EXIT ? 0 : (p - GLOBE_EXIT) / (1 - GLOBE_EXIT)
-      const frameIdx = Math.min(BASE_FRAME + Math.round(videoP * (TOTAL_FRAMES - 1 - BASE_FRAME)), TOTAL_FRAMES - 1)
+      // Frames use targetP directly — zero lag, instant response to scroll
+      const frameIdx = Math.min(Math.round(targetP * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1)
       loadAhead(frameIdx)
       paintFrame(frameIdx)
 
-      // Chapter headings driven by exact frame index — perfect sync
-      applyProgress(p <= GLOBE_EXIT ? -1 : frameIdx)
+      // Overlays use smoothP — gentle lerp for cinematic text transitions
+      smoothP = lerp(smoothP, targetP, 0.12)
 
-      // ── Show "Engineered" during globe→frames transition (same fade as canvas) ──
-      if (p <= GLOBE_EXIT) {
-        const el = chaptersRef.current[0]
-        if (el) {
-          const eOp = Math.min(Math.max(0, (gp - 0.65) / 0.35), 1)
-          el.style.opacity   = String(eOp)
-          el.style.transform = `translateY(${(1 - eOp) * 28}px)`
-        }
-      }
+      // Chapter headings driven by frame index (instant sync with frames)
+      applyProgress(frameIdx)
 
-      // ── Cards fade in sync with intro heading (gp) + cargo fade ──
+      // ── Hero cards fade ──
       if (heroCardsRef.current) {
-        // Fade out in sync with intro text using same gp multiplier (1.5)
-        const gpOp = Math.max(0, 1 - gp * 1.5)
-
-        // Also fade during heavy cargo footage
-        const CARGO_FADE_START = 470
-        const CARGO_FADE_END   = 490
+        const CARD_FADE_START  = 140
+        const CARD_FADE_END    = 185
+        const CARGO_FADE_START = 793
+        const CARGO_FADE_END   = 813
+        const introOp = frameIdx < CARD_FADE_START ? 1
+          : frameIdx > CARD_FADE_END ? 0
+          : 1 - (frameIdx - CARD_FADE_START) / (CARD_FADE_END - CARD_FADE_START)
         const cargoOp = frameIdx < CARGO_FADE_START ? 1
           : frameIdx > CARGO_FADE_END ? 0
           : 1 - (frameIdx - CARGO_FADE_START) / (CARGO_FADE_END - CARGO_FADE_START)
-
-        const finalOp = gpOp * cargoOp
+        const finalOp = Math.min(introOp, cargoOp)
         heroCardsRef.current.style.opacity       = String(finalOp)
         heroCardsRef.current.style.transform     = 'none'
         heroCardsRef.current.style.pointerEvents = finalOp < 0.1 ? 'none' : 'all'
       }
 
-      // ── Exit fade — only after ALL frames shown (last 3% of scroll) ──
+      // ── Exit fade — last 3% of scroll ──
       if (exitOverlayRef.current) {
         exitOverlayRef.current.style.opacity = String(
-          Math.max(0, Math.min(1, (videoP - 0.97) / 0.03))
+          Math.max(0, Math.min(1, (smoothP - 0.97) / 0.03))
         )
       }
 
-      // Keep looping only while animating
-      if (Math.abs(currentP - targetP) > 0.0001) {
+      if (Math.abs(smoothP - targetP) > 0.0001) {
         rafId = requestAnimationFrame(render)
       } else {
         rafId = null
@@ -672,26 +617,9 @@ export default function VideoHero({ onQuoteClick }) {
         <canvas ref={canvasRef} style={{
           position:'absolute', inset:0, zIndex:1,
           width:'100%', height:'100%',
-          opacity:0,
-          willChange:'opacity',
+          opacity:1,
+          willChange:'transform',
         }} />
-
-        {/* ── GLOBE VIDEO — sits on top of canvas, slides away on scroll ── */}
-        <video
-          ref={globeVideoRef}
-          src={GLOBE_SRC}
-          autoPlay
-          muted
-          playsInline
-          className="hero-globe-video"
-          style={{
-            position:'absolute', inset:0, zIndex:2,
-            width:'100%', height:'100%',
-            objectFit:'cover', objectPosition:'center center',
-            opacity:1, transformOrigin:'center center',
-            willChange:'transform,opacity',
-          }}
-        />
 
         {/* Exit overlay */}
         <div ref={exitOverlayRef} style={{
@@ -709,142 +637,6 @@ export default function VideoHero({ onQuoteClick }) {
           `,
         }} />
 
-        {/* ── INTRO SLIDES — shown during 4-second globe lock ── */}
-        {fontsReady && introVisible && introShowing && introIdx < INTRO_SLIDES.length && (() => {
-          const slide = INTRO_SLIDES[introIdx]
-          const isCenter = slide.align === 'center'
-          const isRight  = slide.align === 'right'
-          return (
-            <div key={introIdx}
-              ref={introContainerRef}
-              className="hero-content-overlay"
-              style={{
-                position:'absolute', inset:0, zIndex:5,
-                display:'flex', flexDirection:'column', justifyContent:'center',
-                alignItems:  isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-                textAlign:   isCenter ? 'center'  : isRight ? 'right'   : 'left',
-                padding:'clamp(1.2rem,5vw,6rem)',
-                paddingBottom:'clamp(160px,28vh,320px)',
-                pointerEvents:'none',
-              }}>
-              <div className="hero-eyebrow" style={{
-                fontFamily:"'DM Sans',sans-serif",
-                fontSize:'clamp(11px,1.1vw,14px)', letterSpacing:'0.32em',
-                textTransform:'uppercase', fontWeight:600,
-                color:'#ffffff',
-                textShadow:'0 0 20px rgba(255,255,255,0.4), 0 0 40px rgba(200,168,78,0.6), 0 1px 14px rgba(0,0,0,1)',
-                background:'rgba(0,0,0,0.55)', backdropFilter:'blur(10px)', WebkitBackdropFilter:'blur(10px)',
-                padding:'7px 18px', borderRadius:'3px',
-                marginBottom:'22px',
-                display:'inline-block',
-                border:'1px solid rgba(255,255,255,0.25)',
-              }}>
-                <span className="shine-ltr" data-text={slide.eyebrow}>{slide.eyebrow}</span>
-              </div>
-              <div style={{ cursor:'default' }}>
-                {slide.headline.map((line, li) => (
-                  <h1 key={li} style={{
-                    fontFamily:"'Bebas Neue',sans-serif",
-                    fontSize:'clamp(2rem,5.5vw,5.5rem)',
-                    lineHeight:0.87, letterSpacing:'0.06em', margin:0,
-                    color: li % 2 === 0 ? '#ffffff' : 'rgba(255,215,105,1)',
-                    textShadow: li % 2 === 0
-                      ? '0 0 40px rgba(255,255,255,0.55), 0 2px 48px rgba(0,0,0,0.98), 0 0 120px rgba(0,0,0,0.7)'
-                      : '0 0 32px rgba(255,200,80,0.5), 0 2px 48px rgba(0,0,0,0.98)',
-                    userSelect:'none',
-                  }}>
-                    {line}
-                  </h1>
-                ))}
-              </div>
-              <div style={{
-                width: isCenter ? '80px' : '60px', height:'2px', marginTop:'22px',
-                background:'linear-gradient(90deg,rgba(200,168,78,0.85),rgba(200,168,78,0.08))',
-                alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-              }} />
-              {/* Quick Quote CTA */}
-              <button
-                className="hero-intro-cta"
-                onClick={() => { if (onQuoteClick) onQuoteClick() }}
-                style={{
-                  pointerEvents:'auto',
-                  marginTop:'32px',
-                  display:'inline-flex', alignItems:'center', gap:'10px',
-                  padding: 'clamp(11px,1.2vw,14px) clamp(18px,2vw,26px)',
-                  background:'linear-gradient(135deg, #ffe080 0%, #e8c85a 35%, #c8a84e 70%, #a8882e 100%)',
-                  color:'#000000',
-                  textShadow:'0 1px 0 rgba(255,255,255,0.3)',
-                  fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1rem,1.3vw,1.25rem)',
-                  letterSpacing:'0.2em', textTransform:'uppercase',
-                  border:'1px solid rgba(255,230,120,0.4)',
-                  borderBottom:'1px solid rgba(120,90,20,0.5)',
-                  borderRadius:'10px', cursor:'pointer',
-                  position:'relative', overflow:'hidden',
-                  boxShadow:'0 6px 30px rgba(200,168,78,0.4), 0 2px 0 rgba(255,230,120,0.3) inset, 0 -2px 0 rgba(100,70,10,0.4) inset',
-                  transition:'all 0.35s cubic-bezier(0.23, 1, 0.32, 1)',
-                  alignSelf: isCenter ? 'center' : undefined,
-                }}
-                onMouseEnter={e=>{ e.currentTarget.style.boxShadow='0 10px 48px rgba(200,168,78,0.55), 0 2px 0 rgba(255,240,150,0.4) inset, 0 -2px 0 rgba(100,70,10,0.4) inset'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.background='linear-gradient(135deg,#fff4a0 0%,#f5d970 35%,#daa83e 70%,#b88828 100%)' }}
-                onMouseLeave={e=>{ e.currentTarget.style.boxShadow='0 6px 30px rgba(200,168,78,0.4), 0 2px 0 rgba(255,230,120,0.3) inset, 0 -2px 0 rgba(100,70,10,0.4) inset'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.background='linear-gradient(135deg,#ffe080 0%,#e8c85a 35%,#c8a84e 70%,#a8882e 100%)' }}
-                onMouseDown={e=>{ e.currentTarget.style.transform='translateY(1px) scale(0.98)' }}
-                onMouseUp={e=>{ e.currentTarget.style.transform='translateY(-2px)' }}
-              >
-                <div className="btn-shine-overlay" />
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-                START SHIPMENT
-              </button>
-
-              {/* ── MOBILE ONLY: Track card + Stats inline below CTA ── */}
-              <div className="hero-mobile-cards" style={{ pointerEvents:'auto', display:'none' }}>
-
-                {/* ── "OR" divider — visually separates Quote CTA from Track card ── */}
-                <div className="hero-mobile-divider">
-                  <div className="hero-mobile-divider-line" />
-                  <span className="hero-mobile-divider-text">OR</span>
-                  <div className="hero-mobile-divider-line" />
-                </div>
-
-                {/* ── Track card with section label ── */}
-                <div className="hero-mobile-track-section">
-                  <p className="hero-mobile-section-label">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                    Track Your Shipment
-                  </p>
-                  <div className="hero-mobile-track" style={{ display:'flex', gap:10 }}>
-                    <div style={{ flex:1 }}><TrackCard /></div>
-                    <div style={{ flex:1 }}><FreightCalcCard /></div>
-                  </div>
-                </div>
-                {/* Stats row with label */}
-                <p className="hero-mobile-section-label" style={{ marginTop:'4px' }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
-                  By the Numbers
-                </p>
-                <div className="hero-mobile-stats">
-                  {[
-                    { v:'120',  suffix:'+', l:'Countries'  },
-                    { v:'25',   suffix:'+', l:'Years'      },
-                    { v:'24/7', suffix:'',  l:'Operations' },
-                    { v:'KSA',  suffix:'',  l:'Specialist' },
-                  ].map((s, idx, arr) => (
-                    <div key={s.l} style={{
-                      display:'flex', flexDirection:'column', alignItems:'center',
-                      flex:'1 1 0', padding:'6px 4px',
-                      borderRight: idx < arr.length-1 ? '1px solid rgba(200,210,230,0.1)' : 'none',
-                    }}>
-                      <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.5rem', letterSpacing:'0.04em', lineHeight:1, color:'#ffffff', textShadow:'0 0 16px rgba(255,255,255,0.5)' }}>
-                        <CountUp target={s.v} suffix={s.suffix} duration={800} />
-                      </div>
-                      <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'8px', letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(210,220,240,0.85)', fontWeight:600, marginTop:'3px', whiteSpace:'nowrap' }}>{s.l}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )
-        })()}
 
         {/* ── CHAPTER OVERLAYS — strictly one at a time ── */}
         {CHAPTERS.map((ch, i) => {

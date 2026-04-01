@@ -3,6 +3,5 @@ dist/
 .env
 *.local
 
-# Unused/backup frame sequences — too large for Vercel
-public/frames1/
+# Backup frame sequences — too large for GitHub
 public/frames1_backup/
