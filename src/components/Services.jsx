@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, AnimatePresence } from 'framer-motion'
 import clsx from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { MeshGradient } from '@paper-design/shaders-react'
@@ -16,6 +16,17 @@ const services = [
   {
     num: '01', title: 'Air Freight',
     desc: 'Time-critical global air cargo with priority handling and real-time tracking. Express and charter options available.',
+    subServices: [
+      'General Cargo Consolidation',
+      'Express & Time-Critical Air Freight',
+      'Peak Season Capacity Solutions',
+      'Temperature-Controlled Shipments',
+      'Sea–Air & Air–Sea Solutions',
+      'Air Charter Services',
+      'Oversized Cargo Handling',
+      'Dangerous Goods (DGR) Handling',
+      'AOG Cargo Handling',
+    ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 24L42 12L30 36L22 28L6 24Z" strokeLinejoin="round" /><path d="M22 28L24 42" strokeLinecap="round" /></svg>),
     span: 'md:col-span-2',
     videoBg: '/air-cargo.mp4',
@@ -23,14 +34,31 @@ const services = [
   {
     num: '02', title: 'Sea Freight',
     desc: 'FCL and LCL ocean freight worldwide. Deep expertise in GCC port operations and customs clearance.',
+    subServices: [
+      'Containerized Freight (FCL & LCL)',
+      'Break Bulk Services',
+      'Consolidation of Cargo',
+      'Reefer Cargo Shipping for Perishable Goods',
+      'Dangerous Goods Handling (DG)',
+      'Out Of Gauge (OOG) & Heavy Lift Cargo Handling',
+    ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M8 30L12 18H36L40 30" strokeLinejoin="round" /><path d="M4 34C8 30 12 38 16 34C20 30 24 38 28 34C32 30 36 38 40 34" strokeLinecap="round" /><rect x="20" y="10" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-1',
     videoPoster: '/frames2/0160.jpg',
     videoFrames: { folder: 'frames2', count: 289 },
   },
   {
-    num: '03', title: 'Road Transport',
-    desc: 'Cross-border trucking across the GCC and beyond. Dedicated fleet with GPS tracking and temperature control.',
+    num: '03', title: 'Land Freight',
+    desc: 'End-to-end FTL & LTL transport with seamless local and cross-border trucking across GCC & key trade corridors.',
+    subServices: [
+      'End-to-End FTL & LTL Transport Solutions',
+      'Seamless Local & Cross-Border Trucking across GCC',
+      'Specialized Handling of Oversized Cargo',
+      'Advanced Fleet: Low Bed, Flatbed & Hydraulic Trailers',
+      'Engineered Transport for Heavy & Critical Loads',
+      'Full Shipment Visibility & Absolute Pricing Transparency',
+      'Optimized Routes for Speed, Safety & Cost Efficiency',
+    ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><rect x="4" y="18" width="28" height="16" rx="1" /><path d="M32 24H40L44 30V34H32V24Z" /><circle cx="12" cy="36" r="4" /><circle cx="36" cy="36" r="4" /></svg>),
     span: 'md:col-span-1',
     videoPoster: '/hero-truck-poster.jpg',
@@ -40,6 +68,17 @@ const services = [
   {
     num: '04', title: 'Customs Clearance',
     desc: 'ZATCA-certified customs brokerage. Seamless import/export documentation and full regulatory compliance.',
+    subServices: [
+      'Import & Export Customs Clearance',
+      'Duty & Tax Calculation and Payment Handling',
+      'Preparation & Submission of Customs Documentation',
+      'Coordination with Customs Authorities & Government Agencies',
+      'Secure Warehousing & Storage Awaiting Clearance',
+      'Door Delivery Services After Clearance',
+      'Full Adherence to Saudi Customs Regulations',
+      'Minimized Delays & Cost Optimization',
+      'End-to-End Customs Solutions Under One Roof',
+    ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><rect x="10" y="6" width="28" height="36" rx="2" /><path d="M16 16H32M16 22H32M16 28H26" strokeLinecap="round" /><circle cx="34" cy="34" r="7" fill="#050508" strokeWidth="1.5" /><path d="M30 34L33 37L38 31" strokeLinecap="round" strokeLinejoin="round" /></svg>),
     span: 'md:col-span-2',
     videoPoster: '/frames4/0001.jpg',
@@ -48,13 +87,29 @@ const services = [
   {
     num: '05', title: 'Warehousing',
     desc: 'Strategically located bonded warehouses across Saudi Arabia with advanced inventory management systems.',
+    subServices: [
+      'Inventory Management',
+      'Order Management',
+      'Cross-Dock Solutions',
+      'Commodity Storage',
+      'Pop-Up Warehousing',
+      'Bonded Warehousing',
+      'Storage in Free Trade Zones',
+    ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M4 20L24 8L44 20V42H4V20Z" /><rect x="18" y="28" width="12" height="14" rx="0.5" /><rect x="8" y="24" width="8" height="8" rx="0.5" /><rect x="32" y="24" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-2',
     truckBg: '/warehouse.png',
   },
   {
-    num: '06', title: 'Project Cargo',
+    num: '06', title: 'Heavy Lift & Project Logistics',
     desc: 'Heavy-lift and out-of-gauge logistics. From oil & gas equipment to industrial machinery.',
+    subServices: [
+      'Heavy Lift / ODC / OOG Transportation — Conventional Hydraulic Axles for wind turbines, transformers, generators, industrial machinery & large project cargo',
+      'Route Survey & Feasibility Study — Physical inspection and analysis of the full transportation route',
+      'Route Modification for ODC Transportation — Removal of obstacles: traffic signals, guardrails, overhead cables & bypass construction',
+      'Onsite Jacking & Skidding — Lift heavy equipment and horizontally move cargo along skid beams',
+      'Technical Engineering Solutions — Lift plans, load distribution calculations & structural analysis',
+    ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 36L16 20L28 28L38 12" strokeLinecap="round" strokeLinejoin="round" /><path d="M32 12H38V18" strokeLinecap="round" strokeLinejoin="round" /><circle cx="8" cy="40" r="3" /><circle cx="24" cy="40" r="3" /><circle cx="40" cy="40" r="3" /></svg>),
     span: 'md:col-span-1',
     truckBg: '/project-cargo.jpg',
@@ -130,6 +185,7 @@ export default function Services() {
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-100px 0px" })
   const [hoveredCard, setHoveredCard] = useState(null)
+  const [expandedCard, setExpandedCard] = useState(null)
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -243,6 +299,8 @@ export default function Services() {
           >
             {services.map((s, i) => {
               const isActive = hoveredCard === s.num
+              const isExpanded = expandedCard === s.num
+              const hasExpand = s.subServices && s.subServices.length > 0
               return (
               <motion.div
                 key={s.num}
@@ -250,24 +308,21 @@ export default function Services() {
                 variants={itemVariants}
                 onHoverStart={() => setHoveredCard(s.num)}
                 onHoverEnd={() => setHoveredCard(null)}
-                onTouchStart={() => setHoveredCard(s.num)}
-                onTouchEnd={() => setTimeout(() => setHoveredCard(null), 600)}
                 style={{
                   position: 'relative', overflow: 'hidden',
                   padding: 'clamp(1.6rem,3vw,2.4rem)',
-                  minHeight: undefined,
                   borderRight: (i % 3 !== 2) ? '1px solid rgba(200,168,78,0.08)' : 'none',
                   borderBottom: (i < 3) ? '1px solid rgba(200,168,78,0.08)' : 'none',
                   cursor: 'default',
                   transition: 'background 0.3s ease',
-                  background: isActive ? 'rgba(200,168,78,0.04)' : 'transparent',
+                  background: isExpanded ? 'rgba(200,168,78,0.06)' : isActive ? 'rgba(200,168,78,0.04)' : 'transparent',
                 }}
               >
                 {/* Subtle gold hover glow */}
                 <div style={{
                   position: 'absolute', inset: 0, pointerEvents: 'none',
                   background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200,168,78,0.06) 0%, transparent 70%)',
-                  opacity: isActive ? 1 : 0,
+                  opacity: isActive || isExpanded ? 1 : 0,
                   transition: 'opacity 0.5s ease',
                 }} />
 
@@ -280,20 +335,48 @@ export default function Services() {
                   }}>
                     {s.icon}
                   </div>
-                  {/* Title */}
-                  <h3 style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: 'clamp(1.3rem,2.2vw,1.7rem)',
-                    letterSpacing: '0.08em', lineHeight: 1.1,
-                    color: isActive ? 'rgba(255,215,105,1)' : '#ffffff',
-                    marginBottom: '0.6rem',
-                    transition: 'color 0.3s ease',
-                  }}>
-                    {s.title}
-                  </h3>
+                  {/* Title row */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
+                    <h3 style={{
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontSize: 'clamp(1.3rem,2.2vw,1.7rem)',
+                      letterSpacing: '0.08em', lineHeight: 1.1,
+                      color: isExpanded ? 'rgba(255,215,105,1)' : isActive ? 'rgba(255,215,105,1)' : '#ffffff',
+                      margin: 0,
+                      transition: 'color 0.3s ease',
+                    }}>
+                      {s.title}
+                    </h3>
+                    {hasExpand && (
+                      <button
+                        onClick={() => setExpandedCard(isExpanded ? null : s.num)}
+                        style={{
+                          display: 'flex', alignItems: 'center', gap: '5px',
+                          background: isExpanded ? 'rgba(200,168,78,0.18)' : 'rgba(200,168,78,0.08)',
+                          border: '1px solid rgba(200,168,78,0.35)',
+                          borderRadius: '4px',
+                          padding: '4px 10px',
+                          cursor: 'pointer',
+                          flexShrink: 0,
+                          transition: 'all 0.25s ease',
+                        }}
+                      >
+                        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,215,105,0.9)' }}>
+                          {isExpanded ? 'Less' : 'View'}
+                        </span>
+                        <motion.svg
+                          width="10" height="10" viewBox="0 0 10 10" fill="none"
+                          animate={{ rotate: isExpanded ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <path d="M2 3.5L5 6.5L8 3.5" stroke="rgba(255,215,105,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </motion.svg>
+                      </button>
+                    )}
+                  </div>
                   {/* Divider */}
                   <div style={{
-                    width: isActive ? '40px' : '20px',
+                    width: isActive || isExpanded ? '40px' : '20px',
                     height: 1, marginBottom: '0.8rem',
                     background: 'linear-gradient(90deg, rgba(200,168,78,0.8), transparent)',
                     transition: 'width 0.4s ease',
@@ -307,6 +390,55 @@ export default function Services() {
                   }}>
                     {s.desc}
                   </p>
+
+                  {/* Expandable sub-services */}
+                  <AnimatePresence>
+                    {isExpanded && hasExpand && (
+                      <motion.div
+                        key="sub"
+                        initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                        animate={{ opacity: 1, height: 'auto', marginTop: '1rem' }}
+                        exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                        style={{ overflow: 'hidden' }}
+                      >
+                        <div style={{
+                          borderTop: '1px solid rgba(200,168,78,0.15)',
+                          paddingTop: '0.9rem',
+                          display: 'flex', flexDirection: 'column', gap: '0',
+                        }}>
+                          {s.subServices.map((item, idx) => (
+                            <motion.div
+                              key={item}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: idx * 0.04, duration: 0.25 }}
+                              style={{
+                                display: 'flex', alignItems: 'center', gap: '10px',
+                                padding: '6px 0',
+                                borderBottom: idx < s.subServices.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                              }}
+                            >
+                              <div style={{
+                                width: '5px', height: '5px', borderRadius: '50%', flexShrink: 0,
+                                background: 'rgba(200,168,78,0.7)',
+                                boxShadow: '0 0 6px rgba(200,168,78,0.4)',
+                              }} />
+                              <span style={{
+                                fontFamily: "'DM Sans', sans-serif",
+                                fontSize: 'clamp(12px,1.2vw,13.5px)',
+                                fontWeight: 500,
+                                color: 'rgba(255,255,255,0.82)',
+                                lineHeight: 1.5,
+                              }}>
+                                {item}
+                              </span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </motion.div>
               )

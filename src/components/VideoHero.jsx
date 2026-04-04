@@ -73,7 +73,7 @@ const CHAPTERS = [
   // ── frames1: 0–184 ──
   {
     frameRange: [0, 184],
-    eyebrow:    'FROM BLUE PRINT TO DELIVERY, WE MOVE IT ALL',
+    eyebrow:    'CONNECTING KSA TO THE WORLD',
     headline:   ['SMART FREIGHT', 'POWERED BY AI'],
     sub:        'Award-winning freight forwarder delivering seamless end-to-end logistics with reliability and global reach.',
     align:      'left',
@@ -721,83 +721,88 @@ export default function VideoHero({ onQuoteClick }) {
               }}
             >
 
-              {/* Eyebrow */}
-              {ch.eyebrow && (
-                <div className="hero-eyebrow" style={{
-                  display:'inline-flex', alignItems:'center', gap:'8px',
-                  fontFamily:"'DM Sans',sans-serif",
-                  fontSize:'clamp(10px,1.1vw,13px)', letterSpacing:'0.22em',
-                  textTransform:'uppercase', fontWeight:600,
-                  color:'rgba(255,224,120,1)',
-                  background:'rgba(200,168,78,0.18)',
-                  border:'1px solid rgba(255,215,100,0.55)',
-                  borderRadius:'2px', padding:'5px 14px',
-                  marginBottom:'14px',
-                  alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-                  backdropFilter:'blur(8px)',
-                  userSelect:'none', pointerEvents:'none',
-                }}>
-                  {ch.eyebrow}
-                </div>
-              )}
-
-              {/* Headline */}
-              <div style={{ pointerEvents:'all', cursor:'default' }}>
-                {ch.headline.map((line, li) => (
-                  <h1 key={li} style={{
-                    fontFamily:"'Bebas Neue',sans-serif",
-                    fontSize:'clamp(2rem,5.5vw,5.5rem)',
-                    lineHeight:0.87, letterSpacing:'0.06em', margin:0,
-                    color: li % 2 === 0 ? '#ffffff' : 'rgba(255,215,105,1)',
-                    textShadow: li % 2 === 0
-                      ? '0 0 40px rgba(255,255,255,0.55), 0 2px 48px rgba(0,0,0,0.98), 0 0 120px rgba(0,0,0,0.7)'
-                      : '0 0 32px rgba(255,200,80,0.5), 0 2px 48px rgba(0,0,0,0.98)',
-                    userSelect:'none',
-                  }}>
-                    {line}
-                  </h1>
-                ))}
-              </div>
-
-              {/* Gold accent line */}
+              {/* Glass card behind heading content */}
               <div style={{
-                width: isCenter ? '80px' : '60px', height:'2px', marginTop:'26px',
-                background:'linear-gradient(90deg,rgba(200,168,78,0.85),rgba(200,168,78,0.08))',
+                display:'flex', flexDirection:'column',
+                alignItems: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
+                background:'rgba(5,5,8,0.45)',
+                backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)',
+                border:'1px solid rgba(200,168,78,0.14)',
+                borderRadius:'12px',
+                padding:'clamp(16px,2.5vw,28px) clamp(20px,3vw,36px)',
+                boxShadow:'0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)',
+                maxWidth:'clamp(280px,55vw,680px)',
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-              }} />
-
-              {/* Chapter counter */}
-              <div style={{
-                marginTop:'16px', fontFamily:"'Bebas Neue',sans-serif",
-                fontSize:'11px', letterSpacing:'0.38em', textTransform:'uppercase',
-                color:'rgba(200,168,78,0.32)',
-                alignSelf: isCenter ? 'center' : undefined,
               }}>
-                {String(i+1).padStart(2,'0')} / {String(CHAPTERS.length).padStart(2,'0')}
-              </div>
 
-              {/* Start Shipment CTA — first chapter only */}
-              {ch.showCTA && (
-                <button
-                  className="hero-intro-cta btn-gold"
-                  onClick={onQuoteClick}
-                  style={{
-                    marginTop:'28px',
-                    alignSelf: isRight ? 'flex-end' : isCenter ? 'center' : 'flex-start',
-                    display:'flex', alignItems:'center', gap:'10px',
-                    fontFamily:"'Bebas Neue',sans-serif",
-                    fontSize:'clamp(13px,1.4vw,16px)', letterSpacing:'0.18em',
-                    padding:'14px 32px', borderRadius:'3px', cursor:'pointer',
-                    pointerEvents:'all',
-                  }}
-                >
-                  START SHIPMENT
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0 }}>
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  <div className="btn-shine-overlay" />
-                </button>
-              )}
+                {/* Eyebrow */}
+                {ch.eyebrow && (
+                  <div className="hero-eyebrow" style={{
+                    display:'inline-flex', alignItems:'center', gap:'8px',
+                    fontFamily:"'DM Sans',sans-serif",
+                    fontSize:'clamp(10px,1.1vw,13px)', letterSpacing:'0.22em',
+                    textTransform:'uppercase', fontWeight:600,
+                    color:'rgba(255,224,120,1)',
+                    background:'rgba(200,168,78,0.14)',
+                    border:'1px solid rgba(255,215,100,0.35)',
+                    borderRadius:'2px', padding:'5px 14px',
+                    marginBottom:'14px',
+                    alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
+                    userSelect:'none', pointerEvents:'none',
+                  }}>
+                    {ch.eyebrow}
+                  </div>
+                )}
+
+                {/* Headline */}
+                <div style={{ pointerEvents:'all', cursor:'default' }}>
+                  {ch.headline.map((line, li) => (
+                    <h1 key={li} style={{
+                      fontFamily:"'Bebas Neue',sans-serif",
+                      fontSize:'clamp(2rem,5.5vw,5.5rem)',
+                      lineHeight:0.87, letterSpacing:'0.06em', margin:0,
+                      color: li % 2 === 0 ? '#ffffff' : 'rgba(255,215,105,1)',
+                      textShadow: li % 2 === 0
+                        ? '0 0 30px rgba(255,255,255,0.2), 0 2px 12px rgba(0,0,0,0.6)'
+                        : '0 0 24px rgba(255,200,80,0.3), 0 2px 12px rgba(0,0,0,0.6)',
+                      userSelect:'none',
+                    }}>
+                      {line}
+                    </h1>
+                  ))}
+                </div>
+
+                {/* Gold accent line */}
+                <div style={{
+                  width: isCenter ? '80px' : '60px', height:'2px', marginTop:'20px',
+                  background:'linear-gradient(90deg,rgba(200,168,78,0.85),rgba(200,168,78,0.08))',
+                  alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
+                }} />
+
+                {/* Start Shipment CTA — first chapter only */}
+                {ch.showCTA && (
+                  <button
+                    className="hero-intro-cta btn-gold"
+                    onClick={onQuoteClick}
+                    style={{
+                      marginTop:'24px',
+                      alignSelf:'center',
+                      display:'flex', alignItems:'center', gap:'10px',
+                      fontFamily:"'Bebas Neue',sans-serif",
+                      fontSize:'clamp(13px,1.4vw,16px)', letterSpacing:'0.18em',
+                      padding:'14px 32px', borderRadius:'3px', cursor:'pointer',
+                      pointerEvents:'all',
+                    }}
+                  >
+                    START SHIPMENT
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0 }}>
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <div className="btn-shine-overlay" />
+                  </button>
+                )}
+
+              </div>
             </div>
           )
         })}
