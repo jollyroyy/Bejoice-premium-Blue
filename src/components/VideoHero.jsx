@@ -73,7 +73,7 @@ const CHAPTERS = [
   // ── frames1: 0–184 ──
   {
     frameRange: [0, 184],
-    eyebrow:    'CONNECTING KSA TO THE WORLD',
+    eyebrow:    'FROM BLUE PRINT TO DELIVERY, WE MOVE IT ALL',
     headline:   ['SMART FREIGHT', 'POWERED BY AI'],
     sub:        'Award-winning freight forwarder delivering seamless end-to-end logistics with reliability and global reach.',
     align:      'left',
@@ -83,7 +83,7 @@ const CHAPTERS = [
   {
     frameRange: [185, 229],
     eyebrow:    '180+ COUNTRIES · 25+ YEARS EXPERIENCE',
-    headline:   ['CONNECTING KSA', 'TO THE WORLD'],
+    headline:   ['FROM BLUE PRINT TO', 'DELIVERY, WE MOVE IT ALL'],
     sub:        "Saudi Arabia's premier freight forwarder — delivering seamless logistics across 180+ countries.",
     align:      'right',
   },
@@ -97,21 +97,21 @@ const CHAPTERS = [
   {
     frameRange: [289, 333],
     eyebrow:    'GCC ROAD NETWORK',
-    headline:   ['LAND', 'CORRIDORS'],
+    headline:   ['CONNECTED', 'GLOBALLY'],
     sub:        'Seamless cross-border land transport across the GCC, powered by a state-of-the-art fleet.',
     align:      'left',
   },
   {
     frameRange: [341, 385],
     eyebrow:    'CUSTOMS CLEARANCE · ZATCA CERTIFIED',
-    headline:   ['ZERO DELAYS.', 'ZERO COMPLIANCE SURPRISES.'],
+    headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
     sub:        'We handle the paperwork. You handle the business.',
     align:      'right',
   },
   {
     frameRange: [393, 430],
     eyebrow:    'SEA FREIGHT · FCL & LCL',
-    headline:   ['OCEAN', 'FREIGHT'],
+    headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
     align:      'left',
   },
@@ -119,7 +119,7 @@ const CHAPTERS = [
   {
     frameRange: [439, 489],
     eyebrow:    'PRECISION HEAVY LIFT · 1500+ OPERATIONS',
-    headline:   ['ONSITE JACKING', '& SKIDDING'],
+    headline:   ['PRECISION IN HANDLING.', 'EXCELLENCE IN DELIVERY'],
     sub:        "Precision Placement Where Cranes Can't Go. Millimeter-accurate. No room for error — and we never make one.",
     align:      'right',
   },
@@ -804,10 +804,10 @@ export default function VideoHero({ onQuoteClick }) {
 
         {/* ── Bottom bar — track card + stats ── */}
         <div ref={heroCardsRef} className="hero-bottom-bar" style={{
-          position:'absolute', bottom:'clamp(80px,12vh,160px)', left:0, right:0, zIndex:5,
-          display:'flex', flexWrap:'wrap', gap:'clamp(60px,8vw,120px)', // Increased gap
-          alignItems:'stretch', justifyContent:'flex-end', // Use stretch for consistent height
-          padding:'0 clamp(8rem,20vw,32rem) 0 clamp(0.8rem,4vw,5rem)', pointerEvents:'all',
+          position:'absolute', bottom:'clamp(24px,5vh,60px)', left:0, right:0, zIndex:5,
+          display:'flex', flexWrap:'wrap', gap:'clamp(60px,8vw,120px)',
+          alignItems:'stretch', justifyContent:'flex-start',
+          padding:'0 clamp(2rem,5vw,6rem)', pointerEvents:'all',
         }}>
           <div style={{ display:'flex', gap:'clamp(16px,2vw,24px)', flex:'0 1 auto', minWidth:0, alignItems:'stretch' }}>
             <div className="hero-track-wrap" style={{ flex:'0 1 auto', minWidth:0, display:'flex', alignItems:'stretch' }}>

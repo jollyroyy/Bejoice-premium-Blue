@@ -374,7 +374,7 @@ export default function BejoiceGlobe() {
   }, []);
 
   return (
-    <section style={{ padding: 'clamp(3rem,6vw,5rem) 1.5rem', position: 'relative', overflow: 'hidden', background: 'transparent' }}>
+    <section id="globe" style={{ padding: 'clamp(3rem,6vw,5rem) 1.5rem', position: 'relative', overflow: 'hidden', background: 'transparent' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
         <motion.div

@@ -255,7 +255,7 @@ export default function Services() {
                 style={{
                   position: 'relative', overflow: 'hidden',
                   padding: 'clamp(1.6rem,3vw,2.4rem)',
-                  minHeight: s.truckBg ? 'clamp(200px,40vw,280px)' : undefined,
+                  minHeight: undefined,
                   borderRight: (i % 3 !== 2) ? '1px solid rgba(200,168,78,0.08)' : 'none',
                   borderBottom: (i < 3) ? '1px solid rgba(200,168,78,0.08)' : 'none',
                   cursor: 'default',
@@ -263,39 +263,11 @@ export default function Services() {
                   background: isActive ? 'rgba(200,168,78,0.04)' : 'transparent',
                 }}
               >
-                {/* Background layer */}
-                {s.videoBg ? (
-                  <video
-                    src={s.videoBg}
-                    autoPlay loop muted playsInline
-                    style={{
-                      position: 'absolute', inset: 0,
-                      width: '100%', height: '100%',
-                      objectFit: 'cover', objectPosition: 'center',
-                      opacity: isActive ? 1 : 0.22,
-                      transition: 'opacity 0.55s ease',
-                      pointerEvents: 'none', zIndex: 0,
-                    }}
-                  />
-                ) : s.truckBg ? (
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    backgroundImage: `url(${s.truckBg})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center 60%',
-                    opacity: isActive ? 1 : 0.18,
-                    transition: 'opacity 0.55s ease',
-                    pointerEvents: 'none', zIndex: 0,
-                  }} />
-                ) : (
-                  <FrameCanvas folder={s.videoFrames.folder} count={s.videoFrames.count} active={isActive} />
-                )}
-
-                {/* Dark overlay — stronger on mobile (always on), lightens on active */}
+                {/* Subtle gold hover glow */}
                 <div style={{
                   position: 'absolute', inset: 0, pointerEvents: 'none',
-                  background: 'linear-gradient(160deg, rgba(5,5,8,0.88) 0%, rgba(5,5,8,0.72) 100%)',
-                  opacity: s.videoBg ? (isActive ? 0.5 : 0.78) : s.truckBg ? (isActive ? 1 : 0.92) : (isActive ? 1 : 0),
+                  background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200,168,78,0.06) 0%, transparent 70%)',
+                  opacity: isActive ? 1 : 0,
                   transition: 'opacity 0.5s ease',
                 }} />
 

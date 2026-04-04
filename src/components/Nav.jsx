@@ -6,12 +6,10 @@ import { useLang } from '../context/LangContext'
 const CAL_LINK = "sudeshna-pal-ruww5f/freight-consultation"
 
 const links = [
-  { label: 'Services',        id: 'services' },
-  { label: 'Heavy Cargo',     id: 'heavy-cargo' },
-  { label: 'Why Us',          id: 'why-us' },
-  { label: 'Markets',         id: 'markets' },
-  { label: 'Certifications',  id: 'certifications' },
-  { label: 'Contact',         id: 'contact' },
+  { label: 'Why Bejoice',                  id: 'why-us',     num: '01', sub: 'Our story & edge' },
+  { label: 'Services',                     id: 'services',   num: '02', sub: 'Full logistics suite' },
+  { label: 'Heavy Lift & Project Logistics', id: 'heavy-cargo', num: '03', sub: '1500+ operations' },
+  { label: 'Bejoice Wings',                id: 'globe',      num: '04', sub: 'Our global network', isGlobe: true },
 ]
 
 export default function Nav({ onQuoteClick }) {
@@ -122,7 +120,7 @@ export default function Nav({ onQuoteClick }) {
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
 
           {/* Logo */}
-          <div onClick={scrollToTop} style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-500px' }}>
+          <div onClick={scrollToTop} style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-155px' }}>
             <img
               src="/bejoice-logo-white.png"
               alt="Bejoice"
@@ -179,8 +177,16 @@ export default function Nav({ onQuoteClick }) {
                 <span className={!menuOpen ? 'bar-mid' : ''} style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: 'rgba(200,168,78,0.55)', width: 'clamp(11px,2vw,13px)', opacity: menuOpen ? 0 : 1, transform: menuOpen ? 'scaleX(0)' : undefined, transition: 'all 0.25s ease' }}/>
                 <span style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: '#c8a84e', width: 'clamp(18px,3vw,20px)', transform: menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none', transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)' }}/>
               </div>
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#ffffff', textShadow: '0 0 12px rgba(255,255,255,0.35)', transition: 'color 0.3s ease', lineHeight: 1 }}>
-                {menuOpen ? 'Close' : 'Menu'}
+              <span style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: '15px',
+                letterSpacing: '0.28em',
+                textTransform: 'uppercase',
+                color: '#ffffff',
+                transition: 'color 0.3s ease',
+                lineHeight: 1,
+              }}>
+                {menuOpen ? 'Close' : 'Explore'}
               </span>
             </button>
 
