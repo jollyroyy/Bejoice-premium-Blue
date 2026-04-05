@@ -415,9 +415,9 @@ export default function Nav({ onQuoteClick }) {
           onClick={() => setHeavyOpen(false)}
           style={{
             position: 'fixed', inset: 0, zIndex: 99999,
-            background: 'rgba(5,5,8,0.82)', backdropFilter: 'blur(12px)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: 'clamp(16px,4vw,32px)',
+            background: 'rgba(2,2,4,0.88)', backdropFilter: 'blur(18px)',
+            display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
+            padding: 'clamp(16px,4vw,40px) clamp(12px,3vw,24px)',
             overflowY: 'auto',
           }}
         >
@@ -425,132 +425,173 @@ export default function Nav({ onQuoteClick }) {
             onClick={e => e.stopPropagation()}
             style={{
               position: 'relative',
-              width: '100%', maxWidth: 680,
-              background: 'linear-gradient(160deg, rgba(20,18,12,0.97) 0%, rgba(12,10,6,0.99) 100%)',
-              border: '1px solid rgba(200,168,78,0.28)',
-              borderTop: '2px solid rgba(255,215,105,0.7)',
-              borderRadius: 20,
-              boxShadow: '0 60px 120px rgba(0,0,0,0.85), 0 0 80px rgba(200,168,78,0.08), inset 0 1px 0 rgba(255,215,105,0.15)',
+              width: '100%', maxWidth: 720,
+              background: 'linear-gradient(170deg, rgba(18,15,8,0.99) 0%, rgba(8,7,3,1) 100%)',
+              border: '1px solid rgba(200,168,78,0.22)',
+              borderRadius: 24,
+              boxShadow: '0 80px 160px rgba(0,0,0,0.9), 0 0 0 1px rgba(200,168,78,0.06), 0 0 100px rgba(200,168,78,0.06)',
               overflow: 'hidden',
+              marginTop: 'auto', marginBottom: 'auto',
             }}
           >
-            {/* Gold gradient header */}
+            {/* ── Top gold rule ── */}
+            <div style={{ height: 3, background: 'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.9) 30%, #ffe680 50%, rgba(200,168,78,0.9) 70%, transparent 100%)' }} />
+
+            {/* ── Header ── */}
             <div style={{
-              padding: 'clamp(1.4rem,4vw,2rem) clamp(1.4rem,4vw,2rem) 1.2rem',
-              background: 'linear-gradient(135deg, rgba(200,168,78,0.12) 0%, rgba(200,168,78,0.04) 100%)',
-              borderBottom: '1px solid rgba(200,168,78,0.15)',
+              padding: 'clamp(1rem,2.5vw,1.4rem) clamp(1.4rem,4vw,2rem) clamp(0.75rem,2vw,1rem)',
+              background: 'linear-gradient(180deg, rgba(200,168,78,0.07) 0%, transparent 100%)',
+              borderBottom: '1px solid rgba(200,168,78,0.1)',
+              position: 'relative', overflow: 'hidden',
             }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
-                <div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.65rem,1.4vw,0.72rem)', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(200,168,78,0.8)', marginBottom: '0.4rem' }}>
-                    Bejoice Specialized Services
+              {/* faint background grid */}
+              <div style={{
+                position: 'absolute', inset: 0, opacity: 0.03,
+                backgroundImage: 'repeating-linear-gradient(0deg, rgba(200,168,78,1) 0px, rgba(200,168,78,1) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(90deg, rgba(200,168,78,1) 0px, rgba(200,168,78,1) 1px, transparent 1px, transparent 32px)',
+                pointerEvents: 'none',
+              }} />
+              <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.55rem' }}>
+                    <div style={{ width: 28, height: 2, background: 'linear-gradient(90deg, #c8a84e, #ffe680)' }} />
+                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.6rem,1.2vw,0.68rem)', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(200,168,78,0.75)' }}>
+                      Bejoice Specialized Services
+                    </span>
                   </div>
                   <h2 style={{
                     fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                    fontSize: 'clamp(1.6rem,4vw,2.2rem)', letterSpacing: '0.06em',
-                    color: '#ffffff', lineHeight: 1.1, margin: 0,
+                    fontSize: 'clamp(1.8rem,5vw,2.8rem)', letterSpacing: '0.04em',
+                    color: '#ffffff', lineHeight: 1, margin: '0 0 0.6rem',
                   }}>
-                    Heavy Lift &amp; Project<br/>
-                    <span style={{ color: '#c8a84e' }}>Logistics</span>
+                    Heavy Lift &amp; Project <span style={{ color: '#c8a84e' }}>Logistics</span>
                   </h2>
-                  <div style={{ marginTop: '0.5rem', fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.75rem,1.5vw,0.82rem)', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.04em' }}>
-                    1,500+ heavy lift operations · ODC &amp; OOG specialists
+                  {/* stat chips */}
+                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    {['1,500+ Operations', 'ODC Specialists', 'OOG Cargo', 'KSA Licensed'].map(tag => (
+                      <span key={tag} style={{
+                        fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.6rem,1.1vw,0.67rem)',
+                        letterSpacing: '0.08em', textTransform: 'uppercase',
+                        color: 'rgba(200,168,78,0.9)', background: 'rgba(200,168,78,0.08)',
+                        border: '1px solid rgba(200,168,78,0.2)', borderRadius: 4,
+                        padding: '3px 8px',
+                      }}>{tag}</span>
+                    ))}
                   </div>
                 </div>
                 <button
                   onClick={() => setHeavyOpen(false)}
                   style={{
-                    flexShrink: 0, width: 40, height: 40,
-                    background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '50%', color: 'rgba(255,255,255,0.5)', fontSize: '1rem',
+                    flexShrink: 0, width: 40, height: 40, minHeight: 44, minWidth: 44,
+                    background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '50%', color: 'rgba(255,255,255,0.45)', fontSize: '0.9rem',
                     cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'all 0.2s',
+                    transition: 'all 0.2s', marginTop: '0.1rem',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.background = 'rgba(255,255,255,0.12)' }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
                 >✕</button>
               </div>
             </div>
 
-            {/* Services list */}
-            <div style={{ padding: 'clamp(1.2rem,3vw,1.6rem) clamp(1.4rem,4vw,2rem)', display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+            {/* ── Services ── */}
+            <div style={{ padding: 'clamp(0.6rem,1.5vw,0.9rem) clamp(1.4rem,4vw,2rem)', display: 'flex', flexDirection: 'column', gap: 0 }}>
               {[
                 {
-                  icon: '🏗️',
+                  num: '01',
                   title: 'Heavy Lift / ODC / OOG Transportation',
-                  desc: 'Conventional hydraulic axles for transporting heavy equipment such as wind turbines, transformers, generators, industrial machinery, construction components, and large project cargo.',
+                  desc: 'Hydraulic axle transport for wind turbines, transformers, generators, and large industrial machinery.',
                 },
                 {
-                  icon: '🗺️',
-                  title: 'Route Survey Feasibility Study',
-                  desc: 'Detailed physical inspection and analysis of the entire transportation route from the pickup location to the final delivery site.',
+                  num: '02',
+                  title: 'Route Survey & Feasibility Study',
+                  desc: 'Physical inspection of the full route from pickup to delivery, identifying and resolving risks before movement.',
                 },
                 {
-                  icon: '🚧',
-                  title: 'Route Modification for ODC Transportation',
-                  desc: 'Removal or adjustment of obstacles such as traffic signals, road signs, guardrails, overhead cables, streetlights, and bypass construction for transportation.',
+                  num: '03',
+                  title: 'Route Modification for ODC Transport',
+                  desc: 'Removal of traffic signals, guardrails, overhead cables, and bypass construction to clear path for oversized cargo.',
                 },
                 {
-                  icon: '⚙️',
+                  num: '04',
                   title: 'Onsite Jacking & Skidding',
-                  desc: 'To lift heavy equipment such as transformers, reactors, or large industrial modules, while skidding systems allow the cargo to be horizontally moved along specially designed tracks or skid beams.',
+                  desc: 'Precision lifting for transformers and large modules; horizontal movement via skid systems and engineered beams.',
                 },
                 {
-                  icon: '📐',
+                  num: '05',
                   title: 'Technical Engineering Solutions',
-                  desc: 'Technical analysis and planning for lifting, loading, securing, and transporting heavy cargo safely. Includes lift plans, load distribution calculations, and structural analysis.',
+                  desc: 'Lift plans, load distribution calculations, and structural analysis for safe heavy cargo transport.',
                 },
               ].map((item, i) => (
-                <div key={i} style={{
-                  display: 'flex', gap: 'clamp(0.8rem,2vw,1.1rem)', alignItems: 'flex-start',
-                  padding: 'clamp(0.9rem,2vw,1.1rem) clamp(0.9rem,2vw,1.2rem)',
-                  background: i % 2 === 0 ? 'rgba(200,168,78,0.04)' : 'rgba(255,255,255,0.025)',
-                  border: '1px solid rgba(200,168,78,0.1)',
-                  borderLeft: '3px solid rgba(200,168,78,0.55)',
-                  borderRadius: 10,
-                }}>
-                  <span style={{ fontSize: 'clamp(1.2rem,2.5vw,1.4rem)', flexShrink: 0, marginTop: '0.05rem' }}>{item.icon}</span>
-                  <div>
-                    <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400, fontSize: 'clamp(0.9rem,2vw,1.02rem)', letterSpacing: '0.08em', color: '#e8d898', marginBottom: '0.3rem' }}>
-                      {item.title}
-                    </div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.75rem,1.4vw,0.83rem)', color: 'rgba(255,255,255,0.62)', lineHeight: 1.55 }}>
-                      {item.desc}
+                <div key={i}>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'clamp(1.8rem,4vw,2.4rem) 1fr',
+                    gap: '0 clamp(0.7rem,1.8vw,1rem)',
+                    alignItems: 'start',
+                    padding: 'clamp(0.6rem,1.4vw,0.8rem) 0',
+                  }}>
+                    {/* number */}
+                    <div style={{
+                      fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
+                      fontSize: 'clamp(1rem,2.2vw,1.25rem)', lineHeight: 1,
+                      color: 'rgba(200,168,78,0.35)', letterSpacing: '0.04em',
+                      paddingTop: '0.1rem',
+                    }}>{item.num}</div>
+                    {/* content */}
+                    <div>
+                      <div style={{
+                        fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
+                        fontSize: 'clamp(0.9rem,2vw,1.05rem)', letterSpacing: '0.07em',
+                        color: '#f0e6c0', marginBottom: '0.2rem', lineHeight: 1.2,
+                      }}>{item.title}</div>
+                      <div style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: 'clamp(0.7rem,1.3vw,0.78rem)',
+                        color: 'rgba(255,255,255,0.55)', lineHeight: 1.5,
+                      }}>{item.desc}</div>
                     </div>
                   </div>
+                  {i < 4 && <div style={{ height: 1, background: 'linear-gradient(90deg, rgba(200,168,78,0.18) 0%, rgba(200,168,78,0.04) 100%)' }} />}
                 </div>
               ))}
             </div>
 
-            {/* CTA footer */}
-            <div style={{ padding: '0 clamp(1.4rem,4vw,2rem) clamp(1.2rem,3vw,1.6rem)', display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+            {/* ── CTA footer ── */}
+            <div style={{
+              padding: 'clamp(0.9rem,2.5vw,1.2rem) clamp(1.4rem,4vw,2rem) clamp(1.2rem,3vw,1.6rem)',
+              borderTop: '1px solid rgba(200,168,78,0.1)',
+              background: 'rgba(200,168,78,0.03)',
+              display: 'flex', gap: '0.75rem', flexWrap: 'wrap',
+            }}>
               <button
                 onClick={() => { setHeavyOpen(false); setTimeout(() => openCalPopup(), 300) }}
                 style={{
-                  flex: '1 1 160px', padding: '0.75rem 1.2rem', minHeight: 44,
-                  background: 'linear-gradient(135deg, #c8a84e, #ffe680)',
+                  flex: '1 1 180px', padding: '0.85rem 1.4rem', minHeight: 48,
+                  background: 'linear-gradient(135deg, #b8943e 0%, #ffe680 50%, #c8a84e 100%)',
                   border: 'none', borderRadius: 10, cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                  fontSize: 'clamp(0.85rem,1.8vw,0.95rem)', letterSpacing: '0.1em',
-                  color: '#0a0800', transition: 'opacity 0.2s',
+                  fontSize: 'clamp(0.9rem,2vw,1rem)', letterSpacing: '0.14em',
+                  color: '#0a0800',
+                  boxShadow: '0 4px 24px rgba(200,168,78,0.25)',
+                  transition: 'transform 0.15s, box-shadow 0.15s',
                 }}
-                onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
-                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(200,168,78,0.35)' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(200,168,78,0.25)' }}
               >
-                Book a Consultation
+                Book a Consultation →
               </button>
               <button
                 onClick={() => { setHeavyOpen(false); const el = document.getElementById('heavy-cargo'); if (el) { if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 }); else el.scrollIntoView({ behavior: 'smooth' }) } }}
                 style={{
-                  flex: '1 1 140px', padding: '0.75rem 1.2rem', minHeight: 44,
-                  background: 'transparent', border: '1px solid rgba(200,168,78,0.4)',
-                  borderRadius: 10, cursor: 'pointer',
+                  flex: '1 1 160px', padding: '0.85rem 1.4rem', minHeight: 48,
+                  background: 'transparent',
+                  border: '1px solid rgba(200,168,78,0.3)', borderRadius: 10, cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                  fontSize: 'clamp(0.85rem,1.8vw,0.95rem)', letterSpacing: '0.1em',
-                  color: 'rgba(200,168,78,0.85)', transition: 'border-color 0.2s, color 0.2s',
+                  fontSize: 'clamp(0.9rem,2vw,1rem)', letterSpacing: '0.14em',
+                  color: 'rgba(200,168,78,0.8)', transition: 'all 0.2s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(200,168,78,0.7)'; e.currentTarget.style.color = '#c8a84e' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(200,168,78,0.4)'; e.currentTarget.style.color = 'rgba(200,168,78,0.85)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(200,168,78,0.08)'; e.currentTarget.style.borderColor = 'rgba(200,168,78,0.5)'; e.currentTarget.style.color = '#c8a84e' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(200,168,78,0.3)'; e.currentTarget.style.color = 'rgba(200,168,78,0.8)' }}
               >
                 View Full Section ↓
               </button>
