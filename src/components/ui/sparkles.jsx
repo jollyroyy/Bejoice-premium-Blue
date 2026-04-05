@@ -4,6 +4,9 @@ import Particles, { initParticlesEngine } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
 import { motion, useAnimation } from 'framer-motion'
 
+// Module-level singleton — initParticlesEngine must only be called once per page load
+let engineReady = null
+
 export const SparklesCore = ({
   id,
   className,
@@ -16,9 +19,12 @@ export const SparklesCore = ({
 }) => {
   const [init, setInit] = useState(false)
   useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine)
-    }).then(() => setInit(true))
+    if (!engineReady) {
+      engineReady = initParticlesEngine(async (engine) => {
+        await loadSlim(engine)
+      })
+    }
+    engineReady.then(() => setInit(true))
   }, [])
 
   const controls = useAnimation()

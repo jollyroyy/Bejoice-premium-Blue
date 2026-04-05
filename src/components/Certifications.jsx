@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { SparklesCore } from './ui/sparkles'
 
 const certs = [
   { code: 'ZATCA', name: 'Zakat, Tax & Customs Authority', desc: 'Certified customs broker recognized by Saudi Arabia\'s ZATCA for seamless import/export compliance.', color: '#2aaa5e' },
@@ -30,6 +31,17 @@ export default function Certifications() {
 
   return (
     <section id="certifications" ref={sectionRef} className="relative pt-0 pb-16 md:pb-24 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
+      {/* Floating dots background */}
+      <SparklesCore
+        background="transparent"
+        minSize={0.6}
+        maxSize={2}
+        particleDensity={60}
+        particleColor="rgba(200,168,78,0.9)"
+        speed={0.8}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      />
+
       {/* Ambient */}
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.07) 0%, transparent 50%)' }}/>

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { SparklesCore } from './ui/sparkles'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Container3DViewer, { WeightDistributionGuide } from './Container3DViewer'
@@ -690,6 +691,17 @@ export default function LogisticsTools() {
       position: 'relative',
       overflow: 'hidden',
     }}>
+
+      {/* Floating dots — section level, outside the card */}
+      <SparklesCore
+        background="transparent"
+        minSize={0.6}
+        maxSize={2}
+        particleDensity={60}
+        particleColor="rgba(200,168,78,0.9)"
+        speed={0.8}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      />
 
       {/* Ambient glows */}
       <div style={{ position:'absolute', top:'5%', right:'-10%', width:'600px', height:'600px', borderRadius:'50%', background:'radial-gradient(circle,rgba(200,168,78,0.05) 0%,transparent 65%)', pointerEvents:'none' }} />
