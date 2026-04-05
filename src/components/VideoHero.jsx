@@ -809,11 +809,10 @@ export default function VideoHero({ onQuoteClick }) {
                 flexShrink:0,
               }}>
                 <div style={{ textAlign:'center' }}>
-                  <div className="hero-stat-number" style={{ 
-                    fontFamily:"'Bebas Neue',sans-serif", fontSize:'2.5rem', letterSpacing:'0.04em', lineHeight:1, 
-                    background:'linear-gradient(135deg, #fff 0%, #FFD700 30%, #FFA500 60%, #FFD700 100%)',
-                    WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent',
-                    filter:'drop-shadow(0 0 15px rgba(255,215,100,0.4)) brightness(1.2)',
+                  <div className="hero-stat-number" style={{
+                    fontFamily:"'Bebas Neue',sans-serif", fontSize:'2.5rem', letterSpacing:'0.04em', lineHeight:1,
+                    color:'#ffffff',
+                    textShadow:'0 0 20px rgba(255,255,255,0.3)',
                     fontWeight: 900
                   }}>
                     <CountUp target={s.v} suffix={s.suffix} duration={1000} />
