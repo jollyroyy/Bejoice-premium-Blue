@@ -8,6 +8,9 @@ export default function ScrollReveal() {
   useEffect(() => {
     // Wait for DOM to settle
     const timer = setTimeout(() => {
+      // Refresh ScrollTrigger after lazy sections have mounted + measured
+      ScrollTrigger.refresh()
+
       const mm = gsap.matchMedia()
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -15,6 +18,11 @@ export default function ScrollReveal() {
         // ── 1. SECTION WIPE-IN — each <section> outside hero ──
         const sections = gsap.utils.toArray('main > *:not(#hero-wrapper):not([id="hero"])')
         sections.forEach((sec) => {
+          // If already in/above viewport, show immediately — don't hide it
+          const rect = sec.getBoundingClientRect()
+          const alreadyVisible = rect.top < window.innerHeight * 0.95
+          if (alreadyVisible) return
+
           gsap.fromTo(sec,
             { opacity: 0, y: 60 },
             {
@@ -23,7 +31,7 @@ export default function ScrollReveal() {
               ease: 'power3.out',
               scrollTrigger: {
                 trigger: sec,
-                start: 'top 88%',
+                start: 'top 92%',
                 end: 'top 40%',
                 scrub: false,
                 once: true,
@@ -146,7 +154,7 @@ export default function ScrollReveal() {
       })
 
       return () => mm.revert()
-    }, 600)
+    }, 1200)
 
     return () => clearTimeout(timer)
   }, [])
