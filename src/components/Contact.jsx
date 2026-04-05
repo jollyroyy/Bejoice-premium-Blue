@@ -91,6 +91,17 @@ export default function Contact() {
         padding: 'clamp(3rem,8vw,7rem) clamp(1rem,5vw,2.5rem)',
       }}
     >
+      {/* Floating dots — section level, outside the card */}
+      <SparklesCore
+        background="transparent"
+        minSize={0.6}
+        maxSize={2}
+        particleDensity={60}
+        particleColor="rgba(200,168,78,0.9)"
+        speed={0.8}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      />
+
       {/* ── Ambient light layers ── */}
       <div style={{ position:'absolute', inset:0, pointerEvents:'none',
         background:'radial-gradient(ellipse 80% 50% at 50% -5%, rgba(200,168,78,0.1) 0%, transparent 60%)',
@@ -199,17 +210,6 @@ export default function Contact() {
                 willChange: 'transform',
               }}
             >
-
-              {/* Sparkles background */}
-              <SparklesCore
-                background="transparent"
-                minSize={0.6}
-                maxSize={2}
-                particleDensity={60}
-                particleColor="rgba(200,168,78,0.9)"
-                speed={0.8}
-                className="absolute inset-0 w-full h-full pointer-events-none"
-              />
 
               {/* Interactive mouse-follow glow */}
               <div ref={glowRef} style={{

@@ -30,7 +30,7 @@ export default function Certifications() {
   }, [])
 
   return (
-    <section id="certifications" ref={sectionRef} className="relative pt-0 pb-16 md:pb-24 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
+    <section id="certifications" ref={sectionRef} className="relative pt-0 pb-16 md:pb-24 lg:pb-32 px-6 md:px-12 lg:px-24">
       {/* Floating dots background */}
       <SparklesCore
         background="transparent"
@@ -40,12 +40,13 @@ export default function Certifications() {
         particleColor="rgba(200,168,78,0.9)"
         speed={0.8}
         className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: 0 }}
       />
 
       {/* Ambient */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.07) 0%, transparent 50%)' }}/>
-      <div className="absolute inset-0 pointer-events-none" style={{
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1,
+        background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.07) 0%, transparent 50%)' }}/>
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1,
         backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,168,78,0.02) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,168,78,0.02) 80px)',
       }}/>
 
@@ -56,7 +57,7 @@ export default function Certifications() {
         lineHeight: 1, color: 'rgba(200,168,78,0.025)', pointerEvents: 'none', userSelect: 'none', letterSpacing: '0.04em',
       }}>CERTIFIED</div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto" style={{ position: 'relative', zIndex: 2 }}>
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
