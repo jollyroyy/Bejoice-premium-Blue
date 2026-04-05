@@ -71,13 +71,6 @@ export default function HeavyLift() {
         pointerEvents: 'none',
       }} />
 
-      {/* Large watermark number */}
-      <div style={{
-        position: 'absolute', right: '-0.5rem', bottom: '-1rem',
-        fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(120px,22vw,260px)',
-        lineHeight: 1, color: 'rgba(200,168,78,0.025)', pointerEvents: 'none',
-        userSelect: 'none', letterSpacing: '0.04em',
-      }}>HEAVY</div>
 
       <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
 

@@ -39,12 +39,6 @@ export default function Certifications() {
         backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,168,78,0.02) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,168,78,0.02) 80px)',
       }}/>
 
-      {/* Watermark */}
-      <div style={{
-        position: 'absolute', left: '-0.5rem', bottom: '-1rem',
-        fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(100px,20vw,240px)',
-        lineHeight: 1, color: 'rgba(200,168,78,0.025)', pointerEvents: 'none', userSelect: 'none', letterSpacing: '0.04em',
-      }}>CERTIFIED</div>
 
       <div className="max-w-7xl mx-auto">
 

@@ -220,6 +220,52 @@ export default function Nav({ onQuoteClick }) {
                 {lang === 'ar' && <span style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '20px', height: '2px', background: 'linear-gradient(90deg, transparent, #c8a84e, transparent)', borderRadius: '2px 2px 0 0' }} />}
               </button>
             </div>
+
+            {/* Social icons — app-icon style squares */}
+            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+              <a
+                href="https://www.linkedin.com/company/bejoice-shipping-llc/"
+                target="_blank" rel="noopener noreferrer"
+                aria-label="Bejoice on LinkedIn"
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  width: 30, height: 30, borderRadius: '7px',
+                  background: 'linear-gradient(145deg, #0d7ad6 0%, #0A66C2 60%, #084ea1 100%)',
+                  border: 'none', color: '#ffffff', textDecoration: 'none',
+                  transition: 'all 0.22s',
+                  boxShadow: '0 2px 8px rgba(10,102,194,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.06)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(10,102,194,0.75), 0 0 0 1px rgba(255,255,255,0.15) inset' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(10,102,194,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)' }}
+              >
+                {/* Official LinkedIn "in" lettermark */}
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                  <path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/>
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/bejoice_shipping"
+                target="_blank" rel="noopener noreferrer"
+                aria-label="Bejoice on Instagram"
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  width: 30, height: 30, borderRadius: '7px',
+                  background: 'linear-gradient(135deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%)',
+                  border: 'none', color: '#ffffff', textDecoration: 'none',
+                  transition: 'all 0.22s',
+                  boxShadow: '0 2px 8px rgba(220,39,100,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.06)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(220,39,100,0.7), 0 0 0 1px rgba(255,255,255,0.15) inset' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(220,39,100,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)' }}
+              >
+                {/* Official Instagram camera icon */}
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </nav>
@@ -297,6 +343,48 @@ export default function Nav({ onQuoteClick }) {
             {toolCard('📡', 'Track Shipment', 'BL / AWB live tracking', () => { setMenuOpen(false); setTimeout(() => { const el = document.getElementById('hero'); if (el) { if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.2 }); else window.scrollTo({ top: 0, behavior: 'smooth' }) } }, 350) })}
             {toolCard('📞', 'Book a Call', 'Talk to a freight expert', () => { setMenuOpen(false); setTimeout(() => openCalPopup(), 350) })}
             {toolCard('✉️', 'Email Us', 'quotes@bejoice.com', () => { setMenuOpen(false); window.location.href = 'mailto:quotes@bejoice.com' })}
+          </div>
+
+          {/* Social links — app-icon squares */}
+          <div style={{ display: 'flex', gap: '0.6rem', marginTop: '0.6rem', justifyContent: 'center' }}>
+            <a
+              href="https://www.linkedin.com/company/bejoice-shipping-llc/"
+              target="_blank" rel="noopener noreferrer"
+              aria-label="Bejoice on LinkedIn"
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                width: 44, height: 44, borderRadius: '11px', flexShrink: 0,
+                background: 'linear-gradient(145deg, #0d7ad6 0%, #0A66C2 60%, #084ea1 100%)',
+                color: '#ffffff', textDecoration: 'none', transition: 'all 0.22s',
+                boxShadow: '0 2px 10px rgba(10,102,194,0.6), inset 0 1px 0 rgba(255,255,255,0.25)',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.06)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(10,102,194,0.75), inset 0 1px 0 rgba(255,255,255,0.25)' }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 2px 10px rgba(10,102,194,0.6), inset 0 1px 0 rgba(255,255,255,0.25)' }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
+                <path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/>
+              </svg>
+            </a>
+            <a
+              href="https://www.instagram.com/bejoice_shipping"
+              target="_blank" rel="noopener noreferrer"
+              aria-label="Bejoice on Instagram"
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                width: 44, height: 44, borderRadius: '11px', flexShrink: 0,
+                background: 'linear-gradient(135deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%)',
+                color: '#ffffff', textDecoration: 'none', transition: 'all 0.22s',
+                boxShadow: '0 2px 10px rgba(220,39,100,0.6), inset 0 1px 0 rgba(255,255,255,0.25)',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.06)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(220,39,100,0.75), inset 0 1px 0 rgba(255,255,255,0.25)' }}
+              onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 2px 10px rgba(220,39,100,0.6), inset 0 1px 0 rgba(255,255,255,0.25)' }}
+            >
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
           </div>
         </div>
 

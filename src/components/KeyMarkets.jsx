@@ -127,7 +127,7 @@ export default function KeyMarkets() {
 
               {/* Corner labels */}
               <div className="absolute top-4 left-4 text-[10px] tracking-[0.3em] uppercase text-cream/20 font-body">World Coverage</div>
-              <div className="absolute bottom-4 right-4 text-[10px] tracking-[0.2em] text-cream/20 font-body">© Bejoice Logistics</div>
+              <div className="absolute bottom-4 right-4 text-[10px] tracking-[0.2em] text-cream/20 font-body"></div>
             </div>
           </div>
 

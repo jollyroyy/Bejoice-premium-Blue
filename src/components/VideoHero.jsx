@@ -1,6 +1,7 @@
-import { useEffect, useRef, useCallback, useState } from 'react'
+import { useEffect, useRef, useCallback, useState, lazy, Suspense } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+const BejoiceGlobe = lazy(() => import('./BejoiceGlobe'))
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -382,6 +383,7 @@ export default function VideoHero({ onQuoteClick }) {
   const chaptersRef    = useRef([])
   const heroCardsRef   = useRef(null)
   const exitOverlayRef = useRef(null)
+  const globeOverlayRef = useRef(null)
   const framesRef      = useRef([])   // decoded ImageBitmap / Image objects
   const lastIdxRef     = useRef(-1)   // last drawn frame index
 
@@ -591,6 +593,24 @@ export default function VideoHero({ onQuoteClick }) {
         )
       }
 
+      // ── Globe overlay — visible during chapter 2 (frames 145–390) ──
+      if (globeOverlayRef.current) {
+        const GLOBE_IN_START  = 145
+        const GLOBE_IN_END    = 163
+        const GLOBE_OUT_START = 372
+        const GLOBE_OUT_END   = 390
+        let globeOp = 0
+        if (frameIdx >= GLOBE_IN_END && frameIdx <= GLOBE_OUT_START) {
+          globeOp = 1
+        } else if (frameIdx >= GLOBE_IN_START && frameIdx < GLOBE_IN_END) {
+          globeOp = (frameIdx - GLOBE_IN_START) / (GLOBE_IN_END - GLOBE_IN_START)
+        } else if (frameIdx > GLOBE_OUT_START && frameIdx <= GLOBE_OUT_END) {
+          globeOp = 1 - (frameIdx - GLOBE_OUT_START) / (GLOBE_OUT_END - GLOBE_OUT_START)
+        }
+        globeOverlayRef.current.style.opacity = String(Math.max(0, Math.min(1, globeOp)))
+        globeOverlayRef.current.style.pointerEvents = globeOp > 0.1 ? 'all' : 'none'
+      }
+
       if (Math.abs(smoothP - targetP) > 0.0001) {
         rafId = requestAnimationFrame(render)
       } else {
@@ -663,6 +683,22 @@ export default function VideoHero({ onQuoteClick }) {
           `,
         }} />
 
+
+        {/* ── Globe overlay — shown during chapter 2 (frames2 segment) ── */}
+        <div ref={globeOverlayRef} style={{
+          position: 'absolute', inset: 0, zIndex: 5,
+          opacity: 0, pointerEvents: 'none',
+          transition: 'none',
+          display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+          padding: '0 clamp(2rem,5vw,6rem)',
+          paddingBottom: 'clamp(160px,28vh,320px)',
+        }}>
+          <Suspense fallback={null}>
+            <div style={{ width: 'min(480px, 45vw)', flexShrink: 0 }}>
+              <BejoiceGlobe embedded />
+            </div>
+          </Suspense>
+        </div>
 
         {/* ── CHAPTER OVERLAYS — strictly one at a time ── */}
         {CHAPTERS.map((ch, i) => {

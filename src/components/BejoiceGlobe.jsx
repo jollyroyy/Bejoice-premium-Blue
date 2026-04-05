@@ -69,7 +69,7 @@ const ATM_FRAG = `
     gl_FragColor = vec4(glowColor, rim);
   }`;
 
-export default function BejoiceGlobe() {
+export default function BejoiceGlobe({ embedded = false }) {
   const mountRef   = useRef(null);
   const isDragging = useRef(false);
   const prevMouse  = useRef({ x: 0, y: 0 });
@@ -374,9 +374,7 @@ export default function BejoiceGlobe() {
     };
   }, []);
 
-  return (
-    <section id="globe" style={{ padding: 'clamp(3rem,6vw,5rem) 1.5rem', position: 'relative', overflow: 'hidden', background: 'transparent' }}>
-      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(200,168,78,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
+  const inner = (
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
         <motion.div
@@ -492,6 +490,14 @@ export default function BejoiceGlobe() {
           </motion.div>
         </div>
       </div>
+  )
+
+  if (embedded) return inner
+
+  return (
+    <section id="globe" style={{ padding: 'clamp(3rem,6vw,5rem) 1.5rem', position: 'relative', overflow: 'hidden', background: 'transparent' }}>
+      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(200,168,78,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
+      {inner}
     </section>
-  );
+  )
 }
