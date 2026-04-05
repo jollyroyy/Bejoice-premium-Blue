@@ -416,8 +416,8 @@ export default function Nav({ onQuoteClick }) {
           style={{
             position: 'fixed', inset: 0, zIndex: 99999,
             background: 'rgba(2,2,4,0.88)', backdropFilter: 'blur(18px)',
-            display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
-            padding: 'clamp(16px,4vw,40px) clamp(12px,3vw,24px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 'clamp(8px,3vw,40px) clamp(8px,3vw,24px)',
             overflowY: 'auto',
           }}
         >
@@ -426,12 +426,13 @@ export default function Nav({ onQuoteClick }) {
             style={{
               position: 'relative',
               width: '100%', maxWidth: 720,
+              maxHeight: 'calc(100svh - 16px)',
+              overflowY: 'auto',
               background: 'linear-gradient(170deg, rgba(18,15,8,0.99) 0%, rgba(8,7,3,1) 100%)',
               border: '1px solid rgba(200,168,78,0.22)',
-              borderRadius: 24,
-              boxShadow: '0 80px 160px rgba(0,0,0,0.9), 0 0 0 1px rgba(200,168,78,0.06), 0 0 100px rgba(200,168,78,0.06)',
+              borderRadius: 'clamp(14px,3vw,24px)',
+              boxShadow: '0 40px 80px rgba(0,0,0,0.9), 0 0 0 1px rgba(200,168,78,0.06)',
               overflow: 'hidden',
-              marginTop: 'auto', marginBottom: 'auto',
             }}
           >
             {/* ── Top gold rule ── */}
@@ -558,7 +559,7 @@ export default function Nav({ onQuoteClick }) {
 
             {/* ── CTA footer ── */}
             <div style={{
-              padding: 'clamp(0.9rem,2.5vw,1.2rem) clamp(1.4rem,4vw,2rem) clamp(1.2rem,3vw,1.6rem)',
+              padding: 'clamp(0.7rem,2vw,1.2rem) clamp(1rem,4vw,2rem) clamp(0.9rem,2.5vw,1.6rem)',
               borderTop: '1px solid rgba(200,168,78,0.1)',
               background: 'rgba(200,168,78,0.03)',
               display: 'flex', gap: '0.75rem', flexWrap: 'wrap',
