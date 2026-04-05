@@ -564,6 +564,7 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
     const onUp = () => { rotRef.current.dragging = false; canvas.style.cursor = 'grab' }
     const onWheel = (e) => {
       e.preventDefault()
+      e.stopPropagation()
       zoomRef.current = Math.max(0.5, Math.min(3, zoomRef.current - e.deltaY * 0.002))
       needsDrawRef.current = true
     }
@@ -642,8 +643,8 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
         <div style={{ height: '100%', width: `${utilization}%`, background: utilization > 90 ? '#ef4444' : utilization > 75 ? '#f59e0b' : 'linear-gradient(90deg,#c8a84e,#ffe680)', borderRadius: 2, transition: 'width .4s' }} />
       </div>
 
-      {/* Canvas 3D scene */}
-      <div style={{ width: '100%', height: viewH, position: 'relative', borderRadius: 10, overflow: 'hidden', background: 'rgba(0,0,0,0.15)' }}>
+      {/* Canvas 3D scene — data-lenis-prevent stops Lenis from scrolling on wheel inside */}
+      <div data-lenis-prevent style={{ width: '100%', height: viewH, position: 'relative', borderRadius: 10, overflow: 'hidden', background: 'rgba(0,0,0,0.15)' }}>
         <canvas
           ref={canvasRef}
           style={{ width: '100%', height: '100%', display: 'block', cursor: 'grab' }}
