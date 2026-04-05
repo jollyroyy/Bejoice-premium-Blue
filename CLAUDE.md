@@ -44,12 +44,12 @@
 - `public/` — static assets (logo PNGs, frames, videos)
 - `public/bejoice-logo-white.png` — main logo used in Nav (white wings, transparent bg, 1509×839px)
 - `public/ai-assistant-female.png` — Layla avatar image
-- `public/saudi-connected.mp4` — globe video (intro, slides up at GLOBE_EXIT=0.22)
-- `public/frames2/` — 289 JPEGs: ocean/ship footage (videoP 0.00–0.39)
-- `public/frames3/` — 169 JPEGs: air freight/plane footage (videoP 0.39–0.62)
-- `public/frames4/` — 32 JPEGs: Saudi team discussion/approval (videoP 0.62–0.70)
-- `public/frames5/` — 121 JPEGs: air cargo packing (videoP 0.70–0.84)
-- `public/frames6/` — 121 JPEGs: road/project cargo (videoP 0.84–1.00)
+- `public/saudi-connected.mp4` — globe video (legacy, no longer used for scrubbing)
+- `public/3d/` — 145 PNGs: 3D HDR intro sequence (frameIdx 0–144)
+- `public/frames2/` — 246 PNGs: ocean/ship footage (frameIdx 145–390, files 0044–0289)
+- `public/frames8/` — 121 PNGs: additional footage (frameIdx 391–511)
+- `public/frames6/` — 121 JPEGs: road/project cargo (frameIdx 512–632)
+- Total: 633 frames across 4 sequences
 
 ## Section Order (App.jsx)
 VideoHero → OceanFreight → Services → HeavyLift → HeavyCargo → WhyBejoice → KeyMarkets → Certifications → Testimonials → Contact → Footer
@@ -70,17 +70,30 @@ VideoHero → OceanFreight → Services → HeavyLift → HeavyCargo → WhyBejo
 ### Hero Chapters
 Edit `CHAPTERS` array in `VideoHero.jsx`:
 ```js
-{ range: [0.00, 0.39], eyebrow, headline: ['LINE1','LINE2'], sub, align: 'right'|'left'|'center' }
+{ frameRange: [startFrame, endFrame], eyebrow, headline: ['LINE1','LINE2'], sub, align: 'right'|'left'|'center' }
 ```
-- 5 chapters, each mapped 1:1 to a frame sequence (frames2–frames6)
-- Alignment alternates: right → left → center → right → left
-- `FADE = 0.022` — tight crossfade, chapter fully gone before next starts
-- Last chapter: no fade-out (exit overlay handles at videoP > 0.97)
-- `SCROLL_HEIGHT = 1800` vh, `GLOBE_EXIT = 0.22`
+- 9 chapters + 1 globe chapter (index 1), all mapped to absolute frame indices
+- `FRAME_FADE = 18` — crossfade window in frames
+- `SCROLL_HEIGHT = 1800` vh
+- Globe chapter: `{ frameRange: [145, 210], headline: [], globeChapter: true }` — no text, shows BejoiceGlobe
+- `GLOBE_CHAPTER_START = 145`, `GLOBE_CHAPTER_END = 210`
+- Canvas pre-dims 20 frames before globe chapter (`PRE_DIM_START = 125`) for seamless transition
+- Exit fade: last 3% of scroll (`smoothP > 0.97`)
+- Hero cards (TrackCard + FreightCalcCard + StatBar) fade out at frames 140–185 and 793–813
 
-### Globe Video (VideoHero.jsx)
-- `GLOBE_SRC = '/saudi-connected.mp4'` — served from local `public/` folder (NOT Internet Archive)
-- Progressive frame loading: first 80 frames eager, rest via `requestIdleCallback`, scroll-ahead buffer of 80 frames
+### Globe Chapter (VideoHero.jsx)
+- Full-screen `BejoiceGlobe embedded fullscreen` rendered inside `globeChapterRef` div at zIndex 6
+- `canvasDimRef` darkens frame canvas during globe chapter (zIndex 2, opacity driven by RAF)
+- Pre-dim starts at frame 125 → fully dark by 145 → stays dark through 210 → fades out by frame 232
+- Progressive frame loading: first 30 frames eager, rest via `requestIdleCallback`, scroll-ahead 150 frames
+
+### Social Media (Nav.jsx)
+- LinkedIn: `https://www.linkedin.com/company/bejoice-shipping-llc/`
+- Instagram: `https://www.instagram.com/bejoice_shipping`
+- In nav bar: 30×30px app-icon squares to the right of the language toggle
+- In Explore drawer: 44×44px squares below the tool cards grid (icon-only, no text labels)
+- LinkedIn: official blue gradient `linear-gradient(145deg, #0d7ad6, #0A66C2, #084ea1)` with `in` lettermark
+- Instagram: `linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7)` with camera SVG
 
 ### Quick Quote Modal
 - `src/components/QuickQuoteModal.jsx` — modal wrapper with animated heading
@@ -139,17 +152,27 @@ Three shine classes — all use `::after` pseudo-element with `content: attr(dat
 - Two-line tagline: "BEJOICE" (white, 15px) + "Connecting KSA to the World" (gold `#ffe680`, 12px, shine-ltr)
 - Gold divider line between logo and tagline: `borderLeft: '2px solid rgba(200,168,78,0.45)'`
 
-### Stat Card (VideoHero.jsx)
-- Silver glassmorphism: `rgba(180,190,210,0.08)` bg, `rgba(200,210,230,0.18)` border
-- Numbers: 3.2rem, bright white with blue-white glow
-- Labels: 13px, `rgba(210,220,240,0.9)`
-- Stats: 1500+ Heavy Lift | 120+ Countries | 25+ Years | 24/7 Operations | KSA Specialist
-- CountUp: fires 800ms after mount via setTimeout (not IntersectionObserver)
+### Hero Bottom Bar Cards (VideoHero.jsx)
+All three cards share identical glassmorphism: `rgba(10,10,14,0.55)` bg, `rgba(255,215,120,0.12)` border, `blur(40px)`, gold top line accent, `borderRadius: 14px`
 
-### TrackCard (VideoHero.jsx)
-- Silver glassmorphism matching stat card
-- Tracks via WhatsApp: `https://wa.me/966550000000`
-- Input accepts BL / AWB / Container No.
+**StatBar** — `hero-stats-bar` div:
+- Stats: 120+ Countries | 25+ Years | 24/7 Operations | KSA Specialist
+- Numbers: `1.8rem` Bebas Neue, white with glow
+- Labels: `11px` Inter, `rgba(255,215,120,0.85)`, `0.14em` tracking, uppercase
+- Cell padding: `1.25rem` vertical — matches SleekCard height naturally
+- CountUp: fires 600ms after mount via setTimeout
+
+**TrackCard** — `SleekCard` with `justifyContent: center`, `padding: 1.25rem 1.75rem`:
+- Title: `1.8rem` Bebas Neue + `textShadow` white glow
+- Subtitle: `11px` Inter, `rgba(255,255,255,0.75)` — "Real-Time Global Visibility"
+- Button: `btn-gold`, opens `https://www.track-trace.com/` in new tab
+
+**FreightCalcCard** — same layout as TrackCard:
+- Title: `1.8rem` Bebas Neue + `textShadow` white glow — "LOAD CALCULATOR"
+- Subtitle: `11px` Inter, `rgba(255,255,255,0.75)` — "Container Volume Advisor"
+- Button: `btn-gold`, scrolls to `#tools` section via Lenis
+
+> Hero bottom bar hides on mobile (`.hero-bottom-bar { display: none }`) — cards appear inline below CTA in mobile layout
 
 ### Section Padding
 - All sections: `pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32`

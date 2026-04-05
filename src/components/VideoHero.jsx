@@ -337,10 +337,10 @@ function FreightCalcCard() {
     <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
-          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing:'0.08em', margin:0, lineHeight:1.1 }}>
+          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing:'0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             LOAD CALCULATOR
           </p>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.5)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
+          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
             Container Volume Advisor
           </p>
         </div>
@@ -358,10 +358,10 @@ function TrackCard() {
     <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
-          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing:'0.08em', margin:0, lineHeight:1.1 }}>
+          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing:'0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             SHIPMENT TRACKING
           </p>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.5)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
+          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
             Real-Time Global Visibility
           </p>
         </div>
@@ -848,14 +848,15 @@ export default function VideoHero({ onQuoteClick }) {
           </div>
 
           <div className="hero-stats-bar" style={{
-            flex:'0 0 auto', display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'center',
-            background:'rgba(15, 15, 20, 0.4)',
-            border:'1px solid rgba(255, 255, 255, 0.08)', borderRadius:'8px',
-            backdropFilter:'blur(24px)', WebkitBackdropFilter:'blur(24px)',
-            boxShadow:'0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)',
+            flex:'0 0 auto', display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'stretch',
+            background:'rgba(10, 10, 14, 0.55)',
+            border:'1px solid rgba(255, 215, 120, 0.12)', borderRadius:'14px',
+            backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
+            boxShadow:'0 24px 64px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px rgba(200,168,78,0.04)',
             overflow:'hidden',
-            height: '100%', minHeight: '80px', // Matches SleekCard height naturally
           }}>
+            {/* Gold top line — matches SleekCard */}
+            <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(255,215,120,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
             {[
               { v:'120',  suffix:'+', l:'Countries'  },
               { v:'25',   suffix:'+', l:'Years'      },
@@ -863,20 +864,19 @@ export default function VideoHero({ onQuoteClick }) {
               { v:'KSA',  suffix:'',  l:'Specialist' },
             ].map((s, idx, arr) => (
               <div key={s.l} className="hero-stat-cell" style={{
-                display:'flex', alignItems:'center', padding:'5px 12px',
+                display:'flex', alignItems:'center', padding:'1.25rem clamp(8px,1.2vw,16px)',
                 borderRight: idx < arr.length-1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
                 flexShrink:0,
               }}>
                 <div style={{ textAlign:'center' }}>
                   <div className="hero-stat-number" style={{
-                    fontFamily:"'Bebas Neue',sans-serif", fontSize:'2.5rem', letterSpacing:'0.04em', lineHeight:1,
+                    fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', letterSpacing:'0.08em', lineHeight:1.1,
                     color:'#ffffff',
                     textShadow:'0 0 20px rgba(255,255,255,0.3)',
-                    fontWeight: 900
                   }}>
                     <CountUp target={s.v} suffix={s.suffix} duration={1000} />
                   </div>
-                  <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize:'14px', letterSpacing:'0.12em', textTransform:'uppercase', color:'#FFD700', fontWeight:700, marginTop:'4px', whiteSpace:'nowrap', textShadow:'0 0 10px rgba(255,215,0,0.4)', opacity: 0.9 }}>{s.l}</div>
+                  <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(255,215,120,0.85)', fontWeight:600, marginTop:'6px', whiteSpace:'nowrap' }}>{s.l}</div>
                 </div>
               </div>
             ))}

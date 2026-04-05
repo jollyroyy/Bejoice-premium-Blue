@@ -45,8 +45,8 @@ export default function Testimonials() {
     <section id="testimonials" ref={sectionRef} className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(200,168,78,0.05) 0%, transparent 65%)' }}/>
-      <div className="absolute top-16 right-12 select-none pointer-events-none"
-        style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(160px,25vw,280px)', lineHeight: 1, color: 'rgba(200,168,78,0.05)' }}>
+      <div className="absolute select-none pointer-events-none"
+        style={{ top: 'clamp(32px,4vw,64px)', right: 'clamp(8px,3vw,48px)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(80px,18vw,280px)', lineHeight: 1, color: 'rgba(200,168,78,0.05)' }}>
         "
       </div>
 

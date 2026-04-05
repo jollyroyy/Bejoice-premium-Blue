@@ -96,6 +96,7 @@ export default function KeyMarkets() {
                 <div
                   key={m.name}
                   className="absolute group cursor-default"
+                  tabIndex={0}
                   style={{ left: m.x, top: m.y, transform: 'translate(-50%,-50%)' }}
                 >
                   {/* Pulse ring */}
@@ -108,8 +109,8 @@ export default function KeyMarkets() {
                     m.name === 'Saudi Arabia' ? 'w-4 h-4 bg-gold' : 'w-2.5 h-2.5 bg-gold/40'
                   }`} />
 
-                  {/* Tooltip */}
-                  <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 whitespace-nowrap">
+                  {/* Tooltip — hover (desktop) + focus (touch via tabIndex) */}
+                  <div className="absolute bottom-full mb-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none z-10 whitespace-nowrap">
                     <div className="glass-card px-3 py-2 border-gold/30">
                       <div className="font-display text-sm tracking-widest text-gold">{m.name}</div>
                       <div className="font-body text-[10px] text-cream/60 mt-0.5">{m.role}</div>
