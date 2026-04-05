@@ -166,7 +166,7 @@ export default function Contact() {
             color:'#ffffff', maxWidth:500, margin:'0 auto', lineHeight:1.8,
             fontWeight: 500, textShadow:'0 0 20px rgba(255,255,255,0.12)',
           }}>
-            Tailored quote. 2-hour response.
+            Tailored quote. Instant response.
           </p>
           <div style={{ width:48, height:1, margin:'clamp(1rem,2vw,1.6rem) auto 0', background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.5),transparent)' }}/>
         </div>

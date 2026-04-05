@@ -5,15 +5,54 @@ import Container3DViewer, { WeightDistributionGuide } from './Container3DViewer'
 import { SparklesCore } from './ui/sparkles'
 
 // ── helpers ────────────────────────────────────────────────────────────────
+const CONTAINER_SPECS = {
+  '20ft': { cbm: 25,  wt: 21700, label: '20ft Standard'   },
+  '40ft': { cbm: 67,  wt: 26480, label: '40ft Standard'   },
+  '40hc': { cbm: 76,  wt: 26450, label: '40ft High Cube'  },
+}
+
 const CONTAINER = (cbm, wt = 0) => {
-  if (cbm > 76 || wt > 26450) {
-    const nV = Math.ceil(cbm / 76), nW = Math.ceil(wt / 26450)
-    const n = Math.max(nV, nW)
-    return `${n} x 40ft High Cube Containers Recommended`
+  // Single container — include fill efficiency hint
+  if (cbm <= 25  && wt <= 21700) {
+    const pct = Math.round(cbm / 25 * 100)
+    return pct < 60 ? `20ft Standard — ${pct}% fill (consider LCL if < 15 CBM)` : `20ft Standard — ${pct}% fill (good fit)`
   }
-  return cbm <= 25 ? '20ft Standard (≤25 CBM)' :
-         cbm <= 67 ? '40ft Standard (≤67 CBM)' :
-                     '40ft High Cube (≤76 CBM)'
+  if (cbm <= 67  && wt <= 26480) {
+    const pct = Math.round(cbm / 67 * 100)
+    return `40ft Standard — ${pct}% fill${pct < 50 ? ' (20ft may be cheaper)' : ' (optimal)'}`
+  }
+  if (cbm <= 76  && wt <= 26450) {
+    const pct = Math.round(cbm / 76 * 100)
+    return `40ft High Cube — ${pct}% fill (most cost-effective per CBM)`
+  }
+  // Multi-container — find best type (fewest containers, largest size wins ties)
+  const opts = [
+    { key:'20ft', ...CONTAINER_SPECS['20ft'] },
+    { key:'40ft', ...CONTAINER_SPECS['40ft'] },
+    { key:'40hc', ...CONTAINER_SPECS['40hc'] },
+  ]
+  let best = null
+  for (const o of opts) {
+    const nV = Math.ceil(cbm / o.cbm), nW = Math.ceil(wt / o.wt)
+    const n = Math.max(nV, nW)
+    if (!best || n < best.n || (n === best.n && o.cbm > best.cbm)) best = { n, label: o.label, key: o.key }
+  }
+  return `${best.n} × ${best.label} Containers Required`
+}
+
+const CONTAINER_COUNT = (cbm, wt = 0) => {
+  if (cbm <= 76 && wt <= 26450) return 1
+  const opts = [
+    { cbm: 25,  wt: 21700 },
+    { cbm: 67,  wt: 26480 },
+    { cbm: 76,  wt: 26450 },
+  ]
+  let best = null
+  for (const o of opts) {
+    const n = Math.max(Math.ceil(cbm / o.cbm), Math.ceil(wt / o.wt))
+    if (!best || n < best.n) best = { n }
+  }
+  return best ? best.n : 1
 }
 
 const TRUCK_CAP = {
@@ -254,7 +293,9 @@ function LoadCalculator() {
         const lcm = (parseFloat(r.l)||0)*f, wcm = (parseFloat(r.w)||0)*f, hcm = (parseFloat(r.h)||0)*f
         totalCBM += (lcm*wcm*hcm/1e6)*(parseInt(r.qty)||1)
       }
-      setResults({ tab:'sea', cbm:totalCBM.toFixed(3), weight:totalKg, container:CONTAINER(totalCBM, totalKg), loadPct:Math.min(100,(totalCBM/76*100)).toFixed(1) })
+      const containerCount = CONTAINER_COUNT(totalCBM, totalKg)
+      const actualLoadPct = (totalCBM / 76 * 100).toFixed(1)
+      setResults({ tab:'sea', cbm:totalCBM.toFixed(3), weight:totalKg, container:CONTAINER(totalCBM, totalKg), loadPct:Math.min(100, actualLoadPct).toFixed(1), actualLoadPct, containerCount })
     } else if (tab === 'air') {
       let totalVol = 0, totalAct = 0
       for (const r of airRows) {
@@ -603,23 +644,51 @@ function LoadCalculator() {
             {results.loadPct && (
               <div style={{ marginBottom:'1.2rem' }}>
                 <div style={{ display:'flex', justifyContent:'space-between', fontSize:'0.7rem', color:'rgba(255,255,255,0.85)', marginBottom:'0.5rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase' }}>
-                  <span>Container Capacity</span><span>{results.loadPct}%</span>
+                  <span>Container Capacity</span>
+                  <span style={{ color: results.actualLoadPct > 100 ? '#ff5050' : 'rgba(255,255,255,0.85)' }}>
+                    {results.actualLoadPct}%{results.actualLoadPct > 100 ? ' ⚠ OVERFLOW' : ''}
+                  </span>
                 </div>
                 <div style={{ height:'6px', background:'rgba(255,255,255,0.08)', borderRadius:'4px', overflow:'hidden' }}>
                   <motion.div
                     initial={{ width:0 }}
-                    animate={{ width:`${Math.min(100,results.loadPct)}%` }}
+                    animate={{ width:`${Math.min(100, results.loadPct)}%` }}
                     transition={{ duration:0.9, ease:'easeOut' }}
-                    style={{ height:'100%', background: results.loadPct>90 ? 'linear-gradient(90deg,#c8a84e,#ff5050)' : 'linear-gradient(90deg,#c8a84e,#e8d48a)', borderRadius:'4px' }}
+                    style={{ height:'100%', background: results.actualLoadPct > 100 ? 'linear-gradient(90deg,#ff5050,#ff8080)' : results.loadPct > 90 ? 'linear-gradient(90deg,#c8a84e,#ff5050)' : 'linear-gradient(90deg,#c8a84e,#e8d48a)', borderRadius:'4px' }}
                   />
+                </div>
+                {results.actualLoadPct > 100 && (
+                  <div style={{ marginTop:'0.4rem', fontSize:'0.65rem', color:'rgba(255,80,80,0.9)', fontWeight:600, letterSpacing:'0.08em' }}>
+                    Cargo exceeds single container capacity — see recommendation below
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* ── Containers Required (shown prominently when > 1) ── */}
+            {results.containerCount > 1 && (
+              <div style={{ padding:'1rem', background:'rgba(255,80,80,0.08)', borderRadius:'0.7rem', border:'1px solid rgba(255,80,80,0.3)', marginBottom:'1rem', display:'flex', alignItems:'center', gap:'1rem' }}>
+                <div style={{ fontSize:'2.4rem', fontFamily:"'Bebas Neue',sans-serif", color:'#ff6060', letterSpacing:'0.04em', lineHeight:1, flexShrink:0 }}>
+                  {results.containerCount}
+                </div>
+                <div>
+                  <div style={{ fontSize:'0.65rem', color:'rgba(255,130,130,0.9)', textTransform:'uppercase', fontWeight:700, letterSpacing:'0.12em', marginBottom:'0.2rem' }}>Containers Required</div>
+                  <div style={{ fontSize:'0.78rem', color:'rgba(255,255,255,0.75)', lineHeight:1.4 }}>
+                    Your cargo exceeds one container. Split across <strong style={{ color:'#fff' }}>{results.containerCount}</strong> containers to ship the full volume.
+                  </div>
                 </div>
               </div>
             )}
 
             {results.container && (
-              <div style={{ padding:'0.9rem', background:'rgba(200,168,78,0.1)', borderRadius:'0.7rem', border:'1px dashed rgba(200,168,78,0.35)', textAlign:'center', marginBottom:'1.2rem' }}>
-                <span style={{ display:'block', fontSize:'0.68rem', color:'#c8a84e', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>AI Recommendation</span>
-                <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.15rem', color:'#fff', letterSpacing:'0.05em' }}>{results.container}</span>
+              <div style={{ padding:'0.9rem', background:'rgba(200,168,78,0.1)', borderRadius:'0.7rem', border:'1px dashed rgba(200,168,78,0.35)', marginBottom:'1.2rem' }}>
+                <span style={{ display:'block', fontSize:'0.68rem', color:'#c8a84e', textTransform:'uppercase', fontWeight:700, marginBottom:'0.5rem', letterSpacing:'0.1em' }}>AI Recommendation</span>
+                <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.15rem', color:'#fff', letterSpacing:'0.05em', display:'block', marginBottom: results.containerCount > 1 ? '0.6rem' : 0 }}>{results.container}</span>
+                {results.containerCount > 1 && (
+                  <div style={{ fontSize:'0.72rem', color:'rgba(255,255,255,0.65)', lineHeight:1.55, borderTop:'1px solid rgba(200,168,78,0.2)', paddingTop:'0.5rem' }}>
+                    <strong style={{ color:'#c8a84e' }}>Cost tip:</strong> 40ft High Cube is most cost-effective per CBM for large volumes. Consolidating into fewer, larger containers reduces handling fees and port charges. Ask Bejoice for a multi-container rate.
+                  </div>
+                )}
               </div>
             )}
 

@@ -283,21 +283,26 @@ function getBotResponse(input) {
   // ── Update session memory with anything the user shares ──────
   updateMemory(input)
 
-  // ── RAG: Always consult Sea Freight knowledge base first ──────
+  // ── RAG: Always consult Bejoice Sea Freight Orientation PDF first ──────
+  // Source: Bejoice Orientation – Sea Freight (PDF) → laylaKnowledgeBase.js
   // Skip RAG only for purely social messages (greetings, thanks, goodbye, personal questions)
   const isSocial = /^(hi\b|hello\b|hey\b|salam|marhaba|howdy|thank|thanks|bye|goodbye|see you|good night|how are you|how r u|who are you|what are you|are you|tell me about yourself|you are |you're |i love|date me|marry me|joke|weather|what time|what day|food|hungry)/.test(text)
 
   if (!isSocial) {
-    // Threshold=1 — retrieve whenever ANY keyword overlaps
-    const ragChunks = retrieveChunks(text, 2, 1)
+    // Threshold=1, topN=3 — retrieve top 3 most relevant PDF chunks
+    const ragChunks = retrieveChunks(text, 3, 1)
     if (ragChunks.length > 0) {
       const primary = ragChunks[0]
       const secondary = ragChunks[1]
+      const tertiary = ragChunks[2]
       _lastTopic = 'sea'
       const greeting = personalizeOpening()
       let responseText = greeting + primary.content
       if (secondary && secondary.id !== primary.id) {
         responseText += `\n\n---\n\n${secondary.content}`
+      }
+      if (tertiary && tertiary.id !== primary.id && tertiary.id !== secondary?.id) {
+        responseText += `\n\n---\n\n${tertiary.content}`
       }
       // Append personalized context hint based on session memory
       const ctxHint = buildContextHint()
