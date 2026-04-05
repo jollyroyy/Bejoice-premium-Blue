@@ -59,7 +59,7 @@ export default function Certifications() {
               Industry Accreditations
             </span>
           </div>
-          <h2 style={{
+          <h2 className="hg" style={{
             fontFamily: "'Bebas Neue', sans-serif",
             fontSize: 'clamp(3rem,7vw,6rem)',
             letterSpacing: '0.07em', lineHeight: 1,

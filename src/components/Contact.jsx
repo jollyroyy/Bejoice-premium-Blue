@@ -150,7 +150,7 @@ export default function Contact() {
 
         {/* ── Heading ── */}
         <div className="fade-up" style={{ textAlign:'center', marginBottom:'clamp(2rem,4vw,3.5rem)' }}>
-          <h2 className="contact-heading" style={{
+          <h2 className="contact-heading hg" style={{
             fontFamily:"'Bebas Neue',sans-serif",
             fontSize:'clamp(1.4rem,4vw,3.2rem)',
             letterSpacing:'0.07em', lineHeight:1,
@@ -171,7 +171,7 @@ export default function Contact() {
             color:'#ffffff', maxWidth:500, margin:'0 auto', lineHeight:1.8,
             fontWeight: 500, textShadow:'0 0 20px rgba(255,255,255,0.12)',
           }}>
-            Tailored quote. 2-hour response.
+            Get instant quote.
           </p>
           <div style={{ width:48, height:1, margin:'clamp(1rem,2vw,1.6rem) auto 0', background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.5),transparent)' }}/>
         </div>
@@ -208,7 +208,7 @@ export default function Contact() {
                 particleDensity={60}
                 particleColor="rgba(200,168,78,0.9)"
                 speed={0.8}
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 w-full h-full pointer-events-none"
               />
 
               {/* Interactive mouse-follow glow */}

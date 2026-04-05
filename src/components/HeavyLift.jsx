@@ -98,6 +98,7 @@ export default function HeavyLift() {
 
           {/* Main heading */}
           <motion.h2
+            className="hg"
             initial={{ x: -60, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, margin: '-80px 0px' }}
@@ -113,6 +114,7 @@ export default function HeavyLift() {
             }}
           >WHEN THE LOAD</motion.h2>
           <motion.h2
+            className="hg"
             initial={{ x: -60, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, margin: '-80px 0px' }}

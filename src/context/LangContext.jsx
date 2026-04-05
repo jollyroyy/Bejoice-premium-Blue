@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 export const LANGS = {
   en: {
     dir: 'ltr',
-    navBook: 'Book a Call with Freight Expert',
+    navBook: 'Book Call with Freight Expert',
     navBookShort: 'Book a Call',
     getQuote: 'Get a Quote',
     ourServices: 'Our Services',

@@ -31,7 +31,7 @@ export const SparklesCore = ({
   }
 
   return (
-    <motion.div animate={controls} className={`opacity-0 ${className || ''}`}>
+    <motion.div animate={controls} className={`opacity-0 ${className || ''}`} style={{ pointerEvents: 'none' }}>
       {init && (
         <Particles
           id={id || generatedId}

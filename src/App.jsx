@@ -4,6 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Nav from './components/Nav'
 import VideoHero from './components/VideoHero'
+import HeavyCargo from './components/HeavyCargo'
 const LogisticsTools = lazy(() => import('./components/LogisticsTools'))
 const Services = lazy(() => import('./components/Services'))
 const BejoiceGlobe = lazy(() => import('./components/BejoiceGlobe'))
@@ -71,6 +72,7 @@ export default function App() {
           <LogisticsTools />
           <Services />
           <BejoiceGlobe />
+          <HeavyCargo />
           <WhyBejoice />
           <Certifications />
         </Suspense>

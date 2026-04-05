@@ -173,7 +173,7 @@ export default function HeavyCargo() {
               textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end',
             }}>
               <motion.h2
-                className="no-reveal"
+                className="no-reveal hg"
                 initial={{ x: -70, opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
                 whileInView={{ x: 0, opacity: 1, clipPath: 'inset(0 0% 0 0)' }}
                 viewport={{ once: true, margin: '-80px 0px' }}
