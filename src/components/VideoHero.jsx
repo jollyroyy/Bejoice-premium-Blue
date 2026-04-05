@@ -38,93 +38,104 @@ function CountUp({ target, suffix = '', duration = 900 }) {
 // ─────────────────────────────────────────────────────────────────────────────
 const SCROLL_HEIGHT = 1800
 
-// ── Frame sequences (3 clean segments, no duplication) ───────────────
-// frames1: 0–184   (185) globe/intro JPEGs
-// frames2: 185–430 (246) enhanced Bejoice PNGs — files 0044–0289
-// frames6: 431–551 (121) road / project cargo JPEGs
-// TOTAL: 552
-const FRAMES1_COUNT = 185
-const FRAMES2_COUNT = 246
-const FRAMES2_START = 44   // start from file 0044
-const FRAMES6_COUNT = 121
-const TOTAL_FRAMES  = FRAMES1_COUNT + FRAMES2_COUNT + FRAMES6_COUNT  // 576
+// ── Frame sequences (4 clean segments, no duplication) ───────────────
+// 3d:      0–144   (145) 3D HDR intro PNGs
+// frames2: 145–390 (246) enhanced Bejoice PNGs — files 0044–0289
+// frames8: 391–511 (121) additional footage PNGs
+// frames6: 512–632 (121) road / project cargo JPEGs
+// TOTAL: 633
+const FRAMES3D_COUNT = 145
+const FRAMES2_COUNT  = 246
+const FRAMES2_START  = 44
+const FRAMES8_COUNT  = 121
+const FRAMES6_COUNT  = 121
+const TOTAL_FRAMES   = FRAMES3D_COUNT + FRAMES2_COUNT + FRAMES8_COUNT + FRAMES6_COUNT  // 633
 
 const FRAME_URLS = [
-  // frames1 intro sequence (idx 0–184)
-  ...Array.from({ length: FRAMES1_COUNT }, (_, i) => 
-    `/frames1/${String(i + 1).padStart(4, '0')}.jpg`
+  // 3d intro sequence (idx 0–144)
+  ...Array.from({ length: FRAMES3D_COUNT }, (_, i) =>
+    `/3d/${String(i + 1).padStart(4, '0')}.png`
   ),
-  // frames2 seg: 185–454
+  // frames2 seg: 145–390
   ...Array.from({ length: FRAMES2_COUNT }, (_, i) =>
     `/frames2/${String(FRAMES2_START + i).padStart(4, '0')}.png`),
-  // frames6 seg: 455–575
+  // frames8 seg: 391–511
+  ...Array.from({ length: FRAMES8_COUNT }, (_, i) =>
+    `/frames8/${String(i + 1).padStart(4, '0')}.png`),
+  // frames6 seg: 512–632
   ...Array.from({ length: FRAMES6_COUNT }, (_, i) =>
     `/frames6/${String(i + 1).padStart(4, '0')}.jpg`),
 ]
 
-// Headings shown during the 4-second globe lock — alternate sides
 // Fade window in frames — how many frames to crossfade between chapters
 const FRAME_FADE = 18
 
-// Chapters mapped to 3-segment sequence.
-// frames1:0–184 | frames2:185–430 | frames6:431–551
-// Each chapter window ≥ 45 frames; non-overlapping; FRAME_FADE=18 on each edge.
+// Chapters mapped to 4-segment sequence.
+// 3d:0–144 | frames2:145–390 | frames8:391–511 | frames6:512–632
 const CHAPTERS = [
-  // ── frames1: 0–184 ──
+  // ── 3d: 0–144 ──
   {
-    frameRange: [0, 184],
+    frameRange: [0, 144],
     eyebrow:    'CONNECTING KSA TO THE WORLD',
     headline:   ['SMART FREIGHT', 'POWERED BY AI'],
     sub:        'Award-winning freight forwarder delivering seamless end-to-end logistics with reliability and global reach.',
     align:      'left',
     showCTA:    true,
   },
-  // ── frames2: 185–430 — 5 evenly-spaced chapters (~45 frames each) ──
+  // ── frames2: 145–390 ──
   {
-    frameRange: [185, 229],
+    frameRange: [145, 189],
     eyebrow:    '180+ COUNTRIES · 25+ YEARS EXPERIENCE',
     headline:   ['FROM BLUE PRINT TO', 'DELIVERY, WE MOVE IT ALL'],
     sub:        "Saudi Arabia's premier freight forwarder — delivering seamless logistics across 180+ countries.",
     align:      'right',
   },
   {
-    frameRange: [237, 281],
+    frameRange: [197, 241],
     eyebrow:    'HEAVY CARGO & PROJECT LOGISTICS',
     headline:   ['HEAVY LIFT / ODC', '/ OOG TRANSPORTATION'],
     sub:        'Hydraulic axle transport for oversized and heavy equipment — wind turbines, transformers, industrial machinery, and large project cargo.',
     align:      'right',
   },
   {
-    frameRange: [289, 333],
+    frameRange: [249, 293],
     eyebrow:    'GCC ROAD NETWORK',
     headline:   ['CONNECTED', 'GLOBALLY'],
     sub:        'Seamless cross-border land transport across the GCC, powered by a state-of-the-art fleet.',
     align:      'left',
   },
   {
-    frameRange: [341, 385],
+    frameRange: [301, 345],
     eyebrow:    'CUSTOMS CLEARANCE · ZATCA CERTIFIED',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
     sub:        'We handle the paperwork. You handle the business.',
     align:      'right',
   },
   {
-    frameRange: [393, 430],
+    frameRange: [353, 390],
     eyebrow:    'SEA FREIGHT · FCL & LCL',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
     align:      'left',
   },
-  // ── frames6: 431–551 — 2 chapters ──
+  // ── frames8: 391–511 ──
   {
-    frameRange: [439, 489],
+    frameRange: [399, 503],
+    eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
+    headline:   ['SPEED ABOVE ALL.', 'DELIVERED ON TIME'],
+    sub:        'Express air cargo solutions connecting Saudi Arabia to global hubs — critical shipments, time-sensitive freight, temperature-controlled cargo.',
+    align:      'right',
+  },
+  // ── frames6: 512–632 ──
+  {
+    frameRange: [520, 570],
     eyebrow:    'PRECISION HEAVY LIFT · 1500+ OPERATIONS',
     headline:   ['PRECISION IN HANDLING.', 'EXCELLENCE IN DELIVERY'],
     sub:        "Precision Placement Where Cranes Can't Go. Millimeter-accurate. No room for error — and we never make one.",
     align:      'right',
   },
   {
-    frameRange: [497, 551],
+    frameRange: [578, 632],
     eyebrow:    'ENGINEERING · ISO 9001 CERTIFIED',
     headline:   ['TECHNICAL ENGINEERING', 'SOLUTIONS'],
     sub:        'Lift plans, load calculations, and structural analysis to ensure every heavy move is safe and compliant.',
@@ -310,71 +321,30 @@ function SleekCard({ children, className = '', style = {} }) {
 }
 
 function FreightCalcCard() {
-  const [cbm, setCbm]           = useState('')
-  const [ctype, setCtype]       = useState('20ft')
-  const [result, setResult]     = useState(null)
-
-  const calculate = () => {
-    const vol = parseFloat(cbm)
-    if (!vol || vol <= 0) { setResult({ error: true }); return }
-    const cap = CONTAINER_CAPS[ctype]
-    const needed = Math.ceil(vol / cap)
-    const utilPct = Math.round((vol / (needed * cap)) * 100)
-    setResult({ vol, cap, needed, utilPct, ctype })
-  }
-
-  const labelStyle = {
-    fontFamily:"'Inter',sans-serif", fontSize:'13px', letterSpacing:'0.08em', fontWeight:600,
-    textTransform:'uppercase', color:'rgba(255,255,255,0.5)', marginBottom:'6px',
-    display:'block',
+  const handleOpen = () => {
+    const el = document.getElementById('tools')
+    if (el) {
+      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
+      else el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
   }
 
   return (
-    <SleekCard style={{ gap: '1rem' }}>
-      <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.6rem', color:'var(--gold-light)', letterSpacing:'0.1em', margin:0, textTransform:'uppercase', textAlign:'center' }}>
-        Container Advisor
-      </p>
-
-      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'16px' }}>
+    <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
-          <span style={labelStyle}>Type</span>
-          <select value={ctype} onChange={e => { setCtype(e.target.value); setResult(null) }}
-            className="sleek-select" style={{ fontSize:'15px', padding:'10px 14px', borderRadius:'10px' }}>
-            <option value="20ft">20′ Std</option>
-            <option value="40ft">40′ Std</option>
-            <option value="40HC">40′ HC</option>
-          </select>
-        </div>
-        <div>
-          <span style={labelStyle}>Volume</span>
-          <input
-            type="number" min="0" step="0.1"
-            placeholder="CBM"
-            value={cbm}
-            onChange={e => { setCbm(e.target.value); setResult(null) }}
-            onKeyDown={e => e.key === 'Enter' && calculate()}
-            className="sleek-input" style={{ fontSize:'15px', padding:'10px 14px', borderRadius:'10px' }}
-          />
-        </div>
-      </div>
-
-      <button onClick={calculate} className="btn-gold" style={{
-        width:'auto', alignSelf:'center', padding:'12px 36px', fontSize:'1rem', borderRadius:'10px', fontWeight:700
-      }}>
-        Calculate
-      </button>
-
-      {result && (
-        <div style={{
-          marginTop:'8px', padding:'10px 16px', borderRadius:'8px',
-          background: result.needed > 1 ? 'rgba(200,168,78,0.15)' : 'rgba(34,197,94,0.15)',
-          border: `1px solid ${result.needed > 1 ? 'rgba(200,168,78,0.4)' : 'rgba(34,197,94,0.4)'}`,
-        }}>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'14px', color:'#fff', margin:0, textAlign:'center', fontWeight:600 }}>
-            {result.needed > 1 ? `⚠ ${result.needed} Units Needed` : `✓ Fits 1 × ${result.ctype}`}
+          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing:'0.08em', margin:0, lineHeight:1.1 }}>
+            LOAD CALCULATOR
+          </p>
+          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.5)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
+            Container Volume Advisor
           </p>
         </div>
-      )}
+        <button onClick={handleOpen} className="btn-gold"
+          style={{ padding:'12px 28px', fontSize:'1rem', borderRadius:'10px', whiteSpace:'nowrap', flexShrink:0, fontWeight:400 }}>
+          Open Calculator
+        </button>
+      </div>
     </SleekCard>
   )
 }
@@ -721,88 +691,83 @@ export default function VideoHero({ onQuoteClick }) {
               }}
             >
 
-              {/* Glass card behind heading content */}
-              <div style={{
-                display:'flex', flexDirection:'column',
-                alignItems: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-                background:'rgba(5,5,8,0.45)',
-                backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)',
-                border:'1px solid rgba(200,168,78,0.14)',
-                borderRadius:'12px',
-                padding:'clamp(16px,2.5vw,28px) clamp(20px,3vw,36px)',
-                boxShadow:'0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)',
-                maxWidth:'clamp(280px,55vw,680px)',
-                alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-              }}>
-
-                {/* Eyebrow */}
-                {ch.eyebrow && (
-                  <div className="hero-eyebrow" style={{
-                    display:'inline-flex', alignItems:'center', gap:'8px',
-                    fontFamily:"'DM Sans',sans-serif",
-                    fontSize:'clamp(10px,1.1vw,13px)', letterSpacing:'0.22em',
-                    textTransform:'uppercase', fontWeight:600,
-                    color:'rgba(255,224,120,1)',
-                    background:'rgba(200,168,78,0.14)',
-                    border:'1px solid rgba(255,215,100,0.35)',
-                    borderRadius:'2px', padding:'5px 14px',
-                    marginBottom:'14px',
-                    alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-                    userSelect:'none', pointerEvents:'none',
-                  }}>
-                    {ch.eyebrow}
-                  </div>
-                )}
-
-                {/* Headline */}
-                <div style={{ pointerEvents:'all', cursor:'default' }}>
-                  {ch.headline.map((line, li) => (
-                    <h1 key={li} style={{
-                      fontFamily:"'Bebas Neue',sans-serif",
-                      fontSize:'clamp(2rem,5.5vw,5.5rem)',
-                      lineHeight:0.87, letterSpacing:'0.06em', margin:0,
-                      color: li % 2 === 0 ? '#ffffff' : 'rgba(255,215,105,1)',
-                      textShadow: li % 2 === 0
-                        ? '0 0 30px rgba(255,255,255,0.2), 0 2px 12px rgba(0,0,0,0.6)'
-                        : '0 0 24px rgba(255,200,80,0.3), 0 2px 12px rgba(0,0,0,0.6)',
-                      userSelect:'none',
-                    }}>
-                      {line}
-                    </h1>
-                  ))}
-                </div>
-
-                {/* Gold accent line */}
-                <div style={{
-                  width: isCenter ? '80px' : '60px', height:'2px', marginTop:'20px',
-                  background:'linear-gradient(90deg,rgba(200,168,78,0.85),rgba(200,168,78,0.08))',
+              {/* Eyebrow */}
+              {ch.eyebrow && (
+                <div className="hero-eyebrow" style={{
+                  display:'inline-flex', alignItems:'center', gap:'8px',
+                  fontFamily:"'DM Sans',sans-serif",
+                  fontSize:'clamp(10px,1.1vw,13px)', letterSpacing:'0.22em',
+                  textTransform:'uppercase', fontWeight:600,
+                  color:'rgba(255,224,120,1)',
+                  background:'rgba(200,168,78,0.18)',
+                  border:'1px solid rgba(255,215,100,0.55)',
+                  borderRadius:'2px', padding:'5px 14px',
+                  marginBottom:'14px',
                   alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-                }} />
+                  backdropFilter:'blur(8px)',
+                  userSelect:'none', pointerEvents:'none',
+                }}>
+                  {ch.eyebrow}
+                </div>
+              )}
 
-                {/* Start Shipment CTA — first chapter only */}
-                {ch.showCTA && (
-                  <button
-                    className="hero-intro-cta btn-gold"
-                    onClick={onQuoteClick}
-                    style={{
-                      marginTop:'24px',
-                      alignSelf:'center',
-                      display:'flex', alignItems:'center', gap:'10px',
-                      fontFamily:"'Bebas Neue',sans-serif",
-                      fontSize:'clamp(13px,1.4vw,16px)', letterSpacing:'0.18em',
-                      padding:'14px 32px', borderRadius:'3px', cursor:'pointer',
-                      pointerEvents:'all',
-                    }}
-                  >
-                    START SHIPMENT
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0 }}>
-                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <div className="btn-shine-overlay" />
-                  </button>
-                )}
-
+              {/* Headline */}
+              <div style={{ pointerEvents:'all', cursor:'default' }}>
+                {ch.headline.map((line, li) => (
+                  <h1 key={li} style={{
+                    fontFamily:"'Bebas Neue',sans-serif",
+                    fontSize:'clamp(2rem,5.5vw,5.5rem)',
+                    lineHeight:0.87, letterSpacing:'0.06em', margin:0,
+                    color: li % 2 === 0 ? '#ffffff' : 'rgba(255,215,105,1)',
+                    textShadow: li % 2 === 0
+                      ? '0 0 40px rgba(255,255,255,0.55), 0 2px 48px rgba(0,0,0,0.98), 0 0 120px rgba(0,0,0,0.7)'
+                      : '0 0 32px rgba(255,200,80,0.5), 0 2px 48px rgba(0,0,0,0.98)',
+                    userSelect:'none',
+                  }}>
+                    {line}
+                  </h1>
+                ))}
               </div>
+
+              {/* Gold accent line */}
+              <div style={{
+                width: isCenter ? '80px' : '60px', height:'2px', marginTop:'26px',
+                background:'linear-gradient(90deg,rgba(200,168,78,0.85),rgba(200,168,78,0.08))',
+                alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
+              }} />
+
+              {/* Chapter counter */}
+              <div style={{
+                marginTop:'16px', fontFamily:"'Bebas Neue',sans-serif",
+                fontSize:'11px', letterSpacing:'0.38em', textTransform:'uppercase',
+                color:'rgba(200,168,78,0.32)',
+                alignSelf: isCenter ? 'center' : undefined,
+              }}>
+                {String(i+1).padStart(2,'0')} / {String(CHAPTERS.length).padStart(2,'0')}
+              </div>
+
+              {/* Start Shipment CTA — first chapter only */}
+              {ch.showCTA && (
+                <button
+                  className="hero-intro-cta btn-gold"
+                  onClick={onQuoteClick}
+                  style={{
+                    marginTop:'28px',
+                    alignSelf: isRight ? 'flex-end' : isCenter ? 'center' : 'flex-start',
+                    display:'flex', alignItems:'center', gap:'10px',
+                    fontFamily:"'Bebas Neue',sans-serif",
+                    fontSize:'clamp(13px,1.4vw,16px)', letterSpacing:'0.18em',
+                    padding:'14px 32px', borderRadius:'3px', cursor:'pointer',
+                    pointerEvents:'all',
+                  }}
+                >
+                  START SHIPMENT
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0 }}>
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <div className="btn-shine-overlay" />
+                </button>
+              )}
             </div>
           )
         })}

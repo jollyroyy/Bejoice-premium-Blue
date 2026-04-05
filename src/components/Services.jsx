@@ -244,14 +244,6 @@ export default function Services() {
             position: 'relative',
           }}
         >
-          {/* ── Mesh gradient shader background ── */}
-          <MeshGradient
-            className="absolute inset-0 w-full h-full"
-            colors={['#050508', '#1a1208', '#c8a84e', '#0a0a0f', '#3d2a0a']}
-            speed={0.15}
-            backgroundColor="#050508"
-            style={{ opacity: 0.55 }}
-          />
 
 
           {/* ── Centered heading block ── */}
