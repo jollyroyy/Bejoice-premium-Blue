@@ -169,27 +169,6 @@ export default function Contact() {
             Tailored quote. 2-hour response.
           </p>
           <div style={{ width:48, height:1, margin:'clamp(1rem,2vw,1.6rem) auto 0', background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.5),transparent)' }}/>
-          {/* Social links */}
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'10px', marginTop:'1.2rem' }}>
-            <a href="https://www.linkedin.com/company/bejoice-shipping-llc/" target="_blank" rel="noopener noreferrer"
-              aria-label="Bejoice on LinkedIn"
-              style={{ display:'flex', alignItems:'center', gap:'7px', padding:'8px 16px', borderRadius:'8px', minHeight:44, background:'rgba(0,119,181,0.1)', border:'1px solid rgba(0,119,181,0.3)', color:'#0A9FD8', textDecoration:'none', fontFamily:"'DM Sans',sans-serif", fontSize:'13px', fontWeight:600, transition:'all 0.2s' }}
-              onMouseEnter={e=>{ e.currentTarget.style.background='rgba(0,119,181,0.2)'; e.currentTarget.style.borderColor='rgba(0,119,181,0.6)'; e.currentTarget.style.boxShadow='0 0 16px rgba(0,119,181,0.25)' }}
-              onMouseLeave={e=>{ e.currentTarget.style.background='rgba(0,119,181,0.1)'; e.currentTarget.style.borderColor='rgba(0,119,181,0.3)'; e.currentTarget.style.boxShadow='none' }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-              LinkedIn
-            </a>
-            <a href="https://www.instagram.com/bejoice_shipping" target="_blank" rel="noopener noreferrer"
-              aria-label="Bejoice on Instagram"
-              style={{ display:'flex', alignItems:'center', gap:'7px', padding:'8px 16px', borderRadius:'8px', minHeight:44, background:'rgba(225,48,108,0.08)', border:'1px solid rgba(225,48,108,0.28)', color:'#E1306C', textDecoration:'none', fontFamily:"'DM Sans',sans-serif", fontSize:'13px', fontWeight:600, transition:'all 0.2s' }}
-              onMouseEnter={e=>{ e.currentTarget.style.background='rgba(225,48,108,0.18)'; e.currentTarget.style.borderColor='rgba(225,48,108,0.55)'; e.currentTarget.style.boxShadow='0 0 16px rgba(225,48,108,0.2)' }}
-              onMouseLeave={e=>{ e.currentTarget.style.background='rgba(225,48,108,0.08)'; e.currentTarget.style.borderColor='rgba(225,48,108,0.28)'; e.currentTarget.style.boxShadow='none' }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              Instagram
-            </a>
-          </div>
         </div>
 
         {!sent ? (
