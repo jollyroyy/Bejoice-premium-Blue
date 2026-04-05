@@ -103,9 +103,9 @@ const CHAPTERS = [
   },
   {
     frameRange: [270, 314],
-    eyebrow:    'HEAVY CARGO & PROJECT LOGISTICS',
-    headline:   ['HEAVY LIFT / ODC', '/ OOG TRANSPORTATION'],
-    sub:        'Hydraulic axle transport for oversized and heavy equipment — wind turbines, transformers, industrial machinery, and large project cargo.',
+    eyebrow:    'SEA FREIGHT · FCL & LCL',
+    headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
+    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
     align:      'right',
   },
   {

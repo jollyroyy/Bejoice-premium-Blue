@@ -6,7 +6,7 @@ import { useLang } from '../context/LangContext'
 const CAL_LINK = "sudeshna-pal-ruww5f/freight-consultation"
 
 const links = [
-  { label: 'Why Bejoice',                  id: 'why-us',     num: '01', sub: 'Our story & edge' },
+  { label: 'Why Bejoice',                  id: 'certifications', num: '01', sub: 'Our story & edge' },
   { label: 'Services',                     id: 'services',   num: '02', sub: 'Full logistics suite' },
   { label: 'Heavy Lift & Project Logistics', id: 'heavy-cargo', num: '03', sub: '1500+ operations' },
   { label: 'Bejoice Wings',                id: 'globe',      num: '04', sub: 'Our global network', isGlobe: true },
@@ -18,6 +18,7 @@ export default function Nav({ onQuoteClick }) {
   const [scrolled, setScrolled]   = useState(false)
   const [pastHero, setPastHero]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
+  const [heavyOpen, setHeavyOpen] = useState(false)
   const drawerRef                 = useRef(null)
   const backdropRef               = useRef(null)
 
@@ -80,7 +81,11 @@ export default function Nav({ onQuoteClick }) {
 
   const scrollToTop = () => {
     setMenuOpen(false)
-    window.location.reload()
+    const el = document.getElementById('globe')
+    if (el) {
+      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
+      else el.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const handleQuote = () => {
@@ -315,7 +320,7 @@ export default function Nav({ onQuoteClick }) {
           {links.map(link => (
             <button
               key={link.id}
-              onClick={() => scrollTo(link.id)}
+              onClick={() => link.id === 'heavy-cargo' ? (setMenuOpen(false), setHeavyOpen(true)) : scrollTo(link.id)}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.6rem', width: '100%', textAlign: 'left',
                 fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(1rem,2.5vw,1.15rem)', fontWeight: 400,
@@ -340,7 +345,7 @@ export default function Nav({ onQuoteClick }) {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
             {toolCard('🚢', 'Quick Quote', 'Instant freight rates', handleQuote)}
-            {toolCard('📡', 'Track Shipment', 'BL / AWB live tracking', () => { setMenuOpen(false); setTimeout(() => { const el = document.getElementById('hero'); if (el) { if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.2 }); else window.scrollTo({ top: 0, behavior: 'smooth' }) } }, 350) })}
+            {toolCard('📡', 'Track Shipment', 'BL / AWB live tracking', () => { setMenuOpen(false); window.open('https://www.track-trace.com/', '_blank', 'noopener,noreferrer') })}
             {toolCard('📞', 'Book a Call', 'Talk to a freight expert', () => { setMenuOpen(false); setTimeout(() => openCalPopup(), 350) })}
             {toolCard('✉️', 'Email Us', 'quotes@bejoice.com', () => { setMenuOpen(false); window.location.href = 'mailto:quotes@bejoice.com' })}
           </div>
@@ -403,6 +408,156 @@ export default function Nav({ onQuoteClick }) {
           </div>
         </div>
       </div>
+
+      {/* ── Heavy Lift Popup ── */}
+      {heavyOpen && (
+        <div
+          onClick={() => setHeavyOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 99999,
+            background: 'rgba(5,5,8,0.82)', backdropFilter: 'blur(12px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 'clamp(16px,4vw,32px)',
+            overflowY: 'auto',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              width: '100%', maxWidth: 680,
+              background: 'linear-gradient(160deg, rgba(20,18,12,0.97) 0%, rgba(12,10,6,0.99) 100%)',
+              border: '1px solid rgba(200,168,78,0.28)',
+              borderTop: '2px solid rgba(255,215,105,0.7)',
+              borderRadius: 20,
+              boxShadow: '0 60px 120px rgba(0,0,0,0.85), 0 0 80px rgba(200,168,78,0.08), inset 0 1px 0 rgba(255,215,105,0.15)',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Gold gradient header */}
+            <div style={{
+              padding: 'clamp(1.4rem,4vw,2rem) clamp(1.4rem,4vw,2rem) 1.2rem',
+              background: 'linear-gradient(135deg, rgba(200,168,78,0.12) 0%, rgba(200,168,78,0.04) 100%)',
+              borderBottom: '1px solid rgba(200,168,78,0.15)',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+                <div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.65rem,1.4vw,0.72rem)', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(200,168,78,0.8)', marginBottom: '0.4rem' }}>
+                    Bejoice Specialized Services
+                  </div>
+                  <h2 style={{
+                    fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
+                    fontSize: 'clamp(1.6rem,4vw,2.2rem)', letterSpacing: '0.06em',
+                    color: '#ffffff', lineHeight: 1.1, margin: 0,
+                  }}>
+                    Heavy Lift &amp; Project<br/>
+                    <span style={{ color: '#c8a84e' }}>Logistics</span>
+                  </h2>
+                  <div style={{ marginTop: '0.5rem', fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.75rem,1.5vw,0.82rem)', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.04em' }}>
+                    1,500+ heavy lift operations · ODC &amp; OOG specialists
+                  </div>
+                </div>
+                <button
+                  onClick={() => setHeavyOpen(false)}
+                  style={{
+                    flexShrink: 0, width: 40, height: 40,
+                    background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '50%', color: 'rgba(255,255,255,0.5)', fontSize: '1rem',
+                    cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.background = 'rgba(255,255,255,0.12)' }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.background = 'rgba(255,255,255,0.06)' }}
+                >✕</button>
+              </div>
+            </div>
+
+            {/* Services list */}
+            <div style={{ padding: 'clamp(1.2rem,3vw,1.6rem) clamp(1.4rem,4vw,2rem)', display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+              {[
+                {
+                  icon: '🏗️',
+                  title: 'Heavy Lift / ODC / OOG Transportation',
+                  desc: 'Conventional hydraulic axles for transporting heavy equipment such as wind turbines, transformers, generators, industrial machinery, construction components, and large project cargo.',
+                },
+                {
+                  icon: '🗺️',
+                  title: 'Route Survey Feasibility Study',
+                  desc: 'Detailed physical inspection and analysis of the entire transportation route from the pickup location to the final delivery site.',
+                },
+                {
+                  icon: '🚧',
+                  title: 'Route Modification for ODC Transportation',
+                  desc: 'Removal or adjustment of obstacles such as traffic signals, road signs, guardrails, overhead cables, streetlights, and bypass construction for transportation.',
+                },
+                {
+                  icon: '⚙️',
+                  title: 'Onsite Jacking & Skidding',
+                  desc: 'To lift heavy equipment such as transformers, reactors, or large industrial modules, while skidding systems allow the cargo to be horizontally moved along specially designed tracks or skid beams.',
+                },
+                {
+                  icon: '📐',
+                  title: 'Technical Engineering Solutions',
+                  desc: 'Technical analysis and planning for lifting, loading, securing, and transporting heavy cargo safely. Includes lift plans, load distribution calculations, and structural analysis.',
+                },
+              ].map((item, i) => (
+                <div key={i} style={{
+                  display: 'flex', gap: 'clamp(0.8rem,2vw,1.1rem)', alignItems: 'flex-start',
+                  padding: 'clamp(0.9rem,2vw,1.1rem) clamp(0.9rem,2vw,1.2rem)',
+                  background: i % 2 === 0 ? 'rgba(200,168,78,0.04)' : 'rgba(255,255,255,0.025)',
+                  border: '1px solid rgba(200,168,78,0.1)',
+                  borderLeft: '3px solid rgba(200,168,78,0.55)',
+                  borderRadius: 10,
+                }}>
+                  <span style={{ fontSize: 'clamp(1.2rem,2.5vw,1.4rem)', flexShrink: 0, marginTop: '0.05rem' }}>{item.icon}</span>
+                  <div>
+                    <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400, fontSize: 'clamp(0.9rem,2vw,1.02rem)', letterSpacing: '0.08em', color: '#e8d898', marginBottom: '0.3rem' }}>
+                      {item.title}
+                    </div>
+                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.75rem,1.4vw,0.83rem)', color: 'rgba(255,255,255,0.62)', lineHeight: 1.55 }}>
+                      {item.desc}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA footer */}
+            <div style={{ padding: '0 clamp(1.4rem,4vw,2rem) clamp(1.2rem,3vw,1.6rem)', display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => { setHeavyOpen(false); setTimeout(() => openCalPopup(), 300) }}
+                style={{
+                  flex: '1 1 160px', padding: '0.75rem 1.2rem', minHeight: 44,
+                  background: 'linear-gradient(135deg, #c8a84e, #ffe680)',
+                  border: 'none', borderRadius: 10, cursor: 'pointer',
+                  fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
+                  fontSize: 'clamp(0.85rem,1.8vw,0.95rem)', letterSpacing: '0.1em',
+                  color: '#0a0800', transition: 'opacity 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
+                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+              >
+                Book a Consultation
+              </button>
+              <button
+                onClick={() => { setHeavyOpen(false); const el = document.getElementById('heavy-cargo'); if (el) { if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 }); else el.scrollIntoView({ behavior: 'smooth' }) } }}
+                style={{
+                  flex: '1 1 140px', padding: '0.75rem 1.2rem', minHeight: 44,
+                  background: 'transparent', border: '1px solid rgba(200,168,78,0.4)',
+                  borderRadius: 10, cursor: 'pointer',
+                  fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
+                  fontSize: 'clamp(0.85rem,1.8vw,0.95rem)', letterSpacing: '0.1em',
+                  color: 'rgba(200,168,78,0.85)', transition: 'border-color 0.2s, color 0.2s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(200,168,78,0.7)'; e.currentTarget.style.color = '#c8a84e' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(200,168,78,0.4)'; e.currentTarget.style.color = 'rgba(200,168,78,0.85)' }}
+              >
+                View Full Section ↓
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
