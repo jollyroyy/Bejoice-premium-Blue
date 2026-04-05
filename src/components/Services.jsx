@@ -2,7 +2,6 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView } from 'framer-motion'
 import clsx from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { MeshGradient } from '@paper-design/shaders-react'
 
 function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -186,15 +185,6 @@ export default function Services() {
             position: 'relative',
           }}
         >
-          {/* ── Mesh gradient shader background ── */}
-          <MeshGradient
-            className="absolute inset-0 w-full h-full"
-            colors={['#050508', '#1a1208', '#c8a84e', '#0a0a0f', '#3d2a0a']}
-            speed={0.15}
-            backgroundColor="#050508"
-            style={{ opacity: 0.55 }}
-          />
-
 
           {/* ── Centered heading block ── */}
           <div style={{ textAlign: 'center', padding: 'clamp(2.5rem,5vw,4rem) clamp(1.5rem,5vw,4rem) clamp(1.5rem,3vw,2.5rem)', borderBottom: '1px solid rgba(200,168,78,0.1)', position: 'relative', zIndex: 2 }}>
