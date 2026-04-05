@@ -69,7 +69,7 @@ const ATM_FRAG = `
     gl_FragColor = vec4(glowColor, rim);
   }`;
 
-export default function BejoiceGlobe({ embedded = false }) {
+export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
   const mountRef   = useRef(null);
   const isDragging = useRef(false);
   const prevMouse  = useRef({ x: 0, y: 0 });
@@ -380,21 +380,21 @@ export default function BejoiceGlobe({ embedded = false }) {
         <motion.div
           initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }}
-          style={{ textAlign: 'center', marginBottom: 'clamp(1.5rem,3vw,3rem)' }}
+          style={{ textAlign: 'center', marginBottom: 'clamp(0.6rem,1.5vw,1.2rem)' }}
         >
-          <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'1rem', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'#c8a84e', display:'block', marginBottom:'0.9rem' }}>
+          <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'#c8a84e', display:'block', marginBottom:'0.9rem' }}>
             GLOBAL PRESENCE
           </span>
-          <h2 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(2rem,5.5vw,4.8rem)', color:'#ffffff', letterSpacing:'0.04em', lineHeight:1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
+          <h2 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.3rem,3.5vw,3.2rem)', color:'#ffffff', letterSpacing:'0.04em', lineHeight:1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
             BEJOICE CONNECTS SAUDI TO THE WORLD
           </h2>
         </motion.div>
 
-        <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'clamp(1.5rem,3vw,2.5rem)' }}>
+        <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'clamp(0.6rem,1.5vw,1rem)' }}>
           <motion.div
             initial={{ opacity: 0, scale: 0.88 }} whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }} transition={{ duration: 1.2, ease: [0.16,1,0.3,1] }}
-            style={{ position: 'relative', flexShrink: 0, width: '100%', maxWidth: 'min(520px, 90vw)' }}
+            style={{ position: 'relative', flexShrink: 0, width: '100%', maxWidth: 'min(380px, 55vh, 70vw)' }}
           >
             {/* Outer glow ring */}
             <div style={{
@@ -459,13 +459,13 @@ export default function BejoiceGlobe({ embedded = false }) {
             </div>
 
             {/* Separator */}
-            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'1.6rem 0 0.6rem' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'0.6rem 0 0.3rem' }}>
               <div style={{ flex:1, height:1, background:'rgba(200,168,78,0.15)' }} />
-              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:12, fontWeight:600, color:'rgba(200,168,78,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>Branch Offices</span>
+              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:600, color:'rgba(200,168,78,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>Branch Offices</span>
               <div style={{ flex:1, height:1, background:'rgba(200,168,78,0.15)' }} />
             </div>
 
-            <div style={{ display:'flex', justifyContent:'center', gap:'1rem 2rem', flexWrap:'wrap', marginBottom:'0.5rem' }}>
+            <div style={{ display:'flex', justifyContent:'center', gap:'0.5rem 1.5rem', flexWrap:'wrap', marginBottom:'0.25rem' }}>
               {[
                 { label:'Saudi Arabia', flag:'🇸🇦' },
                 { label:'UAE',          flag:'🇦🇪' },
@@ -474,7 +474,7 @@ export default function BejoiceGlobe({ embedded = false }) {
               ].map(({ label }) => (
                 <motion.div key={label} whileHover={{ y:-3 }} transition={{ type:'spring', stiffness:300, damping:20 }}
                   style={{ display:'flex', alignItems:'center', minHeight:44 }}>
-                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.95rem,2.5vw,1.1rem)', fontWeight:600, color:'rgba(255,255,255,0.82)' }}>{label}</span>
+                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.75rem,1.8vw,0.88rem)', fontWeight:600, color:'rgba(255,255,255,0.82)' }}>{label}</span>
                 </motion.div>
               ))}
             </div>
@@ -492,7 +492,18 @@ export default function BejoiceGlobe({ embedded = false }) {
       </div>
   )
 
-  if (embedded) return inner
+  if (embedded) {
+    if (fullscreen) {
+      return (
+        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '100%', maxWidth: 1200, padding: '0 clamp(1rem,4vw,3rem)' }}>
+            {inner}
+          </div>
+        </div>
+      )
+    }
+    return inner
+  }
 
   return (
     <section id="globe" style={{ padding: 'clamp(3rem,6vw,5rem) 1.5rem', position: 'relative', overflow: 'hidden', background: 'transparent' }}>

@@ -367,10 +367,6 @@ export default function Footer() {
               >{item}</button>
             ))}
           </div>
-          <div className="flex items-center gap-3">
-            <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#2aaa5e', animation: 'pulse 2s infinite' }} />
-            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(10px,1.3vw,13px)', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase' }}>All Systems Operational</span>
-          </div>
         </div>
 
         <div className="absolute bottom-0 right-0 select-none pointer-events-none overflow-hidden"

@@ -73,6 +73,9 @@ const FRAME_FADE = 18
 
 // Chapters mapped to 4-segment sequence.
 // 3d:0–144 | frames2:145–390 | frames8:391–511 | frames6:512–632
+const GLOBE_CHAPTER_START = 145
+const GLOBE_CHAPTER_END   = 210
+
 const CHAPTERS = [
   // ── 3d: 0–144 ──
   {
@@ -83,37 +86,44 @@ const CHAPTERS = [
     align:      'left',
     showCTA:    true,
   },
-  // ── frames2: 145–390 ──
+  // ── GLOBE CHAPTER: 145–210 ── (full-screen 3D globe, canvas hidden, no text overlay)
   {
-    frameRange: [145, 189],
+    frameRange:   [GLOBE_CHAPTER_START, GLOBE_CHAPTER_END],
+    headline:     [],
+    align:        'center',
+    globeChapter: true,
+  },
+  // ── frames2: 218–390 (shifted +65) ──
+  {
+    frameRange: [218, 262],
     eyebrow:    '180+ COUNTRIES · 25+ YEARS EXPERIENCE',
     headline:   ['FROM BLUE PRINT TO', 'DELIVERY, WE MOVE IT ALL'],
     sub:        "Saudi Arabia's premier freight forwarder — delivering seamless logistics across 180+ countries.",
     align:      'right',
   },
   {
-    frameRange: [197, 241],
+    frameRange: [270, 314],
     eyebrow:    'HEAVY CARGO & PROJECT LOGISTICS',
     headline:   ['HEAVY LIFT / ODC', '/ OOG TRANSPORTATION'],
     sub:        'Hydraulic axle transport for oversized and heavy equipment — wind turbines, transformers, industrial machinery, and large project cargo.',
     align:      'right',
   },
   {
-    frameRange: [249, 293],
+    frameRange: [322, 366],
     eyebrow:    'GCC ROAD NETWORK',
     headline:   ['CONNECTED', 'GLOBALLY'],
     sub:        'Seamless cross-border land transport across the GCC, powered by a state-of-the-art fleet.',
     align:      'left',
   },
   {
-    frameRange: [301, 345],
+    frameRange: [374, 418],
     eyebrow:    'CUSTOMS CLEARANCE · ZATCA CERTIFIED',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
     sub:        'We handle the paperwork. You handle the business.',
     align:      'right',
   },
   {
-    frameRange: [353, 390],
+    frameRange: [426, 463],
     eyebrow:    'SEA FREIGHT · FCL & LCL',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
@@ -121,7 +131,7 @@ const CHAPTERS = [
   },
   // ── frames8: 391–511 ──
   {
-    frameRange: [399, 503],
+    frameRange: [471, 560],
     eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
     headline:   ['SPEED ABOVE ALL.', 'DELIVERED ON TIME'],
     sub:        'Express air cargo solutions connecting Saudi Arabia to global hubs — critical shipments, time-sensitive freight, temperature-controlled cargo.',
@@ -129,17 +139,10 @@ const CHAPTERS = [
   },
   // ── frames6: 512–632 ──
   {
-    frameRange: [520, 570],
+    frameRange: [568, 620],
     eyebrow:    'PRECISION HEAVY LIFT · 1500+ OPERATIONS',
     headline:   ['PRECISION IN HANDLING.', 'EXCELLENCE IN DELIVERY'],
     sub:        "Precision Placement Where Cranes Can't Go. Millimeter-accurate. No room for error — and we never make one.",
-    align:      'right',
-  },
-  {
-    frameRange: [578, 632],
-    eyebrow:    'ENGINEERING · ISO 9001 CERTIFIED',
-    headline:   ['TECHNICAL ENGINEERING', 'SOLUTIONS'],
-    sub:        'Lift plans, load calculations, and structural analysis to ensure every heavy move is safe and compliant.',
     align:      'left',
   },
 ]
@@ -378,14 +381,15 @@ function TrackCard() {
 // Main VideoHero
 // ─────────────────────────────────────────────────────────────────────────────
 export default function VideoHero({ onQuoteClick }) {
-  const wrapperRef     = useRef(null)
-  const canvasRef      = useRef(null)
-  const chaptersRef    = useRef([])
-  const heroCardsRef   = useRef(null)
-  const exitOverlayRef = useRef(null)
-  const globeOverlayRef = useRef(null)
-  const framesRef      = useRef([])   // decoded ImageBitmap / Image objects
-  const lastIdxRef     = useRef(-1)   // last drawn frame index
+  const wrapperRef      = useRef(null)
+  const canvasRef       = useRef(null)
+  const chaptersRef     = useRef([])
+  const heroCardsRef    = useRef(null)
+  const exitOverlayRef  = useRef(null)
+  const globeChapterRef = useRef(null)   // full-screen globe chapter overlay
+  const canvasDimRef    = useRef(null)   // canvas dimmer during globe chapter
+  const framesRef       = useRef([])     // decoded Image objects
+  const lastIdxRef      = useRef(-1)     // last drawn frame index
 
   // ── Chapter opacity driven by exact frame index (hardcoded to footage) ──
   const applyProgress = useCallback((frameIdx) => {
@@ -593,22 +597,39 @@ export default function VideoHero({ onQuoteClick }) {
         )
       }
 
-      // ── Globe overlay — visible during chapter 2 (frames 145–390) ──
-      if (globeOverlayRef.current) {
-        const GLOBE_IN_START  = 145
-        const GLOBE_IN_END    = 163
-        const GLOBE_OUT_START = 372
-        const GLOBE_OUT_END   = 390
-        let globeOp = 0
-        if (frameIdx >= GLOBE_IN_END && frameIdx <= GLOBE_OUT_START) {
-          globeOp = 1
-        } else if (frameIdx >= GLOBE_IN_START && frameIdx < GLOBE_IN_END) {
-          globeOp = (frameIdx - GLOBE_IN_START) / (GLOBE_IN_END - GLOBE_IN_START)
-        } else if (frameIdx > GLOBE_OUT_START && frameIdx <= GLOBE_OUT_END) {
-          globeOp = 1 - (frameIdx - GLOBE_OUT_START) / (GLOBE_OUT_END - GLOBE_OUT_START)
+      // ── Globe chapter — full-screen, replaces canvas ──
+      // Canvas pre-dims BEFORE globe chapter so no frames2 footage ever shows
+      const GLOBE_FADE     = 18
+      const PRE_DIM_START  = GLOBE_CHAPTER_START - 20  // start darkening 20 frames early (frame 125)
+      const POST_DIM_END   = GLOBE_CHAPTER_END   + 22  // stay dark 22 frames after globe fades out
+
+      if (globeChapterRef.current && canvasDimRef.current) {
+        // ── Canvas dimmer: independent of globe opacity ──
+        let dimOp = 0
+        if (frameIdx >= PRE_DIM_START && frameIdx < GLOBE_CHAPTER_START) {
+          // pre-dim: ramps from 0→1 over 20 frames before globe chapter
+          dimOp = (frameIdx - PRE_DIM_START) / (GLOBE_CHAPTER_START - PRE_DIM_START)
+        } else if (frameIdx >= GLOBE_CHAPTER_START && frameIdx <= GLOBE_CHAPTER_END) {
+          // fully dim throughout the entire globe chapter
+          dimOp = 1
+        } else if (frameIdx > GLOBE_CHAPTER_END && frameIdx <= POST_DIM_END) {
+          // post-dim: ramps from 1→0 so canvas returns smoothly after globe
+          dimOp = 1 - (frameIdx - GLOBE_CHAPTER_END) / (POST_DIM_END - GLOBE_CHAPTER_END)
         }
-        globeOverlayRef.current.style.opacity = String(Math.max(0, Math.min(1, globeOp)))
-        globeOverlayRef.current.style.pointerEvents = globeOp > 0.1 ? 'all' : 'none'
+        canvasDimRef.current.style.opacity = String(Math.max(0, Math.min(1, dimOp)))
+
+        // ── Globe: fades in/out within the chapter window ──
+        let globeOp = 0
+        if (frameIdx >= GLOBE_CHAPTER_START + GLOBE_FADE && frameIdx <= GLOBE_CHAPTER_END - GLOBE_FADE) {
+          globeOp = 1
+        } else if (frameIdx >= GLOBE_CHAPTER_START && frameIdx < GLOBE_CHAPTER_START + GLOBE_FADE) {
+          globeOp = (frameIdx - GLOBE_CHAPTER_START) / GLOBE_FADE
+        } else if (frameIdx > GLOBE_CHAPTER_END - GLOBE_FADE && frameIdx <= GLOBE_CHAPTER_END) {
+          globeOp = (GLOBE_CHAPTER_END - frameIdx) / GLOBE_FADE
+        }
+        globeOp = Math.max(0, Math.min(1, globeOp))
+        globeChapterRef.current.style.opacity       = String(globeOp)
+        globeChapterRef.current.style.pointerEvents = globeOp > 0.05 ? 'all' : 'none'
       }
 
       if (Math.abs(smoothP - targetP) > 0.0001) {
@@ -684,19 +705,21 @@ export default function VideoHero({ onQuoteClick }) {
         }} />
 
 
-        {/* ── Globe overlay — shown during chapter 2 (frames2 segment) ── */}
-        <div ref={globeOverlayRef} style={{
-          position: 'absolute', inset: 0, zIndex: 5,
-          opacity: 0, pointerEvents: 'none',
-          transition: 'none',
-          display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
-          padding: '0 clamp(2rem,5vw,6rem)',
-          paddingBottom: 'clamp(160px,28vh,320px)',
+        {/* ── Canvas dimmer — darkens frame scrubbing during globe chapter ── */}
+        <div ref={canvasDimRef} style={{
+          position: 'absolute', inset: 0, zIndex: 2,
+          background: '#050508', opacity: 0, pointerEvents: 'none', transition: 'none',
+        }} />
+
+        {/* ── GLOBE CHAPTER — full-screen, sits above canvas ── */}
+        <div ref={globeChapterRef} style={{
+          position: 'absolute', inset: 0, zIndex: 6,
+          opacity: 0, pointerEvents: 'none', transition: 'none',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(10,18,40,0.85) 0%, rgba(5,5,8,0.98) 100%)',
         }}>
           <Suspense fallback={null}>
-            <div style={{ width: 'min(480px, 45vw)', flexShrink: 0 }}>
-              <BejoiceGlobe embedded />
-            </div>
+            <BejoiceGlobe embedded fullscreen />
           </Suspense>
         </div>
 
