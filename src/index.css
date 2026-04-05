@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* tsparticles canvas must never block scroll — NEVER REMOVE */
+[id^="tsparticles"] canvas,
+canvas.tsparticles-canvas-el {
+  pointer-events: none !important;
+}
+
 :root {
   /* Premium Gold Palette — multi-layered & shimmering */
   --gold: #c8a84e;          /* core gold */

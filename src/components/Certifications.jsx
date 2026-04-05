@@ -29,7 +29,7 @@ export default function Certifications() {
   }, [])
 
   return (
-    <section id="certifications" ref={sectionRef} className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
+    <section id="certifications" ref={sectionRef} className="relative pt-0 pb-16 md:pb-24 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
       {/* Ambient */}
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.07) 0%, transparent 50%)' }}/>
@@ -54,7 +54,6 @@ export default function Certifications() {
         >
           {/* Eyebrow */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-            <div style={{ width: 40, height: '1.5px', background: '#c8a84e' }} />
             <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#c8a84e', fontWeight: 600 }}>
               Industry Accreditations
             </span>
