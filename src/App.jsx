@@ -7,6 +7,7 @@ import VideoHero from './components/VideoHero'
 const LogisticsTools = lazy(() => import('./components/LogisticsTools'))
 const Services = lazy(() => import('./components/Services'))
 const BejoiceGlobe = lazy(() => import('./components/BejoiceGlobe'))
+
 const Certifications = lazy(() => import('./components/Certifications'))
 const Contact = lazy(() => import('./components/Contact'))
 const Footer = lazy(() => import('./components/Footer'))
@@ -50,7 +51,12 @@ export default function App() {
     })
     gsap.ticker.lagSmoothing(0)
 
+    const r1 = setTimeout(() => lenis.resize(), 1000)
+    const r2 = setTimeout(() => lenis.resize(), 3000)
+
     return () => {
+      clearTimeout(r1)
+      clearTimeout(r2)
       lenis.destroy()
       window.__lenis = null
     }
@@ -65,13 +71,12 @@ export default function App() {
       <Nav onQuoteClick={() => setQuoteOpen(true)} />
       <main>
         <VideoHero onQuoteClick={() => setQuoteOpen(true)} />
-        <Suspense fallback={null}>
-          <Contact />
-          <LogisticsTools />
-          <Services />
-          <BejoiceGlobe />
-<Certifications />
-        </Suspense>
+        <Suspense fallback={null}><Contact /></Suspense>
+        <Suspense fallback={null}><LogisticsTools /></Suspense>
+        <Suspense fallback={null}><Services /></Suspense>
+        <Suspense fallback={null}><BejoiceGlobe /></Suspense>
+
+        <Suspense fallback={null}><Certifications /></Suspense>
       </main>
       <Suspense fallback={null}>
         <Footer />

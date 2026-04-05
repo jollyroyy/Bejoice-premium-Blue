@@ -4,7 +4,6 @@ import Particles, { initParticlesEngine } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
 import { motion, useAnimation } from 'framer-motion'
 
-// Module-level singleton — initParticlesEngine must only be called once per page load
 let engineReady = null
 
 export const SparklesCore = ({
@@ -37,7 +36,7 @@ export const SparklesCore = ({
   }
 
   return (
-    <motion.div animate={controls} className={`opacity-0 ${className || ''}`} style={{ pointerEvents: 'none' }}>
+    <motion.div animate={controls} className={`opacity-0 ${className || ''}`}>
       {init && (
         <Particles
           id={id || generatedId}

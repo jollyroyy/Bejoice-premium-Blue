@@ -30,23 +30,12 @@ export default function Certifications() {
   }, [])
 
   return (
-    <section id="certifications" ref={sectionRef} className="relative pt-0 pb-16 md:pb-24 lg:pb-32 px-6 md:px-12 lg:px-24">
-      {/* Floating dots background */}
-      <SparklesCore
-        background="transparent"
-        minSize={0.6}
-        maxSize={2}
-        particleDensity={60}
-        particleColor="rgba(200,168,78,0.9)"
-        speed={0.8}
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ zIndex: 0 }}
-      />
-
+    <section id="certifications" ref={sectionRef} className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
+      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(200,168,78,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
       {/* Ambient */}
-      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1,
-        background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.07) 0%, transparent 50%)' }}/>
-      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1,
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 60% 0%, rgba(200,168,78,0.07) 0%, transparent 50%)' }}/>
+      <div className="absolute inset-0 pointer-events-none" style={{
         backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,168,78,0.02) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,168,78,0.02) 80px)',
       }}/>
 
@@ -57,7 +46,7 @@ export default function Certifications() {
         lineHeight: 1, color: 'rgba(200,168,78,0.025)', pointerEvents: 'none', userSelect: 'none', letterSpacing: '0.04em',
       }}>CERTIFIED</div>
 
-      <div className="max-w-7xl mx-auto" style={{ position: 'relative', zIndex: 2 }}>
+      <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -67,11 +56,12 @@ export default function Certifications() {
         >
           {/* Eyebrow */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+            <div style={{ width: 40, height: '1.5px', background: '#c8a84e' }} />
             <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#c8a84e', fontWeight: 600 }}>
               Industry Accreditations
             </span>
           </div>
-          <h2 className="hg" style={{
+          <h2 style={{
             fontFamily: "'Bebas Neue', sans-serif",
             fontSize: 'clamp(3rem,7vw,6rem)',
             letterSpacing: '0.07em', lineHeight: 1,

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
+import { SparklesCore } from './ui/sparkles'
 
 const OFFICES = [
   // HQ — Dubai, UAE
@@ -375,6 +376,7 @@ export default function BejoiceGlobe() {
 
   return (
     <section id="globe" style={{ padding: 'clamp(3rem,6vw,5rem) 1.5rem', position: 'relative', overflow: 'hidden', background: 'transparent' }}>
+      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(200,168,78,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
         <motion.div
@@ -479,9 +481,13 @@ export default function BejoiceGlobe() {
               ))}
             </div>
 
-            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.9rem,2vw,1.05rem)', color:'rgba(200,168,78,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', textAlign:'center', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}>
-              Strategically connected to Global Partners
-            </p>
+            <motion.p
+              animate={{ opacity: [0.7, 1, 0.7] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.9rem,2vw,1.05rem)', color:'rgba(200,168,78,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', textAlign:'center', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}
+            >
+              Strategically positioned for seamless global connectivity
+            </motion.p>
 
           </motion.div>
         </div>

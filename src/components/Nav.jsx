@@ -120,7 +120,7 @@ export default function Nav({ onQuoteClick }) {
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
 
           {/* Logo */}
-          <div onClick={scrollToTop} style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-405px' }}>
+          <div onClick={scrollToTop} style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-155px' }}>
             <img
               src="/bejoice-logo-white.png"
               alt="Bejoice"
@@ -150,7 +150,7 @@ export default function Nav({ onQuoteClick }) {
                 <line x1="8" y1="2" x2="8" y2="6"/>
                 <line x1="3" y1="10" x2="21" y2="10"/>
               </svg>
-              <span className="hidden sm:inline">Book Call with Freight Expert</span>
+              <span className="hidden sm:inline">Book a Call with Freight Expert</span>
               <span className="sm:hidden">Book a Call</span>
             </button>
 

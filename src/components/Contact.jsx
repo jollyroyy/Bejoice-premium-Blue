@@ -91,17 +91,7 @@ export default function Contact() {
         padding: 'clamp(3rem,8vw,7rem) clamp(1rem,5vw,2.5rem)',
       }}
     >
-      {/* Floating dots — section level, outside the card */}
-      <SparklesCore
-        background="transparent"
-        minSize={0.6}
-        maxSize={2}
-        particleDensity={60}
-        particleColor="rgba(200,168,78,0.9)"
-        speed={0.8}
-        className="absolute inset-0 w-full h-full pointer-events-none"
-      />
-
+      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(200,168,78,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
       {/* ── Ambient light layers ── */}
       <div style={{ position:'absolute', inset:0, pointerEvents:'none',
         background:'radial-gradient(ellipse 80% 50% at 50% -5%, rgba(200,168,78,0.1) 0%, transparent 60%)',
@@ -161,7 +151,7 @@ export default function Contact() {
 
         {/* ── Heading ── */}
         <div className="fade-up" style={{ textAlign:'center', marginBottom:'clamp(2rem,4vw,3.5rem)' }}>
-          <h2 className="contact-heading hg" style={{
+          <h2 className="contact-heading" style={{
             fontFamily:"'Bebas Neue',sans-serif",
             fontSize:'clamp(1.4rem,4vw,3.2rem)',
             letterSpacing:'0.07em', lineHeight:1,
@@ -182,7 +172,7 @@ export default function Contact() {
             color:'#ffffff', maxWidth:500, margin:'0 auto', lineHeight:1.8,
             fontWeight: 500, textShadow:'0 0 20px rgba(255,255,255,0.12)',
           }}>
-            Get instant quote.
+            Tailored quote. 2-hour response.
           </p>
           <div style={{ width:48, height:1, margin:'clamp(1rem,2vw,1.6rem) auto 0', background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.5),transparent)' }}/>
         </div>

@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* tsparticles canvas must never block scroll — NEVER REMOVE */
-[id^="tsparticles"] canvas,
-canvas.tsparticles-canvas-el {
-  pointer-events: none !important;
-}
-
 :root {
   /* Premium Gold Palette — multi-layered & shimmering */
   --gold: #c8a84e;          /* core gold */
@@ -484,14 +478,14 @@ body {
 
 /* ── TABLET (641–1024px) ── */
 @media (min-width: 641px) and (max-width: 1024px) {
-  .section-headline { font-size: clamp(2.6rem, 7vw, 5rem); }
+  .section-headline { font-size: clamp(1.1rem, 3vw, 1.5rem); }
   .body-text { font-size: clamp(16px, 2vw, 18px); }
   .section-glass-header { padding: 1.4rem 2rem; }
 }
 
 /* ── MOBILE RESPONSIVE (≤768px) ── */
 @media (max-width: 768px) {
-  .section-headline { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+  .section-headline { font-size: clamp(1rem, 5vw, 1.8rem); }
   .body-text { font-size: clamp(15px, 4vw, 17px); }
   .card-body { font-size: 15px; }
   .card-title { font-size: 1.35rem; }
@@ -576,7 +570,7 @@ body {
 
 /* ── SMALL MOBILE (≤480px) ── */
 @media (max-width: 480px) {
-  .section-headline { font-size: clamp(1.9rem, 11vw, 2.8rem); }
+  .section-headline { font-size: clamp(0.9rem, 6vw, 1.3rem); }
   .btn-gold, .btn-ghost { padding: 14px 20px !important; font-size: 11px !important; }
   .section-glass-header { padding: 1rem 1.2rem; }
 
@@ -620,7 +614,7 @@ body {
 /* ── SECTION HEADINGS — used in all non-hero sections ── */
 .section-headline {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.8rem, 7vw, 6.5rem);
+  font-size: clamp(1.3rem, 3vw, 2.5rem);
   font-weight: 700;
   line-height: 0.92;
   letter-spacing: 0.08em;
@@ -639,26 +633,6 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-/* ── HEADING GLASS — visible frosted panel behind headings ── */
-.hg {
-  position: relative;
-  display: inline-block;
-  padding: 0.3em 0.9em;
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(255,215,120,0.18);
-  border-top: 1.5px solid rgba(255,215,120,0.38);
-  border-radius: 12px;
-  box-shadow:
-    0 12px 48px rgba(0,0,0,0.6),
-    inset 0 1px 0 rgba(255,255,255,0.09),
-    0 0 24px rgba(200,168,78,0.05);
-}
-@media (max-width: 767px) {
-  .hg { padding: 0.25em 0.6em; border-radius: 8px; }
 }
 
 /* ── BODY TEXT ── */
@@ -1080,14 +1054,7 @@ body {
    ── PREVENT GSAP FLASH (FOUT/FLASH FIX) ──
    ───────────────────────────────────────────────────────────────────────────── */
 
-/* Pre-hide elements that GSAP will reveal to prevent the "final state" flash */
-main section:not(#hero-wrapper),
-.glass-card,
-.contact-glass-card,
-.section-headline,
-.gold-line {
-  opacity: 0;
-}
+/* Sections always visible — GSAP animates transform only */
 
 /* 
    Explicitly ensure Hero Heading & Nav are VISIBLE during first paint.

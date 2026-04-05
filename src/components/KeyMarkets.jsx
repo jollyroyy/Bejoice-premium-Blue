@@ -55,7 +55,7 @@ export default function KeyMarkets() {
         >
           <div className="section-glass-header" style={{ textAlign: 'right' }}>
             <div className="section-num mb-4" style={{ textAlign: 'right' }}>03 — Key Markets</div>
-            <h2 className="section-headline hg" style={{ textAlign: 'right' }}>
+            <h2 className="section-headline" style={{ textAlign: 'right' }}>
               <span style={{ color: '#ffffff' }}>GLOBAL</span><br />
               <span style={{ color: 'rgba(200,168,78,0.78)' }}>REACH</span>
             </h2>
