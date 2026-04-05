@@ -743,7 +743,7 @@ export default function LogisticsTools() {
                 margin:'0 0 clamp(0.6rem,1.5vw,1rem)',
                 color:'#ffffff',
               }}>
-                CONTAINER LOAD CALCULATOR
+                CONTAINER <span style={{ color:'#c8a84e' }}>LOAD CALCULATOR</span>
               </h2>
               <p style={{
                 fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(15px,1.9vw,19px)',

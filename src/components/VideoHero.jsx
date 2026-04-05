@@ -337,7 +337,7 @@ function FreightCalcCard() {
     <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
-          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing:'0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
+          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#ffffff', letterSpacing:'0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             LOAD CALCULATOR
           </p>
           <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>

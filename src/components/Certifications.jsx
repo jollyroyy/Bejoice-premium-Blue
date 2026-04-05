@@ -50,26 +50,27 @@ export default function Certifications() {
           transition={{ type: 'spring', stiffness: 90, damping: 22 }}
           style={{
             position: 'relative',
-            background: 'linear-gradient(135deg, rgba(10,9,20,0.97) 0%, rgba(6,6,14,0.99) 100%)',
+            background: 'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
+            backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
             border: '1px solid rgba(200,168,78,0.35)',
-            borderRadius: 6,
+            borderTop: '1px solid rgba(255,215,105,0.65)',
+            borderRadius: 28,
             overflow: 'hidden',
+            boxShadow: [
+              '0 60px 120px rgba(0,0,0,0.75)',
+              '0 0 0 1px rgba(200,168,78,0.08) inset',
+              'inset 0 1px 0 rgba(255,215,105,0.30)',
+              '0 0 60px rgba(200,168,78,0.10)',
+              '0 0 120px rgba(200,168,78,0.05)',
+            ].join(', '),
           }}
         >
-          {/* Outer glow */}
-          <div style={{
-            position: 'absolute', inset: -1, borderRadius: 7, pointerEvents: 'none',
-            boxShadow: '0 0 0 1px rgba(200,168,78,0.12), 0 0 40px rgba(200,168,78,0.06), inset 0 0 60px rgba(200,168,78,0.03)',
-          }} />
 
           {/* Animated top sweep */}
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, overflow: 'hidden', borderRadius: '6px 6px 0 0' }}>
-            <div style={{
-              height: '100%',
-              background: 'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.9) 50%, transparent 100%)',
-              animation: 'certHeaderSweep 4s ease-in-out infinite',
-            }} />
-          </div>
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, pointerEvents: 'none',
+            background: 'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.6) 40%, rgba(200,168,78,0.8) 50%, rgba(200,168,78,0.6) 60%, transparent 100%)',
+            animation: 'certHeaderSweep 4s ease-in-out infinite',
+          }} />
 
           {/* Diagonal hatch texture */}
           <div style={{
