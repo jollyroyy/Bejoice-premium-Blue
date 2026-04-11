@@ -55,7 +55,7 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     .qm-select option { background: #0a0e1a; color: #fff; }
     .qm-submit {
       width: 100%; padding: 18px;
-      background: linear-gradient(135deg, #f5d97a 0%, #e8cc7a 40%, #c8a84e 100%);
+      background: linear-gradient(135deg, #f5d970 0%, #f5d970 40%, #c8a84e 100%);
       color: #050508; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 12px;
       font-family: 'DM Sans', sans-serif;
       font-size: 14px; font-weight: 900;
@@ -66,7 +66,7 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     }
     .qm-submit:hover:not(:disabled) { 
       transform: translateY(-2.5px); 
-      background: linear-gradient(135deg, #fff2a8 0%, #f5d97a 40%, #e8cc7a 100%); 
+      background: linear-gradient(135deg, #fff4a0 0%, #f5d970 40%, #f5d970 100%); 
       box-shadow: 0 16px 40px rgba(200,168,78,0.45), 0 12px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.6); 
     }
     .qm-submit:active { transform: scale(0.975); }
@@ -167,7 +167,7 @@ export default function QuoteModal({ onClose }) {
 
         <div style={{
           height: 4,
-          background: 'linear-gradient(90deg, transparent 0%, #c8a84e 30%, #ffe680 50%, #c8a84e 70%, transparent 100%)',
+          background: 'linear-gradient(90deg, transparent 0%, #c8a84e 30%, #f5d970 50%, #c8a84e 70%, transparent 100%)',
           borderRadius: '24px 24px 0 0',
         }} />
 
@@ -182,7 +182,7 @@ export default function QuoteModal({ onClose }) {
             <div style={{
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: 'clamp(1.8rem, 4vw, 2.4rem)',
-              letterSpacing: '0.12em', color: '#e8cc7a',
+              letterSpacing: '0.12em', color: '#f5d970',
             }}>
               Quote Request Sent!
             </div>
@@ -197,7 +197,7 @@ export default function QuoteModal({ onClose }) {
               onClick={onClose}
               style={{
                 marginTop: 12, padding: '14px 44px',
-                background: 'linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)',
+                background: 'linear-gradient(135deg, #f5d970, #f5d970, #c8a84e)',
                 color: '#050508', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 12,
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 14, fontWeight: 900, letterSpacing: '0.18em',
@@ -269,7 +269,7 @@ export default function QuoteModal({ onClose }) {
                       <span style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: 11.5, fontWeight: 700,
-                        color: service === s.id ? '#e8cc7a' : 'rgba(255,255,255,0.8)',
+                        color: service === s.id ? '#f5d970' : 'rgba(255,255,255,0.8)',
                         textAlign: 'center', lineHeight: 1.3,
                         transition: 'color 0.2s',
                       }}>{s.label}</span>

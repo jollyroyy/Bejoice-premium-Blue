@@ -240,7 +240,7 @@ export default function Services() {
             borderTop: '1px solid rgba(200,168,78,0.55)',
             borderRadius: 24,
             overflow: 'hidden',
-            boxShadow: '0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,78,0.06) inset, inset 0 1px 0 rgba(255,215,105,0.22), 0 0 50px rgba(200,168,78,0.06)',
+            boxShadow: '0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,78,0.06) inset, inset 0 1px 0 rgba(200,168,78,0.22), 0 0 50px rgba(200,168,78,0.06)',
             position: 'relative',
           }}
         >
@@ -252,8 +252,8 @@ export default function Services() {
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 'clamp(13px,1.4vw,16px)',
               letterSpacing: '0.45em', textTransform: 'uppercase',
-              color: 'rgba(255,215,105,1)',
-              textShadow: '0 0 20px rgba(255,200,80,0.5)',
+              color: 'rgba(200,168,78,1)',
+              textShadow: '0 0 20px rgba(200,168,78,0.5)',
               fontWeight: 700,
               marginBottom: '0.8rem',
             }}>
@@ -335,7 +335,7 @@ export default function Services() {
                       fontFamily: "'Bebas Neue', sans-serif",
                       fontSize: 'clamp(1.3rem,2.2vw,1.7rem)',
                       letterSpacing: '0.08em', lineHeight: 1.1,
-                      color: isExpanded ? 'rgba(255,215,105,1)' : isActive ? 'rgba(255,215,105,1)' : '#ffffff',
+                      color: isExpanded ? 'rgba(200,168,78,1)' : isActive ? 'rgba(200,168,78,1)' : '#ffffff',
                       margin: 0,
                       transition: 'color 0.3s ease',
                     }}>
@@ -355,7 +355,7 @@ export default function Services() {
                           transition: 'all 0.25s ease',
                         }}
                       >
-                        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,215,105,0.9)' }}>
+                        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(200,168,78,0.9)' }}>
                           {isExpanded ? 'Less' : 'View'}
                         </span>
                         <motion.svg
@@ -363,7 +363,7 @@ export default function Services() {
                           animate={{ rotate: isExpanded ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <path d="M2 3.5L5 6.5L8 3.5" stroke="rgba(255,215,105,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M2 3.5L5 6.5L8 3.5" stroke="rgba(200,168,78,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </motion.svg>
                       </button>
                     )}

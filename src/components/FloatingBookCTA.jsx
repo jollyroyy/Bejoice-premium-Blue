@@ -570,7 +570,7 @@ if (typeof document !== "undefined" && !document.getElementById(STYLE_ID)) {
     .ca-input-field:focus { border-color: rgba(200,168,78,0.5); background: rgba(255,255,255,0.07); }
     .ca-send-btn {
       width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, #e8cc7a, #c8a84e);
+      background: linear-gradient(135deg, #f5d970, #c8a84e);
       border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
       color: #050508; transition: transform 0.2s, box-shadow 0.2s;
       box-shadow: 0 4px 14px rgba(200,168,78,0.4);
@@ -836,7 +836,7 @@ export default function FloatingBookCTA() {
                   <button
                     onClick={() => handleCTA(msg.cta.action)}
                     style={{
-                      background: "linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)",
+                      background: "linear-gradient(135deg, #f5d970, #f5d970, #c8a84e)",
                       color: "#050508", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 12,
                       padding: "11px 20px", fontSize: 12, fontWeight: 900,
                       cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
@@ -846,8 +846,8 @@ export default function FloatingBookCTA() {
                       position: 'relative', overflow: 'hidden',
                       minHeight: 44,
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1.5px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(200,168,78,0.4), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #fff2a8, #f5d97a, #e8cc7a)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #f5d97a, #e8cc7a, #c8a84e)"; }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1.5px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(200,168,78,0.4), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #fff4a0, #f5d970, #f5d970)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #f5d970, #f5d970, #c8a84e)"; }}
                   >
                     <div className="btn-shine-overlay" />
                     {msg.cta.label} →
@@ -891,7 +891,7 @@ export default function FloatingBookCTA() {
                 onClick={() => handleQuickReply(r.action, r.label)}
                 className="ca-qr-btn-mobile"
                 style={{
-                  background: "rgba(200,168,78,0.07)", color: "#e8cc7a",
+                  background: "rgba(200,168,78,0.07)", color: "#f5d970",
                   border: "1px solid rgba(200,168,78,0.22)", borderRadius: 22,
                   padding: "6px 12px", fontSize: 12, fontWeight: 600,
                   cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
@@ -952,7 +952,7 @@ export default function FloatingBookCTA() {
           onClick={() => setOpen(true)}
           className="ca-bubble-mobile"
           style={{
-            background: "linear-gradient(135deg, rgba(12,14,26,0.96), rgba(5,5,8,0.98))",
+            background: "linear-gradient(135deg, rgba(12,14,26,0.96), rgba(7,16,28,0.98))",
             color: "#f0e6c8",
             border: "1px solid rgba(200,168,78,0.4)",
             borderRadius: "18px 18px 4px 18px",
@@ -983,7 +983,7 @@ export default function FloatingBookCTA() {
           <div style={{
             display: "flex", flexDirection: "column", alignItems: "center", gap: 5,
             animation: "ca-label-in 0.5s ease forwards",
-            background: "rgba(5,5,8,0.72)",
+            background: "rgba(7,16,28,0.72)",
             border: "1px solid rgba(200,168,78,0.3)",
             borderRadius: "12px",
             padding: "8px 16px",
@@ -1009,7 +1009,7 @@ export default function FloatingBookCTA() {
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 9.5, fontWeight: 700,
                 letterSpacing: "0.25em",
-                color: "#e8cc7a",
+                color: "#f5d970",
                 textTransform: "uppercase", lineHeight: 1,
               }}>Freight Expert</span>
               <div style={{ width: 16, height: 1, background: "rgba(200,168,78,0.7)" }} />

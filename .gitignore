@@ -5,3 +5,9 @@ dist/
 
 # Backup frame sequences — too large for GitHub
 public/frames1_backup/
+
+# New scrollytelling frame folders — too large for GitHub (1.2GB total)
+public/saudi/
+public/bejoice_truck/
+public/port/
+public/tech_enng/

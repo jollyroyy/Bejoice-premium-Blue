@@ -98,7 +98,7 @@ export default function TrackShipment() {
                 style={{
                   display: 'flex', alignItems: 'center', gap: '9px',
                   padding: '13px 30px',
-                  background: 'linear-gradient(135deg, #e8cc7a, #c8a84e)',
+                  background: 'linear-gradient(135deg, #f5d970, #c8a84e)',
                   border: 'none', color: '#050508',
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: '12px', fontWeight: 700,

@@ -256,6 +256,104 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
       arcMeshes.push(arc);
     });
 
+    // ── Triangulated polygon network (reference image style) ──────────
+    const networkGroup = new THREE.Group();
+    group.add(networkGroup);
+
+    // Port anchor nodes — major world ports (become bright glowing dots)
+    const PORT_NODES = [
+      { lat: 21.5,  lng: 39.2,   r: 1.02, port: true  }, // Jeddah — KSA main hub
+      { lat: 25.2,  lng: 55.3,   r: 1.02, port: true  }, // Dubai
+      { lat: 30.0,  lng: 31.2,   r: 1.02, port: true  }, // Port Said
+      { lat: 37.9,  lng: 23.7,   r: 1.03, port: true  }, // Piraeus
+      { lat: 51.9,  lng:  4.5,   r: 1.04, port: true  }, // Rotterdam
+      { lat: 53.5,  lng:  9.9,   r: 1.04, port: true  }, // Hamburg
+      { lat: 11.6,  lng: 43.1,   r: 1.02, port: true  }, // Djibouti
+      { lat: 19.1,  lng: 72.9,   r: 1.03, port: true  }, // Mumbai
+      { lat:  1.3,  lng: 103.8,  r: 1.03, port: true  }, // Singapore
+      { lat: 22.3,  lng: 114.2,  r: 1.03, port: true  }, // Hong Kong
+      { lat: 31.2,  lng: 121.5,  r: 1.03, port: true  }, // Shanghai
+      { lat: 35.7,  lng: 139.7,  r: 1.04, port: true  }, // Tokyo
+      { lat: 37.5,  lng: 126.9,  r: 1.04, port: true  }, // Busan
+      { lat: -33.9, lng: 151.2,  r: 1.04, port: true  }, // Sydney
+      { lat: 40.7,  lng: -74.0,  r: 1.04, port: true  }, // New York
+      { lat: 34.0,  lng: -118.2, r: 1.04, port: true  }, // Los Angeles
+      { lat: 29.7,  lng: -95.4,  r: 1.03, port: true  }, // Houston
+      { lat: -23.5, lng: -46.6,  r: 1.03, port: true  }, // Santos
+      { lat: -33.9, lng: 18.4,   r: 1.03, port: true  }, // Cape Town
+      { lat:  6.5,  lng:  3.4,   r: 1.02, port: true  }, // Lagos
+      { lat: -4.0,  lng: 39.7,   r: 1.02, port: true  }, // Mombasa
+      { lat: 55.7,  lng: 37.6,   r: 1.04, port: true  }, // Moscow
+      { lat: 43.1,  lng: 131.9,  r: 1.04, port: true  }, // Vladivostok
+    ];
+
+    // Fibonacci fill nodes — dense enough to leave no gaps across the globe
+    const FILL_COUNT = 72;
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    const fillNodes = Array.from({ length: FILL_COUNT }, (_, i) => {
+      const y     = 1 - (i / (FILL_COUNT - 1)) * 2;
+      const rad   = Math.sqrt(Math.max(0, 1 - y * y));
+      const theta = goldenAngle * i;
+      const r     = i % 4 === 0 ? 1.09 : 1.02; // every 4th floats beyond globe
+      return { vec: new THREE.Vector3(Math.cos(theta) * rad * r, y * r, Math.sin(theta) * rad * r), port: false };
+    });
+
+    // Merge all nodes
+    const allNodes = [
+      ...PORT_NODES.map(p => ({ vec: latLngToVec3(p.lat, p.lng, p.r), port: p.port })),
+      ...fillNodes,
+    ];
+
+    // Connect every pair within threshold — no per-node cap so no broken chains
+    // Distance tuned so each node gets ~4-6 neighbours on average (no isolated gaps)
+    const DIST_MAX = 0.60;
+    const lineVerts = [];
+    for (let i = 0; i < allNodes.length; i++) {
+      for (let j = i + 1; j < allNodes.length; j++) {
+        const d = allNodes[i].vec.distanceTo(allNodes[j].vec);
+        if (d < DIST_MAX) {
+          const a = allNodes[i].vec, b = allNodes[j].vec;
+          lineVerts.push(a.x, a.y, a.z, b.x, b.y, b.z);
+        }
+      }
+    }
+
+    const netLineGeo = new THREE.BufferGeometry();
+    netLineGeo.setAttribute('position', new THREE.Float32BufferAttribute(lineVerts, 3));
+    const networkLines = new THREE.LineSegments(netLineGeo, new THREE.LineBasicMaterial({
+      color: 0xaaddff, transparent: true, opacity: 0.20,
+      blending: THREE.AdditiveBlending, depthWrite: false,
+    }));
+    networkGroup.add(networkLines);
+
+    // Fill node dots — small, subtle
+    const fillVerts = fillNodes.map(n => [n.vec.x, n.vec.y, n.vec.z]).flat();
+    const fillGeo = new THREE.BufferGeometry();
+    fillGeo.setAttribute('position', new THREE.Float32BufferAttribute(fillVerts, 3));
+    networkGroup.add(new THREE.Points(fillGeo, new THREE.PointsMaterial({
+      color: 0xc8eeff, size: 0.020, transparent: true, opacity: 0.65,
+      sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+    })));
+
+    // Port dots — brighter, larger
+    const portVerts = PORT_NODES.map(p => { const v = latLngToVec3(p.lat, p.lng, p.r); return [v.x, v.y, v.z]; }).flat();
+    const portGeo = new THREE.BufferGeometry();
+    portGeo.setAttribute('position', new THREE.Float32BufferAttribute(portVerts, 3));
+    const hubDots = new THREE.Points(portGeo, new THREE.PointsMaterial({
+      color: 0xffffff, size: 0.042, transparent: true, opacity: 0.95,
+      sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+    }));
+    networkGroup.add(hubDots);
+
+    // Jeddah — extra bright KSA anchor
+    const saudiVec = latLngToVec3(21.5, 39.2, 1.02);
+    const saudiGeo = new THREE.BufferGeometry();
+    saudiGeo.setAttribute('position', new THREE.Float32BufferAttribute([saudiVec.x, saudiVec.y, saudiVec.z], 3));
+    networkGroup.add(new THREE.Points(saudiGeo, new THREE.PointsMaterial({
+      color: 0xffffff, size: 0.082, transparent: true, opacity: 1.0,
+      sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+    })));
+
     // Lighting
     scene.add(new THREE.AmbientLight(0x0a1525, 0.8));
     const moon = new THREE.DirectionalLight(0xb8d8ff, 1.4);
@@ -347,6 +445,9 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
       arcMeshes.forEach(arc => {
         arc.material.opacity = 0.18 + 0.12 * Math.sin(t * 1.2);
       });
+      // Network pulse
+      networkLines.material.opacity = 0.18 + 0.08 * Math.sin(t * 0.7);
+      hubDots.material.opacity      = 0.88 + 0.12 * Math.sin(t * 1.4 + 1.0);
       renderer.render(scene, camera);
     };
     tick();
@@ -454,8 +555,8 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
           >
             {/* HQ */}
             <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'0.7rem', marginBottom:'1rem' }}>
-              <span style={{ width:12, height:12, borderRadius:'50%', background:'#ffe680', flexShrink:0, boxShadow:'0 0 8px rgba(255,230,128,0.5)' }} />
-              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,3vw,1.4rem)', color:'#ffe680', letterSpacing:'0.08em' }}>DUBAI, UAE — HEADQUARTERS</span>
+              <span style={{ width:12, height:12, borderRadius:'50%', background:'#f5d970', flexShrink:0, boxShadow:'0 0 8px rgba(200,168,78,0.5)' }} />
+              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,3vw,1.4rem)', color:'#f5d970', letterSpacing:'0.08em' }}>DUBAI, UAE — HEADQUARTERS</span>
             </div>
 
             {/* Separator */}

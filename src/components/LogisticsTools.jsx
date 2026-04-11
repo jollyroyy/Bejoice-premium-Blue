@@ -376,11 +376,11 @@ function LoadCalculator() {
           <button key={t.id} onClick={() => { setTab(t.id); setResults(null) }}
             style={{
               flex:1, padding:'0.7rem 0.3rem',
-              background:   tab===t.id ? 'linear-gradient(135deg,#ffe080,#c8a84e)' : 'rgba(255,255,255,0.04)',
+              background:   tab===t.id ? 'linear-gradient(135deg,#f0e090,#c8a84e)' : 'rgba(255,255,255,0.04)',
               border:       '1px solid',
               borderColor:  tab===t.id ? 'transparent' : 'rgba(255,255,255,0.12)',
               borderRadius: '0.65rem',
-              color:        tab===t.id ? '#0a0a0f' : 'rgba(255,255,255,0.7)',
+              color:        tab===t.id ? '#0c0c14' : 'rgba(255,255,255,0.7)',
               fontFamily:   "'DM Sans', sans-serif",
               fontSize:     '0.75rem', fontWeight: 800,
               cursor:       'pointer', letterSpacing: '0.04em',
@@ -729,7 +729,7 @@ function LoadCalculator() {
                 📥 CSV
               </button>
               <button onClick={exportPDF}
-                style={{ flex:1, background:'linear-gradient(135deg,#ffe080,#c8a84e)', border:'none', borderRadius:'0.6rem', color:'#0a0a0f', padding:'0.7rem', cursor:'pointer', fontFamily:"'DM Sans',sans-serif", fontSize:'0.82rem', fontWeight:800, display:'flex', alignItems:'center', justifyContent:'center', gap:'0.4rem', transition:'all 0.2s' }}
+                style={{ flex:1, background:'linear-gradient(135deg,#f0e090,#c8a84e)', border:'none', borderRadius:'0.6rem', color:'#0c0c14', padding:'0.7rem', cursor:'pointer', fontFamily:"'DM Sans',sans-serif", fontSize:'0.82rem', fontWeight:800, display:'flex', alignItems:'center', justifyContent:'center', gap:'0.4rem', transition:'all 0.2s' }}
                 onMouseEnter={e=>e.currentTarget.style.opacity='0.88'}
                 onMouseLeave={e=>e.currentTarget.style.opacity='1'}>
                 📄 PDF Report
@@ -781,13 +781,13 @@ export default function LogisticsTools() {
             background:'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
             backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
             border:'1px solid rgba(200,168,78,0.35)',
-            borderTop:'1px solid rgba(255,215,105,0.65)',
+            borderTop:'1px solid rgba(200,168,78,0.65)',
             borderRadius:28, overflow:'hidden', position:'relative',
             padding:'clamp(2rem,5vw,4rem) clamp(1.5rem,4vw,3.5rem) clamp(2rem,4vw,3rem)',
             boxShadow:[
               '0 60px 120px rgba(0,0,0,0.75)',
               '0 0 0 1px rgba(200,168,78,0.08) inset',
-              'inset 0 1px 0 rgba(255,215,105,0.30)',
+              'inset 0 1px 0 rgba(200,168,78,0.30)',
               '0 0 60px rgba(200,168,78,0.10)',
               '0 0 120px rgba(200,168,78,0.05)',
             ].join(', '),

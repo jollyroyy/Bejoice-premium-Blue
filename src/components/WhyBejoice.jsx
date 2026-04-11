@@ -17,7 +17,7 @@ export default function WhyBejoice() {
           border: '1px solid rgba(200,168,78,0.28)',
           borderTop: '1px solid rgba(200,168,78,0.55)',
           borderRadius: 28,
-          boxShadow: '0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,78,0.06) inset, inset 0 1px 0 rgba(255,215,105,0.22), 0 0 50px rgba(200,168,78,0.06)',
+          boxShadow: '0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,78,0.06) inset, inset 0 1px 0 rgba(200,168,78,0.22), 0 0 50px rgba(200,168,78,0.06)',
           overflow: 'hidden', position: 'relative',
           padding: 'clamp(24px,3.5vw,48px)',
         }}>

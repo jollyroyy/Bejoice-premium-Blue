@@ -71,7 +71,7 @@ export default function StatsBar() {
                 fontFamily: "'Bebas Neue', sans-serif",
                 fontSize: 'clamp(2.6rem, 4vw, 3.8rem)',
                 letterSpacing: '0.04em', lineHeight: 1,
-                color: '#ffe680',
+                color: '#f5d970',
                 textShadow: '0 0 24px rgba(255,214,0,0.55), 0 2px 10px rgba(0,0,0,0.8)',
               }}>
                 <CountUp target={s.v} suffix={s.suffix} duration={800} />

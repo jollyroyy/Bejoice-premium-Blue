@@ -39,45 +39,57 @@ function CountUp({ target, suffix = '', duration = 900 }) {
 // ─────────────────────────────────────────────────────────────────────────────
 const SCROLL_HEIGHT = 1800
 
-// ── Frame sequences (4 clean segments, no duplication) ───────────────
-// 3d:      0–144   (145) 3D HDR intro PNGs
-// frames2: 145–390 (246) enhanced Bejoice PNGs — files 0044–0289
-// frames8: 391–511 (121) additional footage PNGs
-// frames6: 512–632 (121) road / project cargo JPEGs
-// TOTAL: 633
-const FRAMES3D_COUNT = 145
-const FRAMES2_COUNT  = 246
-const FRAMES2_START  = 44
-const FRAMES8_COUNT  = 121
-const FRAMES6_COUNT  = 121
-const TOTAL_FRAMES   = FRAMES3D_COUNT + FRAMES2_COUNT + FRAMES8_COUNT + FRAMES6_COUNT  // 633
+// ── Frame sequences ───────────────────────────────────────────────────
+// 3d:            0–144   (145) 3D HDR intro PNGs — hero
+// globe-bridge:  145–210 (66)  last 3d frame repeated — canvas fully dimmed during globe widget
+// saudi:         211–403 (193) Saudi Arabia footage PNGs — 3rd segment (after globe)
+// bejoice_truck: 404–548 (145) Truck/road footage PNGs
+// port:          549–717 (169) Port/sea footage PNGs
+// frames8:       718–838 (121) additional footage PNGs
+// tech_enng:     839–983 (145) tech/engineering footage PNGs
+// TOTAL: 984
+const FRAMES3D_COUNT     = 145
+const GLOBE_BRIDGE_COUNT = 66   // frames 145–210 — hidden behind globe widget
+const FRAMES_SAUDI_COUNT = 193
+const FRAMES_TRUCK_COUNT = 145
+const FRAMES_PORT_COUNT  = 169
+const FRAMES8_COUNT      = 121
+const FRAMES_TECH_COUNT  = 145
+const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_SAUDI_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT  // 984
 
 const FRAME_URLS = [
-  // 3d intro sequence (idx 0–144)
+  // 3d intro sequence (idx 0–144) — hero
   ...Array.from({ length: FRAMES3D_COUNT }, (_, i) =>
-    `/3d/${String(i + 1).padStart(4, '0')}.png`
-  ),
-  // frames2 seg: 145–390
-  ...Array.from({ length: FRAMES2_COUNT }, (_, i) =>
-    `/frames2/${String(FRAMES2_START + i).padStart(4, '0')}.png`),
-  // frames8 seg: 391–511
+    `/3d/${String(i + 1).padStart(4, '0')}.png`),
+  // globe bridge (idx 145–210) — repeats last 3d frame; invisible behind globe dim
+  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `/3d/0145.png`),
+  // saudi seg (idx 211–403) — 3rd segment, plays right after globe
+  ...Array.from({ length: FRAMES_SAUDI_COUNT }, (_, i) =>
+    `/saudi/${String(i + 1).padStart(4, '0')}.png`),
+  // bejoice_truck seg (idx 404–548) — starts from frame 1 after globe ends
+  ...Array.from({ length: FRAMES_TRUCK_COUNT }, (_, i) =>
+    `/bejoice_truck/${String(i + 1).padStart(4, '0')}.png`),
+  // port seg (idx 549–717)
+  ...Array.from({ length: FRAMES_PORT_COUNT }, (_, i) =>
+    `/port/${String(i + 1).padStart(4, '0')}.png`),
+  // frames8 seg (idx 718–838)
   ...Array.from({ length: FRAMES8_COUNT }, (_, i) =>
     `/frames8/${String(i + 1).padStart(4, '0')}.png`),
-  // frames6 seg: 512–632
-  ...Array.from({ length: FRAMES6_COUNT }, (_, i) =>
-    `/frames6/${String(i + 1).padStart(4, '0')}.jpg`),
+  // tech_enng seg (idx 839–983)
+  ...Array.from({ length: FRAMES_TECH_COUNT }, (_, i) =>
+    `/tech_enng/${String(i + 1).padStart(4, '0')}.png`),
 ]
 
 // Fade window in frames — how many frames to crossfade between chapters
 const FRAME_FADE = 18
 
-// Chapters mapped to 4-segment sequence.
-// 3d:0–144 | frames2:145–390 | frames8:391–511 | frames6:512–632
+// Chapters mapped to segments.
+// 3d:0–144 | globe-bridge:145–210 | saudi:211–403 | bejoice_truck:404–548 | port:549–717 | frames8:718–838 | tech_enng:839–983
 const GLOBE_CHAPTER_START = 145
 const GLOBE_CHAPTER_END   = 210
 
 const CHAPTERS = [
-  // ── 3d: 0–144 ──
+  // ── 3d: 0–144 — hero ──
   {
     frameRange: [0, 144],
     eyebrow:    'CONNECTING KSA TO THE WORLD',
@@ -93,57 +105,75 @@ const CHAPTERS = [
     align:        'center',
     globeChapter: true,
   },
-  // ── frames2: 218–390 (shifted +65) ──
+  // ── saudi: 211–403 — 3rd chapter ──
   {
-    frameRange: [218, 262],
-    eyebrow:    '180+ COUNTRIES · 25+ YEARS EXPERIENCE',
-    headline:   ['FROM BLUE PRINT TO', 'DELIVERY, WE MOVE IT ALL'],
-    sub:        "Saudi Arabia's premier freight forwarder — delivering seamless logistics across 180+ countries.",
+    frameRange: [218, 390],
+    eyebrow:    'KINGDOM OF SAUDI ARABIA · VISION 2030',
+    headline:   ['CONNECTED GLOBALLY'],
+    sub:        'Born in Saudi Arabia. Trusted across 180+ countries. Bejoice Group — the Kingdom\'s premier freight forwarder powering Vision 2030 trade ambitions.',
+    align:      'center',
+    vAlign:     'bottom',
+  },
+  // ── bejoice_truck: 404–548 ──
+  {
+    frameRange: [413, 463],
+    eyebrow:    'GCC ROAD NETWORK · CROSS-BORDER TRANSPORT',
+    headline:   ['FROM BLUE PRINT TO DELIVERY,', 'WE MOVE IT ALL'],
+    sub:        'Seamless cross-border land transport across the GCC — powered by a modern fleet connecting Saudi Arabia to every regional hub.',
     align:      'right',
   },
   {
-    frameRange: [270, 314],
-    eyebrow:    'SEA FREIGHT · FCL & LCL',
+    frameRange: [471, 541],
+    eyebrow:    'OCEAN FREIGHT',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
-    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
-    align:      'right',
-  },
-  {
-    frameRange: [322, 366],
-    eyebrow:    'GCC ROAD NETWORK',
-    headline:   ['CONNECTED', 'GLOBALLY'],
-    sub:        'Seamless cross-border land transport across the GCC, powered by a state-of-the-art fleet.',
+    sub:        'End-to-end road freight solutions engineered for reliability — from first mile to final destination across KSA and the wider GCC.',
     align:      'left',
   },
+  // ── port: 549–717 ──
   {
-    frameRange: [374, 418],
-    eyebrow:    'CUSTOMS CLEARANCE · ZATCA CERTIFIED',
+    frameRange: [557, 613],
+    eyebrow:    'CUSTOMS CLEARANCE · PORT OPERATIONS',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
-    sub:        'We handle the paperwork. You handle the business.',
+    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
     align:      'right',
   },
   {
-    frameRange: [426, 463],
-    eyebrow:    'SEA FREIGHT · FCL & LCL',
-    headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
-    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub.',
+    frameRange: [621, 707],
+    eyebrow:    'FCL & LCL',
+    headline:   ['FROM PORT TO PORT.', 'WORLD-CLASS LOGISTICS'],
+    sub:        'Comprehensive ocean freight solutions — full container loads, consolidated shipments, and breakbulk cargo managed with Saudi expertise.',
     align:      'left',
   },
-  // ── frames8: 391–511 ──
+  // ── frames8: 718–838 ──
   {
-    frameRange: [471, 560],
+    frameRange: [726, 780],
     eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
     headline:   ['SPEED ABOVE ALL.', 'DELIVERED ON TIME'],
     sub:        'Express air cargo solutions connecting Saudi Arabia to global hubs — critical shipments, time-sensitive freight, temperature-controlled cargo.',
     align:      'right',
   },
-  // ── frames6: 512–632 ──
   {
-    frameRange: [568, 620],
-    eyebrow:    'PRECISION HEAVY LIFT · 1500+ OPERATIONS',
+    frameRange: [781, 840],
+    eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
+    headline:   ['WORLD CLASS AIR FREIGHT'],
+    sub:        '',
+    align:      'right',
+  },
+  // ── tech_enng: 839–983 ──
+  {
+    frameRange: [847, 911],
+    eyebrow:    'HEAVY LIFT · PROJECT CARGO',
     headline:   ['PRECISION IN HANDLING.', 'EXCELLENCE IN DELIVERY'],
-    sub:        "Precision Placement Where Cranes Can't Go. Millimeter-accurate. No room for error — and we never make one.",
-    align:      'left',
+    sub:        'End-to-end technical cargo solutions engineered for complexity — heavy machinery, industrial equipment, and high-value freight delivered with zero compromise.',
+    align:      'right',
+  },
+  {
+    frameRange: [919, 978],
+    eyebrow:    'ISO 9001 CERTIFIED · FIATA MEMBER',
+    headline:   ['TECHNICAL', 'ENGINEERING'],
+    sub:        'Specialised handling of oversized, overweight and high-value cargo — engineered solutions for every challenge.',
+    align:      'center',
+    vAlign:     'bottom',
   },
 ]
 
@@ -172,14 +202,14 @@ function TrackModal({ blNum, onClose }) {
       style={{
         position:'fixed', inset:0, zIndex:9999,
         display:'flex', alignItems:'center', justifyContent:'center',
-        background:'rgba(3,3,6,0.88)', backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)',
+        background:'rgba(5,12,24,0.88)', backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)',
         animation:'trackFadeIn 0.3s ease',
         padding:'1.5rem',
       }}
     >
       <div style={{
         width:'100%', maxWidth:'480px',
-        background:'linear-gradient(135deg,rgba(10,14,26,0.98) 0%,rgba(5,5,8,0.98) 100%)',
+        background:'linear-gradient(135deg,rgba(10,14,26,0.98) 0%,rgba(7,16,28,0.98) 100%)',
         border:'1px solid rgba(200,210,230,0.18)',
         borderRadius:'1.2rem',
         boxShadow:'0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,168,78,0.08) inset',
@@ -300,7 +330,7 @@ function SleekCard({ children, className = '', style = {} }) {
         width:'100%', height:'100%', flex:'1 1 auto', position:'relative', overflow:'hidden',
         background:'rgba(10, 10, 14, 0.55)', 
         backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
-        border:'1px solid rgba(255, 215, 120, 0.12)', 
+        border:'1px solid rgba(200, 168, 78, 0.12)', 
         borderRadius:'14px',
         padding:'1rem 1.25rem',
         boxShadow:'0 24px 64px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px rgba(200,168,78,0.04)',
@@ -312,10 +342,10 @@ function SleekCard({ children, className = '', style = {} }) {
     >
       <div className="card-glow-overlay" style={{
         position:'absolute', inset:0, pointerEvents:'none',
-        background:'radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, -20%), rgba(255,215,120,0.08), transparent 75%)',
+        background:'radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, -20%), rgba(200,168,78,0.08), transparent 75%)',
         opacity:0.6
       }} />
-      <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(255,215,120,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
+      <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
       <div className="card-shine-anim" />
       <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
         {children}
@@ -368,7 +398,7 @@ function TrackCard() {
         <button
           onClick={() => window.open('https://www.track-trace.com/', '_blank', 'noopener,noreferrer')}
           className="btn-gold"
-          style={{ padding:'12px 28px', fontSize:'1rem', borderRadius:'10px', whiteSpace:'nowrap', flexShrink:0, fontWeight:700 }}
+          style={{ padding:'12px 28px', fontSize:'1rem', borderRadius:'10px', whiteSpace:'nowrap', flexShrink:0, fontWeight:400 }}
         >
           Track Now
         </button>
@@ -422,7 +452,7 @@ export default function VideoHero({ onQuoteClick }) {
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    const dpr = Math.min(window.devicePixelRatio || 1, 3)
     const resize = () => {
       // Use parent's rendered size so canvas matches exactly — handles 100svh correctly
       const parent = canvas.parentElement
@@ -471,8 +501,8 @@ export default function VideoHero({ onQuoteClick }) {
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'high'
 
-    // HDR-like enhancement: boost contrast, saturation & brightness
-    ctx.filter = 'contrast(1.15) saturate(1.25) brightness(1.05)'
+    // HDR-like enhancement: richer contrast, saturation & sharpness
+    ctx.filter = 'contrast(1.18) saturate(1.3) brightness(1.04)'
     ctx.drawImage(img, x, y, w, h)
     ctx.filter = 'none'
   }, [])
@@ -691,7 +721,7 @@ export default function VideoHero({ onQuoteClick }) {
         {/* Exit overlay */}
         <div ref={exitOverlayRef} style={{
           position:'absolute', inset:0, zIndex:8,
-          background:'linear-gradient(to bottom,rgba(5,5,8,0.96) 0%,#050508 100%)',
+          background:'linear-gradient(to bottom,rgba(7,16,28,0.96) 0%,#050508 100%)',
           pointerEvents:'none', opacity:0, willChange:'opacity',
         }} />
 
@@ -699,8 +729,8 @@ export default function VideoHero({ onQuoteClick }) {
         <div style={{
           position:'absolute', inset:0, zIndex:3, pointerEvents:'none',
           background:`
-            radial-gradient(ellipse 75% 65% at 50% 50%,rgba(5,5,8,0) 0%,rgba(5,5,8,0.45) 100%),
-            linear-gradient(to bottom,rgba(5,5,8,0.50) 0%,rgba(5,5,8,0.01) 22%,rgba(5,5,8,0.01) 76%,rgba(5,5,8,0.70) 100%)
+            radial-gradient(ellipse 75% 65% at 50% 50%,rgba(7,16,28,0) 0%,rgba(7,16,28,0.45) 100%),
+            linear-gradient(to bottom,rgba(7,16,28,0.50) 0%,rgba(7,16,28,0.01) 22%,rgba(7,16,28,0.01) 76%,rgba(7,16,28,0.70) 100%)
           `,
         }} />
 
@@ -716,7 +746,7 @@ export default function VideoHero({ onQuoteClick }) {
           position: 'absolute', inset: 0, zIndex: 6,
           opacity: 0, pointerEvents: 'none', transition: 'none',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(10,18,40,0.85) 0%, rgba(5,5,8,0.98) 100%)',
+          background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(10,18,40,0.85) 0%, rgba(7,16,28,0.98) 100%)',
         }}>
           <Suspense fallback={null}>
             <BejoiceGlobe embedded fullscreen />
@@ -728,6 +758,7 @@ export default function VideoHero({ onQuoteClick }) {
           const isCenter = ch.align === 'center'
           const isRight  = ch.align === 'right'
           const isTop    = ch.vAlign === 'top'
+          const isBottom = ch.vAlign === 'bottom'
           return (
             <div key={i}
               ref={el => chaptersRef.current[i] = el}
@@ -735,12 +766,12 @@ export default function VideoHero({ onQuoteClick }) {
               style={{
                 position:'absolute', inset:0, zIndex:4,
                 display:'flex', flexDirection:'column',
-                justifyContent: isTop ? 'flex-start' : 'center',
+                justifyContent: isTop ? 'flex-start' : isBottom ? 'flex-end' : 'center',
                 alignItems:    isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                 textAlign:     isCenter ? 'center' : isRight ? 'right'    : 'left',
                 padding:       'clamp(1.2rem,5vw,6rem)',
                 paddingTop:    isTop ? 'clamp(5rem,10vh,8rem)' : undefined,
-                paddingBottom: 'clamp(160px,28vh,320px)',
+                paddingBottom: isBottom ? 'clamp(60px,8vh,100px)' : 'clamp(160px,28vh,320px)',
                 /* NO opacity here — React re-renders would reset it.
                    Initial opacity:0 is applied by the useEffect below.
                    The RAF owns opacity from then on. */
@@ -750,83 +781,90 @@ export default function VideoHero({ onQuoteClick }) {
               }}
             >
 
-              {/* Eyebrow */}
-              {ch.eyebrow && (
-                <div className="hero-eyebrow" style={{
-                  display:'inline-flex', alignItems:'center', gap:'8px',
-                  fontFamily:"'DM Sans',sans-serif",
-                  fontSize:'clamp(10px,1.1vw,13px)', letterSpacing:'0.22em',
-                  textTransform:'uppercase', fontWeight:600,
-                  color:'rgba(255,224,120,1)',
-                  background:'rgba(200,168,78,0.18)',
-                  border:'1px solid rgba(255,215,100,0.55)',
-                  borderRadius:'2px', padding:'5px 14px',
-                  marginBottom:'14px',
-                  alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-                  backdropFilter:'blur(8px)',
-                  userSelect:'none', pointerEvents:'none',
-                }}>
-                  {ch.eyebrow}
-                </div>
-              )}
-
-              {/* Headline */}
-              <div style={{ pointerEvents:'all', cursor:'default' }}>
-                {ch.headline.map((line, li) => (
-                  <h1 key={li} style={{
-                    fontFamily:"'Bebas Neue',sans-serif",
-                    fontSize:'clamp(2rem,5.5vw,5.5rem)',
-                    lineHeight:0.87, letterSpacing:'0.06em', margin:0,
-                    color: li % 2 === 0 ? '#ffffff' : 'rgba(255,215,105,1)',
-                    textShadow: li % 2 === 0
-                      ? '0 0 40px rgba(255,255,255,0.55), 0 2px 48px rgba(0,0,0,0.98), 0 0 120px rgba(0,0,0,0.7)'
-                      : '0 0 32px rgba(255,200,80,0.5), 0 2px 48px rgba(0,0,0,0.98)',
-                    userSelect:'none',
-                  }}>
-                    {line}
-                  </h1>
-                ))}
-              </div>
-
-              {/* Gold accent line */}
+              {/* ── Text block with subtle dark backdrop ── */}
               <div style={{
-                width: isCenter ? '80px' : '60px', height:'2px', marginTop:'26px',
-                background:'linear-gradient(90deg,rgba(200,168,78,0.85),rgba(200,168,78,0.08))',
+                display:'flex', flexDirection:'column',
+                alignItems: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
+                background:'rgba(0,0,0,0.42)',
+                backdropFilter:'blur(6px)',
+                WebkitBackdropFilter:'blur(6px)',
+                borderRadius:'10px',
+                padding:'clamp(14px,2vw,24px) clamp(16px,2.5vw,28px)',
+                border:'1px solid rgba(255,255,255,0.06)',
+                maxWidth: 'max-content',
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
-              }} />
-
-              {/* Chapter counter */}
-              <div style={{
-                marginTop:'16px', fontFamily:"'Bebas Neue',sans-serif",
-                fontSize:'11px', letterSpacing:'0.38em', textTransform:'uppercase',
-                color:'rgba(200,168,78,0.32)',
-                alignSelf: isCenter ? 'center' : undefined,
               }}>
-                {String(i+1).padStart(2,'0')} / {String(CHAPTERS.length).padStart(2,'0')}
-              </div>
 
-              {/* Start Shipment CTA — first chapter only */}
-              {ch.showCTA && (
-                <button
-                  className="hero-intro-cta btn-gold"
-                  onClick={onQuoteClick}
-                  style={{
-                    marginTop:'28px',
-                    alignSelf: isRight ? 'flex-end' : isCenter ? 'center' : 'flex-start',
-                    display:'flex', alignItems:'center', gap:'10px',
-                    fontFamily:"'Bebas Neue',sans-serif",
-                    fontSize:'clamp(13px,1.4vw,16px)', letterSpacing:'0.18em',
-                    padding:'14px 32px', borderRadius:'3px', cursor:'pointer',
-                    pointerEvents:'all',
-                  }}
-                >
-                  START SHIPMENT
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0 }}>
-                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  <div className="btn-shine-overlay" />
-                </button>
-              )}
+                {/* Eyebrow */}
+                {ch.eyebrow && (
+                  <div className="hero-eyebrow" style={{
+                    display:'inline-flex', alignItems:'center', gap:'8px',
+                    fontFamily:"'DM Sans',sans-serif",
+                    fontSize:'clamp(10px,1.1vw,13px)', letterSpacing:'0.22em',
+                    textTransform:'uppercase', fontWeight:600,
+                    color:'rgba(200,168,78,1)',
+                    background:'rgba(200,168,78,0.18)',
+                    border:'1px solid rgba(200,168,78,0.55)',
+                    borderRadius:'2px', padding:'5px 14px',
+                    marginBottom:'14px',
+                    alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
+                    backdropFilter:'blur(8px)',
+                    userSelect:'none', pointerEvents:'none',
+                  }}>
+                    {ch.eyebrow}
+                  </div>
+                )}
+
+                {/* Headline */}
+                <div style={{ pointerEvents:'all', cursor:'default' }}>
+                  {ch.headline.map((line, li) => (
+                    <h1 key={li} style={{
+                      fontFamily:"'Bebas Neue',sans-serif",
+                      fontSize:'clamp(2rem,5.5vw,5.5rem)',
+                      lineHeight:0.87, letterSpacing:'0.06em', margin:0,
+                      color: li % 2 === 0 ? '#ffffff' : 'rgba(200,168,78,1)',
+                      textShadow: li % 2 === 0
+                        ? '0 1px 12px rgba(0,0,0,0.9)'
+                        : '0 1px 12px rgba(0,0,0,0.9), 0 0 20px rgba(200,168,78,0.3)',
+                      userSelect:'none',
+                    }}>
+                      {line}
+                    </h1>
+                  ))}
+                </div>
+
+                {/* Accent line */}
+                <div style={{
+                  width: isCenter ? '80px' : '60px', height:'2px', marginTop:'26px',
+                  background:'linear-gradient(90deg,rgba(200,168,78,0.85),rgba(200,168,78,0.08))',
+                  alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
+                }} />
+
+
+{/* Start Shipment CTA — first chapter only */}
+                {ch.showCTA && (
+                  <button
+                    className="hero-intro-cta btn-gold"
+                    onClick={onQuoteClick}
+                    style={{
+                      marginTop:'28px',
+                      alignSelf: isRight ? 'flex-end' : isCenter ? 'center' : 'flex-start',
+                      display:'flex', alignItems:'center', gap:'10px',
+                      fontFamily:"'Bebas Neue',sans-serif",
+                      fontSize:'clamp(13px,1.4vw,16px)', letterSpacing:'0.18em',
+                      padding:'14px 32px', borderRadius:'3px', cursor:'pointer',
+                      pointerEvents:'all',
+                    }}
+                  >
+                    START SHIPMENT
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0 }}>
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <div className="btn-shine-overlay" />
+                  </button>
+                )}
+
+              </div>{/* end text backdrop */}
             </div>
           )
         })}
@@ -850,13 +888,13 @@ export default function VideoHero({ onQuoteClick }) {
           <div className="hero-stats-bar" style={{
             flex:'0 0 auto', display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'stretch',
             background:'rgba(10, 10, 14, 0.55)',
-            border:'1px solid rgba(255, 215, 120, 0.12)', borderRadius:'14px',
+            border:'1px solid rgba(200, 168, 78, 0.12)', borderRadius:'14px',
             backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
             boxShadow:'0 24px 64px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px rgba(200,168,78,0.04)',
             overflow:'hidden',
           }}>
             {/* Gold top line — matches SleekCard */}
-            <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(255,215,120,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
+            <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
             {[
               { v:'120',  suffix:'+', l:'Countries'  },
               { v:'25',   suffix:'+', l:'Years'      },
@@ -876,7 +914,7 @@ export default function VideoHero({ onQuoteClick }) {
                   }}>
                     <CountUp target={s.v} suffix={s.suffix} duration={1000} />
                   </div>
-                  <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(255,215,120,0.85)', fontWeight:600, marginTop:'6px', whiteSpace:'nowrap' }}>{s.l}</div>
+                  <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(200,168,78,0.85)', fontWeight:600, marginTop:'6px', whiteSpace:'nowrap' }}>{s.l}</div>
                 </div>
               </div>
             ))}
@@ -915,7 +953,7 @@ export default function VideoHero({ onQuoteClick }) {
 
         .premium-card-shine:hover {
           transform: translateY(-2px);
-          border-color: rgba(255, 215, 120, 0.25) !important;
+          border-color: rgba(200, 168, 78, 0.25) !important;
           box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 20px rgba(200,168,78,0.08) !important;
         }
         .card-shine-anim {

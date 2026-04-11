@@ -235,7 +235,7 @@ export default function ContainerCalculator() {
               ].map(([k, v]) => (
                 <div key={k}>
                   <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: 1.5, marginBottom: 3 }}>{k}</div>
-                  <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 18, color: '#ffe680', letterSpacing: 1 }}>{v}</div>
+                  <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 18, color: '#f5d970', letterSpacing: 1 }}>{v}</div>
                 </div>
               ))}
             </div>
@@ -317,7 +317,7 @@ export default function ContainerCalculator() {
                       ? 'linear-gradient(90deg,#ef4444,#ff6b6b)'
                       : utilization > 75
                         ? 'linear-gradient(90deg,#f59e0b,#fbbf24)'
-                        : 'linear-gradient(90deg,#c8a84e,#ffe680)',
+                        : 'linear-gradient(90deg,#c8a84e,#f5d970)',
                     borderRadius: 2, transition: 'width 0.5s ease',
                     boxShadow: `0 0 8px ${utilizationColor}88`,
                   }} />
@@ -329,7 +329,7 @@ export default function ContainerCalculator() {
                 onClick={() => typeof window.__showCalModal === 'function' && window.__showCalModal()}
                 style={{
                   width: '100%', padding: '13px 0', borderRadius: 10,
-                  background: 'linear-gradient(135deg,#c8a84e 0%,#ffe680 50%,#c8a84e 100%)',
+                  background: 'linear-gradient(135deg,#c8a84e 0%,#f5d970 50%,#c8a84e 100%)',
                   border: 'none', cursor: 'pointer',
                   fontFamily: 'DM Sans,sans-serif', fontSize: 13, fontWeight: 700,
                   color: '#0a0a12', letterSpacing: 1.5,

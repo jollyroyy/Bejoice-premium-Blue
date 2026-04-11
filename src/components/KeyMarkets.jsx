@@ -71,7 +71,7 @@ export default function KeyMarkets() {
             <div className="fade-up relative rounded-none border border-gold/10 overflow-hidden" style={{ aspectRatio: '16/9' }}>
               {/* SVG World map (simplified) */}
               <div className="absolute inset-0" style={{
-                background: 'linear-gradient(135deg, rgba(13,13,20,1) 0%, rgba(5,5,8,1) 100%)'
+                background: 'linear-gradient(135deg, rgba(13,13,20,1) 0%, rgba(7,16,28,1) 100%)'
               }} />
 
               {/* Grid lines */}

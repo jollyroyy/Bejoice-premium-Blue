@@ -103,7 +103,7 @@ function Select({ value, onChange, options, placeholder }) {
     >
       {placeholder && <option value="">{placeholder}</option>}
       {options.map(o => (
-        <option key={o} value={o} style={{ background: '#0a0a0f' }}>{o}</option>
+        <option key={o} value={o} style={{ background: '#0c0c14' }}>{o}</option>
       ))}
     </select>
   );
@@ -273,7 +273,7 @@ function StepIndicator({ steps, current }) {
               color: i < current
                 ? 'rgba(200,168,78,0.8)'
                 : i === current
-                  ? '#0a0a0f'
+                  ? '#0c0c14'
                   : 'rgba(255,255,255,0.25)',
               transition: 'all 0.3s',
             }}>

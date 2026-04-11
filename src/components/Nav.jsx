@@ -117,7 +117,7 @@ export default function Nav({ onQuoteClick }) {
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
         transition: 'all 0.5s ease',
         padding: '12px 0',
-        background: pastHero ? 'rgba(5,5,8,0.92)' : 'transparent',
+        background: pastHero ? 'rgba(5,5,8,0.95)' : 'transparent',
         backdropFilter: pastHero ? 'blur(18px)' : 'none',
         WebkitBackdropFilter: pastHero ? 'blur(18px)' : 'none',
         borderBottom: 'none',
@@ -125,10 +125,11 @@ export default function Nav({ onQuoteClick }) {
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
 
           {/* Logo */}
-          <div onClick={scrollToTop} style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-405px' }}>
+          <div onClick={scrollToTop} className="nav-logo-wrap" style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-395px' }}>
             <img
               src="/bejoice-logo-white.png"
               alt="Bejoice"
+              className="nav-logo-img"
               style={{
                 height: 'clamp(82px, 11.2vw, 128px)',
                 width: 'clamp(315px, 42vw, 630px)',
@@ -140,7 +141,7 @@ export default function Nav({ onQuoteClick }) {
           </div>
 
           {/* Right side: CTA + Hamburger */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)', marginRight: '-200px' }}>
+          <div className="nav-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)', marginRight: '-200px' }}>
 
             {/* CTA — Book a Call */}
             <button
@@ -212,7 +213,7 @@ export default function Nav({ onQuoteClick }) {
                 onMouseLeave={e => { if (lang !== 'en') e.currentTarget.style.background = 'transparent' }}
               >
                 <img src="https://flagcdn.com/w40/gb.png" width="20" height="14" alt="English" style={{ borderRadius: '3px', flexShrink: 0, objectFit: 'cover', display: 'block', boxShadow: '0 1px 4px rgba(0,0,0,0.5)', opacity: lang === 'en' ? 1 : 0.75 }} />
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', fontWeight: 800, letterSpacing: '0.12em', lineHeight: 1, color: lang === 'en' ? '#e8cc7a' : 'rgba(200,168,78,0.65)', textShadow: lang === 'en' ? '0 0 12px rgba(232,204,122,0.6)' : 'none' }}>EN</span>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', fontWeight: 800, letterSpacing: '0.12em', lineHeight: 1, color: lang === 'en' ? '#f5d970' : 'rgba(200,168,78,0.65)', textShadow: lang === 'en' ? '0 0 12px rgba(232,204,122,0.6)' : 'none' }}>EN</span>
                 {lang === 'en' && <span style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '20px', height: '2px', background: 'linear-gradient(90deg, transparent, #c8a84e, transparent)', borderRadius: '2px 2px 0 0' }} />}
               </button>
               <button onClick={() => { if (lang === 'ar') return; setLang('ar'); document.cookie = 'googtrans=/en/ar; path=/'; document.cookie = `googtrans=/en/ar; path=/; domain=.${window.location.hostname}`; window.location.reload() }}
@@ -221,7 +222,7 @@ export default function Nav({ onQuoteClick }) {
                 onMouseLeave={e => { if (lang !== 'ar') e.currentTarget.style.background = 'transparent' }}
               >
                 <img src="https://flagcdn.com/w40/sa.png" width="20" height="14" alt="Arabic" style={{ borderRadius: '3px', flexShrink: 0, objectFit: 'cover', display: 'block', boxShadow: '0 1px 4px rgba(0,0,0,0.5)', opacity: lang === 'ar' ? 1 : 0.75 }} />
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', fontWeight: 800, letterSpacing: '0.12em', lineHeight: 1, color: lang === 'ar' ? '#e8cc7a' : 'rgba(200,168,78,0.65)', textShadow: lang === 'ar' ? '0 0 12px rgba(232,204,122,0.6)' : 'none' }}>AR</span>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', fontWeight: 800, letterSpacing: '0.12em', lineHeight: 1, color: lang === 'ar' ? '#f5d970' : 'rgba(200,168,78,0.65)', textShadow: lang === 'ar' ? '0 0 12px rgba(232,204,122,0.6)' : 'none' }}>AR</span>
                 {lang === 'ar' && <span style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '20px', height: '2px', background: 'linear-gradient(90deg, transparent, #c8a84e, transparent)', borderRadius: '2px 2px 0 0' }} />}
               </button>
             </div>
@@ -288,7 +289,7 @@ export default function Nav({ onQuoteClick }) {
         style={{
           position: 'fixed', top: 0, right: 0, bottom: 0,
           width: 'min(400px, 92vw)',
-          background: '#080810',
+          background: '#0c0c14',
           borderLeft: '1px solid rgba(200,168,78,0.12)',
           zIndex: 999,
           display: 'flex', flexDirection: 'column',
@@ -415,7 +416,7 @@ export default function Nav({ onQuoteClick }) {
           onClick={() => setHeavyOpen(false)}
           style={{
             position: 'fixed', inset: 0, zIndex: 99999,
-            background: 'rgba(2,2,4,0.88)', backdropFilter: 'blur(18px)',
+            background: 'rgba(5,5,8,0.92)', backdropFilter: 'blur(18px)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             padding: 'clamp(8px,3vw,40px) clamp(8px,3vw,24px)',
             overflowY: 'auto',
@@ -428,7 +429,7 @@ export default function Nav({ onQuoteClick }) {
               width: '100%', maxWidth: 720,
               maxHeight: 'calc(100svh - 16px)',
               overflowY: 'auto',
-              background: 'linear-gradient(170deg, rgba(18,15,8,0.99) 0%, rgba(8,7,3,1) 100%)',
+              background: 'linear-gradient(170deg, rgba(5,5,8,0.99) 0%, rgba(10,24,38,1) 100%)',
               border: '1px solid rgba(200,168,78,0.22)',
               borderRadius: 'clamp(14px,3vw,24px)',
               boxShadow: '0 40px 80px rgba(0,0,0,0.9), 0 0 0 1px rgba(200,168,78,0.06)',
@@ -436,7 +437,7 @@ export default function Nav({ onQuoteClick }) {
             }}
           >
             {/* ── Top gold rule ── */}
-            <div style={{ height: 3, background: 'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.9) 30%, #ffe680 50%, rgba(200,168,78,0.9) 70%, transparent 100%)' }} />
+            <div style={{ height: 3, background: 'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.9) 30%, #f5d970 50%, rgba(200,168,78,0.9) 70%, transparent 100%)' }} />
 
             {/* ── Header ── */}
             <div style={{
@@ -454,7 +455,7 @@ export default function Nav({ onQuoteClick }) {
               <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.55rem' }}>
-                    <div style={{ width: 28, height: 2, background: 'linear-gradient(90deg, #c8a84e, #ffe680)' }} />
+                    <div style={{ width: 28, height: 2, background: 'linear-gradient(90deg, #c8a84e, #f5d970)' }} />
                     <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.6rem,1.2vw,0.68rem)', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(200,168,78,0.75)' }}>
                       Bejoice Specialized Services
                     </span>
@@ -568,11 +569,11 @@ export default function Nav({ onQuoteClick }) {
                 onClick={() => { setHeavyOpen(false); setTimeout(() => openCalPopup(), 300) }}
                 style={{
                   flex: '1 1 180px', padding: '0.85rem 1.4rem', minHeight: 48,
-                  background: 'linear-gradient(135deg, #b8943e 0%, #ffe680 50%, #c8a84e 100%)',
+                  background: 'linear-gradient(135deg, #c8a84e 0%, #f5d970 50%, #c8a84e 100%)',
                   border: 'none', borderRadius: 10, cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
                   fontSize: 'clamp(0.9rem,2vw,1rem)', letterSpacing: '0.14em',
-                  color: '#0a0800',
+                  color: '#050508',
                   boxShadow: '0 4px 24px rgba(200,168,78,0.25)',
                   transition: 'transform 0.15s, box-shadow 0.15s',
                 }}

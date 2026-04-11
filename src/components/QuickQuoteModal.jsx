@@ -54,7 +54,7 @@ export default function QuickQuoteModal({ onClose }) {
           z-index: 30;
           width: 42px; height: 42px;
           display: flex; align-items: center; justify-content: center;
-          background: rgba(5,5,8,0.9);
+          background: rgba(7,16,28,0.9);
           border: 1.5px solid rgba(200,168,78,0.5);
           border-radius: 50%;
           color: rgba(200,168,78,0.9);
@@ -67,8 +67,8 @@ export default function QuickQuoteModal({ onClose }) {
         }
         .qqm-x-btn:hover {
           background: rgba(200,168,78,0.15);
-          border-color: #e8cc7a;
-          color: #e8cc7a;
+          border-color: #f5d970;
+          color: #f5d970;
           transform: rotate(90deg) scale(1.1);
           box-shadow: 0 6px 28px rgba(200,168,78,0.4), 0 0 0 4px rgba(200,168,78,0.08);
         }
@@ -81,8 +81,8 @@ export default function QuickQuoteModal({ onClose }) {
             transparent 0%,
             #6b4d10 10%,
             #c8a84e 35%,
-            #f5d97a 50%,
-            #e8cc7a 65%,
+            #f5d970 50%,
+            #f5d970 65%,
             #c8a84e 80%,
             transparent 100%
           );

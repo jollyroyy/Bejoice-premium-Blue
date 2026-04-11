@@ -73,8 +73,8 @@ export default function Contact() {
     fontFamily: "'DM Sans',sans-serif",
     fontSize: 'clamp(13px,1.3vw,15px)',
     letterSpacing: '0.22em', textTransform: 'uppercase',
-    color: 'rgba(255,215,105,1)',
-    textShadow: '0 0 16px rgba(255,200,80,0.4)',
+    color: 'rgba(200,168,78,1)',
+    textShadow: '0 0 16px rgba(200,168,78,0.4)',
     fontWeight: 700,
     display: 'block', marginBottom: 7,
   }
@@ -113,12 +113,12 @@ export default function Contact() {
         backdropFilter: 'blur(40px)',
         WebkitBackdropFilter: 'blur(40px)',
         border: '1px solid rgba(200,168,78,0.35)',
-        borderTop: '1px solid rgba(255,215,105,0.65)',
+        borderTop: '1px solid rgba(200,168,78,0.65)',
         borderRadius: 28,
         boxShadow: [
           '0 60px 120px rgba(0,0,0,0.75)',
           '0 0 0 1px rgba(200,168,78,0.08) inset',
-          'inset 0 1px 0 rgba(255,215,105,0.30)',
+          'inset 0 1px 0 rgba(200,168,78,0.30)',
           '0 0 60px rgba(200,168,78,0.10)',
           '0 0 120px rgba(200,168,78,0.05)',
         ].join(', '),
@@ -187,7 +187,7 @@ export default function Contact() {
                 border: '1px solid rgba(200,168,78,0.22)',
                 borderTop: '1px solid rgba(200,168,78,0.45)',
                 borderRadius: 20,
-                boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,78,0.05) inset, inset 0 1px 0 rgba(255,215,105,0.18), 0 0 40px rgba(200,168,78,0.05)',
+                boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,78,0.05) inset, inset 0 1px 0 rgba(200,168,78,0.18), 0 0 40px rgba(200,168,78,0.05)',
                 overflow: 'hidden',
                 position: 'relative',
                 transition: 'transform 0.15s ease, box-shadow 0.3s ease',
@@ -252,7 +252,7 @@ export default function Contact() {
                             borderRadius:6, cursor:'pointer', transition:'all 0.18s',
                             background: form.type === s ? 'rgba(200,168,78,0.12)' : 'rgba(255,255,255,0.04)',
                             border: `1px solid ${form.type === s ? 'rgba(200,168,78,0.45)' : 'rgba(255,255,255,0.08)'}`,
-                            color: form.type === s ? '#ffe680' : 'rgba(255,255,255,0.85)',
+                            color: form.type === s ? '#f5d970' : 'rgba(255,255,255,0.85)',
                           }}
                         >{s}</button>
                       ))}

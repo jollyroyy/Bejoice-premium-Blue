@@ -275,8 +275,8 @@ export function WeightDistributionGuide({ items, containerType }) {
             {totalWeight > 0 && <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:8, color:'rgba(255,255,255,0.35)' }}>{actualRear.toLocaleString()} kg</span>}
           </div>
           <div style={{ position:'absolute', left:'57%', top:'50%', transform:'translate(-50%,-50%)', display:'flex', flexDirection:'column', alignItems:'center', gap:2, zIndex:2 }}>
-            <div style={{ width:10, height:10, borderRadius:'50%', background:'#ffe680', boxShadow:'0 0 10px rgba(255,230,128,0.9)', border:'1.5px solid rgba(255,230,128,0.7)' }} />
-            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:7, color:'#ffe680', letterSpacing:0.5, whiteSpace:'nowrap' }}>CoG</span>
+            <div style={{ width:10, height:10, borderRadius:'50%', background:'#f5d970', boxShadow:'0 0 10px rgba(200,168,78,0.9)', border:'1.5px solid rgba(200,168,78,0.7)' }} />
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:7, color:'#f5d970', letterSpacing:0.5, whiteSpace:'nowrap' }}>CoG</span>
           </div>
           <div style={{ position:'absolute', right:0, top:0, bottom:0, width:18, background:'rgba(200,168,78,0.07)', display:'flex', alignItems:'center', justifyContent:'center', borderLeft:'1px solid rgba(200,168,78,0.18)' }}>
             <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:7, color:'rgba(200,168,78,0.45)', letterSpacing:1, writingMode:'vertical-rl', transform:'rotate(180deg)' }}>DOOR</span>
@@ -393,7 +393,7 @@ export function WeightDistributionGuide({ items, containerType }) {
                 ].map(([k,v]) => (
                   <div key={k} style={{ background:'rgba(0,0,0,0.15)', borderRadius:5, padding:'0.4rem 0.5rem' }}>
                     <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:9, color:'rgba(255,255,255,0.35)', marginBottom:2 }}>{k}</div>
-                    <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:15, color:'#ffe680', letterSpacing:0.5 }}>{v}</div>
+                    <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:15, color:'#f5d970', letterSpacing:0.5 }}>{v}</div>
                   </div>
                 ))}
               </div>
@@ -632,7 +632,7 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
           ['LOAD', utilization.toFixed(0) + '%'],
         ].map(([k, v]) => (
           <div key={k} style={{ background: 'rgba(200,168,78,0.05)', border: '1px solid rgba(200,168,78,0.13)', borderRadius: 7, padding: '8px 6px', textAlign: 'center' }}>
-            <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 20, color: '#ffe680', letterSpacing: 1 }}>{v}</div>
+            <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 20, color: '#f5d970', letterSpacing: 1 }}>{v}</div>
             <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.55)', letterSpacing: .6, marginTop: 1 }}>{k}</div>
           </div>
         ))}
@@ -640,7 +640,7 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
 
       {/* Utilization bar */}
       <div style={{ height: 2, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginBottom: 8, overflow: 'hidden' }}>
-        <div style={{ height: '100%', width: `${utilization}%`, background: utilization > 90 ? '#ef4444' : utilization > 75 ? '#f59e0b' : 'linear-gradient(90deg,#c8a84e,#ffe680)', borderRadius: 2, transition: 'width .4s' }} />
+        <div style={{ height: '100%', width: `${utilization}%`, background: utilization > 90 ? '#ef4444' : utilization > 75 ? '#f59e0b' : 'linear-gradient(90deg,#c8a84e,#f5d970)', borderRadius: 2, transition: 'width .4s' }} />
       </div>
 
       {/* Canvas 3D scene — data-lenis-prevent stops Lenis from scrolling on wheel inside */}
