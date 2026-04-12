@@ -67,7 +67,7 @@ export default function App() {
       <GlobalInteractions />
       <ScrollReveal />
       <Nav onQuoteClick={() => setQuoteOpen(true)} />
-      <main>
+      <main id="main-content">
         <VideoHero onQuoteClick={() => setQuoteOpen(true)} />
         <Suspense fallback={null}><Contact /></Suspense>
         <Suspense fallback={null}><LogisticsTools /></Suspense>

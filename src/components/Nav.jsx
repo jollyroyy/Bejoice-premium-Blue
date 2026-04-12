@@ -116,7 +116,13 @@ export default function Nav({ onQuoteClick }) {
 
   return (
     <>
-      <nav style={{
+      <a href="#main-content" className="skip-link">
+        {isAr ? 'تجاوز إلى المحتوى الرئيسي' : 'Skip to Content'}
+      </a>
+      <nav 
+        role="navigation"
+        aria-label={isAr ? 'الملاحة الرئيسية' : 'Main Navigation'}
+        style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
         transition: 'all 0.5s ease',
         padding: '12px 0',
@@ -128,7 +134,13 @@ export default function Nav({ onQuoteClick }) {
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
 
           {/* Logo */}
-          <div onClick={scrollToTop} className="nav-logo-wrap" style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', marginLeft: '-173px' }}>
+          <div 
+            onClick={scrollToTop} 
+            className="nav-logo-wrap" 
+            role="link"
+            aria-label={isAr ? 'الصفحة الرئيسية بيجويس' : 'Bejoice Home'}
+            aria-current="page"
+            style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', marginLeft: '-173px' }}>
             <div style={{
               background: 'rgba(255,255,255,0.96)',
               borderRadius: '10px',

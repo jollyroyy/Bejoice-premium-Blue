@@ -86,6 +86,38 @@ html[lang="ar"] [data-arabic-num] {
   animation: none;
 }
 
+/* Accessibility Utilities */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 20px;
+  background: #5BC2E7;
+  color: #07101c;
+  padding: 12px 24px;
+  z-index: 99999;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: top 0.3s ease;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 20px;
+}
+
 /* White text shine */
 .shine-text {
   position: relative;

@@ -843,20 +843,27 @@ export default function VideoHero({ onQuoteClick }) {
 
                 {/* Headline */}
                 <div style={{ pointerEvents:'all', cursor:'default' }}>
-                  {displayHeadline.map((line, li) => (
-                    <h1 key={li} style={{
-                      fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
-                      fontSize: isAr ? 'clamp(1.8rem,5vw,5rem)' : 'clamp(2rem,5.5vw,5.5rem)',
-                      lineHeight: isAr ? 1.1 : 0.87, letterSpacing: isAr ? '0' : '0.06em', margin:0,
-                      color: li % 2 === 0 ? '#ffffff' : 'rgba(91,194,231,1)',
-                      textShadow: li % 2 === 0
-                        ? '0 1px 12px rgba(0,0,0,0.9)'
-                        : '0 1px 12px rgba(0,0,0,0.9), 0 0 20px rgba(91,194,231,0.3)',
-                      userSelect:'none',
-                    }}>
-                      {line}
-                    </h1>
-                  ))}
+                  {(() => {
+                    const HeadlineTag = i === 0 ? 'h1' : 'h2'
+                    return (
+                      <HeadlineTag style={{ margin: 0 }}>
+                        {displayHeadline.map((line, li) => (
+                          <div key={li} style={{
+                            fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
+                            fontSize: isAr ? 'clamp(1.8rem,5vw,5rem)' : 'clamp(2rem,5.5vw,5.5rem)',
+                            lineHeight: isAr ? 1.1 : 0.87, letterSpacing: isAr ? '0' : '0.06em', margin:0,
+                            color: li % 2 === 0 ? '#ffffff' : 'rgba(91,194,231,1)',
+                            textShadow: li % 2 === 0
+                              ? '0 1px 12px rgba(0,0,0,0.9)'
+                              : '0 1px 12px rgba(0,0,0,0.9), 0 0 20px rgba(91,194,231,0.3)',
+                            userSelect:'none',
+                          }}>
+                            {line}
+                          </div>
+                        ))}
+                      </HeadlineTag>
+                    )
+                  })()}
                 </div>
 
                 {/* Accent line */}
@@ -872,6 +879,7 @@ export default function VideoHero({ onQuoteClick }) {
                   <button
                     className="hero-intro-cta btn-gold"
                     onClick={onQuoteClick}
+                    aria-label={isAr ? 'ابدأ الشحن - احصل على عرض سعر' : 'Start Shipment - Get a Quote'}
                     style={{
                       marginTop:'28px',
                       alignSelf: isRight ? 'flex-end' : isCenter ? 'center' : 'flex-start',
