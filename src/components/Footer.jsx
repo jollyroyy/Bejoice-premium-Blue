@@ -3,7 +3,7 @@ import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
 
 const footerLinks = {
-  Company: ['About Bejoice', 'Certifications', 'Key Markets', 'Careers', 'News'],
+  Company: ['About Bejoice', 'Certifications', 'Key Markets', 'Careers'],
   Support: ['Track Shipment', 'Get a Quote', 'Contact Us', 'Port Offices'],
 }
 
@@ -99,7 +99,7 @@ const POLICIES = {
       },
       {
         title: '6. Contact',
-        body: `If you have questions about our use of cookies, contact us at info@bejoice.com.`,
+        body: `If you have questions about our use of cookies, contact us at info@bejoiceshipping.com.`,
       },
     ],
   },
@@ -209,7 +209,7 @@ export default function Footer() {
               {isAr ? ar.footer.description : 'Premium global freight forwarding and logistics solutions. Trusted by industry leaders across Saudi Arabia and beyond since 2006.'}
             </p>
             <div className="flex gap-3">
-              {['LI', 'X', 'WA'].map(s => (
+              {['LI'].map(s => (
                 <button key={s} style={{ width: 'clamp(44px,4vw,44px)', height: 'clamp(44px,4vw,44px)', border: '1px solid rgba(255,255,255,0.12)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(9px,1.1vw,12px)', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', background: 'none', cursor: 'pointer', transition: 'all 0.3s' }}
                   onMouseEnter={e => { e.target.style.borderColor = 'rgba(91,194,231,0.5)'; e.target.style.color = '#5BC2E7' }}
                   onMouseLeave={e => { e.target.style.borderColor = 'rgba(255,255,255,0.12)'; e.target.style.color = 'rgba(255,255,255,0.4)' }}
@@ -252,10 +252,10 @@ export default function Footer() {
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <svg style={{ flexShrink: 0, marginTop: '3px' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.7)" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <a href="mailto:info@bejoice.com" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5 }}
+                <a href="mailto:info@bejoiceshipping.com" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5 }}
                   onMouseEnter={e => e.target.style.color = '#ffffff'}
                   onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.72)'}
-                >info@bejoice.com</a>
+                >info@bejoiceshipping.com</a>
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <svg style={{ flexShrink: 0, marginTop: '3px' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.7)" strokeWidth="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -263,13 +263,7 @@ export default function Footer() {
                   Block A, Al Raja Avenue,<br/>1st floor, Office No. 2, Dammam 32234, KSA
                 </span>
               </li>
-              <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                <svg style={{ flexShrink: 0, marginTop: '3px' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.7)" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <a href="mailto:quotes@bejoice.com" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(91,194,231,0.75)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5 }}
-                  onMouseEnter={e => e.target.style.color = '#5BC2E7'}
-                  onMouseLeave={e => e.target.style.color = 'rgba(91,194,231,0.75)'}
-                >quotes@bejoice.com</a>
-              </li>
+
             </ul>
           </div>
         </div>

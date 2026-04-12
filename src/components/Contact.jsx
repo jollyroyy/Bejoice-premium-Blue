@@ -8,7 +8,7 @@ const SERVICES = ['Air Freight','Sea Freight','Road Transport','Customs Clearanc
 const CONTACT_INFO = [
   { icon: '◈', label: 'Dammam HQ',  value: 'Block A, Al Raja Avenue\n1st floor, Office No. 2, Dammam 32234, Saudi Arabia' },
   { icon: '◉', label: 'Phone',      value: '+966 13 823 3461' },
-  { icon: '◆', label: 'Email',      value: 'info@bejoice.com\nquotes@bejoice.com' },
+  { icon: '◆', label: 'Email',      value: 'info@bejoiceshipping.com\nquotes@bejoice.com' },
 ]
 
 export default function Contact() {

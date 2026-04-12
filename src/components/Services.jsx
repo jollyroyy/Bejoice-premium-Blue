@@ -339,13 +339,14 @@ export default function Services() {
                     {s.icon}
                   </div>
                   {/* Title row */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
                     <h3 style={{
                       fontFamily: "'Bebas Neue', sans-serif",
                       fontSize: 'clamp(1.3rem,2.2vw,1.7rem)',
                       letterSpacing: '0.08em', lineHeight: 1.1,
                       color: isExpanded ? 'rgba(91,194,231,1)' : isActive ? 'rgba(91,194,231,1)' : '#ffffff',
                       margin: 0,
+                      marginTop: '8px', 
                       transition: 'color 0.3s ease',
                     }}>
                       {isAr && arItem ? arItem.title : s.title}
@@ -366,7 +367,7 @@ export default function Services() {
                         }}
                       >
                         <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '13px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.9)' }}>
-                          {isExpanded ? (isAr ? ar.services.viewLess : 'Less') : (isAr ? ar.services.viewMore : 'View')}
+                          {isExpanded ? (isAr ? ar.services.viewLess : 'Less') : (isAr ? ar.services.viewMore : 'More')}
                         </span>
                         <motion.svg
                           width="10" height="10" viewBox="0 0 10 10" fill="none"
