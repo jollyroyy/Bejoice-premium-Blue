@@ -921,10 +921,10 @@ export default function VideoHero({ onQuoteClick }) {
             {/* Gold top line — matches SleekCard */}
             <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(91,194,231,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
             {[
-              { v:'120',  suffix:'+', l:'Countries',  ar: 'دولة'      },
-              { v:'25',   suffix:'+', l:'Years',      ar: 'عامًا'     },
-              { v:'24/7', suffix:'',  l:'Operations', ar: 'عمليات'    },
-              { v:'KSA',  suffix:'',  l:'Specialist', ar: 'متخصص'     },
+              { v:'120',  arV:null, suffix:'+', l:'Countries',  ar: 'دولة'      },
+              { v:'25',   arV:null, suffix:'+', l:'Years',      ar: 'عامًا'     },
+              { v:'24/7', arV:'٢٤/٧', suffix:'',  l:'Operations', ar: 'عمليات'    },
+              { v:'KSA',  arV:'KSA',  suffix:'',  l:'Specialist', ar: 'متخصص'     },
             ].map((s, idx, arr) => (
               <div key={s.l} className="hero-stat-cell" style={{
                 display:'flex', alignItems:'center', padding:'1.25rem clamp(8px,1.2vw,16px)',
@@ -937,7 +937,7 @@ export default function VideoHero({ onQuoteClick }) {
                     color:'#ffffff',
                     textShadow:'0 0 20px rgba(255,255,255,0.3)',
                   }}>
-                    <CountUp target={s.v} suffix={isAr && s.v !== 'KSA' ? toArabicNum(s.suffix) : s.suffix} duration={1000} arabic={isAr} />
+                    <CountUp target={isAr && s.arV ? s.arV : s.v} suffix={isAr && s.suffix ? toArabicNum(s.suffix) : s.suffix} duration={1000} arabic={isAr && !s.arV} />
                   </div>
                   <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(91,194,231,0.85)', fontWeight:600, marginTop:'6px', whiteSpace:'nowrap' }}>
                     {isAr ? s.ar : s.l}
