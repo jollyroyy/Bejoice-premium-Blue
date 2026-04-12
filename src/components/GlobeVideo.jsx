@@ -117,7 +117,7 @@ export default function GlobeVideo() {
               alt="Bejoice"
               width="400" height="223"
               loading="lazy" decoding="async"
-              style={{ height: '2.2rem', width: 'auto', objectFit: 'contain' }}
+              style={{ height: '2.2rem', width: 'auto', aspectRatio: '400 / 223', objectFit: 'contain' }}
             />
           </picture>
           <span style={{

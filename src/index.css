@@ -173,6 +173,15 @@ html[lang="ar"] [data-arabic-num] {
 
 html { scroll-behavior: auto; }
 
+/* ── HERO STICKY VIEWPORT — iOS URL-bar CLS fix ──────────────────────────────
+   The inline style sets height:100vh which shifts on iOS when the browser
+   chrome shows/hides during scroll. 100svh (Small Viewport Height) is fixed
+   to the viewport EXCLUDING browser chrome — prevents that layout shift.
+   @supports guards against browsers where svh is invalid (they keep 100vh). */
+@supports (height: 100svh) {
+  .hero-sticky-viewport { height: 100svh !important; }
+}
+
 body {
   background: var(--obsidian);
   color: var(--cream);
