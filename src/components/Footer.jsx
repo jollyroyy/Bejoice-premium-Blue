@@ -230,7 +230,23 @@ export default function Footer() {
                 {items.map(item => (
                   <li key={item}>
                     <a 
-                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : '#'} 
+                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : item === 'Certifications' ? '#certifications' : '#'} 
+                      onClick={(e) => {
+                        const targets = {
+                          'Get a Quote': 'contact',
+                          'Contact Us': 'contact',
+                          'Certifications': 'certifications'
+                        }
+                        const targetId = targets[item]
+                        if (targetId) {
+                          e.preventDefault()
+                          const el = document.getElementById(targetId)
+                          if (el) {
+                            if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
+                            else el.scrollIntoView({ behavior: 'smooth' })
+                          }
+                        }
+                      }}
                       target={item === 'Track Shipment' ? '_blank' : undefined}
                       rel={item === 'Track Shipment' ? 'noopener noreferrer' : undefined}
                       style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s' }}
