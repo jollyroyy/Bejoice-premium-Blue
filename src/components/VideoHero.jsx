@@ -443,13 +443,19 @@ export default function VideoHero({ onQuoteClick }) {
       if (!el) continue
 
       const [start, end] = CHAPTERS[i].frameRange
-      const isLast = i === CHAPTERS.length - 1
+      const isLast  = i === CHAPTERS.length - 1
+      const isFirst = i === 0
       let opacity = 0
 
       if (isLast) {
         // Last chapter fades in and stays; exit overlay covers the end
         if      (frameIdx >= start + FRAME_FADE) opacity = 1
         else if (frameIdx >= start)              opacity = (frameIdx - start) / FRAME_FADE
+      } else if (isFirst) {
+        // First chapter: no fade-in — fully visible from frame 0
+        if      (frameIdx <= end - FRAME_FADE) opacity = 1
+        else if (frameIdx <= end)              opacity = (end - frameIdx) / FRAME_FADE
+        else opacity = 0
       } else {
         if      (frameIdx >= start + FRAME_FADE && frameIdx <= end - FRAME_FADE) opacity = 1
         else if (frameIdx >= start              && frameIdx <  start + FRAME_FADE) opacity = (frameIdx - start) / FRAME_FADE
