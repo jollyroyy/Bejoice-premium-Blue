@@ -229,7 +229,11 @@ export default function Footer() {
               <ul className="space-y-3">
                 {items.map(item => (
                   <li key={item}>
-                    <a href="#" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s' }}
+                    <a 
+                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : '#'} 
+                      target={item === 'Track Shipment' ? '_blank' : undefined}
+                      rel={item === 'Track Shipment' ? 'noopener noreferrer' : undefined}
+                      style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s' }}
                       onMouseEnter={e => e.target.style.color = '#ffffff'}
                       onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.72)'}
                     >{isAr ? (ar.footer.links[item] || item) : item}</a>
