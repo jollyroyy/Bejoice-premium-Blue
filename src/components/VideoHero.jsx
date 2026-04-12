@@ -18,25 +18,25 @@ gsap.registerPlugin(ScrollTrigger)
 function CountUp({ target, suffix = '', duration = 900, arabic = false }) {
   const isNumeric = /^\d+(\.\d+)?$/.test(String(target).trim())
   const [display, setDisplay] = useState(isNumeric ? '0' : target)
-  const hasRun = useRef(false)
 
   useEffect(() => {
-    if (!isNumeric) return
-    const timer = setTimeout(() => {
-      if (hasRun.current) return
-      hasRun.current = true
-      const end = parseFloat(target)
-      const t0 = performance.now()
-      const tick = (now) => {
-        const t = Math.min((now - t0) / duration, 1)
-        const val = Math.round((1 - Math.pow(1 - t, 3)) * end)
-        setDisplay((arabic ? toArabicNum(val) : val) + suffix)
-        if (t < 1) requestAnimationFrame(tick)
-        else setDisplay((arabic ? toArabicNum(end) : end) + suffix)
-      }
-      requestAnimationFrame(tick)
-    }, 600)
-    return () => clearTimeout(timer)
+    if (!isNumeric) {
+      setDisplay(target)
+      return
+    }
+    const end = parseFloat(target)
+    setDisplay(arabic ? toArabicNum(0) : '0')
+    const t0 = performance.now()
+    let raf
+    const tick = (now) => {
+      const t = Math.min((now - t0) / duration, 1)
+      const val = Math.round((1 - Math.pow(1 - t, 3)) * end)
+      setDisplay((arabic ? toArabicNum(val) : val) + suffix)
+      if (t < 1) raf = requestAnimationFrame(tick)
+      else setDisplay((arabic ? toArabicNum(end) : end) + suffix)
+    }
+    const timer = setTimeout(() => { raf = requestAnimationFrame(tick) }, 600)
+    return () => { clearTimeout(timer); cancelAnimationFrame(raf) }
   }, [target, suffix, duration, isNumeric, arabic])
 
   return <span>{display}</span>
