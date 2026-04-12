@@ -1136,6 +1136,7 @@ function Avatar({ size }) {
             src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/ai-assistant-female.webp"
             alt="Layla — Bejoice AI"
             width="200" height="200"
+            loading="lazy" decoding="async"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           />
         </picture>

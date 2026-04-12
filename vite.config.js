@@ -6,12 +6,14 @@ export default defineConfig({
   server: {
     port: 5173
   },
-  publicDir: 'public',     // ← ADD THIS
-  base: './',             // ← ADD THIS  
+  publicDir: 'public',
+  base: './',
   build: {
     target: 'esnext',
     assetsInlineLimit: 0,
     chunkSizeWarningLimit: 1000,
+    // Minify with esbuild (default) — fastest
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -19,6 +21,9 @@ export default defineConfig({
           gsap: ['gsap'],
           lenis: ['lenis'],
           motion: ['framer-motion'],
+          // Three.js is ~580KB — keep it separate so it doesn't block initial load
+          // It's only needed for BejoiceGlobe (lazy, globe chapter)
+          three: ['three'],
         }
       }
     }

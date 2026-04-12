@@ -116,6 +116,7 @@ export default function GlobeVideo() {
               src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-wings-gold.webp"
               alt="Bejoice"
               width="400" height="223"
+              loading="lazy" decoding="async"
               style={{ height: '2.2rem', width: 'auto', objectFit: 'contain' }}
             />
           </picture>

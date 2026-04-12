@@ -17,136 +17,259 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta name="twitter:title" content="Bejoice — Saudi's Leading Smart Freight, AI Powered" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         STEP 1 — INLINE CRITICAL CSS
+         Paints dark background + scrollbar + root before ANY
+         external stylesheet loads. Eliminates white-flash on slow
+         connections (common in India on 4G).
+    ════════════════════════════════════════════════════════════ -->
+    <style>
+      /* Reset */
+      *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+      /* Rendering */
+      html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;scroll-behavior:auto}
+      /* Body — dark bg painted immediately, before external CSS */
+      body{background:#07101c;color:#fff;font-family:'DM Sans',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+      /* Root fade-in placeholder */
+      #root{opacity:0;transition:opacity .5s ease-out;background:#030306;min-height:100svh}
+      /* Scrollbar — prevents width-jump on content load */
+      ::-webkit-scrollbar{width:3px}
+      ::-webkit-scrollbar-track{background:#060f1a}
+      ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#5BC2E7,#007DBA);border-radius:2px}
+      ::-webkit-scrollbar-thumb:hover{background:#5BC2E7}
+      /* Canvas baseline */
+      canvas{display:block;max-width:100%}
+      /* Grain wrapper */
+      .grain{position:relative}
+      /* Nav placeholder — prevents layout shift before React hydrates */
+      nav,[role="navigation"]{position:fixed;top:0;left:0;right:0;z-index:9000}
+    </style>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         STEP 2 — PRECONNECT ALL THIRD-PARTY ORIGINS
+         Warms DNS + TCP + TLS before resources are requested.
+         Saves 100-300ms per origin on first load.
+    ════════════════════════════════════════════════════════════ -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Preload critical first frame for zero-delay hero load -->
-    <link rel="preload" as="image" href="/frames1/0001.jpg" />
-    <!-- Fonts — single consolidated request -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" as="style" />
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
-  <!-- Cal.com: preconnect for speed -->
-  <link rel="preconnect" href="https://cal.com" />
-  <link rel="preconnect" href="https://app.cal.com" />
-  <link rel="dns-prefetch" href="https://cal.com" />
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <!-- Force scroll to top before any rendering — prevents browser scroll restoration -->
-  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; window.scrollTo(0, 0);</script>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <!-- S3 CDN for hero WebP frames + logo assets -->
+    <link rel="preconnect" href="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com" crossorigin />
+    <link rel="dns-prefetch" href="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com" />
+    <!-- Cal.com booking modal -->
+    <link rel="preconnect" href="https://cal.com" />
+    <link rel="preconnect" href="https://app.cal.com" />
+    <link rel="dns-prefetch" href="https://cal.com" />
+    <!-- Flag CDN (EN/AR language toggle flags in Nav) -->
+    <link rel="preconnect" href="https://flagcdn.com" />
+    <link rel="dns-prefetch" href="https://flagcdn.com" />
+    <!-- jsDelivr CDN (Three.js Globe uses earth-night.jpg texture from here) -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 
-  <script>
-    // Dual-locale Cal.com preloader — both EN and AR iframes load in background
-    document.addEventListener('DOMContentLoaded', function() {
-      var CAL_BASE = 'https://cal.com/sudeshna-pal-ruww5f/freight-consultation?embed=true&theme=dark&layout=month_view&brandColor=%235BC2E7&hideEventTypeDetails=false';
-      var IFRAME_STYLE = 'position:absolute;inset:0;width:100%;height:100%;border:none;display:block;';
+    <!-- ═══════════════════════════════════════════════════════════
+         STEP 3 — CRITICAL RESOURCE PRELOADS
+         Fetched at highest priority, in parallel with HTML parse.
+    ════════════════════════════════════════════════════════════ -->
+    <!-- First hero frame — must paint before user sees anything -->
+    <link rel="preload" as="image" href="/frames1/0001.jpg" fetchpriority="high" />
+    <!-- Critical font CSS — preloaded but applied NON-BLOCKING (see font links below) -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" as="style" fetchpriority="high" />
 
-      // Overlay backdrop
-      var overlay = document.createElement('div');
-      overlay.id = 'cal-overlay';
-      overlay.style.cssText = [
-        'position:fixed','inset:0','z-index:99999',
-        'background:rgba(3,3,6,0.88)',
-        'backdrop-filter:blur(18px)','-webkit-backdrop-filter:blur(18px)',
-        'display:none','align-items:center','justify-content:center',
-        'padding:1rem',
-      ].join(';');
+    <!-- ═══════════════════════════════════════════════════════════
+         STEP 4 — NON-BLOCKING FONT LOADING
+         Eliminates Google Fonts as a render blocker.
+         media="print" trick: browser fetches without blocking paint,
+         onload flips it to all-media. noscript provides JS fallback.
 
-      // Modal box
-      var box = document.createElement('div');
-      box.style.cssText = [
-        'position:relative','width:100%','max-width:900px',
-        'height:min(90vh,720px)',
-        'background:#0c1c30',
-        'border:1px solid rgba(91,194,231,0.25)',
-        'border-radius:16px','overflow:visible',
-        'box-shadow:0 32px 80px rgba(0,0,0,0.9)',
-      ].join(';');
+         Bebas Neue + DM Sans: critical — loaded first
+         Inter + Cormorant + Cairo: secondary — lowest priority
+    ════════════════════════════════════════════════════════════ -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap"
+          media="print"
+          onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" />
+    </noscript>
 
-      // Gold top bar
-      var bar = document.createElement('div');
-      bar.style.cssText = 'position:absolute;top:0;left:0;right:0;height:3px;z-index:1;background:linear-gradient(90deg,transparent,rgba(91,194,231,0.9),transparent);pointer-events:none;';
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cairo:wght@400;600;700&display=swap"
+          media="print"
+          onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cairo:wght@400;600;700&display=swap" />
+    </noscript>
 
-      // Close button
-      var closeBtn = document.createElement('button');
-      closeBtn.innerHTML = '&#x2715;';
-      closeBtn.style.cssText = [
-        'position:absolute','top:12px','right:12px','z-index:2147483647',
-        'background:rgba(7,16,28,0.97)',
-        'border:2px solid rgba(91,194,231,0.85)',
-        'border-radius:50%','width:44px','height:44px',
-        'color:#fff','font-size:22px','line-height:1','cursor:pointer',
-        'display:flex','align-items:center','justify-content:center',
-        'box-shadow:0 2px 16px rgba(0,0,0,0.9),0 0 14px rgba(91,194,231,0.35)',
-        'transition:all 0.2s ease',
-        'pointer-events:all','isolation:isolate',
-      ].join(';');
-      closeBtn.onmouseenter = function() {
-        closeBtn.style.background = 'rgba(91,194,231,0.25)';
-        closeBtn.style.borderColor = '#5BC2E7';
-        closeBtn.style.boxShadow = '0 2px 20px rgba(91,194,231,0.5)';
-      };
-      closeBtn.onmouseleave = function() {
-        closeBtn.style.background = 'rgba(7,16,28,0.95)';
-        closeBtn.style.borderColor = 'rgba(91,194,231,0.8)';
-        closeBtn.style.boxShadow = '0 2px 16px rgba(0,0,0,0.9),0 0 12px rgba(91,194,231,0.3)';
-      };
-      closeBtn.onclick = function() { overlay.style.display = 'none'; };
+    <!-- Force scroll to top before any rendering — prevents browser scroll restoration -->
+    <script>if('scrollRestoration'in history)history.scrollRestoration='manual';window.scrollTo(0,0);</script>
 
-      // Inner clip with relative positioning so both iframes stack
-      var inner = document.createElement('div');
-      inner.style.cssText = 'position:relative;width:100%;height:100%;border-radius:16px;overflow:hidden;';
+    <!-- ═══════════════════════════════════════════════════════════
+         STEP 5 — DEFERRED CAL.COM MODAL SETUP
+         Problem: creating an iframe with src= immediately fires a
+         network request that competes with hero frame loads.
+         Solution:
+           • Build overlay DOM immediately (zero network cost)
+           • Defer setting iframeEn.src until EITHER:
+               – 3 seconds after DOMContentLoaded, OR
+               – First user interaction (scroll/click/touch/key)
+             whichever comes first
+           • __showCalModal() always works instantly (forces init)
+           • AR iframe still created lazily (only if user is in AR mode)
+    ════════════════════════════════════════════════════════════ -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var CAL_BASE = 'https://cal.com/sudeshna-pal-ruww5f/freight-consultation?embed=true&theme=dark&layout=month_view&brandColor=%235BC2E7&hideEventTypeDetails=false';
+        var IFRAME_STYLE = 'position:absolute;inset:0;width:100%;height:100%;border:none;display:block;';
 
-      // English iframe (visible by default)
-      var iframeEn = document.createElement('iframe');
-      iframeEn.src = CAL_BASE + '&locale=en';
-      iframeEn.style.cssText = IFRAME_STYLE + 'opacity:1;transition:opacity 0.2s;';
-      iframeEn.setAttribute('loading', 'eager');
-      iframeEn.setAttribute('allow', 'camera;microphone;payment');
+        /* ── Build overlay DOM (no iframes yet — no network cost) ── */
+        var overlay = document.createElement('div');
+        overlay.id = 'cal-overlay';
+        overlay.style.cssText = [
+          'position:fixed','inset:0','z-index:99999',
+          'background:rgba(3,3,6,0.88)',
+          'backdrop-filter:blur(18px)','-webkit-backdrop-filter:blur(18px)',
+          'display:none','align-items:center','justify-content:center',
+          'padding:1rem',
+        ].join(';');
 
-      // Arabic iframe (hidden, preloading in background)
-      var iframeAr = document.createElement('iframe');
-      iframeAr.src = CAL_BASE + '&locale=ar';
-      iframeAr.style.cssText = IFRAME_STYLE + 'opacity:0;transition:opacity 0.2s;pointer-events:none;';
-      iframeAr.setAttribute('loading', 'eager');
-      iframeAr.setAttribute('allow', 'camera;microphone;payment');
+        var box = document.createElement('div');
+        box.style.cssText = [
+          'position:relative','width:100%','max-width:900px',
+          'height:min(90vh,720px)',
+          'background:#0c1c30',
+          'border:1px solid rgba(91,194,231,0.25)',
+          'border-radius:16px','overflow:visible',
+          'box-shadow:0 32px 80px rgba(0,0,0,0.9)',
+        ].join(';');
 
-      inner.appendChild(bar);
-      inner.appendChild(iframeEn);
-      inner.appendChild(iframeAr);
-      box.appendChild(inner);
-      box.appendChild(closeBtn);
-      overlay.appendChild(box);
-      document.body.appendChild(overlay);
+        var bar = document.createElement('div');
+        bar.style.cssText = 'position:absolute;top:0;left:0;right:0;height:3px;z-index:1;background:linear-gradient(90deg,transparent,rgba(91,194,231,0.9),transparent);pointer-events:none;';
 
-      overlay.onclick = function(e) { if (e.target === overlay) overlay.style.display = 'none'; };
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') overlay.style.display = 'none';
-      });
+        var closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '&#x2715;';
+        closeBtn.style.cssText = [
+          'position:absolute','top:12px','right:12px','z-index:2147483647',
+          'background:rgba(7,16,28,0.97)',
+          'border:2px solid rgba(91,194,231,0.85)',
+          'border-radius:50%','width:44px','height:44px',
+          'color:#fff','font-size:22px','line-height:1','cursor:pointer',
+          'display:flex','align-items:center','justify-content:center',
+          'box-shadow:0 2px 16px rgba(0,0,0,0.9),0 0 14px rgba(91,194,231,0.35)',
+          'transition:all 0.2s ease',
+          'pointer-events:all','isolation:isolate',
+        ].join(';');
+        closeBtn.onmouseenter = function() {
+          closeBtn.style.background = 'rgba(91,194,231,0.25)';
+          closeBtn.style.borderColor = '#5BC2E7';
+          closeBtn.style.boxShadow = '0 2px 20px rgba(91,194,231,0.5)';
+        };
+        closeBtn.onmouseleave = function() {
+          closeBtn.style.background = 'rgba(7,16,28,0.95)';
+          closeBtn.style.borderColor = 'rgba(91,194,231,0.8)';
+          closeBtn.style.boxShadow = '0 2px 16px rgba(0,0,0,0.9),0 0 12px rgba(91,194,231,0.3)';
+        };
+        closeBtn.onclick = function() { overlay.style.display = 'none'; };
 
-      // Show correct iframe instantly — no reload needed
-      window.__showCalModal = function() {
-        var isAr = document.documentElement.lang === 'ar';
-        if (isAr) {
-          iframeAr.style.opacity = '1'; iframeAr.style.pointerEvents = 'auto';
-          iframeEn.style.opacity = '0'; iframeEn.style.pointerEvents = 'none';
-        } else {
-          iframeEn.style.opacity = '1'; iframeEn.style.pointerEvents = 'auto';
-          iframeAr.style.opacity = '0'; iframeAr.style.pointerEvents = 'none';
+        var inner = document.createElement('div');
+        inner.style.cssText = 'position:relative;width:100%;height:100%;border-radius:16px;overflow:hidden;';
+        inner.appendChild(bar);
+        box.appendChild(inner);
+        box.appendChild(closeBtn);
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+        overlay.onclick = function(e) { if (e.target === overlay) overlay.style.display = 'none'; };
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') overlay.style.display = 'none';
+        });
+
+        /* ── Iframe state — created lazily ── */
+        var iframeEn = null;
+        var iframeAr = null;
+        var calReady = false;
+
+        function initCalIframe() {
+          if (calReady) return;
+          calReady = true;
+          iframeEn = document.createElement('iframe');
+          iframeEn.src = CAL_BASE + '&locale=en';
+          iframeEn.style.cssText = IFRAME_STYLE + 'opacity:1;transition:opacity 0.2s;';
+          iframeEn.setAttribute('loading', 'eager');
+          iframeEn.setAttribute('allow', 'camera;microphone;payment');
+          inner.appendChild(iframeEn);
         }
-        overlay.style.display = 'flex';
-      };
-    });
-  </script>
+
+        function ensureArIframe() {
+          if (iframeAr) return;
+          iframeAr = document.createElement('iframe');
+          iframeAr.src = CAL_BASE + '&locale=ar';
+          iframeAr.style.cssText = IFRAME_STYLE + 'opacity:0;transition:opacity 0.2s;pointer-events:none;';
+          iframeAr.setAttribute('loading', 'eager');
+          iframeAr.setAttribute('allow', 'camera;microphone;payment');
+          inner.appendChild(iframeAr);
+        }
+
+        /* Defer: fire 3s after load, or on first interaction — whichever first */
+        var deferTimer = setTimeout(initCalIframe, 3000);
+        var DEFER_EVENTS = ['scroll', 'click', 'touchstart', 'keydown', 'mousemove'];
+        function onFirstInteraction() {
+          clearTimeout(deferTimer);
+          initCalIframe();
+          DEFER_EVENTS.forEach(function(e) { window.removeEventListener(e, onFirstInteraction, true); });
+        }
+        DEFER_EVENTS.forEach(function(e) { window.addEventListener(e, onFirstInteraction, { once: true, passive: true, capture: true }); });
+
+        /* Public API — always works immediately (forces init if called before defer fires) */
+        window.__showCalModal = function() {
+          clearTimeout(deferTimer);
+          initCalIframe();
+          var isAr = document.documentElement.lang === 'ar';
+          if (isAr) {
+            ensureArIframe();
+            iframeAr.style.opacity = '1'; iframeAr.style.pointerEvents = 'auto';
+            iframeEn.style.opacity = '0'; iframeEn.style.pointerEvents = 'none';
+          } else {
+            iframeEn.style.opacity = '1'; iframeEn.style.pointerEvents = 'auto';
+            if (iframeAr) { iframeAr.style.opacity = '0'; iframeAr.style.pointerEvents = 'none'; }
+          }
+          overlay.style.display = 'flex';
+        };
+      });
+    </script>
   </head>
-  <body style="background: #07101c;">
-    <div id="root" style="opacity: 0; transition: opacity 0.5s ease-out; background: #030306;"></div>
+
+  <body>
+    <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script>
-      // Signal to fade in the app once critical hero assets are ready
+      /* Signal hero ready — fades in #root once critical frames are painted */
       window.__markHeroReady = function() {
-        requestAnimationFrame(() => {
-          const root = document.getElementById('root');
+        requestAnimationFrame(function() {
+          var root = document.getElementById('root');
           if (root) root.style.opacity = '1';
         });
       };
+    </script>
+
+    <!-- Service Worker registration — fires after 'load' so it never blocks
+         the critical rendering path. The SW handles browser-layer caching for
+         repeat visits (near-instant load, works offline). -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then(function(reg) {
+              // Check for updates in the background every 60 minutes
+              setInterval(function() { reg.update(); }, 60 * 60 * 1000);
+            })
+            .catch(function(err) {
+              // SW registration failure is non-fatal — site works fine without it
+              console.warn('[SW] Registration failed:', err);
+            });
+        });
+      }
     </script>
   </body>
 </html>

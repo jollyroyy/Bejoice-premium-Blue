@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useTransition } from 'react'
 
 export const LANGS = {
   en: {
@@ -57,12 +57,17 @@ const LangContext = createContext({ lang: 'en', t: LANGS.en, setLang: () => {} }
 
 export function LangProvider({ children }) {
   const [lang, setLangState] = useState(detectLang)
+  // eslint-disable-next-line no-unused-vars
+  const [, startTransition] = useTransition()
 
   const setLang = (l) => {
-    setLangState(l)
+    // DOM + storage update synchronously (instant, no flicker)
     document.documentElement.lang = l
     document.documentElement.dir = LANGS[l].dir
     try { localStorage.setItem('bejoice_lang', l) } catch {}
+    // The full React tree re-render is non-urgent — mark as a transition
+    // so the browser stays responsive (scrolling, animations) during swap
+    startTransition(() => setLangState(l))
   }
 
   useEffect(() => {

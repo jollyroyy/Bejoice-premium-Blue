@@ -153,6 +153,8 @@ export default function Nav({ onQuoteClick }) {
                   src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp"
                   alt="Bejoice"
                   width="480" height="200"
+                  fetchPriority="high"
+                  decoding="async"
                   style={{
                     height: 'clamp(40px, 8.5vw, 100px)',
                     width: 'auto',
@@ -237,7 +239,7 @@ export default function Nav({ onQuoteClick }) {
                 onMouseEnter={e => { if (lang !== 'en') e.currentTarget.style.background = 'rgba(91,194,231,0.1)' }}
                 onMouseLeave={e => { if (lang !== 'en') e.currentTarget.style.background = 'transparent' }}
               >
-                <img src="https://flagcdn.com/w40/gb.png" width="20" height="14" alt="English" style={{ borderRadius: '3px', flexShrink: 0, objectFit: 'cover', display: 'block', boxShadow: '0 1px 4px rgba(0,0,0,0.5)', opacity: lang === 'en' ? 1 : 0.75 }} />
+                <img src="https://flagcdn.com/w40/gb.png" width="20" height="14" alt="English" decoding="async" loading="lazy" style={{ borderRadius: '3px', flexShrink: 0, objectFit: 'cover', display: 'block', boxShadow: '0 1px 4px rgba(0,0,0,0.5)', opacity: lang === 'en' ? 1 : 0.75 }} />
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', fontWeight: 800, letterSpacing: '0.12em', lineHeight: 1, color: lang === 'en' ? '#8DD8F0' : 'rgba(91,194,231,0.65)', textShadow: lang === 'en' ? '0 0 12px rgba(232,204,122,0.6)' : 'none' }}>EN</span>
                 {lang === 'en' && <span style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '20px', height: '2px', background: 'linear-gradient(90deg, transparent, #5BC2E7, transparent)', borderRadius: '2px 2px 0 0' }} />}
               </button>
@@ -246,7 +248,7 @@ export default function Nav({ onQuoteClick }) {
                 onMouseEnter={e => { if (lang !== 'ar') e.currentTarget.style.background = 'rgba(91,194,231,0.1)' }}
                 onMouseLeave={e => { if (lang !== 'ar') e.currentTarget.style.background = 'transparent' }}
               >
-                <img src="https://flagcdn.com/w40/sa.png" width="20" height="14" alt="Arabic" style={{ borderRadius: '3px', flexShrink: 0, objectFit: 'cover', display: 'block', boxShadow: '0 1px 4px rgba(0,0,0,0.5)', opacity: lang === 'ar' ? 1 : 0.75 }} />
+                <img src="https://flagcdn.com/w40/sa.png" width="20" height="14" alt="Arabic" decoding="async" loading="lazy" style={{ borderRadius: '3px', flexShrink: 0, objectFit: 'cover', display: 'block', boxShadow: '0 1px 4px rgba(0,0,0,0.5)', opacity: lang === 'ar' ? 1 : 0.75 }} />
                 <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', fontWeight: 800, letterSpacing: '0.12em', lineHeight: 1, color: lang === 'ar' ? '#8DD8F0' : 'rgba(91,194,231,0.65)', textShadow: lang === 'ar' ? '0 0 12px rgba(232,204,122,0.6)' : 'none' }}>AR</span>
                 {lang === 'ar' && <span style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '20px', height: '2px', background: 'linear-gradient(90deg, transparent, #5BC2E7, transparent)', borderRadius: '2px 2px 0 0' }} />}
               </button>
@@ -331,7 +333,7 @@ export default function Nav({ onQuoteClick }) {
             <div style={{ background: 'rgba(255,255,255,0.95)', borderRadius: '8px', padding: '3px 8px' }}>
               <picture>
                 <source srcSet="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp" type="image/webp" />
-                <img src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp" alt="Bejoice" width="480" height="200" style={{ height: '44px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+                <img src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp" alt="Bejoice" width="480" height="200" loading="lazy" decoding="async" style={{ height: '44px', width: 'auto', objectFit: 'contain', display: 'block' }} />
               </picture>
             </div>
             <div style={{ borderLeft: '1.5px solid rgba(91,194,231,0.35)', paddingLeft: '9px', marginLeft: '6px' }}>

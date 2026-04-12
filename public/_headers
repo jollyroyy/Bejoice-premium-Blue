@@ -1,3 +1,58 @@
+# ── HTML shell — always revalidate (points to hashed assets) ──────────────────
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ── Service Worker — must never be stale ──────────────────────────────────────
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+  Service-Worker-Allowed: /
+
+# ── Hashed JS/CSS bundles (Vite content-hash in filename) — cache forever ─────
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ── Local frame sequences — immutable (filenames are stable) ──────────────────
+/frames1/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/frames2/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/3d/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/port/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/saudi/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/bejoice_truck/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/frames8/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/tech_enng/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ── Static images (logos, icons) — 7 days + stale-while-revalidate ────────────
+/*.webp
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/*.avif
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/*.svg
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/*.png
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# ── Security headers — every response ─────────────────────────────────────────
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff

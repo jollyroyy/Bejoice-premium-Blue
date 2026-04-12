@@ -15,8 +15,9 @@ export default function Contact() {
   const { lang } = useLang()
   const isAr = lang === 'ar'
   const sectionRef = useRef(null)
-  const [form, setForm]     = useState({ name:'', company:'', email:'', phone:'', origin:'', destination:'', type:'', message:'' })
-  const [sent, setSent]     = useState(false)
+  const [form, setForm]       = useState({ name:'', company:'', email:'', phone:'', origin:'', destination:'', type:'', message:'' })
+  const [sent, setSent]       = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const [focused, setFocused] = useState(null)
   const cardRef = useRef(null)
   const glowRef = useRef(null)
@@ -213,7 +214,19 @@ export default function Contact() {
 
               {/* Inner padding */}
               <div style={{ padding: 'clamp(1.6rem,4vw,2.8rem)', position: 'relative', zIndex: 2 }}>
-                <form onSubmit={e => { e.preventDefault(); setSent(true) }}>
+                <form onSubmit={e => {
+                  e.preventDefault()
+                  if (submitting) return
+                  // OPTIMISTIC: mark as submitting immediately — UI responds at click speed
+                  setSubmitting(true)
+                  // Fire background "API" call (replace with real fetch when backend exists)
+                  Promise.resolve().then(() => new Promise(res => setTimeout(res, 400)))
+                    .then(() => {
+                      setSent(true)     // success state snaps in
+                      setSubmitting(false)
+                    })
+                    .catch(() => setSubmitting(false))  // on error: revert (form stays)
+                }}>
 
                   {/* Row 1 — Name / Company */}
                   <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'clamp(8px,1.4vw,14px)', marginBottom:'clamp(8px,1.4vw,14px)' }} className="cg2">
@@ -283,14 +296,35 @@ export default function Contact() {
 
                   {/* ── Submit row ── */}
                   <div style={{ display:'flex', justifyContent:'center', alignItems:'center' }}>
-                    <button type="submit" className="btn-gold btn-gold--static" style={{
-                      flexShrink: 0,
-                      fontSize: 'clamp(13px,1.5vw,16px)',
-                      letterSpacing: '0.2em',
-                      padding: 'clamp(12px,1.5vw,15px) clamp(24px,3vw,38px)',
-                    }}>
-                      <span>{isAr ? ar.contact.submitBtn : 'Send Query'}</span>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <button
+                      type="submit"
+                      className="btn-gold btn-gold--static"
+                      disabled={submitting}
+                      style={{
+                        flexShrink: 0,
+                        fontSize: 'clamp(13px,1.5vw,16px)',
+                        letterSpacing: '0.2em',
+                        padding: 'clamp(12px,1.5vw,15px) clamp(24px,3vw,38px)',
+                        opacity: submitting ? 0.75 : 1,
+                        transition: 'opacity 0.15s',
+                      }}
+                    >
+                      {submitting ? (
+                        <>
+                          {/* Inline spinner — no extra deps */}
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+                            style={{ animation: 'spin 0.7s linear infinite' }}>
+                            <path d="M12 2a10 10 0 1 0 10 10" strokeLinecap="round"/>
+                          </svg>
+                          <span style={{ marginLeft: 8 }}>{isAr ? 'جارٍ الإرسال…' : 'Sending…'}</span>
+                          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+                        </>
+                      ) : (
+                        <>
+                          <span>{isAr ? ar.contact.submitBtn : 'Send Query'}</span>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </>
+                      )}
                     </button>
                   </div>
 
