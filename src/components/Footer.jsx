@@ -230,14 +230,16 @@ export default function Footer() {
                 {items.map(item => (
                   <li key={item}>
                     <a 
-                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : (item === 'Certifications' || item === 'Why Bejoice') ? '#certifications' : item === 'Our Offices' ? '#globe' : '#'} 
+                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : (item === 'Certifications' || item === 'Why Bejoice') ? '#certifications' : item === 'Our Offices' ? '#globe' : item === 'Key Markets' ? '#markets' : item === 'About Bejoice' ? '#hero' : '#'} 
                       onClick={(e) => {
                         const targets = {
                           'Get a Quote': 'contact',
                           'Contact Us': 'contact',
                           'Certifications': 'certifications',
                           'Why Bejoice': 'certifications',
-                          'Our Offices': 'globe'
+                          'Our Offices': 'globe',
+                          'Key Markets': 'markets',
+                          'About Bejoice': 'hero'
                         }
                         const targetId = targets[item]
                         if (targetId) {
