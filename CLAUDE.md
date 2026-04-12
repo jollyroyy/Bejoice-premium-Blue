@@ -1,5 +1,20 @@
 # Bejoice Premium — Claude Context
 
+## Core Rules
+- **Only modify what was explicitly requested.** Do not add extra changes, resize fonts, refactor styles, or "improve" things that weren't asked about. If you think something else should change, ASK first.
+- **When a fix attempt fails or the user asks to revert, do NOT retry the same approach.** Step back, explain what went wrong, and propose a fundamentally different strategy before proceeding.
+
+## Before Editing
+- Before editing a file, verify it's the **correct file** that renders the component in question. Use Grep to confirm which file is actually imported/used before making changes.
+
+## Debugging
+- When debugging, start with the **simplest possible causes first** (CSS visibility, z-index, pointer-events, opacity) before investigating complex scenarios. Spend no more than 2 minutes on exploratory investigation before checking the obvious.
+
+## After Changes
+- After making changes to the site, run `npm run build` to verify the build succeeds before moving on. **Never leave broken syntax behind.**
+
+---
+
 ## 🎨 STANDING RULE — USE FRONTEND-DESIGN SKILL
 **Always consult the `frontend-design` skill for any UI/styling work — new components, layout changes, visual improvements, or design decisions — without being asked.**
 - Invoke via `Skill tool: frontend-design` before writing any significant UI code
