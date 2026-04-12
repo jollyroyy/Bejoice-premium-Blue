@@ -4,7 +4,7 @@ import ar from '../i18n/ar'
 
 const footerLinks = {
   Company: ['About Bejoice', 'Certifications', 'Key Markets', 'Careers'],
-  Support: ['Track Shipment', 'Get a Quote', 'Contact Us', 'Port Offices'],
+  Support: ['Track Shipment', 'Get a Quote', 'Contact Us', 'Our Offices'],
 }
 
 const POLICIES = {
@@ -230,12 +230,14 @@ export default function Footer() {
                 {items.map(item => (
                   <li key={item}>
                     <a 
-                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : item === 'Certifications' ? '#certifications' : '#'} 
+                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : (item === 'Certifications' || item === 'Why Bejoice') ? '#certifications' : item === 'Our Offices' ? '#globe' : '#'} 
                       onClick={(e) => {
                         const targets = {
                           'Get a Quote': 'contact',
                           'Contact Us': 'contact',
-                          'Certifications': 'certifications'
+                          'Certifications': 'certifications',
+                          'Why Bejoice': 'certifications',
+                          'Our Offices': 'globe'
                         }
                         const targetId = targets[item]
                         if (targetId) {

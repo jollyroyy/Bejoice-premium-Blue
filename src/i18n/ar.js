@@ -573,7 +573,7 @@ const ar = {
       'Track Shipment': 'تتبع الشحنة',
       'Get a Quote': 'احصل على عرض سعر',
       'Contact Us': 'تواصل معنا',
-      'Port Offices': 'مكاتب الموانئ',
+      'Our Offices': 'مكاتبنا',
     },
     rights: '© 2026 بيجويس لوجستيات العالمية ذ.م.م. جميع الحقوق محفوظة.',
     followLinkedIn: 'تابعنا على لينكدإن',
