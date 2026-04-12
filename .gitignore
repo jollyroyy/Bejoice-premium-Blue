@@ -25,15 +25,12 @@ public/hero-ship.mp4
 
 # ── Unused logo/image variants ──
 public/bejoice-logo.jpeg
-public/bejoice-logo-blue.png
 public/bejoice-logo-extracted.png
 public/bejoice-logo-nav.png
-public/bejoice-logo-nav.svg
 public/bejoice-logo-white-trim.png
 public/bejoice-wings-navy.png
 public/bejoice-wings-transparent.png
 public/bejoice-wings.png
-public/bejoice-wings.svg
 public/bejoice2-clean.png
 public/bejoice2-fixed.png
 public/bejoice2-sharp.png
@@ -51,8 +48,14 @@ public/frames4/
 public/frames8/
 public/tech_enng/
 *.png
+!public/bejoice-logo-blue.png
 *.mp4
 *.jpg
 *.jpeg
 *.webp
+!public/bejoice-logo-new.webp
+!public/bejoice-logo-white.webp
 *.gif
+!public/favicon.svg
+!public/bejoice-logo-nav.svg
+!public/bejoice-wings.svg
