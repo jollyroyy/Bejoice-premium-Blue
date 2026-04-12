@@ -923,6 +923,7 @@ export default function VideoHero({ onQuoteClick }) {
             {[
               { v:'120',  arV:null, suffix:'+', l:'Countries',  ar: 'دولة'      },
               { v:'25',   arV:null, suffix:'+', l:'Years',      ar: 'عامًا'     },
+              { v:'500',  arV:null, suffix:'+', l:'Deliveries', ar: 'عملية تسليم' },
               { v:'24/7', arV:'٢٤/٧', suffix:'',  l:'Operations', ar: 'عمليات'    },
               { v:'KSA',  arV:'KSA',  suffix:'',  l:'Specialist', ar: 'متخصص'     },
             ].map((s, idx, arr) => (
