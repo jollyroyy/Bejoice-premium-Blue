@@ -560,23 +560,23 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             {/* HQ */}
             <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'0.7rem', marginBottom:'1rem' }}>
               <span style={{ width:12, height:12, borderRadius:'50%', background:'#8DD8F0', flexShrink:0, boxShadow:'0 0 8px rgba(91,194,231,0.5)' }} />
-              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,3vw,1.4rem)', color:'#8DD8F0', letterSpacing:'0.08em' }}>DUBAI, UAE — HEADQUARTERS</span>
+              <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,3vw,1.4rem)', color:'#8DD8F0', letterSpacing: isAr ? '0' : '0.08em' }}>{isAr ? ar.globe.hq : 'DUBAI, UAE — HEADQUARTERS'}</span>
             </div>
 
             {/* Separator */}
             <div style={{ display:'flex', alignItems:'center', gap:12, margin:'0.6rem 0 0.3rem' }}>
               <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
-              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:600, color:'rgba(91,194,231,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>Branch Offices</span>
+              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:600, color:'rgba(91,194,231,0.95)', letterSpacing: isAr ? '0' : '0.2em', textTransform: isAr ? 'none' : 'uppercase', flexShrink:0 }}>{isAr ? ar.globe.branchOffices : 'Branch Offices'}</span>
               <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
             </div>
 
             <div style={{ display:'flex', justifyContent:'center', gap:'0.5rem 1.5rem', flexWrap:'wrap', marginBottom:'0.25rem' }}>
-              {[
+              {(isAr ? ar.globe.offices : [
                 { label:'Saudi Arabia', flag:'🇸🇦' },
                 { label:'UAE',          flag:'🇦🇪' },
                 { label:'India',        flag:'🇮🇳' },
                 { label:'China',        flag:'🇨🇳' },
-              ].map(({ label }) => (
+              ]).map(({ label }) => (
                 <motion.div key={label} whileHover={{ y:-3 }} transition={{ type:'spring', stiffness:300, damping:20 }}
                   style={{ display:'flex', alignItems:'center', minHeight:44 }}>
                   <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.75rem,1.8vw,0.88rem)', fontWeight:600, color:'rgba(255,255,255,0.82)' }}>{label}</span>
@@ -589,7 +589,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.9rem,2vw,1.05rem)', color:'rgba(91,194,231,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', textAlign:'center', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}
             >
-              Strategically positioned for seamless global connectivity
+              {isAr ? ar.globe.tagline : 'Strategically positioned for seamless global connectivity'}
             </motion.p>
 
           </motion.div>
