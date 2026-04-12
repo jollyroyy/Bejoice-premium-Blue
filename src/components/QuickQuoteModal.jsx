@@ -1,7 +1,11 @@
 import { useEffect, useRef } from 'react'
 import QuickQuoteSection from './QuickQuoteSection'
+import { useLang } from '../context/LangContext'
+import ar from '../i18n/ar'
 
 export default function QuickQuoteModal({ onClose }) {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   const backdropRef = useRef(null)
 
   useEffect(() => {
@@ -207,31 +211,33 @@ export default function QuickQuoteModal({ onClose }) {
               }} />
               <span style={{
                 fontFamily: "'DM Sans',sans-serif",
-                fontSize: 10.5, letterSpacing: '0.32em',
-                textTransform: 'uppercase',
+                fontSize: 10.5, letterSpacing: isAr ? 0 : '0.32em',
+                textTransform: isAr ? 'none' : 'uppercase',
                 color: 'rgba(91,194,231,0.9)', fontWeight: 700,
               }}>
-                Instant Pricing Engine
+                {isAr ? ar.quickQuote.badgeLabel : 'Instant Pricing Engine'}
               </span>
             </div>
 
             {/* Main heading */}
             <div style={{ marginBottom: 10 }}>
               <h2 className="qqm-heading-h2" style={{
-                fontFamily: "'Bebas Neue',sans-serif",
+                fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
                 fontSize: 'clamp(2.2rem,6vw,4rem)',
-                letterSpacing: '0.1em',
+                letterSpacing: isAr ? 0 : '0.1em',
                 lineHeight: 1,
                 margin: 0,
                 color: '#ffffff',
                 textShadow: '0 2px 40px rgba(0,0,0,0.8)',
+                textTransform: isAr ? 'none' : undefined,
+                direction: isAr ? 'rtl' : 'ltr',
               }}>
-                GET YOUR{' '}
+                {isAr ? ar.quickQuote.headingWhite : 'GET YOUR'}{' '}
                 <span style={{
                   color: '#5BC2E7',
                   textShadow: '0 0 30px rgba(91,194,231,0.5), 0 2px 40px rgba(0,0,0,0.8)',
                 }}>
-                  QUICK QUOTE
+                  {isAr ? ar.quickQuote.headingBlue : 'QUICK QUOTE'}
                 </span>
               </h2>
             </div>
@@ -247,7 +253,7 @@ export default function QuickQuoteModal({ onClose }) {
               letterSpacing: '0.01em',
               fontWeight: 500,
             }}>
-              Get a tailored freight price in minutes — Sea, Air, Road, Customs or Project Cargo. No calls, no waiting. Just results.
+              {isAr ? ar.quickQuote.subtitle : 'Get a tailored freight price in minutes — Sea, Air, Road, Customs or Project Cargo. No calls, no waiting. Just results.'}
             </p>
 
             {/* Divider */}
@@ -259,7 +265,7 @@ export default function QuickQuoteModal({ onClose }) {
 
           {/* Form */}
           <div style={{ position: 'relative', zIndex: 1 }}>
-            <QuickQuoteSection inModal={true} />
+            <QuickQuoteSection inModal={true} lang={lang} />
           </div>
         </div>
       </div>

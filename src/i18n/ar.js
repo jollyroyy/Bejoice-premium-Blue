@@ -296,6 +296,234 @@ const ar = {
     ],
   },
 
+  // ── QuickQuote ───────────────────────────────────────────────
+  quickQuote: {
+    // Modal heading
+    badgeLabel: 'محرك التسعير الفوري',
+    headingWhite: 'احصل على',
+    headingBlue: 'عرض سعر سريع',
+    subtitle: 'احصل على سعر شحن مخصص في دقائق — بحري، جوي، بري، جمارك أو شحن مشاريع. بدون مكالمات، بدون انتظار. فقط نتائج.',
+
+    // Section heading (non-modal)
+    sectionEyebrow: 'تسعير فوري',
+    sectionTitle: 'عرض سعر سريع',
+    sectionSubtitle: 'شحن بحري، جوي، بري، تخليص جمركي أو مشاريع — احصل على عرض سعر مخصص في دقائق. بدون مكالمات. بدون انتظار.',
+    footnote: 'جميع طلبات عروض الأسعار يعالجها متخصصو بيجويس. استجابة مضمونة خلال 4 ساعات عمل (الأحد–الخميس، بتوقيت المملكة العربية السعودية).',
+
+    // Tab labels
+    tabSea: 'شحن بحري',
+    tabSeaSub: 'FCL · LCL',
+    tabAir: 'شحن جوي',
+    tabAirSub: 'سريع · قياسي',
+    tabLand: 'شحن بري',
+    tabLandSub: 'FTL · LTL',
+    tabCustoms: 'التخليص الجمركي',
+    tabCustomsSub: 'استيراد · تصدير',
+    tabProject: 'شحن مشاريع',
+    tabProjectSub: 'OOG · رفع ثقيل',
+
+    // Step labels
+    stepRoute: 'المسار',
+    stepCargo: 'البضاعة',
+    stepServices: 'الخدمات',
+    stepContact: 'التواصل',
+    stepDetails: 'التفاصيل',
+    stepDimensions: 'الأبعاد',
+    stepShipment: 'الشحنة',
+
+    // Service type buttons
+    fcl: 'FCL',
+    fclSub: 'حاوية كاملة',
+    lcl: 'LCL',
+    lclSub: 'أقل من حاوية',
+    ftl: 'FTL',
+    ftlSub: 'شاحنة كاملة',
+    ltl: 'LTL',
+    ltlSub: 'جزء شاحنة',
+    importDir: '📥 استيراد',
+    importSub: 'وارد إلى المملكة',
+    exportDir: '📤 تصدير',
+    exportSub: 'صادر من المملكة',
+
+    // Sea form field labels
+    serviceType: 'نوع الخدمة',
+    cargoReadyDate: 'تاريخ جاهزية البضاعة *',
+    portOfLoading: 'ميناء التحميل (المنشأ) *',
+    portOfDischarge: 'ميناء التفريغ (الوجهة) *',
+    selectPort: 'اختر الميناء…',
+    containerDetails: 'تفاصيل الحاوية',
+    addContainer: '+ إضافة حاوية',
+    commodity: 'البضاعة *',
+    commodityPlaceholder: 'مثال: إلكترونيات',
+    totalWeightTons: 'الوزن الإجمالي (طن)',
+    estValueUSD: 'القيمة التقديرية (دولار)',
+    hazardousDG: 'بضاعة خطرة / DG',
+    reeferTemp: 'درجة حرارة مبردة',
+    reeferTempLabel: 'درجة الحرارة المطلوبة (°م)',
+    reeferPlaceholder: '-18',
+
+    // LCL specific
+    noOfPackages: 'عدد الطرود',
+    totalVolumeCBM: 'الحجم الإجمالي (CBM)',
+    grossWeightKg: 'الوزن الإجمالي (كجم)',
+
+    // Air form
+    originAirport: 'مطار المنشأ',
+    destinationAirport: 'مطار الوجهة',
+    selectAirport: 'اختر المطار…',
+    cargoType: 'نوع البضاعة',
+    noOfPieces: 'عدد القطع',
+    weightPerPiece: 'الوزن / قطعة (كجم)',
+    commodityAir: 'البضاعة',
+    commodityAirPlaceholder: 'مثال: قطع غيار سيارات',
+    dimensionsPerPiece: 'أبعاد القطعة الواحدة',
+    dimLength: 'الطول',
+    dimWidth: 'العرض',
+    dimHeight: 'الارتفاع',
+    actualWeight: 'الوزن الفعلي',
+    volumetricWeight: 'الوزن الحجمي',
+    chargeableWeight: 'الوزن القابل للشحن',
+    dangerousGoodsIATA: 'بضائع خطرة (IATA)',
+    lithiumBattery: 'يحتوي على بطاريات ليثيوم',
+    perishable: 'قابل للتلف / حساس لدرجة الحرارة',
+    serviceLevel: 'مستوى الخدمة',
+
+    // Air service levels
+    svcExpress: 'سريع جداً',
+    svcExpressSub: '1–2 يوم عمل',
+    svcPriority: 'أولوية',
+    svcPrioritySub: '2–3 أيام عمل',
+    svcStandard: 'قياسي',
+    svcStandardSub: '3–5 أيام عمل',
+    svcEconomy: 'اقتصادي',
+    svcEconomySub: '5–7 أيام عمل',
+
+    // Land form
+    originCity: 'مدينة المنشأ',
+    destinationCity: 'مدينة الوجهة',
+    selectCity: 'اختر المدينة…',
+    truckType: 'نوع الشاحنة / المعدة',
+    grossWeightTons: 'الوزن الإجمالي (طن)',
+    volumeCBM: 'الحجم (CBM)',
+    noOfPallets: 'عدد المنصات',
+    commodityDesc: 'وصف البضاعة',
+    commodityLandPlaceholder: 'مثال: مواد بناء',
+    hazardousADR: 'بضاعة خطرة / ADR',
+    refrigeratedReefer: 'مبردة (ريفر)',
+    cargoInsurance: 'تأمين البضاعة',
+
+    // Customs form
+    direction: 'الاتجاه',
+    freightMode: 'وسيلة الشحن',
+    portAirportBorder: 'الميناء / المطار / المعبر الحدودي',
+    selectEntryExit: 'اختر نقطة الدخول/الخروج…',
+    commodityDescCustoms: 'وصف البضاعة',
+    commodityCustomsPlaceholder: 'مثال: آلات صناعية',
+    hsCode: 'رمز HS (اختياري)',
+    hsCodePlaceholder: 'مثال: 8479.89',
+    shipmentValue: 'قيمة الشحنة',
+    currency: 'العملة',
+    noOfDocsBLs: 'عدد المستندات / بوالص الشحن',
+    noOfPackagesUnits: 'عدد الطرود / الوحدات',
+
+    // Customs service cards
+    dutyTaxPayment: 'دفع الرسوم والضرائب',
+    dutyTaxDesc: 'صرف رسوم الجمارك + ضريبة القيمة المضافة نيابةً عنك',
+    physicalInspection: 'الفحص المادي',
+    physicalInspectionDesc: 'تنسيق فحص الجمارك وهيئة المواصفات والمقاييس',
+    portStorageRelease: 'التخزين في الميناء والإفراج',
+    portStorageDesc: 'متابعة الميناء، تجنب رسوم الاحتجاز، الإفراج عن الحاوية',
+    preShipmentSurvey: 'مسح ما قبل الشحن',
+    preShipmentDesc: 'مسح الامتثال SASO/SFDA قبل التحميل',
+
+    // Project cargo form
+    projectCargoType: 'نوع المشروع / البضاعة',
+    originPortCity: 'المنشأ (ميناء / مدينة)',
+    originProjectPlaceholder: 'مثال: شنغهاي، الصين',
+    destinationPortCity: 'الوجهة (ميناء / مدينة)',
+    destinationProjectPlaceholder: 'مثال: مدينة الجبيل الصناعية',
+    commodityProjectDesc: 'البضاعة / وصف المشروع',
+    commodityProjectPlaceholder: 'صف البضاعة واسم المشروع وأي متطلبات خاصة…',
+    noOfPiecesProject: 'عدد القطع',
+    totalWeightMT: 'الوزن الإجمالي (طن متري)',
+    dimensionsLongestPiece: 'الأبعاد — أطول قطعة منفردة (بالمتر)',
+    craneRequired: 'مطلوب رافعة / معدات رفع ثقيل',
+    policeEscort: 'مطلوب مرافقة شرطة',
+    specialPermits: 'تصاريح خاصة ومسح المسار',
+
+    // Services step (sea & air)
+    customsClearance: 'التخليص الجمركي',
+    customsClearanceDesc: 'تخليص الاستيراد والتصدير في المنشأ/الوجهة',
+    cargoInsuranceSvc: 'تأمين البضاعة',
+    cargoInsuranceDesc: 'تغطية شاملة للبضائع البحرية',
+    originPickup: 'الاستلام من المنشأ',
+    originPickupDesc: 'الاستلام من مقر الشاحن',
+    destinationDelivery: 'التسليم في الوجهة',
+    destinationDeliveryDesc: 'التسليم حتى باب المستلم',
+    airCustomsDesc: 'وثائق وتخليص الشحن الجوي للاستيراد والتصدير',
+    airInsuranceDesc: 'تغطية تأمين شاملة للشحن الجوي',
+    airPickupDesc: 'الاستلام من مقرك إلى المطار',
+    airDeliveryDesc: 'التسليم للباب من مطار الوجهة',
+    airPickupLabel: 'الاستلام من المطار',
+    airDeliveryLabel: 'التسليم من المطار',
+
+    // 3D Load calculator
+    load3dTitle: '3D حاسبة التحميل',
+    load3dOptional: 'اختياري — اسحب للتدوير',
+    boxLabel: 'صندوق',
+    stackable: 'قابل للتكديس',
+    nonStackable: 'غير قابل للتكديس',
+    addBoxType: '+ إضافة نوع صندوق',
+    weightKg: 'الوزن (كجم)',
+    qty: 'الكمية',
+
+    // Incoterms
+    incoterms: 'شروط الشحن الدولية',
+
+    // Contact step
+    fullName: 'الاسم الكامل *',
+    fullNamePlaceholder: 'اسمك',
+    companyName: 'اسم الشركة',
+    companyPlaceholder: 'شركتك',
+    emailAddress: 'البريد الإلكتروني *',
+    emailPlaceholder: 'you@company.com',
+    phoneWhatsApp: 'الهاتف / واتساب *',
+    phonePlaceholder: '+966 5X XXX XXXX',
+    additionalNotes: 'ملاحظات إضافية',
+    notesPlaceholder: 'تعليمات خاصة، شركات الشحن المفضلة، الجدول الزمني للتسليم…',
+    privacyNote: 'بياناتك تُستخدم فقط لإعداد عرض أسعارك. نرد خلال 4 ساعات عمل.',
+
+    // Buttons
+    continue: 'متابعة',
+    back: 'رجوع إلى الخطوة',
+    submitQuote: 'إرسال طلب عرض السعر',
+    sending: 'جارٍ الإرسال…',
+    submitAnother: 'إرسال طلب آخر',
+    getQuote: 'احصل على عرض سعر',
+
+    // Validation errors
+    errOrigin: 'ميناء المنشأ مطلوب',
+    errDestination: 'ميناء الوجهة مطلوب',
+    errReadyDate: 'تاريخ جاهزية البضاعة مطلوب',
+    errCommodity: 'وصف البضاعة مطلوب',
+    errName: 'الاسم الكامل مطلوب',
+    errEmail: 'البريد الإلكتروني مطلوب',
+    errPhone: 'الهاتف / واتساب مطلوب',
+
+    // Success state
+    quoteRequested: 'تم استلام الطلب',
+    successBody1: 'تم استلام طلب عرض أسعار',
+    successBody2: 'سيرد فريقنا خلال',
+    successBody3: '4 ساعات عمل',
+
+    // Success type labels
+    successSea: 'شحن بحري',
+    successAir: 'شحن جوي',
+    successLand: 'شحن بري',
+    successCustoms: 'تخليص جمركي',
+    successProject: 'شحن مشاريع',
+  },
+
   // ── Contact ──────────────────────────────────────────────────
   contact: {
     headlineWhite: 'اطلب ',

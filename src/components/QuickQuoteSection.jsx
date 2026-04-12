@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import Container3DViewer, { CONTAINER_SPECS, WEIGHT_TABLE, WeightDistributionGuide } from './Container3DViewer';
+import { useLang } from '../context/LangContext';
+import arT from '../i18n/ar';
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 const INCOTERMS = ['EXW','FCA','FAS','FOB','CFR','CIF','CPT','CIP','DAP','DPU','DDP'];
@@ -305,7 +307,7 @@ function StepIndicator({ steps, current }) {
   );
 }
 
-function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading, validate }) {
+function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading, validate, isAr }) {
   const isLast = step === totalSteps - 1
   const handleContinue = () => {
     if (validate && !validate()) return
@@ -326,7 +328,7 @@ function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading, valid
             animation: loading ? 'none' : 'qqm-continue-pulse 2s ease-in-out infinite',
           }}
         >
-          <span>{loading ? 'Sending your request…' : 'Submit Quote Request'}</span>
+          <span>{loading ? (isAr ? arT.quickQuote.sending : 'Sending your request…') : (isAr ? arT.quickQuote.submitQuote : 'Submit Quote Request')}</span>
           {!loading && (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ animation: 'qqm-arrow-nudge 1.4s ease-in-out infinite' }}>
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -343,7 +345,7 @@ function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading, valid
             animation: 'qqm-continue-pulse 2s ease-in-out infinite',
           }}
         >
-          <span>Continue</span>
+          <span>{isAr ? arT.quickQuote.continue : 'Continue'}</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" style={{ animation: 'qqm-arrow-nudge 1.4s ease-in-out infinite' }}>
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
@@ -367,7 +369,7 @@ function NavButtons({ step, totalSteps, onBack, onNext, onSubmit, loading, valid
           onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
           onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.45)'}
         >
-          ← Back to step {step}
+          {isAr ? `${arT.quickQuote.back} ${step}` : `← Back to step ${step}`}
         </button>
       )}
     </div>
@@ -468,7 +470,7 @@ function CargoLoad3D({ containerType, compact }) {
   )
 }
 
-function SeaForm({ onSuccess }) {
+function SeaForm({ onSuccess, isAr }) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [d, setD] = useState({
@@ -488,17 +490,17 @@ function SeaForm({ onSuccess }) {
   const validate = () => {
     const e = {}
     if (step === 0) {
-      if (!d.origin) e.origin = 'Origin port is required'
-      if (!d.destination) e.destination = 'Destination port is required'
-      if (!d.readyDate) e.readyDate = 'Cargo ready date is required'
+      if (!d.origin) e.origin = isAr ? arT.quickQuote.errOrigin : 'Origin port is required'
+      if (!d.destination) e.destination = isAr ? arT.quickQuote.errDestination : 'Destination port is required'
+      if (!d.readyDate) e.readyDate = isAr ? arT.quickQuote.errReadyDate : 'Cargo ready date is required'
     }
     if (step === 1) {
-      if (!d.commodity) e.commodity = 'Commodity description is required'
+      if (!d.commodity) e.commodity = isAr ? arT.quickQuote.errCommodity : 'Commodity description is required'
     }
     if (step === 3) {
-      if (!d.name.trim()) e.name = 'Full name is required'
-      if (!d.email.trim()) e.email = 'Email address is required'
-      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required'
+      if (!d.name.trim()) e.name = isAr ? arT.quickQuote.errName : 'Full name is required'
+      if (!d.email.trim()) e.email = isAr ? arT.quickQuote.errEmail : 'Email address is required'
+      if (!d.phone.trim()) e.phone = isAr ? arT.quickQuote.errPhone : 'Phone / WhatsApp is required'
     }
     setErrors(e)
     return Object.keys(e).length === 0
@@ -506,7 +508,9 @@ function SeaForm({ onSuccess }) {
 
   const CONTAINER_TYPES = ['20ft Dry Standard','40ft Dry Standard','40ft High Cube','20ft Reefer','40ft Reefer','20ft Open Top','40ft Open Top','20ft Flat Rack','40ft Flat Rack'];
 
-  const steps = ['Route', 'Cargo', 'Services', 'Contact'];
+  const steps = isAr
+    ? [arT.quickQuote.stepRoute, arT.quickQuote.stepCargo, arT.quickQuote.stepServices, arT.quickQuote.stepContact]
+    : ['Route', 'Cargo', 'Services', 'Contact'];
 
   const handleSubmit = () => {
     setLoading(true);
@@ -520,27 +524,27 @@ function SeaForm({ onSuccess }) {
       {step === 0 && (
         <div className="qq-step">
           <div className="qq-grid-2">
-            <Field label="Service Type">
+            <Field label={isAr ? arT.quickQuote.serviceType : 'Service Type'}>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 {['FCL','LCL'].map(s => (
                   <button key={s} onClick={() => up('service', s)}
                     className={`qq-type-btn${d.service === s ? ' active' : ''}`}>
                     {s === 'FCL' ? '🧊 FCL' : '📦 LCL'}<br />
-                    <span>{s === 'FCL' ? 'Full Container' : 'Less Container'}</span>
+                    <span>{s === 'FCL' ? (isAr ? arT.quickQuote.fclSub : 'Full Container') : (isAr ? arT.quickQuote.lclSub : 'Less Container')}</span>
                   </button>
                 ))}
               </div>
             </Field>
-            <Field label="Cargo Ready Date *" error={errors.readyDate}>
+            <Field label={isAr ? arT.quickQuote.cargoReadyDate : 'Cargo Ready Date *'} error={errors.readyDate}>
               <Input type="date" value={d.readyDate} onChange={e => { up('readyDate', e.target.value); setErrors(p => ({...p, readyDate: ''})) }} error={errors.readyDate} />
             </Field>
           </div>
           <div className="qq-grid-2" style={{ marginTop: '1rem' }}>
-            <Field label="Port of Loading (Origin) *" error={errors.origin}>
-              <Select value={d.origin} onChange={e => { up('origin', e.target.value); setErrors(p => ({...p, origin: ''})) }} options={PORTS_SEA} placeholder="Select or type port…" />
+            <Field label={isAr ? arT.quickQuote.portOfLoading : 'Port of Loading (Origin) *'} error={errors.origin}>
+              <Select value={d.origin} onChange={e => { up('origin', e.target.value); setErrors(p => ({...p, origin: ''})) }} options={PORTS_SEA} placeholder={isAr ? arT.quickQuote.selectPort : 'Select or type port…'} />
             </Field>
-            <Field label="Port of Discharge (Destination) *" error={errors.destination}>
-              <Select value={d.destination} onChange={e => { up('destination', e.target.value); setErrors(p => ({...p, destination: ''})) }} options={PORTS_SEA} placeholder="Select or type port…" />
+            <Field label={isAr ? arT.quickQuote.portOfDischarge : 'Port of Discharge (Destination) *'} error={errors.destination}>
+              <Select value={d.destination} onChange={e => { up('destination', e.target.value); setErrors(p => ({...p, destination: ''})) }} options={PORTS_SEA} placeholder={isAr ? arT.quickQuote.selectPort : 'Select or type port…'} />
             </Field>
           </div>
         </div>
@@ -549,69 +553,69 @@ function SeaForm({ onSuccess }) {
       {step === 1 && d.service === 'FCL' && (
         <div className="qq-step">
           <div style={{ marginBottom: '1rem' }}>
-            <label style={labelCls}>Container Details</label>
+            <label style={labelCls}>{isAr ? arT.quickQuote.containerDetails : 'Container Details'}</label>
             {d.containers.map((c, i) => (
               <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 0.4fr 1.6rem', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'center' }}>
                 <Select value={c.type} onChange={e => updContainer(i, 'type', e.target.value)} options={CONTAINER_TYPES} />
-                <Input type="number" min="1" placeholder="Qty" value={c.qty} onChange={e => updContainer(i, 'qty', e.target.value)} />
+                <Input type="number" min="1" placeholder={isAr ? arT.quickQuote.qty : 'Qty'} value={c.qty} onChange={e => updContainer(i, 'qty', e.target.value)} />
                 <button onClick={() => removeContainer(i)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.2)', fontSize: '1rem', cursor: 'pointer', paddingBottom: '2px' }} disabled={d.containers.length === 1}>×</button>
               </div>
             ))}
-            <button onClick={addContainer} className="qq-add-btn">+ Add Container</button>
+            <button onClick={addContainer} className="qq-add-btn">{isAr ? arT.quickQuote.addContainer : '+ Add Container'}</button>
           </div>
           <div className="qq-grid-3">
-            <Field label="Commodity *" error={errors.commodity}>
-              <Input placeholder="e.g. Electronics" value={d.commodity} onChange={e => { up('commodity', e.target.value); setErrors(p => ({...p, commodity: ''})) }} error={errors.commodity} />
+            <Field label={isAr ? arT.quickQuote.commodity : 'Commodity *'} error={errors.commodity}>
+              <Input placeholder={isAr ? arT.quickQuote.commodityPlaceholder : 'e.g. Electronics'} value={d.commodity} onChange={e => { up('commodity', e.target.value); setErrors(p => ({...p, commodity: ''})) }} error={errors.commodity} />
             </Field>
-            <Field label="Total Weight (tons)">
+            <Field label={isAr ? arT.quickQuote.totalWeightTons : 'Total Weight (tons)'}>
               <Input type="number" min="0" step="0.1" placeholder="0.00" value={d.weight} onChange={e => up('weight', e.target.value)} />
             </Field>
-            <Field label="Est. Value (USD)">
+            <Field label={isAr ? arT.quickQuote.estValueUSD : 'Est. Value (USD)'}>
               <Input type="number" min="0" placeholder="0" value={d.value} onChange={e => up('value', e.target.value)} />
             </Field>
           </div>
           <div style={{ marginTop: '1rem', display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-            <CheckToggle label="Hazardous / DG Cargo" checked={d.hazardous} onChange={v => up('hazardous', v)} />
-            <CheckToggle label="Temperature-Controlled (Reefer)" checked={d.reefer} onChange={v => up('reefer', v)} />
+            <CheckToggle label={isAr ? arT.quickQuote.hazardousDG : 'Hazardous / DG Cargo'} checked={d.hazardous} onChange={v => up('hazardous', v)} />
+            <CheckToggle label={isAr ? arT.quickQuote.refrigeratedReefer : 'Temperature-Controlled (Reefer)'} checked={d.reefer} onChange={v => up('reefer', v)} />
           </div>
           {d.reefer && (
             <div style={{ marginTop: '0.75rem', maxWidth: '12rem' }}>
-              <Field label="Required Temp (°C)">
-                <Input placeholder="-18" value={d.reeferTemp} onChange={e => up('reeferTemp', e.target.value)} />
+              <Field label={isAr ? arT.quickQuote.reeferTempLabel : 'Required Temp (°C)'}>
+                <Input placeholder={isAr ? arT.quickQuote.reeferPlaceholder : '-18'} value={d.reeferTemp} onChange={e => up('reeferTemp', e.target.value)} />
               </Field>
             </div>
           )}
           {/* 3D Load Calculator */}
-          <CargoLoad3D containerType={CTYPE_MAP[d.containers[0]?.type] || '20ft'} compact />
+          <CargoLoad3D containerType={CTYPE_MAP[d.containers[0]?.type] || '20ft'} compact isAr={isAr} />
         </div>
       )}
 
       {step === 1 && d.service === 'LCL' && (
         <div className="qq-step">
           <div className="qq-grid-3">
-            <Field label="No. of Packages">
+            <Field label={isAr ? arT.quickQuote.noOfPackages : 'No. of Packages'}>
               <Input type="number" min="1" placeholder="0" value={d.packages} onChange={e => up('packages', e.target.value)} />
             </Field>
-            <Field label="Total Volume (CBM)">
+            <Field label={isAr ? arT.quickQuote.totalVolumeCBM : 'Total Volume (CBM)'}>
               <Input type="number" min="0" step="0.01" placeholder="0.00" value={d.cbm} onChange={e => up('cbm', e.target.value)} />
             </Field>
-            <Field label="Gross Weight (kg)">
+            <Field label={isAr ? arT.quickQuote.grossWeightKg : 'Gross Weight (kg)'}>
               <Input type="number" min="0" placeholder="0" value={d.weight} onChange={e => up('weight', e.target.value)} />
             </Field>
           </div>
           <div className="qq-grid-2" style={{ marginTop: '1rem' }}>
-            <Field label="Commodity">
-              <Input placeholder="e.g. Furniture" value={d.commodity} onChange={e => up('commodity', e.target.value)} />
+            <Field label={isAr ? arT.quickQuote.commodity : 'Commodity'}>
+              <Input placeholder={isAr ? arT.quickQuote.commodityPlaceholder : 'e.g. Furniture'} value={d.commodity} onChange={e => up('commodity', e.target.value)} />
             </Field>
-            <Field label="Est. Value (USD)">
+            <Field label={isAr ? arT.quickQuote.estValueUSD : 'Est. Value (USD)'}>
               <Input type="number" min="0" placeholder="0" value={d.value} onChange={e => up('value', e.target.value)} />
             </Field>
           </div>
           <div style={{ marginTop: '1rem' }}>
-            <CheckToggle label="Hazardous / DG Cargo" checked={d.hazardous} onChange={v => up('hazardous', v)} />
+            <CheckToggle label={isAr ? arT.quickQuote.hazardousDG : 'Hazardous / DG Cargo'} checked={d.hazardous} onChange={v => up('hazardous', v)} />
           </div>
           {/* 3D Load Calculator */}
-          <CargoLoad3D containerType="20ft" compact />
+          <CargoLoad3D containerType="20ft" compact isAr={isAr} />
         </div>
       )}
 
@@ -619,10 +623,10 @@ function SeaForm({ onSuccess }) {
         <div className="qq-step">
           <div className="qq-services-grid">
             {[
-              ['customs',  '🏛️', 'Customs Clearance', 'Import & export clearance at origin/destination'],
-              ['insurance','🛡️', 'Cargo Insurance',   'All-risk marine cargo coverage'],
-              ['pickup',   '🚛', 'Origin Pickup',      'Door collection from shipper\'s premises'],
-              ['delivery', '📍', 'Destination Delivery','Last-mile delivery to consignee'],
+              ['customs',  '🏛️', isAr ? arT.quickQuote.customsClearance : 'Customs Clearance', isAr ? arT.quickQuote.customsClearanceDesc : 'Import & export clearance at origin/destination'],
+              ['insurance','🛡️', isAr ? arT.quickQuote.cargoInsuranceSvc : 'Cargo Insurance',   isAr ? arT.quickQuote.cargoInsuranceDesc : 'All-risk marine cargo coverage'],
+              ['pickup',   '🚛', isAr ? arT.quickQuote.originPickup : 'Origin Pickup',           isAr ? arT.quickQuote.originPickupDesc : "Door collection from shipper's premises"],
+              ['delivery', '📍', isAr ? arT.quickQuote.destinationDelivery : 'Destination Delivery', isAr ? arT.quickQuote.destinationDeliveryDesc : 'Last-mile delivery to consignee'],
             ].map(([k, icon, title, desc]) => (
               <div key={k} onClick={() => up(k, !d[k])} className={`qq-service-card${d[k] ? ' active' : ''}`}>
                 <div style={{ fontSize: '1.4rem', marginBottom: '0.4rem' }}>{icon}</div>
@@ -633,7 +637,7 @@ function SeaForm({ onSuccess }) {
             ))}
           </div>
           <div style={{ marginTop: '1.5rem', maxWidth: '16rem' }}>
-            <Field label="Incoterms">
+            <Field label={isAr ? arT.quickQuote.incoterms : 'Incoterms'}>
               <Select value={d.incoterms} onChange={e => up('incoterms', e.target.value)} options={INCOTERMS} />
             </Field>
           </div>
@@ -641,16 +645,16 @@ function SeaForm({ onSuccess }) {
       )}
 
       {step === 3 && (
-        <ContactStep d={d} up={up} errors={errors} setErrors={setErrors} />
+        <ContactStep d={d} up={up} errors={errors} setErrors={setErrors} isAr={isAr} />
       )}
 
-      <NavButtons step={step} totalSteps={4} onBack={() => { setStep(s => s - 1); setErrors({}) }} onNext={() => setStep(s => s + 1)} onSubmit={handleSubmit} loading={loading} validate={validate} />
+      <NavButtons step={step} totalSteps={4} onBack={() => { setStep(s => s - 1); setErrors({}) }} onNext={() => setStep(s => s + 1)} onSubmit={handleSubmit} loading={loading} validate={validate} isAr={isAr} />
     </div>
   );
 }
 
 // ─── AIR FREIGHT FORM ─────────────────────────────────────────────────────────
-function AirForm({ onSuccess }) {
+function AirForm({ onSuccess, isAr }) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [d, setD] = useState({
@@ -685,7 +689,9 @@ function AirForm({ onSuccess }) {
     { id: 'Standard', label: 'Standard', sub: '3–5 business days' },
     { id: 'Economy',  label: 'Economy',  sub: '5–7 business days' },
   ];
-  const steps = ['Route', 'Cargo', 'Services', 'Contact'];
+  const steps = isAr
+    ? [arT.quickQuote.stepRoute, arT.quickQuote.stepCargo, arT.quickQuote.stepServices, arT.quickQuote.stepContact]
+    : ['Route', 'Cargo', 'Services', 'Contact'];
 
   return (
     <div>
@@ -694,18 +700,18 @@ function AirForm({ onSuccess }) {
       {step === 0 && (
         <div className="qq-step">
           <div className="qq-grid-2">
-            <Field label="Origin Airport">
-              <Select value={d.origin} onChange={e => up('origin', e.target.value)} options={AIRPORTS} placeholder="Select airport…" />
+            <Field label={isAr ? arT.quickQuote.originAirport : 'Origin Airport'}>
+              <Select value={d.origin} onChange={e => up('origin', e.target.value)} options={AIRPORTS} placeholder={isAr ? arT.quickQuote.selectAirport : 'Select airport…'} />
             </Field>
-            <Field label="Destination Airport">
-              <Select value={d.destination} onChange={e => up('destination', e.target.value)} options={AIRPORTS} placeholder="Select airport…" />
+            <Field label={isAr ? arT.quickQuote.destinationAirport : 'Destination Airport'}>
+              <Select value={d.destination} onChange={e => up('destination', e.target.value)} options={AIRPORTS} placeholder={isAr ? arT.quickQuote.selectAirport : 'Select airport…'} />
             </Field>
           </div>
           <div className="qq-grid-2" style={{ marginTop: '1rem' }}>
-            <Field label="Cargo Ready Date">
+            <Field label={isAr ? arT.quickQuote.cargoReadyDate : 'Cargo Ready Date'}>
               <Input type="date" value={d.readyDate} onChange={e => up('readyDate', e.target.value)} />
             </Field>
-            <Field label="Cargo Type">
+            <Field label={isAr ? arT.quickQuote.cargoType : 'Cargo Type'}>
               <Select value={d.cargoType} onChange={e => up('cargoType', e.target.value)} options={CARGO_TYPES} />
             </Field>
           </div>
@@ -715,19 +721,19 @@ function AirForm({ onSuccess }) {
       {step === 1 && (
         <div className="qq-step">
           <div className="qq-grid-3">
-            <Field label="No. of Pieces">
+            <Field label={isAr ? arT.quickQuote.noOfPieces : 'No. of Pieces'}>
               <Input type="number" min="1" placeholder="0" value={d.pieces} onChange={e => up('pieces', e.target.value)} />
             </Field>
-            <Field label="Weight / Piece (kg)">
+            <Field label={isAr ? arT.quickQuote.weightPerPiece : 'Weight / Piece (kg)'}>
               <Input type="number" min="0" step="0.1" placeholder="0.00" value={d.weight} onChange={e => up('weight', e.target.value)} />
             </Field>
-            <Field label="Commodity">
-              <Input placeholder="e.g. Auto Parts" value={d.commodity} onChange={e => up('commodity', e.target.value)} />
+            <Field label={isAr ? arT.quickQuote.commodityAir : 'Commodity'}>
+              <Input placeholder={isAr ? arT.quickQuote.commodityAirPlaceholder : 'e.g. Auto Parts'} value={d.commodity} onChange={e => up('commodity', e.target.value)} />
             </Field>
           </div>
           <div style={{ marginTop: '1rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.65rem', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <label style={{ ...labelCls, marginBottom: 0 }}>Dimensions per Piece</label>
+              <label style={{ ...labelCls, marginBottom: 0 }}>{isAr ? arT.quickQuote.dimensionsPerPiece : 'Dimensions per Piece'}</label>
               <UnitDropdown
                 value={d.dimUnit}
                 onChange={v => up('dimUnit', v)}
@@ -738,7 +744,10 @@ function AirForm({ onSuccess }) {
               />
             </div>
             <div className="qq-grid-3" style={{ gap: '0.5rem' }}>
-              {[['Length','length'],['Width','width'],['Height','height']].map(([lbl, key]) => (
+              {(isAr
+                ? [[arT.quickQuote.dimLength,'length'],[arT.quickQuote.dimWidth,'width'],[arT.quickQuote.dimHeight,'height']]
+                : [['Length','length'],['Width','width'],['Height','height']]
+              ).map(([lbl, key]) => (
                 <div key={key}>
                   <label style={{ ...labelCls, fontSize: '0.55rem', opacity: 0.6 }}>{lbl}</label>
                   <Input type="number" min="0" placeholder="0" value={d[key]} onChange={e => up(key, e.target.value)} />
@@ -749,34 +758,42 @@ function AirForm({ onSuccess }) {
           {(d.weight || d.length) && (
             <div className="qq-calc-preview">
               <div className="qq-calc-row">
-                <span>Actual Weight</span>
+                <span>{isAr ? arT.quickQuote.actualWeight : 'Actual Weight'}</span>
                 <span>{((parseFloat(d.weight)||0)*(parseInt(d.pieces)||1)).toFixed(2)} kg</span>
               </div>
               <div className="qq-calc-row">
-                <span>Volumetric Weight</span>
+                <span>{isAr ? arT.quickQuote.volumetricWeight : 'Volumetric Weight'}</span>
                 <span>{volWeight()} kg</span>
               </div>
               <div className="qq-calc-row highlight">
-                <span>Chargeable Weight</span>
+                <span>{isAr ? arT.quickQuote.chargeableWeight : 'Chargeable Weight'}</span>
                 <span>{chargeable()} kg</span>
               </div>
             </div>
           )}
           <div style={{ marginTop: '1rem', display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-            <CheckToggle label="Dangerous Goods (IATA)" checked={d.hazardous} onChange={v => up('hazardous', v)} />
-            <CheckToggle label="Contains Lithium Batteries" checked={d.lithiumBattery} onChange={v => up('lithiumBattery', v)} />
-            <CheckToggle label="Perishable / Temperature-Sensitive" checked={d.perishable} onChange={v => up('perishable', v)} />
+            <CheckToggle label={isAr ? arT.quickQuote.dangerousGoodsIATA : 'Dangerous Goods (IATA)'} checked={d.hazardous} onChange={v => up('hazardous', v)} />
+            <CheckToggle label={isAr ? arT.quickQuote.lithiumBattery : 'Contains Lithium Batteries'} checked={d.lithiumBattery} onChange={v => up('lithiumBattery', v)} />
+            <CheckToggle label={isAr ? arT.quickQuote.perishable : 'Perishable / Temperature-Sensitive'} checked={d.perishable} onChange={v => up('perishable', v)} />
           </div>
           <div style={{ marginTop: '1.25rem' }}>
-            <label style={labelCls}>Service Level</label>
+            <label style={labelCls}>{isAr ? arT.quickQuote.serviceLevel : 'Service Level'}</label>
             <div className="qq-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '0.5rem' }}>
-              {SERVICES.map(s => (
-                <div key={s.id} onClick={() => up('service', s.id)} className={`qq-service-card compact${d.service === s.id ? ' active' : ''}`}>
-                  <div className="qq-service-title">{s.label}</div>
-                  <div className="qq-service-desc">{s.sub}</div>
-                  <div className={`qq-service-check${d.service === s.id ? ' active' : ''}`}>{d.service === s.id ? '✓' : ''}</div>
-                </div>
-              ))}
+              {SERVICES.map(s => {
+                const svcMap = {
+                  Express:  { label: isAr ? arT.quickQuote.svcExpress  : s.label, sub: isAr ? arT.quickQuote.svcExpressSub  : s.sub },
+                  Priority: { label: isAr ? arT.quickQuote.svcPriority : s.label, sub: isAr ? arT.quickQuote.svcPrioritySub : s.sub },
+                  Standard: { label: isAr ? arT.quickQuote.svcStandard : s.label, sub: isAr ? arT.quickQuote.svcStandardSub : s.sub },
+                  Economy:  { label: isAr ? arT.quickQuote.svcEconomy  : s.label, sub: isAr ? arT.quickQuote.svcEconomySub  : s.sub },
+                }[s.id] || { label: s.label, sub: s.sub };
+                return (
+                  <div key={s.id} onClick={() => up('service', s.id)} className={`qq-service-card compact${d.service === s.id ? ' active' : ''}`}>
+                    <div className="qq-service-title">{svcMap.label}</div>
+                    <div className="qq-service-desc">{svcMap.sub}</div>
+                    <div className={`qq-service-check${d.service === s.id ? ' active' : ''}`}>{d.service === s.id ? '✓' : ''}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -786,10 +803,10 @@ function AirForm({ onSuccess }) {
         <div className="qq-step">
           <div className="qq-services-grid">
             {[
-              ['customs',  '🏛️', 'Customs Clearance', 'Air cargo import/export documentation & clearance'],
-              ['insurance','🛡️', 'Air Cargo Insurance','All-risk air cargo insurance coverage'],
-              ['pickup',   '🚛', 'Airport Pickup',     'Collect from your premises to the airport'],
-              ['delivery', '📍', 'Airport Delivery',   'Door delivery from destination airport'],
+              ['customs',  '🏛️', isAr ? arT.quickQuote.customsClearance : 'Customs Clearance',     isAr ? arT.quickQuote.airCustomsDesc : 'Air cargo import/export documentation & clearance'],
+              ['insurance','🛡️', isAr ? arT.quickQuote.cargoInsuranceSvc : 'Air Cargo Insurance',   isAr ? arT.quickQuote.airInsuranceDesc : 'All-risk air cargo insurance coverage'],
+              ['pickup',   '🚛', isAr ? arT.quickQuote.airPickupLabel : 'Airport Pickup',            isAr ? arT.quickQuote.airPickupDesc : 'Collect from your premises to the airport'],
+              ['delivery', '📍', isAr ? arT.quickQuote.airDeliveryLabel : 'Airport Delivery',        isAr ? arT.quickQuote.airDeliveryDesc : 'Door delivery from destination airport'],
             ].map(([k, icon, title, desc]) => (
               <div key={k} onClick={() => up(k, !d[k])} className={`qq-service-card${d[k] ? ' active' : ''}`}>
                 <div style={{ fontSize: '1.4rem', marginBottom: '0.4rem' }}>{icon}</div>
@@ -802,15 +819,15 @@ function AirForm({ onSuccess }) {
         </div>
       )}
 
-      {step === 3 && <ContactStep d={d} up={up} />}
+      {step === 3 && <ContactStep d={d} up={up} isAr={isAr} />}
 
-      <NavButtons step={step} totalSteps={4} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('air'); }, 1400); }} loading={loading} />
+      <NavButtons step={step} totalSteps={4} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('air'); }, 1400); }} loading={loading} isAr={isAr} />
     </div>
   );
 }
 
 // ─── LAND / ROAD FREIGHT FORM ─────────────────────────────────────────────────
-function LandForm({ onSuccess }) {
+function LandForm({ onSuccess, isAr }) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [d, setD] = useState({
@@ -1172,8 +1189,10 @@ const TABS = [
   { id: 'project', icon: '⚙️', label: 'Project Cargo',     sub: 'OOG · Heavy Lift' },
 ];
 
-export default function QuickQuoteSection({ sectionRef, lang = 'en', inModal = false }) {
-  const ar = lang === 'ar';
+export default function QuickQuoteSection({ sectionRef, lang: langProp, inModal = false }) {
+  const { lang: ctxLang } = useLang();
+  const lang = langProp || ctxLang || 'en';
+  const isAr = lang === 'ar';
   const [activeTab, setActiveTab] = useState('sea');
   const [successType, setSuccessType] = useState(null);
 
@@ -1190,51 +1209,58 @@ export default function QuickQuoteSection({ sectionRef, lang = 'en', inModal = f
         {!inModal && (
           <div className="tools-header">
             <div className="chapter-label" style={{ justifyContent: 'center' }}>
-              {ar ? 'تسعير فوري' : 'Instant Pricing'}
+              {isAr ? arT.quickQuote.sectionEyebrow : 'Instant Pricing'}
             </div>
             <h2 className="tools-title">
-              {ar ? 'عرض سعر سريع' : 'Quick Quote'}
+              {isAr ? arT.quickQuote.sectionTitle : 'Quick Quote'}
             </h2>
             <p className="tools-subtitle">
-              {ar
-                ? 'شحن بحري، جوي، بري، تخليص جمركي أو مشاريع — احصل على عرض سعر مخصص في دقائق. بدون مكالمات. بدون انتظار.'
-                : 'Sea, air, land, customs or project cargo — get a tailored quote in minutes. No calls. No waiting. Just results.'}
+              {isAr ? arT.quickQuote.sectionSubtitle : 'Sea, air, land, customs or project cargo — get a tailored quote in minutes. No calls. No waiting. Just results.'}
             </p>
           </div>
         )}
 
         {/* Tab selector */}
         <div className="qq-tabs">
-          {TABS.map(t => (
-            <button
-              key={t.id}
-              onClick={() => { setActiveTab(t.id); setSuccessType(null); }}
-              className={`qq-tab${activeTab === t.id ? ' active' : ''}`}
-            >
-              <span className="qq-tab-icon">{t.icon}</span>
-              <span className="qq-tab-label">{t.label}</span>
-              <span className="qq-tab-sub">{t.sub}</span>
-            </button>
-          ))}
+          {TABS.map(t => {
+            const tabLabels = {
+              sea:     { label: isAr ? arT.quickQuote.tabSea     : t.label, sub: isAr ? arT.quickQuote.tabSeaSub     : t.sub },
+              air:     { label: isAr ? arT.quickQuote.tabAir     : t.label, sub: isAr ? arT.quickQuote.tabAirSub     : t.sub },
+              land:    { label: isAr ? arT.quickQuote.tabLand    : t.label, sub: isAr ? arT.quickQuote.tabLandSub    : t.sub },
+              customs: { label: isAr ? arT.quickQuote.tabCustoms : t.label, sub: isAr ? arT.quickQuote.tabCustomsSub : t.sub },
+              project: { label: isAr ? arT.quickQuote.tabProject : t.label, sub: isAr ? arT.quickQuote.tabProjectSub : t.sub },
+            }[t.id] || { label: t.label, sub: t.sub };
+            return (
+              <button
+                key={t.id}
+                onClick={() => { setActiveTab(t.id); setSuccessType(null); }}
+                className={`qq-tab${activeTab === t.id ? ' active' : ''}`}
+              >
+                <span className="qq-tab-icon">{t.icon}</span>
+                <span className="qq-tab-label">{tabLabels.label}</span>
+                <span className="qq-tab-sub">{tabLabels.sub}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Form panel */}
         <div className="qq-panel">
           {successType ? (
-            <SuccessState type={successType} onReset={handleReset} />
+            <SuccessState type={successType} onReset={handleReset} isAr={isAr} />
           ) : (
             <>
-              {activeTab === 'sea'     && <SeaForm     onSuccess={handleSuccess} />}
-              {activeTab === 'air'     && <AirForm     onSuccess={handleSuccess} />}
-              {activeTab === 'land'    && <LandForm    onSuccess={handleSuccess} />}
-              {activeTab === 'customs' && <CustomsForm onSuccess={handleSuccess} />}
-              {activeTab === 'project' && <ProjectForm onSuccess={handleSuccess} />}
+              {activeTab === 'sea'     && <SeaForm     onSuccess={handleSuccess} isAr={isAr} />}
+              {activeTab === 'air'     && <AirForm     onSuccess={handleSuccess} isAr={isAr} />}
+              {activeTab === 'land'    && <LandForm    onSuccess={handleSuccess} isAr={isAr} />}
+              {activeTab === 'customs' && <CustomsForm onSuccess={handleSuccess} isAr={isAr} />}
+              {activeTab === 'project' && <ProjectForm onSuccess={handleSuccess} isAr={isAr} />}
             </>
           )}
         </div>
 
         <p className="tools-footnote" style={{ marginTop: '1.5rem' }}>
-          All quote requests are handled by Bejoice specialists. Response guaranteed within 4 business hours (Sun–Thu, KSA time).
+          {isAr ? arT.quickQuote.footnote : 'All quote requests are handled by Bejoice specialists. Response guaranteed within 4 business hours (Sun–Thu, KSA time).'}
         </p>
       </div>
     </div>
