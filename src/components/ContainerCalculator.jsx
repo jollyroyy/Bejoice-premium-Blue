@@ -1,9 +1,14 @@
 import { useState, useMemo } from 'react'
 import Container3DViewer, { CONTAINER_SPECS, WeightDistributionGuide } from './Container3DViewer'
+import { useLang } from '../context/LangContext'
+import ar from '../i18n/ar'
 
 const BOX_COLORS = ['#5BC2E7','#3b82f6','#10b981','#e05252','#8b5cf6','#f59e0b','#06b6d4']
 
 export default function ContainerCalculator() {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
+  const t = ar.containerCalc
   const [containerType, setContainerType] = useState('20ft')
   const [items, setItems] = useState([{
     id: 1, l: 120, w: 80, h: 80, weight: 200, qty: 5, unit: 'cm', stackable: true
@@ -53,22 +58,22 @@ export default function ContainerCalculator() {
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 'clamp(36px,5vw,56px)' }}>
-          <div style={{ fontSize: 11, letterSpacing: 4, color: '#5BC2E7', fontFamily: 'DM Sans,sans-serif', fontWeight: 600, marginBottom: 14, textTransform: 'uppercase' }}>
-            LOAD OPTIMISER
+          <div style={{ fontSize: 11, letterSpacing: isAr ? 0 : 4, color: '#5BC2E7', fontFamily: 'DM Sans,sans-serif', fontWeight: 600, marginBottom: 14, textTransform: isAr ? 'none' : 'uppercase' }}>
+            {isAr ? t.eyebrow : 'LOAD OPTIMISER'}
           </div>
           <h2 style={{
-            fontFamily: 'Bebas Neue,sans-serif',
+            fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : 'Bebas Neue,sans-serif',
             fontSize: 'clamp(2.4rem,6vw,4.2rem)',
-            color: '#fff', letterSpacing: 4, lineHeight: 1, margin: 0,
+            color: '#fff', letterSpacing: isAr ? 0 : 4, lineHeight: 1, margin: 0,
           }}>
-            CONTAINER CALCULATOR
+            {isAr ? t.title : 'CONTAINER CALCULATOR'}
           </h2>
           <p style={{
             fontFamily: 'DM Sans,sans-serif', color: 'rgba(255,255,255,0.42)',
             fontSize: 'clamp(13px,1.5vw,15px)',
             maxWidth: 440, margin: '14px auto 0',
           }}>
-            Enter cargo dimensions and see how it packs into the container.
+            {isAr ? t.subtitle : 'Enter cargo dimensions and see how it packs into the container.'}
           </p>
         </div>
 
@@ -102,12 +107,12 @@ export default function ContainerCalculator() {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#5BC2E7', boxShadow: '0 0 8px rgba(91,194,231,0.8)' }} />
-                <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: 2.5, color: 'rgba(255,255,255,0.55)', textTransform: 'uppercase' }}>
-                  Cargo Input
+                <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: isAr ? 0 : 2.5, color: 'rgba(255,255,255,0.55)', textTransform: isAr ? 'none' : 'uppercase' }}>
+                  {isAr ? t.cargoInput : 'Cargo Input'}
                 </span>
               </div>
               <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: 'rgba(91,194,231,0.5)', letterSpacing: 1 }}>
-                {items.length} item{items.length !== 1 ? 's' : ''}
+                {isAr ? `${items.length} ${t.item}` : `${items.length} item${items.length !== 1 ? 's' : ''}`}
               </span>
             </div>
 
@@ -116,7 +121,7 @@ export default function ContainerCalculator() {
 
               {/* Container selector */}
               <div style={{ marginBottom: 22 }}>
-                <span style={lbl}>Container Type</span>
+                <span style={lbl}>{isAr ? t.containerType : 'Container Type'}</span>
                 <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
                   {Object.entries(CONTAINER_SPECS).map(([key, c]) => (
                     <button key={key} onClick={() => setContainerType(key)} style={{
@@ -146,7 +151,7 @@ export default function ContainerCalculator() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                     <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, color: BOX_COLORS[idx % BOX_COLORS.length], fontWeight: 700, letterSpacing: 1.5, display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ display: 'inline-block', width: 7, height: 7, borderRadius: 2, background: BOX_COLORS[idx % BOX_COLORS.length], boxShadow: `0 0 6px ${BOX_COLORS[idx % BOX_COLORS.length]}` }} />
-                      ITEM {idx + 1}
+                      {isAr ? `${t.item} ${idx + 1}` : `ITEM ${idx + 1}`}
                     </span>
                     <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                       <select value={item.unit} onChange={e => updateItem(item.id, 'unit', e.target.value)} style={sel}>
@@ -173,13 +178,13 @@ export default function ContainerCalculator() {
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 7, marginBottom: 11 }}>
                     <div>
-                      <span style={micro}>Weight (kg)</span>
+                      <span style={micro}>{isAr ? t.weight : 'Weight (kg)'}</span>
                       <input type="number" min="0" value={item.weight}
                         onChange={e => updateItem(item.id, 'weight', Math.max(0, +e.target.value || 0))}
                         style={inp} />
                     </div>
                     <div>
-                      <span style={micro}>Quantity</span>
+                      <span style={micro}>{isAr ? t.quantity : 'Quantity'}</span>
                       <div style={{ display: 'flex', gap: 4, marginTop: 6 }}>
                         <button onClick={() => updateItem(item.id, 'qty', Math.max(1, item.qty - 1))} style={stepB}>−</button>
                         <input type="number" min="1" value={item.qty}
@@ -205,7 +210,7 @@ export default function ContainerCalculator() {
                         left: item.stackable ? 18 : 1.5, transition: 'left 0.2s',
                       }} />
                     </span>
-                    <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.38)' }}>Stackable</span>
+                    <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.38)' }}>{isAr ? t.stackable : 'Stackable'}</span>
                   </button>
                 </div>
               ))}
@@ -215,9 +220,9 @@ export default function ContainerCalculator() {
                 border: '1px dashed rgba(91,194,231,0.25)',
                 background: 'transparent', color: 'rgba(91,194,231,0.55)',
                 fontFamily: 'DM Sans,sans-serif', fontSize: 11, fontWeight: 700,
-                cursor: 'pointer', letterSpacing: 1.5, transition: 'all 0.2s',
+                cursor: 'pointer', letterSpacing: isAr ? 0 : 1.5, transition: 'all 0.2s',
               }}>
-                + ADD ITEM
+                {isAr ? t.addItem : '+ ADD ITEM'}
               </button>
             </div>
 
@@ -230,8 +235,8 @@ export default function ContainerCalculator() {
               gap: 10,
             }}>
               {[
-                ['TOTAL VOLUME', `${totalCBM.toFixed(2)} m³`],
-                ['TOTAL WEIGHT', `${totalWeight.toLocaleString()} kg`],
+                [isAr ? t.totalVolume : 'TOTAL VOLUME', `${totalCBM.toFixed(2)} m³`],
+                [isAr ? t.totalWeight : 'TOTAL WEIGHT', `${totalWeight.toLocaleString()} kg`],
               ].map(([k, v]) => (
                 <div key={k}>
                   <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: 1.5, marginBottom: 3 }}>{k}</div>
@@ -261,8 +266,8 @@ export default function ContainerCalculator() {
               position: 'relative', zIndex: 1,
             }}>
               <div>
-                <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.6)', letterSpacing: 2.5, textTransform: 'uppercase', marginBottom: 2 }}>
-                  {container.label} · Live Preview
+                <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.6)', letterSpacing: isAr ? 0 : 2.5, textTransform: isAr ? 'none' : 'uppercase', marginBottom: 2 }}>
+                  {container.label} · {isAr ? t.livePreview : 'Live Preview'}
                 </div>
                 <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>
                   {container.length}×{container.width}×{container.height} cm · max {container.maxWeight.toLocaleString()} kg · {containerCBM.toFixed(0)} m³
@@ -279,7 +284,7 @@ export default function ContainerCalculator() {
                 <span style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 15, color: utilizationColor, letterSpacing: 1 }}>
                   {utilization.toFixed(0)}%
                 </span>
-                <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.35)', letterSpacing: 0.5 }}>LOADED</span>
+                <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.35)', letterSpacing: 0.5 }}>{isAr ? t.loaded : 'LOADED'}</span>
               </div>
             </div>
 
@@ -298,14 +303,14 @@ export default function ContainerCalculator() {
               <div style={{ marginBottom: 12 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
                   <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.35)', letterSpacing: 1 }}>
-                    {totalContainersNeeded > 1 
-                      ? `⚠ ${totalContainersNeeded} x ${container.label} recommended` 
-                      : (utilization > 95 ? '⚠ Almost full' : `${(containerCBM - totalCBM).toFixed(1)} m³ remaining`)
+                    {totalContainersNeeded > 1
+                      ? `⚠ ${totalContainersNeeded} x ${container.label} ${isAr ? t.recommended : 'recommended'}`
+                      : (utilization > 95 ? (isAr ? t.almostFull : '⚠ Almost full') : `${(containerCBM - totalCBM).toFixed(1)} ${isAr ? t.remaining : 'm³ remaining'}`)
                     }
                   </span>
                   <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: utilizationColor }}>
-                    {totalContainersNeeded > 1 
-                      ? `${totalCBM.toFixed(2)} m³ TOTAL` 
+                    {totalContainersNeeded > 1
+                      ? `${totalCBM.toFixed(2)} ${isAr ? t.totalCbm : 'm³ TOTAL'}`
                       : `${totalCBM.toFixed(2)} / ${containerCBM.toFixed(0)} m³`
                     }
                   </span>
@@ -339,7 +344,7 @@ export default function ContainerCalculator() {
                 onMouseOver={e => { e.currentTarget.style.boxShadow = '0 4px 36px rgba(91,194,231,0.45)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
                 onMouseOut={e => { e.currentTarget.style.boxShadow = '0 4px 24px rgba(91,194,231,0.25)'; e.currentTarget.style.transform = 'translateY(0)' }}
               >
-                GET A FREIGHT QUOTE →
+                {isAr ? t.getQuote : 'GET A FREIGHT QUOTE →'}
               </button>
             </div>
           </div>

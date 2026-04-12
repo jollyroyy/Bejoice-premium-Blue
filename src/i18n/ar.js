@@ -174,6 +174,29 @@ const ar = {
     ],
   },
 
+  // ── ContainerCalculator ──────────────────────────────────────
+  containerCalc: {
+    eyebrow:        'محسّن التحميل',
+    title:          'حاسبة الحاويات',
+    subtitle:       'أدخل أبعاد الشحنة وشاهد كيف تُحزم داخل الحاوية.',
+    cargoInput:     'إدخال البضاعة',
+    containerType:  'نوع الحاوية',
+    item:           'صنف',
+    weight:         'الوزن (كجم)',
+    quantity:       'الكمية',
+    stackable:      'قابل للتكديس',
+    addItem:        '+ إضافة صنف',
+    totalVolume:    'الحجم الإجمالي',
+    totalWeight:    'الوزن الإجمالي',
+    livePreview:    'معاينة مباشرة',
+    loaded:         'محمّل',
+    almostFull:     '⚠ الحاوية شبه ممتلئة',
+    remaining:      'م³ متبقية',
+    recommended:    'حاوية موصى بها',
+    totalCbm:       'م³ إجمالي',
+    getQuote:       'احصل على عرض شحن →',
+  },
+
   // ── HeavyCargo ───────────────────────────────────────────────
   heavyCargo: {
     headLine: 'استشارات لمشاريع جيجا',
