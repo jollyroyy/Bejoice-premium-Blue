@@ -464,8 +464,9 @@ export default function VideoHero({ onQuoteClick }) {
       }
 
       opacity = Math.max(0, Math.min(1, opacity))
-      el.style.opacity   = String(opacity)
-      el.style.transform = `translateY(${(1 - opacity) * 28}px)`
+      el.style.opacity       = String(opacity)
+      el.style.transform     = `translateY(${(1 - opacity) * 28}px)`
+      el.style.pointerEvents = opacity < 0.1 ? 'none' : 'all'
     }
   }, [])
 
@@ -879,6 +880,7 @@ export default function VideoHero({ onQuoteClick }) {
                       fontSize:'clamp(13px,1.4vw,16px)', letterSpacing:'0.18em',
                       padding:'14px 32px', borderRadius:'3px', cursor:'pointer',
                       pointerEvents:'all',
+                      zIndex: 10,
                     }}
                   >
                     {isAr ? ar.hero.ctaQuote : 'START SHIPMENT'}
