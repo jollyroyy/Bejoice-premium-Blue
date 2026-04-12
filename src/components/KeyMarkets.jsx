@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { useLang } from '../context/LangContext'
+import ar from '../i18n/ar'
 
 const routes = [
   { from: 'RIYADH', to: 'SHANGHAI', type: 'Air · 8h', active: true },
@@ -19,6 +21,8 @@ const markets = [
 ]
 
 export default function KeyMarkets() {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -41,7 +45,7 @@ export default function KeyMarkets() {
   return (
     <section id="markets" ref={sectionRef} className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: 'radial-gradient(ellipse at 20% 80%, rgba(200,168,78,0.05) 0%, transparent 55%)'
+        background: 'radial-gradient(ellipse at 20% 80%, rgba(91,194,231,0.05) 0%, transparent 55%)'
       }} />
 
       <div className="max-w-7xl mx-auto">
@@ -54,13 +58,13 @@ export default function KeyMarkets() {
           className="mb-20 flex flex-col items-end"
         >
           <div className="section-glass-header" style={{ textAlign: 'right' }}>
-            <div className="section-num mb-4" style={{ textAlign: 'right' }}>03 — Key Markets</div>
+            <div className="section-num mb-4" style={{ textAlign: 'right' }}>{isAr ? ar.keyMarkets.sectionNum : '03 — Key Markets'}</div>
             <h2 className="section-headline" style={{ textAlign: 'right' }}>
-              <span style={{ color: '#ffffff' }}>GLOBAL</span><br />
-              <span style={{ color: 'rgba(200,168,78,0.78)' }}>REACH</span>
+              <span style={{ color: '#ffffff' }}>{isAr ? ar.keyMarkets.headLineWhite : 'GLOBAL'}</span><br />
+              <span style={{ color: 'rgba(91,194,231,0.78)' }}>{isAr ? ar.keyMarkets.headLineCyan : 'REACH'}</span>
             </h2>
-            <p className="font-body max-w-xs" style={{ color: 'rgba(255,255,255,0.92)', fontSize: '17px', fontWeight: 500, lineHeight: 1.75, marginTop: '1.2rem', textAlign: 'left' }}>
-              Strategic footprint across the world's most critical trade lanes, with deep roots in Saudi Arabia.
+            <p className="font-body max-w-xs" style={{ color: 'rgba(255,255,255,0.92)', fontSize: '17px', fontWeight: 500, lineHeight: 1.75, marginTop: '1.2rem', textAlign: isAr ? 'right' : 'left' }}>
+              {isAr ? ar.keyMarkets.body : "Strategic footprint across the world's most critical trade lanes, with deep roots in Saudi Arabia."}
             </p>
           </div>
         </motion.div>
@@ -78,17 +82,17 @@ export default function KeyMarkets() {
               <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 100 56" preserveAspectRatio="none">
                 {/* Latitude lines */}
                 {[10,20,30,40,50].map(y => (
-                  <line key={y} x1="0" y1={y} x2="100" y2={y} stroke="#c8a84e" strokeWidth="0.1"/>
+                  <line key={y} x1="0" y1={y} x2="100" y2={y} stroke="#5BC2E7" strokeWidth="0.1"/>
                 ))}
                 {/* Longitude lines */}
                 {[10,20,30,40,50,60,70,80,90].map(x => (
-                  <line key={x} x1={x} y1="0" x2={x} y2="56" stroke="#c8a84e" strokeWidth="0.1"/>
+                  <line key={x} x1={x} y1="0" x2={x} y2="56" stroke="#5BC2E7" strokeWidth="0.1"/>
                 ))}
                 {/* Route arcs */}
-                <path d="M 55 48 Q 70 20 80 36" stroke="#c8a84e" strokeWidth="0.3" fill="none" opacity="0.6" strokeDasharray="1 0.5"/>
-                <path d="M 55 48 Q 48 30 42 28" stroke="#c8a84e" strokeWidth="0.3" fill="none" opacity="0.6" strokeDasharray="1 0.5"/>
-                <path d="M 55 48 Q 36 44 16 40" stroke="#c8a84e" strokeWidth="0.3" fill="none" opacity="0.4" strokeDasharray="1 0.5"/>
-                <path d="M 60 52 Q 60 35 60 52" stroke="#c8a84e" strokeWidth="0.3" fill="none" opacity="0.4" strokeDasharray="1 0.5"/>
+                <path d="M 55 48 Q 70 20 80 36" stroke="#5BC2E7" strokeWidth="0.3" fill="none" opacity="0.6" strokeDasharray="1 0.5"/>
+                <path d="M 55 48 Q 48 30 42 28" stroke="#5BC2E7" strokeWidth="0.3" fill="none" opacity="0.6" strokeDasharray="1 0.5"/>
+                <path d="M 55 48 Q 36 44 16 40" stroke="#5BC2E7" strokeWidth="0.3" fill="none" opacity="0.4" strokeDasharray="1 0.5"/>
+                <path d="M 60 52 Q 60 35 60 52" stroke="#5BC2E7" strokeWidth="0.3" fill="none" opacity="0.4" strokeDasharray="1 0.5"/>
               </svg>
 
               {/* Market dots */}
@@ -127,7 +131,7 @@ export default function KeyMarkets() {
               ))}
 
               {/* Corner labels */}
-              <div className="absolute top-4 left-4 text-[10px] tracking-[0.3em] uppercase text-cream/20 font-body">World Coverage</div>
+              <div className="absolute top-4 left-4 text-[10px] tracking-[0.3em] uppercase text-cream/20 font-body">{isAr ? ar.keyMarkets.worldCoverage : 'World Coverage'}</div>
               <div className="absolute bottom-4 right-4 text-[10px] tracking-[0.2em] text-cream/20 font-body"></div>
             </div>
           </div>
@@ -135,10 +139,10 @@ export default function KeyMarkets() {
           {/* Routes list */}
           <div className="lg:col-span-2">
             <div className="fade-up mb-6">
-              <div className="font-body text-[11px] tracking-[0.3em] uppercase text-gold/60 mb-4">Active Trade Lanes</div>
+              <div className="font-body text-[11px] tracking-[0.3em] uppercase text-gold/60 mb-4">{isAr ? ar.keyMarkets.tradeLabel : 'Active Trade Lanes'}</div>
             </div>
             <div className="space-y-px">
-              {routes.map((r, i) => (
+              {(isAr ? ar.keyMarkets.routes.map((r2, i) => ({ ...routes[i], ...r2 })) : routes).map((r, i) => (
                 <div
                   key={i}
                   className="fade-up glass-card group px-5 py-4 flex items-center justify-between cursor-default"

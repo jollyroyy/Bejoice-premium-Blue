@@ -1,14 +1,21 @@
 import { useEffect, useRef, useCallback, useState, lazy, Suspense } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useLang } from '../context/LangContext'
+import ar from '../i18n/ar'
 const BejoiceGlobe = lazy(() => import('./BejoiceGlobe'))
+
+// Convert Western digits to Arabic-Indic numerals
+function toArabicNum(str) {
+  return String(str).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[+d])
+}
 
 gsap.registerPlugin(ScrollTrigger)
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Animated counter
 // ─────────────────────────────────────────────────────────────────────────────
-function CountUp({ target, suffix = '', duration = 900 }) {
+function CountUp({ target, suffix = '', duration = 900, arabic = false }) {
   const isNumeric = /^\d+(\.\d+)?$/.test(String(target).trim())
   const [display, setDisplay] = useState(isNumeric ? '0' : target)
   const hasRun = useRef(false)
@@ -22,14 +29,15 @@ function CountUp({ target, suffix = '', duration = 900 }) {
       const t0 = performance.now()
       const tick = (now) => {
         const t = Math.min((now - t0) / duration, 1)
-        setDisplay(Math.round((1 - Math.pow(1 - t, 3)) * end) + suffix)
+        const val = Math.round((1 - Math.pow(1 - t, 3)) * end)
+        setDisplay((arabic ? toArabicNum(val) : val) + suffix)
         if (t < 1) requestAnimationFrame(tick)
-        else setDisplay(end + suffix)
+        else setDisplay((arabic ? toArabicNum(end) : end) + suffix)
       }
       requestAnimationFrame(tick)
     }, 600)
     return () => clearTimeout(timer)
-  }, [target, suffix, duration, isNumeric])
+  }, [target, suffix, duration, isNumeric, arabic])
 
   return <span>{display}</span>
 }
@@ -60,24 +68,24 @@ const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_SAUDI_CO
 const FRAME_URLS = [
   // 3d intro sequence (idx 0–144) — hero
   ...Array.from({ length: FRAMES3D_COUNT }, (_, i) =>
-    `/3d/${String(i + 1).padStart(4, '0')}.png`),
+    `/3d/${String(i + 1).padStart(4, '0')}.webp`),
   // globe bridge (idx 145–210) — repeats last 3d frame; invisible behind globe dim
-  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `/3d/0145.png`),
+  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `/3d/0145.webp`),
   // saudi seg (idx 211–403) — 3rd segment, plays right after globe
   ...Array.from({ length: FRAMES_SAUDI_COUNT }, (_, i) =>
-    `/saudi/${String(i + 1).padStart(4, '0')}.png`),
+    `/saudi/${String(i + 1).padStart(4, '0')}.webp`),
   // bejoice_truck seg (idx 404–548) — starts from frame 1 after globe ends
   ...Array.from({ length: FRAMES_TRUCK_COUNT }, (_, i) =>
-    `/bejoice_truck/${String(i + 1).padStart(4, '0')}.png`),
+    `/bejoice_truck/${String(i + 1).padStart(4, '0')}.webp`),
   // port seg (idx 549–717)
   ...Array.from({ length: FRAMES_PORT_COUNT }, (_, i) =>
-    `/port/${String(i + 1).padStart(4, '0')}.png`),
+    `/port/${String(i + 1).padStart(4, '0')}.webp`),
   // frames8 seg (idx 718–838)
   ...Array.from({ length: FRAMES8_COUNT }, (_, i) =>
-    `/frames8/${String(i + 1).padStart(4, '0')}.png`),
+    `/frames8/${String(i + 1).padStart(4, '0')}.webp`),
   // tech_enng seg (idx 839–983)
   ...Array.from({ length: FRAMES_TECH_COUNT }, (_, i) =>
-    `/tech_enng/${String(i + 1).padStart(4, '0')}.png`),
+    `/tech_enng/${String(i + 1).padStart(4, '0')}.webp`),
 ]
 
 // Fade window in frames — how many frames to crossfade between chapters
@@ -212,12 +220,12 @@ function TrackModal({ blNum, onClose }) {
         background:'linear-gradient(135deg,rgba(10,14,26,0.98) 0%,rgba(7,16,28,0.98) 100%)',
         border:'1px solid rgba(200,210,230,0.18)',
         borderRadius:'1.2rem',
-        boxShadow:'0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,168,78,0.08) inset',
+        boxShadow:'0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(91,194,231,0.08) inset',
         overflow:'hidden',
         animation:'trackSlideUp 0.35s cubic-bezier(0.23,1,0.32,1)',
       }}>
         {/* Gold top bar */}
-        <div style={{ height:'2px', background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.9),transparent)' }} />
+        <div style={{ height:'2px', background:'linear-gradient(90deg,transparent,rgba(91,194,231,0.9),transparent)' }} />
 
         <div style={{ padding:'2rem' }}>
           {/* Header row */}
@@ -226,7 +234,7 @@ function TrackModal({ blNum, onClose }) {
               <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.6rem', color:'#fff', letterSpacing:'0.08em', lineHeight:1 }}>
                 SHIPMENT TRACKING
               </div>
-              <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.7rem', color:'rgba(200,168,78,0.7)', letterSpacing:'0.2em', textTransform:'uppercase', marginTop:'4px' }}>
+              <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.7rem', color:'rgba(91,194,231,0.7)', letterSpacing:'0.2em', textTransform:'uppercase', marginTop:'4px' }}>
                 Powered by Bejoice · WhatsApp Connect
               </div>
             </div>
@@ -236,10 +244,10 @@ function TrackModal({ blNum, onClose }) {
           </div>
 
           {/* Reference number display */}
-          <div style={{ background:'rgba(200,168,78,0.06)', border:'1px solid rgba(200,168,78,0.18)', borderRadius:'8px', padding:'0.9rem 1.2rem', marginBottom:'1.5rem', display:'flex', alignItems:'center', gap:'10px' }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(200,168,78,0.8)" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <div style={{ background:'rgba(91,194,231,0.06)', border:'1px solid rgba(91,194,231,0.18)', borderRadius:'8px', padding:'0.9rem 1.2rem', marginBottom:'1.5rem', display:'flex', alignItems:'center', gap:'10px' }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.8)" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
             <div>
-              <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.65rem', color:'rgba(200,168,78,0.6)', letterSpacing:'0.18em', textTransform:'uppercase' }}>Reference No.</div>
+              <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.65rem', color:'rgba(91,194,231,0.6)', letterSpacing:'0.18em', textTransform:'uppercase' }}>Reference No.</div>
               <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.95rem', color:'#fff', fontWeight:600, letterSpacing:'0.06em', marginTop:'2px' }}>{blNum.trim()}</div>
             </div>
           </div>
@@ -330,10 +338,10 @@ function SleekCard({ children, className = '', style = {} }) {
         width:'100%', height:'100%', flex:'1 1 auto', position:'relative', overflow:'hidden',
         background:'rgba(10, 10, 14, 0.55)', 
         backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
-        border:'1px solid rgba(200, 168, 78, 0.12)', 
+        border:'1px solid rgba(91, 194, 231, 0.12)', 
         borderRadius:'14px',
         padding:'1rem 1.25rem',
-        boxShadow:'0 24px 64px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px rgba(200,168,78,0.04)',
+        boxShadow:'0 24px 64px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px rgba(91,194,231,0.04)',
         display:'flex', flexDirection:'column',
         transition:'transform 0.15s ease-out, box-shadow 0.4s ease, border-color 0.4s ease',
         willChange:'transform',
@@ -342,10 +350,10 @@ function SleekCard({ children, className = '', style = {} }) {
     >
       <div className="card-glow-overlay" style={{
         position:'absolute', inset:0, pointerEvents:'none',
-        background:'radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, -20%), rgba(200,168,78,0.08), transparent 75%)',
+        background:'radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, -20%), rgba(91,194,231,0.08), transparent 75%)',
         opacity:0.6
       }} />
-      <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
+      <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(91,194,231,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
       <div className="card-shine-anim" />
       <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
         {children}
@@ -355,6 +363,8 @@ function SleekCard({ children, className = '', style = {} }) {
 }
 
 function FreightCalcCard() {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   const handleOpen = () => {
     const el = document.getElementById('tools')
     if (el) {
@@ -368,15 +378,15 @@ function FreightCalcCard() {
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
           <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#ffffff', letterSpacing:'0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
-            LOAD CALCULATOR
+            {isAr ? ar.hero.calcTitle : 'LOAD CALCULATOR'}
           </p>
           <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
-            Container Volume Advisor
+            {isAr ? ar.hero.calcSub : 'Container Volume Advisor'}
           </p>
         </div>
         <button onClick={handleOpen} className="btn-gold"
           style={{ padding:'12px 28px', fontSize:'1rem', borderRadius:'10px', whiteSpace:'nowrap', flexShrink:0, fontWeight:400 }}>
-          Open Calculator
+          {isAr ? ar.hero.calcBtn : 'Open Calculator'}
         </button>
       </div>
     </SleekCard>
@@ -384,15 +394,17 @@ function FreightCalcCard() {
 }
 
 function TrackCard() {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   return (
     <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
           <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing:'0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
-            SHIPMENT TRACKING
+            {isAr ? ar.hero.trackTitle : 'SHIPMENT TRACKING'}
           </p>
           <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
-            Real-Time Global Visibility
+            {isAr ? ar.hero.trackSub : 'Real-Time Global Visibility'}
           </p>
         </div>
         <button
@@ -400,7 +412,7 @@ function TrackCard() {
           className="btn-gold"
           style={{ padding:'12px 28px', fontSize:'1rem', borderRadius:'10px', whiteSpace:'nowrap', flexShrink:0, fontWeight:400 }}
         >
-          Track Now
+          {isAr ? ar.hero.trackBtn : 'Track Now'}
         </button>
       </div>
     </SleekCard>
@@ -411,6 +423,8 @@ function TrackCard() {
 // Main VideoHero
 // ─────────────────────────────────────────────────────────────────────────────
 export default function VideoHero({ onQuoteClick }) {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   const wrapperRef      = useRef(null)
   const canvasRef       = useRef(null)
   const chaptersRef     = useRef([])
@@ -708,7 +722,7 @@ export default function VideoHero({ onQuoteClick }) {
       <div className="hero-sticky-viewport" style={{ position:'sticky', top:0, height:'100vh', overflow:'hidden' }}>
 
         {/* Dark base */}
-        <div style={{ position:'absolute', inset:0, zIndex:0, background:'#050508' }} />
+        <div style={{ position:'absolute', inset:0, zIndex:0, background:'#091524' }} />
 
         {/* ── CANVAS — sits beneath globe, always ready ── */}
         <canvas ref={canvasRef} style={{
@@ -721,7 +735,7 @@ export default function VideoHero({ onQuoteClick }) {
         {/* Exit overlay */}
         <div ref={exitOverlayRef} style={{
           position:'absolute', inset:0, zIndex:8,
-          background:'linear-gradient(to bottom,rgba(7,16,28,0.96) 0%,#050508 100%)',
+          background:'linear-gradient(to bottom,rgba(7,16,28,0.96) 0%,#091524 100%)',
           pointerEvents:'none', opacity:0, willChange:'opacity',
         }} />
 
@@ -738,7 +752,7 @@ export default function VideoHero({ onQuoteClick }) {
         {/* ── Canvas dimmer — darkens frame scrubbing during globe chapter ── */}
         <div ref={canvasDimRef} style={{
           position: 'absolute', inset: 0, zIndex: 2,
-          background: '#050508', opacity: 0, pointerEvents: 'none', transition: 'none',
+          background: '#091524', opacity: 0, pointerEvents: 'none', transition: 'none',
         }} />
 
         {/* ── GLOBE CHAPTER — full-screen, sits above canvas ── */}
@@ -755,6 +769,9 @@ export default function VideoHero({ onQuoteClick }) {
 
         {/* ── CHAPTER OVERLAYS — strictly one at a time ── */}
         {CHAPTERS.map((ch, i) => {
+          const arCh = ar.hero.chapters[i]
+          const displayEyebrow  = isAr && arCh?.eyebrow  != null ? arCh.eyebrow  : ch.eyebrow
+          const displayHeadline = isAr && arCh?.headline != null ? arCh.headline : ch.headline
           const isCenter = ch.align === 'center'
           const isRight  = ch.align === 'right'
           const isTop    = ch.vAlign === 'top'
@@ -796,36 +813,36 @@ export default function VideoHero({ onQuoteClick }) {
               }}>
 
                 {/* Eyebrow */}
-                {ch.eyebrow && (
+                {displayEyebrow && (
                   <div className="hero-eyebrow" style={{
                     display:'inline-flex', alignItems:'center', gap:'8px',
                     fontFamily:"'DM Sans',sans-serif",
                     fontSize:'clamp(10px,1.1vw,13px)', letterSpacing:'0.22em',
                     textTransform:'uppercase', fontWeight:600,
-                    color:'rgba(200,168,78,1)',
-                    background:'rgba(200,168,78,0.18)',
-                    border:'1px solid rgba(200,168,78,0.55)',
+                    color:'rgba(91,194,231,1)',
+                    background:'rgba(91,194,231,0.18)',
+                    border:'1px solid rgba(91,194,231,0.55)',
                     borderRadius:'2px', padding:'5px 14px',
                     marginBottom:'14px',
                     alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                     backdropFilter:'blur(8px)',
                     userSelect:'none', pointerEvents:'none',
                   }}>
-                    {ch.eyebrow}
+                    {displayEyebrow}
                   </div>
                 )}
 
                 {/* Headline */}
                 <div style={{ pointerEvents:'all', cursor:'default' }}>
-                  {ch.headline.map((line, li) => (
+                  {displayHeadline.map((line, li) => (
                     <h1 key={li} style={{
                       fontFamily:"'Bebas Neue',sans-serif",
                       fontSize:'clamp(2rem,5.5vw,5.5rem)',
                       lineHeight:0.87, letterSpacing:'0.06em', margin:0,
-                      color: li % 2 === 0 ? '#ffffff' : 'rgba(200,168,78,1)',
+                      color: li % 2 === 0 ? '#ffffff' : 'rgba(91,194,231,1)',
                       textShadow: li % 2 === 0
                         ? '0 1px 12px rgba(0,0,0,0.9)'
-                        : '0 1px 12px rgba(0,0,0,0.9), 0 0 20px rgba(200,168,78,0.3)',
+                        : '0 1px 12px rgba(0,0,0,0.9), 0 0 20px rgba(91,194,231,0.3)',
                       userSelect:'none',
                     }}>
                       {line}
@@ -836,7 +853,7 @@ export default function VideoHero({ onQuoteClick }) {
                 {/* Accent line */}
                 <div style={{
                   width: isCenter ? '80px' : '60px', height:'2px', marginTop:'26px',
-                  background:'linear-gradient(90deg,rgba(200,168,78,0.85),rgba(200,168,78,0.08))',
+                  background:'linear-gradient(90deg,rgba(91,194,231,0.85),rgba(91,194,231,0.08))',
                   alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                 }} />
 
@@ -856,7 +873,7 @@ export default function VideoHero({ onQuoteClick }) {
                       pointerEvents:'all',
                     }}
                   >
-                    START SHIPMENT
+                    {isAr ? ar.hero.ctaQuote : 'START SHIPMENT'}
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0 }}>
                       <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
@@ -888,18 +905,18 @@ export default function VideoHero({ onQuoteClick }) {
           <div className="hero-stats-bar" style={{
             flex:'0 0 auto', display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'stretch',
             background:'rgba(10, 10, 14, 0.55)',
-            border:'1px solid rgba(200, 168, 78, 0.12)', borderRadius:'14px',
+            border:'1px solid rgba(91, 194, 231, 0.12)', borderRadius:'14px',
             backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
-            boxShadow:'0 24px 64px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px rgba(200,168,78,0.04)',
+            boxShadow:'0 24px 64px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px rgba(91,194,231,0.04)',
             overflow:'hidden',
           }}>
             {/* Gold top line — matches SleekCard */}
-            <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
+            <div style={{ position:'absolute', top:0, left:0, right:0, height:1.5, background:'linear-gradient(90deg,transparent,rgba(91,194,231,0.35),transparent)', pointerEvents:'none', zIndex:1 }}/>
             {[
-              { v:'120',  suffix:'+', l:'Countries'  },
-              { v:'25',   suffix:'+', l:'Years'      },
-              { v:'24/7', suffix:'',  l:'Operations' },
-              { v:'KSA',  suffix:'',  l:'Specialist' },
+              { v:'120',  suffix:'+', l:'Countries',  ar: 'دولة'      },
+              { v:'25',   suffix:'+', l:'Years',      ar: 'عامًا'     },
+              { v:'24/7', suffix:'',  l:'Operations', ar: 'عمليات'    },
+              { v:'KSA',  suffix:'',  l:'Specialist', ar: 'متخصص'     },
             ].map((s, idx, arr) => (
               <div key={s.l} className="hero-stat-cell" style={{
                 display:'flex', alignItems:'center', padding:'1.25rem clamp(8px,1.2vw,16px)',
@@ -912,9 +929,11 @@ export default function VideoHero({ onQuoteClick }) {
                     color:'#ffffff',
                     textShadow:'0 0 20px rgba(255,255,255,0.3)',
                   }}>
-                    <CountUp target={s.v} suffix={s.suffix} duration={1000} />
+                    <CountUp target={s.v} suffix={isAr && s.v !== 'KSA' ? toArabicNum(s.suffix) : s.suffix} duration={1000} arabic={isAr} />
                   </div>
-                  <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(200,168,78,0.85)', fontWeight:600, marginTop:'6px', whiteSpace:'nowrap' }}>{s.l}</div>
+                  <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(91,194,231,0.85)', fontWeight:600, marginTop:'6px', whiteSpace:'nowrap' }}>
+                    {isAr ? s.ar : s.l}
+                  </div>
                 </div>
               </div>
             ))}
@@ -953,8 +972,8 @@ export default function VideoHero({ onQuoteClick }) {
 
         .premium-card-shine:hover {
           transform: translateY(-2px);
-          border-color: rgba(200, 168, 78, 0.25) !important;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 20px rgba(200,168,78,0.08) !important;
+          border-color: rgba(91, 194, 231, 0.25) !important;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 20px rgba(91,194,231,0.08) !important;
         }
         .card-shine-anim {
           position: absolute;
@@ -980,7 +999,7 @@ export default function VideoHero({ onQuoteClick }) {
 
         /* ── Globe video: contain (full frame) on portrait/mobile ── */
         @media (max-width: 767px) and (orientation: portrait) {
-          .hero-globe-video { object-fit: contain !important; background: #050508; }
+          .hero-globe-video { object-fit: contain !important; background: #091524; }
         }
 
         /* ════════════════════════════════════════════════════
@@ -1024,14 +1043,14 @@ export default function VideoHero({ onQuoteClick }) {
           .hero-mobile-divider-line {
             flex: 1;
             height: 1px;
-            background: rgba(200,168,78,0.25);
+            background: rgba(91,194,231,0.25);
           }
           .hero-mobile-divider-text {
             font-family: 'DM Sans', sans-serif;
             font-size: clamp(7px, 1.8vw, 9px);
             font-weight: 700;
             letter-spacing: 0.24em;
-            color: rgba(200,168,78,0.65);
+            color: rgba(91,194,231,0.65);
             text-transform: uppercase;
             flex-shrink: 0;
           }
@@ -1046,7 +1065,7 @@ export default function VideoHero({ onQuoteClick }) {
             font-weight: 700 !important;
             letter-spacing: 0.18em !important;
             text-transform: uppercase !important;
-            color: rgba(200,168,78,0.8) !important;
+            color: rgba(91,194,231,0.8) !important;
             margin-bottom: 6px !important;
           }
           .hero-mobile-section-label svg {

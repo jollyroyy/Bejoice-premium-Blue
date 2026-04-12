@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useCalBooking } from "../hooks/useCalBooking";
 import { retrieveChunks } from "../data/laylaKnowledgeBase";
+import { useLang } from "../context/LangContext";
+import ar from "../i18n/ar";
 
 const CAL_LINK = "sudeshna-pal-ruww5f/freight-consultation";
 
@@ -514,9 +516,9 @@ if (typeof document !== "undefined" && !document.getElementById(STYLE_ID)) {
       100% { transform: scale(1.55); opacity: 0;  }
     }
     @keyframes ca-shimmer-border {
-      0%   { box-shadow: 0 0 0 3px rgba(200,168,78,0.55), 0 8px 32px rgba(0,0,0,0.6); }
-      50%  { box-shadow: 0 0 0 3px rgba(232,204,122,0.85), 0 10px 40px rgba(200,168,78,0.2); }
-      100% { box-shadow: 0 0 0 3px rgba(200,168,78,0.55), 0 8px 32px rgba(0,0,0,0.6); }
+      0%   { box-shadow: 0 0 0 3px rgba(91,194,231,0.55), 0 8px 32px rgba(0,0,0,0.6); }
+      50%  { box-shadow: 0 0 0 3px rgba(232,204,122,0.85), 0 10px 40px rgba(91,194,231,0.2); }
+      100% { box-shadow: 0 0 0 3px rgba(91,194,231,0.55), 0 8px 32px rgba(0,0,0,0.6); }
     }
     @keyframes ca-label-in {
       from { opacity: 0; transform: translateX(8px); }
@@ -545,8 +547,8 @@ if (typeof document !== "undefined" && !document.getElementById(STYLE_ID)) {
       to   { opacity: 1; transform: translateY(0);    }
     }
     @keyframes ca-glow-pulse {
-      0%, 100% { box-shadow: 0 0 28px 6px rgba(200,168,78,0.35), 0 8px 40px rgba(0,0,0,0.7); }
-      50%      { box-shadow: 0 0 44px 12px rgba(200,168,78,0.55), 0 8px 40px rgba(0,0,0,0.7); }
+      0%, 100% { box-shadow: 0 0 28px 6px rgba(91,194,231,0.35), 0 8px 40px rgba(0,0,0,0.7); }
+      50%      { box-shadow: 0 0 44px 12px rgba(91,194,231,0.55), 0 8px 40px rgba(0,0,0,0.7); }
     }
     @keyframes ca-badge-pop {
       0%   { transform: scale(0); }
@@ -556,26 +558,26 @@ if (typeof document !== "undefined" && !document.getElementById(STYLE_ID)) {
     .ca-wave-hand { display: inline-block; animation: ca-wave 1.8s ease-in-out; transform-origin: 70% 80%; }
     .ca-wave-hand:hover { animation: ca-wave 0.8s ease-in-out infinite; }
     .ca-msgs::-webkit-scrollbar { width: 4px; }
-    .ca-msgs::-webkit-scrollbar-thumb { background: rgba(200,168,78,0.2); border-radius: 4px; }
+    .ca-msgs::-webkit-scrollbar-thumb { background: rgba(91,194,231,0.2); border-radius: 4px; }
     .ca-msgs::-webkit-scrollbar-track { background: transparent; }
     .ca-input-field {
       flex: 1; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(200,168,78,0.2); border-radius: 24px;
+      border: 1px solid rgba(91,194,231,0.2); border-radius: 24px;
       color: #fff; font-family: 'DM Sans', sans-serif;
       font-size: 16px; padding: 10px 16px; outline: none;
       transition: border-color 0.2s;
       -webkit-appearance: none;
     }
     .ca-input-field::placeholder { color: rgba(255,255,255,0.3); }
-    .ca-input-field:focus { border-color: rgba(200,168,78,0.5); background: rgba(255,255,255,0.07); }
+    .ca-input-field:focus { border-color: rgba(91,194,231,0.5); background: rgba(255,255,255,0.07); }
     .ca-send-btn {
       width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, #f5d970, #c8a84e);
+      background: linear-gradient(135deg, #8DD8F0, #5BC2E7);
       border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-      color: #050508; transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 14px rgba(200,168,78,0.4);
+      color: #091524; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(91,194,231,0.4);
     }
-    .ca-send-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 6px 20px rgba(200,168,78,0.6); }
+    .ca-send-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 6px 20px rgba(91,194,231,0.6); }
     .ca-send-btn:disabled { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.2); box-shadow: none; cursor: default; transform: none; }
     /* ── Mobile overrides ── */
     @media (max-width: 480px) {
@@ -610,6 +612,10 @@ if (typeof document !== "undefined" && !document.getElementById(STYLE_ID)) {
 
 export default function FloatingBookCTA() {
   const { openCalPopup } = useCalBooking();
+  const { lang } = useLang();
+  const isAr = lang === 'ar';
+  const activeMessages     = isAr ? ar.layla.floatingMessages : MESSAGES;
+  const activeQuickReplies = isAr ? ar.layla.quickReplies     : QUICK_REPLIES;
   const [visible, setVisible]           = useState(true);
   const [open, setOpen]                 = useState(false);
   const [msgIndex, setMsgIndex]         = useState(0);
@@ -642,7 +648,7 @@ export default function FloatingBookCTA() {
     const interval = setInterval(() => {
       setShowBubble(false);
       setTimeout(() => {
-        setMsgIndex(i => (i + 1) % MESSAGES.length);
+        setMsgIndex(i => (i + 1) % activeMessages.length);
         setShowBubble(true);
       }, 400);
     }, 4000);
@@ -738,19 +744,19 @@ export default function FloatingBookCTA() {
       {open && (
         <div className="ca-panel-mobile" style={{
           width: "min(380px, calc(100vw - 16px))",
-          background: "linear-gradient(170deg, #0b1120 0%, #050508 100%)",
-          border: "1px solid rgba(200,168,78,0.3)",
+          background: "linear-gradient(170deg, #0b1120 0%, #091524 100%)",
+          border: "1px solid rgba(91,194,231,0.3)",
           borderRadius: 24,
           overflow: "visible",
-          boxShadow: "0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,168,78,0.12), 0 0 60px rgba(200,168,78,0.08)",
+          boxShadow: "0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(91,194,231,0.12), 0 0 60px rgba(91,194,231,0.08)",
           animation: "ca-panel-in 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards",
           display: "flex", flexDirection: "column",
         }}>
 
           {/* ── Header ── */}
           <div style={{
-            background: "linear-gradient(110deg, rgba(200,168,78,0.14) 0%, rgba(200,168,78,0.04) 100%)",
-            borderBottom: "1px solid rgba(200,168,78,0.18)",
+            background: "linear-gradient(110deg, rgba(91,194,231,0.14) 0%, rgba(91,194,231,0.04) 100%)",
+            borderBottom: "1px solid rgba(91,194,231,0.18)",
             padding: "16px 18px",
             display: "flex", alignItems: "center", gap: 12,
             flexShrink: 0,
@@ -760,7 +766,7 @@ export default function FloatingBookCTA() {
               <div style={{
                 position: "absolute", bottom: 1, right: 1,
                 width: 12, height: 12, borderRadius: "50%",
-                background: "#22c55e", border: "2.5px solid #050508",
+                background: "#22c55e", border: "2.5px solid #091524",
                 boxShadow: "0 0 8px rgba(34,197,94,0.7)",
               }} />
             </div>
@@ -769,13 +775,13 @@ export default function FloatingBookCTA() {
                 color: "#fff", fontWeight: 700, fontSize: 15,
                 fontFamily: "'DM Sans', sans-serif", letterSpacing: "0.01em",
               }}>
-                Layla <span style={{ color: "rgba(200,168,78,0.8)", fontSize: 12, fontWeight: 500 }}>· Bejoice AI</span>
+                {isAr ? ar.layla.name : 'Layla'} <span style={{ color: "rgba(91,194,231,0.8)", fontSize: 12, fontWeight: 500 }}>· Bejoice AI</span>
               </div>
               <div style={{
                 color: "#22c55e", fontSize: 11.5,
                 fontFamily: "'DM Sans', sans-serif", marginTop: 2,
               }}>
-                ● Online · Freight & Supply Chain Expert
+                ● {isAr ? ar.layla.role : 'Online · Freight & Supply Chain Expert'}
               </div>
             </div>
             <button
@@ -820,14 +826,14 @@ export default function FloatingBookCTA() {
                   maxWidth: "88%",
                   background: msg.from === "bot"
                     ? "rgba(255,255,255,0.055)"
-                    : "linear-gradient(135deg, #c8a84e, #a8843e)",
+                    : "linear-gradient(135deg, #5BC2E7, #a8843e)",
                   color: msg.from === "bot" ? "rgba(255,255,255,0.93)" : "#fff",
                   borderRadius: msg.from === "bot" ? "4px 16px 16px 16px" : "16px 4px 16px 16px",
                   padding: "10px 14px",
                   fontSize: 13.5,
                   fontFamily: "'DM Sans', sans-serif",
                   lineHeight: 1.6,
-                  border: msg.from === "bot" ? "1px solid rgba(200,168,78,0.14)" : "none",
+                  border: msg.from === "bot" ? "1px solid rgba(91,194,231,0.14)" : "none",
                   whiteSpace: "pre-wrap",
                 }}>
                   {msg.text}
@@ -836,8 +842,8 @@ export default function FloatingBookCTA() {
                   <button
                     onClick={() => handleCTA(msg.cta.action)}
                     style={{
-                      background: "linear-gradient(135deg, #f5d970, #f5d970, #c8a84e)",
-                      color: "#050508", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 12,
+                      background: "linear-gradient(135deg, #8DD8F0, #8DD8F0, #5BC2E7)",
+                      color: "#091524", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 12,
                       padding: "11px 20px", fontSize: 12, fontWeight: 900,
                       cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
                       letterSpacing: "0.1em", textTransform: "uppercase",
@@ -846,8 +852,8 @@ export default function FloatingBookCTA() {
                       position: 'relative', overflow: 'hidden',
                       minHeight: 44,
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1.5px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(200,168,78,0.4), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #fff4a0, #f5d970, #f5d970)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #f5d970, #f5d970, #c8a84e)"; }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1.5px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(91,194,231,0.4), 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #c4edfa, #8DD8F0, #8DD8F0)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4)"; e.currentTarget.style.background = "linear-gradient(135deg, #8DD8F0, #8DD8F0, #5BC2E7)"; }}
                   >
                     <div className="btn-shine-overlay" />
                     {msg.cta.label} →
@@ -864,12 +870,12 @@ export default function FloatingBookCTA() {
                 background: "rgba(255,255,255,0.055)",
                 borderRadius: "4px 16px 16px 16px",
                 width: "fit-content",
-                border: "1px solid rgba(200,168,78,0.12)",
+                border: "1px solid rgba(91,194,231,0.12)",
               }}>
                 {[0, 1, 2].map(j => (
                   <div key={j} style={{
                     width: 7, height: 7, borderRadius: "50%",
-                    background: "#c8a84e",
+                    background: "#5BC2E7",
                     animation: `ca-dot-bounce 1.2s ease ${j * 0.2}s infinite`,
                   }} />
                 ))}
@@ -882,24 +888,24 @@ export default function FloatingBookCTA() {
           <div className="ca-qr-mobile" style={{
             padding: "8px 16px 10px",
             display: "flex", flexWrap: "wrap", gap: 7,
-            borderTop: "1px solid rgba(200,168,78,0.1)",
+            borderTop: "1px solid rgba(91,194,231,0.1)",
             flexShrink: 0,
           }}>
-            {QUICK_REPLIES.map(r => (
+            {activeQuickReplies.map(r => (
               <button
                 key={r.label}
                 onClick={() => handleQuickReply(r.action, r.label)}
                 className="ca-qr-btn-mobile"
                 style={{
-                  background: "rgba(200,168,78,0.07)", color: "#f5d970",
-                  border: "1px solid rgba(200,168,78,0.22)", borderRadius: 22,
+                  background: "rgba(91,194,231,0.07)", color: "#8DD8F0",
+                  border: "1px solid rgba(91,194,231,0.22)", borderRadius: 22,
                   padding: "6px 12px", fontSize: 12, fontWeight: 600,
                   cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
                   transition: "all 0.18s",
                   minHeight: 36,
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(200,168,78,0.18)"; e.currentTarget.style.borderColor = "rgba(200,168,78,0.55)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "rgba(200,168,78,0.07)"; e.currentTarget.style.borderColor = "rgba(200,168,78,0.22)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(91,194,231,0.18)"; e.currentTarget.style.borderColor = "rgba(91,194,231,0.55)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(91,194,231,0.07)"; e.currentTarget.style.borderColor = "rgba(91,194,231,0.22)"; e.currentTarget.style.transform = "translateY(0)"; }}
               >
                 {r.label}
               </button>
@@ -916,7 +922,7 @@ export default function FloatingBookCTA() {
             <input
               ref={inputRef}
               className="ca-input-field"
-              placeholder="Ask about freight, rates, Saudi customs..."
+              placeholder={isAr ? ar.layla.inputPlaceholder : "Ask about freight, rates, Saudi customs..."}
               value={inputVal}
               onChange={e => setInputVal(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter") sendMessage(inputVal); }}
@@ -939,7 +945,7 @@ export default function FloatingBookCTA() {
             fontSize: 10.5, color: "rgba(255,255,255,0.22)",
             fontFamily: "'DM Sans', sans-serif", letterSpacing: "0.08em",
           }}>
-            BEJOICE AI · Freight Intelligence Engine
+            {isAr ? ar.layla.poweredBy : 'BEJOICE AI · Freight Intelligence Engine'}
           </div>
         </div>
       )}
@@ -954,21 +960,21 @@ export default function FloatingBookCTA() {
           style={{
             background: "linear-gradient(135deg, rgba(12,14,26,0.96), rgba(7,16,28,0.98))",
             color: "#f0e6c8",
-            border: "1px solid rgba(200,168,78,0.4)",
+            border: "1px solid rgba(91,194,231,0.4)",
             borderRadius: "18px 18px 4px 18px",
             padding: "12px 18px",
             fontSize: 13.5, fontWeight: 500,
             fontFamily: "'DM Sans', sans-serif",
             maxWidth: 240,
             textAlign: "right",
-            boxShadow: "0 10px 36px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,78,0.1)",
+            boxShadow: "0 10px 36px rgba(0,0,0,0.6), 0 0 0 1px rgba(91,194,231,0.1)",
             animation: "ca-bubble-in 0.4s ease forwards",
             lineHeight: 1.5, cursor: "pointer",
             backdropFilter: "blur(16px)",
           }}
         >
           <span style={{ animation: "ca-msg-fade 4s ease forwards", display: "block" }}>
-            {MESSAGES[msgIndex]}
+            {activeMessages[msgIndex]}
           </span>
         </div>
       )}
@@ -984,7 +990,7 @@ export default function FloatingBookCTA() {
             display: "flex", flexDirection: "column", alignItems: "center", gap: 5,
             animation: "ca-label-in 0.5s ease forwards",
             background: "rgba(7,16,28,0.72)",
-            border: "1px solid rgba(200,168,78,0.3)",
+            border: "1px solid rgba(91,194,231,0.3)",
             borderRadius: "12px",
             padding: "8px 16px",
             backdropFilter: "blur(12px)",
@@ -1000,19 +1006,19 @@ export default function FloatingBookCTA() {
               lineHeight: 1,
               textTransform: "uppercase",
             }}>
-              LAYLA
+              {isAr ? ar.layla.name : 'LAYLA'}
             </div>
             {/* Subtitle with flanking lines */}
             <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-              <div style={{ width: 16, height: 1, background: "rgba(200,168,78,0.7)" }} />
+              <div style={{ width: 16, height: 1, background: "rgba(91,194,231,0.7)" }} />
               <span style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 9.5, fontWeight: 700,
                 letterSpacing: "0.25em",
-                color: "#f5d970",
+                color: "#8DD8F0",
                 textTransform: "uppercase", lineHeight: 1,
-              }}>Freight Expert</span>
-              <div style={{ width: 16, height: 1, background: "rgba(200,168,78,0.7)" }} />
+              }}>{isAr ? 'خبيرة شحن' : 'Freight Expert'}</span>
+              <div style={{ width: 16, height: 1, background: "rgba(91,194,231,0.7)" }} />
             </div>
           </div>
         )}
@@ -1047,7 +1053,7 @@ export default function FloatingBookCTA() {
           {!open && (
             <div style={{
               position: "absolute", inset: -5, borderRadius: "50%",
-              border: "1.5px solid rgba(200,168,78,0.45)",
+              border: "1.5px solid rgba(91,194,231,0.45)",
               animation: "ca-pulse-ring 2.8s ease-out infinite",
               pointerEvents: "none",
             }} />
@@ -1073,7 +1079,7 @@ export default function FloatingBookCTA() {
                 background: "linear-gradient(135deg, #ef4444, #dc2626)",
                 color: "#fff", fontSize: 12, fontWeight: 700,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                border: "2px solid #050508",
+                border: "2px solid #091524",
                 boxShadow: "0 2px 8px rgba(239,68,68,0.6)",
                 animation: "ca-badge-pop 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards",
                 fontFamily: "'DM Sans', sans-serif",
@@ -1087,7 +1093,7 @@ export default function FloatingBookCTA() {
               position: "absolute", top: 7, right: 7,
               width: 16, height: 16, borderRadius: "50%",
               background: "#22c55e",
-              border: "2.5px solid #050508",
+              border: "2.5px solid #091524",
               boxShadow: "0 0 8px rgba(34,197,94,0.7)",
             }} />
           </div>
@@ -1110,8 +1116,8 @@ function Avatar({ size }) {
       <div style={{
         position: "absolute", inset: -3,
         borderRadius: "50%",
-        border: "2px solid rgba(200,168,78,0.55)",
-        boxShadow: "0 0 18px rgba(200,168,78,0.4), inset 0 0 12px rgba(200,168,78,0.15)",
+        border: "2px solid rgba(91,194,231,0.55)",
+        boxShadow: "0 0 18px rgba(91,194,231,0.4), inset 0 0 12px rgba(91,194,231,0.15)",
         animation: "laylaRingPulse 2.4s ease-in-out infinite",
         zIndex: 2,
         pointerEvents: "none",
@@ -1121,14 +1127,18 @@ function Avatar({ size }) {
         width: size, height: size, borderRadius: "50%",
         overflow: "hidden",
         background: "linear-gradient(135deg, #0d1a2e, #06101c)",
-        border: "1.5px solid rgba(200,168,78,0.3)",
+        border: "1.5px solid rgba(91,194,231,0.3)",
         position: "relative", zIndex: 1,
       }}>
-        <img
-          src="/ai-assistant-female.png"
-          alt="Layla — Bejoice AI"
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
+        <picture>
+          <source srcSet="/ai-assistant-female.webp" type="image/webp" />
+          <img
+            src="/ai-assistant-female.png"
+            alt="Layla — Bejoice AI"
+            width="200" height="200"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+        </picture>
         {/* Scanlines overlay */}
         <div style={{
           position: "absolute", inset: 0,
@@ -1143,8 +1153,8 @@ function Avatar({ size }) {
           50% { transform: translateY(-4px); }
         }
         @keyframes laylaRingPulse {
-          0%, 100% { opacity: 0.7; box-shadow: 0 0 14px rgba(200,168,78,0.35), inset 0 0 10px rgba(200,168,78,0.1); }
-          50% { opacity: 1; box-shadow: 0 0 26px rgba(200,168,78,0.65), inset 0 0 18px rgba(200,168,78,0.2); }
+          0%, 100% { opacity: 0.7; box-shadow: 0 0 14px rgba(91,194,231,0.35), inset 0 0 10px rgba(91,194,231,0.1); }
+          50% { opacity: 1; box-shadow: 0 0 26px rgba(91,194,231,0.65), inset 0 0 18px rgba(91,194,231,0.2); }
         }
       `}</style>
     </div>

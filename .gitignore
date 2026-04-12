@@ -1,13 +1,58 @@
+# Add to .gitignore
+*.zip
+*.iso
 node_modules/
-dist/
 .env
+dist/
+build/
 *.local
 
-# Backup frame sequences — too large for GitHub
+# ── Unused frame sequences (not referenced in source) ──
+public/frames1/
+public/frames1_highres/
 public/frames1_backup/
+public/frames5/
+public/frames6/
+public/frames7/
 
-# New scrollytelling frame folders — too large for GitHub (1.2GB total)
+# ── Unused video files ──
+public/hero-combined.mp4
+public/saudi-connected.mp4
+public/hero-truck.mp4
+public/hero-scroll.mp4
+public/hero.mp4
+public/hero-ship.mp4
+
+# ── Unused logo/image variants ──
+public/bejoice-logo.jpeg
+public/bejoice-logo-blue.png
+public/bejoice-logo-extracted.png
+public/bejoice-logo-nav.png
+public/bejoice-logo-nav.svg
+public/bejoice-logo-white-trim.png
+public/bejoice-wings-navy.png
+public/bejoice-wings-transparent.png
+public/bejoice-wings.png
+public/bejoice-wings.svg
+public/bejoice2-clean.png
+public/bejoice2-fixed.png
+public/bejoice2-sharp.png
+public/bejoice2.png
+public/debug-pdf-raw.png
+public/logo-from-pdf.png
+
+# ── Stage push: temporarily exclude all frame folders ──
+public/3d/
 public/saudi/
 public/bejoice_truck/
 public/port/
+public/frames2/
+public/frames4/
+public/frames8/
 public/tech_enng/
+*.png
+*.mp4
+*.jpg
+*.jpeg
+*.webp
+*.gif

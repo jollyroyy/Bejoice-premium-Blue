@@ -54,7 +54,7 @@ export const SparklesCore = ({
               },
             },
             particles: {
-              color: { value: particleColor || '#c8a84e' },
+              color: { value: particleColor || '#5BC2E7' },
               move: {
                 direction: 'none',
                 enable: true,

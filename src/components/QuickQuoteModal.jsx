@@ -26,8 +26,8 @@ export default function QuickQuoteModal({ onClose }) {
           to   { opacity: 1; transform: translateY(0) scale(1); }
         }
         @keyframes qqm-badge-pulse {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(200,168,78,0.4); }
-          50%       { box-shadow: 0 0 0 6px rgba(200,168,78,0); }
+          0%, 100% { box-shadow: 0 0 0 0 rgba(91,194,231,0.4); }
+          50%       { box-shadow: 0 0 0 6px rgba(91,194,231,0); }
         }
         @keyframes qqm-dot-pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
@@ -38,8 +38,8 @@ export default function QuickQuoteModal({ onClose }) {
           100% { background-position: 200% center; }
         }
         @keyframes qqm-continue-pulse {
-          0%, 100% { box-shadow: 0 6px 28px rgba(200,168,78,0.35), inset 0 1px 0 rgba(255,255,255,0.35); }
-          50%       { box-shadow: 0 8px 40px rgba(200,168,78,0.65), 0 0 0 6px rgba(200,168,78,0.12), inset 0 1px 0 rgba(255,255,255,0.45); }
+          0%, 100% { box-shadow: 0 6px 28px rgba(91,194,231,0.35), inset 0 1px 0 rgba(255,255,255,0.35); }
+          50%       { box-shadow: 0 8px 40px rgba(91,194,231,0.65), 0 0 0 6px rgba(91,194,231,0.12), inset 0 1px 0 rgba(255,255,255,0.45); }
         }
         @keyframes qqm-arrow-nudge {
           0%, 100% { transform: translateX(0); }
@@ -55,22 +55,22 @@ export default function QuickQuoteModal({ onClose }) {
           width: 42px; height: 42px;
           display: flex; align-items: center; justify-content: center;
           background: rgba(7,16,28,0.9);
-          border: 1.5px solid rgba(200,168,78,0.5);
+          border: 1.5px solid rgba(91,194,231,0.5);
           border-radius: 50%;
-          color: rgba(200,168,78,0.9);
+          color: rgba(91,194,231,0.9);
           font-size: 18px;
           cursor: pointer;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.7), 0 0 0 0 rgba(200,168,78,0.3);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.7), 0 0 0 0 rgba(91,194,231,0.3);
           transition: background 0.25s, border-color 0.25s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s, color 0.25s;
           flex-shrink: 0;
           backdrop-filter: blur(8px);
         }
         .qqm-x-btn:hover {
-          background: rgba(200,168,78,0.15);
-          border-color: #f5d970;
-          color: #f5d970;
+          background: rgba(91,194,231,0.15);
+          border-color: #8DD8F0;
+          color: #8DD8F0;
           transform: rotate(90deg) scale(1.1);
-          box-shadow: 0 6px 28px rgba(200,168,78,0.4), 0 0 0 4px rgba(200,168,78,0.08);
+          box-shadow: 0 6px 28px rgba(91,194,231,0.4), 0 0 0 4px rgba(91,194,231,0.08);
         }
 
         /* Animated top gradient bar */
@@ -80,10 +80,10 @@ export default function QuickQuoteModal({ onClose }) {
             90deg,
             transparent 0%,
             #6b4d10 10%,
-            #c8a84e 35%,
-            #f5d970 50%,
-            #f5d970 65%,
-            #c8a84e 80%,
+            #5BC2E7 35%,
+            #8DD8F0 50%,
+            #8DD8F0 65%,
+            #5BC2E7 80%,
             transparent 100%
           );
           background-size: 300% 100%;
@@ -151,13 +151,13 @@ export default function QuickQuoteModal({ onClose }) {
             position: 'relative',
             width: '100%', maxWidth: 960,
             boxSizing: 'border-box',
-            background: 'linear-gradient(160deg, #0d1425 0%, #080c18 40%, #050508 100%)',
-            border: '1px solid rgba(200,168,78,0.18)',
+            background: 'linear-gradient(160deg, #0d1425 0%, #080c18 40%, #091524 100%)',
+            border: '1px solid rgba(91,194,231,0.18)',
             borderRadius: 24,
             boxShadow: `
               0 60px 140px rgba(0,0,0,0.95),
-              0 0 0 1px rgba(200,168,78,0.06) inset,
-              0 1px 0 rgba(200,168,78,0.2) inset
+              0 0 0 1px rgba(91,194,231,0.06) inset,
+              0 1px 0 rgba(91,194,231,0.2) inset
             `,
             animation: 'qqm-panel-in 0.45s cubic-bezier(0.34,1.2,0.64,1) forwards',
           }}
@@ -169,7 +169,7 @@ export default function QuickQuoteModal({ onClose }) {
           <div style={{
             position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
             width: '60%', height: '200px',
-            background: 'radial-gradient(ellipse at 50% 0%, rgba(200,168,78,0.12) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse at 50% 0%, rgba(91,194,231,0.12) 0%, transparent 70%)',
             pointerEvents: 'none', zIndex: 0,
           }} />
 
@@ -190,8 +190,8 @@ export default function QuickQuoteModal({ onClose }) {
             {/* Live badge */}
             <div className="qqm-badge" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
-              background: 'rgba(200,168,78,0.07)',
-              border: '1px solid rgba(200,168,78,0.25)',
+              background: 'rgba(91,194,231,0.07)',
+              border: '1px solid rgba(91,194,231,0.25)',
               borderRadius: 40,
               padding: '6px 16px',
               marginBottom: 20,
@@ -199,9 +199,9 @@ export default function QuickQuoteModal({ onClose }) {
             }}>
               <span style={{
                 width: 7, height: 7, borderRadius: '50%',
-                background: '#c8a84e',
+                background: '#5BC2E7',
                 display: 'inline-block',
-                boxShadow: '0 0 8px rgba(200,168,78,0.9)',
+                boxShadow: '0 0 8px rgba(91,194,231,0.9)',
                 animation: 'qqm-dot-pulse 1.8s ease-in-out infinite',
                 flexShrink: 0,
               }} />
@@ -209,7 +209,7 @@ export default function QuickQuoteModal({ onClose }) {
                 fontFamily: "'DM Sans',sans-serif",
                 fontSize: 10.5, letterSpacing: '0.32em',
                 textTransform: 'uppercase',
-                color: 'rgba(200,168,78,0.9)', fontWeight: 700,
+                color: 'rgba(91,194,231,0.9)', fontWeight: 700,
               }}>
                 Instant Pricing Engine
               </span>
@@ -228,8 +228,8 @@ export default function QuickQuoteModal({ onClose }) {
               }}>
                 GET YOUR{' '}
                 <span style={{
-                  color: '#c8a84e',
-                  textShadow: '0 0 30px rgba(200,168,78,0.5), 0 2px 40px rgba(0,0,0,0.8)',
+                  color: '#5BC2E7',
+                  textShadow: '0 0 30px rgba(91,194,231,0.5), 0 2px 40px rgba(0,0,0,0.8)',
                 }}>
                   QUICK QUOTE
                 </span>
@@ -253,7 +253,7 @@ export default function QuickQuoteModal({ onClose }) {
             {/* Divider */}
             <div className="qqm-divider" style={{
               width: 80, height: 1, margin: '18px auto 0',
-              background: 'linear-gradient(90deg, transparent, rgba(200,168,78,0.5), transparent)',
+              background: 'linear-gradient(90deg, transparent, rgba(91,194,231,0.5), transparent)',
             }} />
           </div>
 

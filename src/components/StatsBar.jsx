@@ -44,8 +44,8 @@ export default function StatsBar() {
   return (
     <section style={{
       background: 'linear-gradient(90deg, #07090f 0%, #0d1220 50%, #07090f 100%)',
-      borderTop: '1px solid rgba(200,168,78,0.18)',
-      borderBottom: '1px solid rgba(200,168,78,0.18)',
+      borderTop: '1px solid rgba(91,194,231,0.18)',
+      borderBottom: '1px solid rgba(91,194,231,0.18)',
       padding: 'clamp(40px, 6vw, 72px) clamp(1.5rem, 8vw, 8rem)',
       position: 'relative', overflow: 'hidden',
     }}>
@@ -53,7 +53,7 @@ export default function StatsBar() {
       <div style={{
         position: 'absolute', top: '-60px', left: '50%', transform: 'translateX(-50%)',
         width: '600px', height: '200px', borderRadius: '50%',
-        background: 'radial-gradient(ellipse, rgba(200,168,78,0.08) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse, rgba(91,194,231,0.08) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -71,7 +71,7 @@ export default function StatsBar() {
                 fontFamily: "'Bebas Neue', sans-serif",
                 fontSize: 'clamp(2.6rem, 4vw, 3.8rem)',
                 letterSpacing: '0.04em', lineHeight: 1,
-                color: '#f5d970',
+                color: '#8DD8F0',
                 textShadow: '0 0 24px rgba(255,214,0,0.55), 0 2px 10px rgba(0,0,0,0.8)',
               }}>
                 <CountUp target={s.v} suffix={s.suffix} duration={800} />
@@ -88,7 +88,7 @@ export default function StatsBar() {
             {i < STATS.length - 1 && (
               <div style={{
                 width: '1px', height: '52px', flexShrink: 0,
-                background: 'linear-gradient(180deg, transparent, rgba(200,168,78,0.35), transparent)',
+                background: 'linear-gradient(180deg, transparent, rgba(91,194,231,0.35), transparent)',
                 margin: '0 clamp(20px, 3vw, 48px)',
               }} />
             )}

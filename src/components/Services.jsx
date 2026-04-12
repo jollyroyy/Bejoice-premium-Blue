@@ -1,4 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
+import { useLang } from '../context/LangContext'
+import ar from '../i18n/ar'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import clsx from 'clsx'
 import { twMerge } from 'tailwind-merge'
@@ -28,7 +30,7 @@ const services = [
       'Dangerous Goods (DGR) Handling',
       'AOG Cargo Handling',
     ],
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 24L42 12L30 36L22 28L6 24Z" strokeLinejoin="round" /><path d="M22 28L24 42" strokeLinecap="round" /></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><path d="M6 24L42 12L30 36L22 28L6 24Z" strokeLinejoin="round" /><path d="M22 28L24 42" strokeLinecap="round" /></svg>),
     span: 'md:col-span-2',
     videoBg: '/air-cargo.mp4',
   },
@@ -43,7 +45,7 @@ const services = [
       'Dangerous Goods Handling (DG)',
       'Out Of Gauge (OOG) & Heavy Lift Cargo Handling',
     ],
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M8 30L12 18H36L40 30" strokeLinejoin="round" /><path d="M4 34C8 30 12 38 16 34C20 30 24 38 28 34C32 30 36 38 40 34" strokeLinecap="round" /><rect x="20" y="10" width="8" height="8" rx="0.5" /></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><path d="M8 30L12 18H36L40 30" strokeLinejoin="round" /><path d="M4 34C8 30 12 38 16 34C20 30 24 38 28 34C32 30 36 38 40 34" strokeLinecap="round" /><rect x="20" y="10" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-1',
     videoPoster: '/frames2/0160.jpg',
     videoFrames: { folder: 'frames2', count: 289 },
@@ -60,7 +62,7 @@ const services = [
       'Full Shipment Visibility & Absolute Pricing Transparency',
       'Optimized Routes for Speed, Safety & Cost Efficiency',
     ],
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><rect x="4" y="18" width="28" height="16" rx="1" /><path d="M32 24H40L44 30V34H32V24Z" /><circle cx="12" cy="36" r="4" /><circle cx="36" cy="36" r="4" /></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><rect x="4" y="18" width="28" height="16" rx="1" /><path d="M32 24H40L44 30V34H32V24Z" /><circle cx="12" cy="36" r="4" /><circle cx="36" cy="36" r="4" /></svg>),
     span: 'md:col-span-1',
     videoPoster: '/hero-truck-poster.jpg',
     videoFrames: null,
@@ -80,7 +82,7 @@ const services = [
       'Minimized Delays & Cost Optimization',
       'End-to-End Customs Solutions Under One Roof',
     ],
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><rect x="10" y="6" width="28" height="36" rx="2" /><path d="M16 16H32M16 22H32M16 28H26" strokeLinecap="round" /><circle cx="34" cy="34" r="7" fill="#050508" strokeWidth="1.5" /><path d="M30 34L33 37L38 31" strokeLinecap="round" strokeLinejoin="round" /></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><rect x="10" y="6" width="28" height="36" rx="2" /><path d="M16 16H32M16 22H32M16 28H26" strokeLinecap="round" /><circle cx="34" cy="34" r="7" fill="#091524" strokeWidth="1.5" /><path d="M30 34L33 37L38 31" strokeLinecap="round" strokeLinejoin="round" /></svg>),
     span: 'md:col-span-2',
     videoPoster: '/frames4/0001.jpg',
     videoFrames: { folder: 'frames4', count: 32 },
@@ -97,7 +99,7 @@ const services = [
       'Bonded Warehousing',
       'Storage in Free Trade Zones',
     ],
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M4 20L24 8L44 20V42H4V20Z" /><rect x="18" y="28" width="12" height="14" rx="0.5" /><rect x="8" y="24" width="8" height="8" rx="0.5" /><rect x="32" y="24" width="8" height="8" rx="0.5" /></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><path d="M4 20L24 8L44 20V42H4V20Z" /><rect x="18" y="28" width="12" height="14" rx="0.5" /><rect x="8" y="24" width="8" height="8" rx="0.5" /><rect x="32" y="24" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-2',
     truckBg: '/warehouse.png',
   },
@@ -111,7 +113,7 @@ const services = [
       'Onsite Jacking & Skidding — Lift heavy equipment and horizontally move cargo along skid beams',
       'Technical Engineering Solutions — Lift plans, load distribution calculations & structural analysis',
     ],
-    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#c8a84e" strokeWidth="1.3" className="w-10 h-10"><path d="M6 36L16 20L28 28L38 12" strokeLinecap="round" strokeLinejoin="round" /><path d="M32 12H38V18" strokeLinecap="round" strokeLinejoin="round" /><circle cx="8" cy="40" r="3" /><circle cx="24" cy="40" r="3" /><circle cx="40" cy="40" r="3" /></svg>),
+    icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><path d="M6 36L16 20L28 28L38 12" strokeLinecap="round" strokeLinejoin="round" /><path d="M32 12H38V18" strokeLinecap="round" strokeLinejoin="round" /><circle cx="8" cy="40" r="3" /><circle cx="24" cy="40" r="3" /><circle cx="40" cy="40" r="3" /></svg>),
     span: 'md:col-span-1',
     truckBg: '/project-cargo.jpg',
   },
@@ -183,6 +185,8 @@ function FrameCanvas({ folder, count, active }) {
 }
 
 export default function Services() {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-100px 0px" })
   const [hoveredCard, setHoveredCard] = useState(null)
@@ -220,10 +224,10 @@ export default function Services() {
 
   return (
     <section ref={sectionRef} id="services" className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-4 md:px-10 lg:px-20">
-      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(200,168,78,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
+      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(91,194,231,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
       {/* Ambient background glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(200,168,78,0.07) 0%, transparent 60%)' }} />
+        style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(91,194,231,0.07) 0%, transparent 60%)' }} />
 
       <div className="max-w-5xl mx-auto">
 
@@ -233,31 +237,31 @@ export default function Services() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ type: 'spring', stiffness: 80, damping: 20 }}
           style={{
-            background: 'linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.02) 100%)',
+            background: 'linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 50%, rgba(91,194,231,0.02) 100%)',
             backdropFilter: 'blur(32px)',
             WebkitBackdropFilter: 'blur(32px)',
-            border: '1px solid rgba(200,168,78,0.28)',
-            borderTop: '1px solid rgba(200,168,78,0.55)',
+            border: '1px solid rgba(91,194,231,0.28)',
+            borderTop: '1px solid rgba(91,194,231,0.55)',
             borderRadius: 24,
             overflow: 'hidden',
-            boxShadow: '0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(200,168,78,0.06) inset, inset 0 1px 0 rgba(200,168,78,0.22), 0 0 50px rgba(200,168,78,0.06)',
+            boxShadow: '0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(91,194,231,0.06) inset, inset 0 1px 0 rgba(91,194,231,0.22), 0 0 50px rgba(91,194,231,0.06)',
             position: 'relative',
           }}
         >
 
 
           {/* ── Centered heading block ── */}
-          <div style={{ textAlign: 'center', padding: 'clamp(2.5rem,5vw,4rem) clamp(1.5rem,5vw,4rem) clamp(1.5rem,3vw,2.5rem)', borderBottom: '1px solid rgba(200,168,78,0.1)', position: 'relative', zIndex: 2 }}>
+          <div style={{ textAlign: 'center', padding: 'clamp(2.5rem,5vw,4rem) clamp(1.5rem,5vw,4rem) clamp(1.5rem,3vw,2.5rem)', borderBottom: '1px solid rgba(91,194,231,0.1)', position: 'relative', zIndex: 2 }}>
             <div style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 'clamp(13px,1.4vw,16px)',
               letterSpacing: '0.45em', textTransform: 'uppercase',
-              color: 'rgba(200,168,78,1)',
-              textShadow: '0 0 20px rgba(200,168,78,0.5)',
+              color: 'rgba(91,194,231,1)',
+              textShadow: '0 0 20px rgba(91,194,231,0.5)',
               fontWeight: 700,
               marginBottom: '0.8rem',
             }}>
-              What We Offer
+              {isAr ? ar.services.eyebrow : 'What We Offer'}
             </div>
             <motion.h2
               className="no-reveal"
@@ -270,12 +274,16 @@ export default function Services() {
                 letterSpacing: '0.07em', lineHeight: 1,
                 margin: 0,
               color: '#ffffff',
-              filter: 'drop-shadow(0 0 30px rgba(200,168,78,0.3))',
+              filter: 'drop-shadow(0 0 30px rgba(91,194,231,0.3))',
               }}
             >
-              <span style={{ color: '#ffffff' }}>OUR </span><span style={{ color: '#c8a84e' }}>SERVICES</span>
+              {isAr ? (
+                <span style={{ color: '#5BC2E7' }}>{ar.services.headline[0]}</span>
+              ) : (
+                <><span style={{ color: '#ffffff' }}>OUR </span><span style={{ color: '#5BC2E7' }}>SERVICES</span></>
+              )}
             </motion.h2>
-            <div style={{ width: 60, height: 2, margin: '1.4rem auto 0', background: 'linear-gradient(90deg, transparent, rgba(200,168,78,0.7), transparent)' }} />
+            <div style={{ width: 60, height: 2, margin: '1.4rem auto 0', background: 'linear-gradient(90deg, transparent, rgba(91,194,231,0.7), transparent)' }} />
           </div>
 
           {/* ── Services grid inside the card ── */}
@@ -295,6 +303,7 @@ export default function Services() {
               const isActive = hoveredCard === s.num
               const isExpanded = expandedCard === s.num
               const hasExpand = s.subServices && s.subServices.length > 0
+              const arItem = ar.services.items[i]
               return (
               <motion.div
                 key={s.num}
@@ -305,17 +314,17 @@ export default function Services() {
                 style={{
                   position: 'relative', overflow: 'hidden',
                   padding: 'clamp(1.6rem,3vw,2.4rem)',
-                  borderRight: (i % 3 !== 2) ? '1px solid rgba(200,168,78,0.08)' : 'none',
-                  borderBottom: (i < 3) ? '1px solid rgba(200,168,78,0.08)' : 'none',
+                  borderRight: (i % 3 !== 2) ? '1px solid rgba(91,194,231,0.08)' : 'none',
+                  borderBottom: (i < 3) ? '1px solid rgba(91,194,231,0.08)' : 'none',
                   cursor: 'default',
                   transition: 'background 0.3s ease',
-                  background: isExpanded ? 'rgba(200,168,78,0.06)' : isActive ? 'rgba(200,168,78,0.04)' : 'transparent',
+                  background: isExpanded ? 'rgba(91,194,231,0.06)' : isActive ? 'rgba(91,194,231,0.04)' : 'transparent',
                 }}
               >
                 {/* Subtle gold hover glow */}
                 <div style={{
                   position: 'absolute', inset: 0, pointerEvents: 'none',
-                  background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(200,168,78,0.06) 0%, transparent 70%)',
+                  background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(91,194,231,0.06) 0%, transparent 70%)',
                   opacity: isActive || isExpanded ? 1 : 0,
                   transition: 'opacity 0.5s ease',
                 }} />
@@ -335,19 +344,19 @@ export default function Services() {
                       fontFamily: "'Bebas Neue', sans-serif",
                       fontSize: 'clamp(1.3rem,2.2vw,1.7rem)',
                       letterSpacing: '0.08em', lineHeight: 1.1,
-                      color: isExpanded ? 'rgba(200,168,78,1)' : isActive ? 'rgba(200,168,78,1)' : '#ffffff',
+                      color: isExpanded ? 'rgba(91,194,231,1)' : isActive ? 'rgba(91,194,231,1)' : '#ffffff',
                       margin: 0,
                       transition: 'color 0.3s ease',
                     }}>
-                      {s.title}
+                      {isAr && arItem ? arItem.title : s.title}
                     </h3>
                     {hasExpand && (
                       <button
                         onClick={() => setExpandedCard(isExpanded ? null : s.num)}
                         style={{
                           display: 'flex', alignItems: 'center', gap: '5px',
-                          background: isExpanded ? 'rgba(200,168,78,0.18)' : 'rgba(200,168,78,0.08)',
-                          border: '1px solid rgba(200,168,78,0.35)',
+                          background: isExpanded ? 'rgba(91,194,231,0.18)' : 'rgba(91,194,231,0.08)',
+                          border: '1px solid rgba(91,194,231,0.35)',
                           borderRadius: '4px',
                           padding: '4px 10px',
                           cursor: 'pointer',
@@ -355,15 +364,15 @@ export default function Services() {
                           transition: 'all 0.25s ease',
                         }}
                       >
-                        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(200,168,78,0.9)' }}>
-                          {isExpanded ? 'Less' : 'View'}
+                        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.9)' }}>
+                          {isExpanded ? (isAr ? ar.services.viewLess : 'Less') : (isAr ? ar.services.viewMore : 'View')}
                         </span>
                         <motion.svg
                           width="10" height="10" viewBox="0 0 10 10" fill="none"
                           animate={{ rotate: isExpanded ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <path d="M2 3.5L5 6.5L8 3.5" stroke="rgba(200,168,78,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M2 3.5L5 6.5L8 3.5" stroke="rgba(91,194,231,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </motion.svg>
                       </button>
                     )}
@@ -372,7 +381,7 @@ export default function Services() {
                   <div style={{
                     width: isActive || isExpanded ? '40px' : '20px',
                     height: 1, marginBottom: '0.8rem',
-                    background: 'linear-gradient(90deg, rgba(200,168,78,0.8), transparent)',
+                    background: 'linear-gradient(90deg, rgba(91,194,231,0.8), transparent)',
                     transition: 'width 0.4s ease',
                   }} />
                   {/* Description */}
@@ -382,7 +391,7 @@ export default function Services() {
                     color: 'rgba(255,255,255,0.72)', lineHeight: 1.7,
                     margin: 0,
                   }}>
-                    {s.desc}
+                    {isAr && arItem ? arItem.desc : s.desc}
                   </p>
 
                   {/* Expandable sub-services */}
@@ -397,11 +406,11 @@ export default function Services() {
                         style={{ overflow: 'hidden' }}
                       >
                         <div style={{
-                          borderTop: '1px solid rgba(200,168,78,0.15)',
+                          borderTop: '1px solid rgba(91,194,231,0.15)',
                           paddingTop: '0.9rem',
                           display: 'flex', flexDirection: 'column', gap: '0',
                         }}>
-                          {s.subServices.map((item, idx) => (
+                          {(isAr && arItem?.subServices ? arItem.subServices : s.subServices).map((item, idx) => (
                             <motion.div
                               key={item}
                               initial={{ opacity: 0, x: -10 }}
@@ -415,8 +424,8 @@ export default function Services() {
                             >
                               <div style={{
                                 width: '5px', height: '5px', borderRadius: '50%', flexShrink: 0,
-                                background: 'rgba(200,168,78,0.7)',
-                                boxShadow: '0 0 6px rgba(200,168,78,0.4)',
+                                background: 'rgba(91,194,231,0.7)',
+                                boxShadow: '0 0 6px rgba(91,194,231,0.4)',
                               }} />
                               <span style={{
                                 fontFamily: "'DM Sans', sans-serif",
@@ -449,7 +458,7 @@ export default function Services() {
         @media (max-width: 600px) {
           #services .services-grid > div {
             border-right: none !important;
-            border-bottom: 1px solid rgba(200,168,78,0.08) !important;
+            border-bottom: 1px solid rgba(91,194,231,0.08) !important;
             min-height: 160px !important;
           }
           #services .services-grid > div:last-child {

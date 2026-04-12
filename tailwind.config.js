@@ -8,17 +8,17 @@ export default {
     extend: {
       colors: {
         gold: {
-          DEFAULT: '#c8a84e',
-          light: '#e2c97a',
-          dark: '#9a7a2e',
+          DEFAULT: '#5BC2E7',
+          light: '#8DD8F0',
+          dark: '#007DBA',
         },
         obsidian: {
-          DEFAULT: '#050508',
-          '50': '#0d0d14',
-          '100': '#0a0a10',
-          '200': '#07070d',
+          DEFAULT: '#07101c',
+          '50': '#0c1c30',
+          '100': '#0a1826',
+          '200': '#091524',
         },
-        cream: '#f0e6d0',
+        cream: '#e8f4fa',
       },
       fontFamily: {
         display: ['Bebas Neue', 'sans-serif'],

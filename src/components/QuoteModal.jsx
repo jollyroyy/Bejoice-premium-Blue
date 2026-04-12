@@ -20,9 +20,9 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
       100% { transform: scale(1); }
     }
     @keyframes qm-success-glow {
-      0%   { box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,168,78,0.1); }
-      50%  { box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 60px rgba(200,168,78,0.4); }
-      100% { box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 30px rgba(200,168,78,0.2); }
+      0%   { box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(91,194,231,0.1); }
+      50%  { box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 60px rgba(91,194,231,0.4); }
+      100% { box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 30px rgba(91,194,231,0.2); }
     }
     .qm-input {
       width: 100%; background: rgba(255,255,255,0.03);
@@ -34,9 +34,9 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     }
     .qm-input::placeholder { color: rgba(255,255,255,0.2); }
     .qm-input:focus { 
-      border-color: rgba(200,168,78,0.6); 
+      border-color: rgba(91,194,231,0.6); 
       background: rgba(255,255,255,0.06); 
-      box-shadow: 0 0 0 1px rgba(200,168,78,0.3), 0 8px 24px rgba(0,0,0,0.2);
+      box-shadow: 0 0 0 1px rgba(91,194,231,0.3), 0 8px 24px rgba(0,0,0,0.2);
     }
     .qm-select {
       width: 100%; background: rgba(255,255,255,0.03);
@@ -48,15 +48,15 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
       box-sizing: border-box;
     }
     .qm-select:focus { 
-      border-color: rgba(200,168,78,0.6); 
+      border-color: rgba(91,194,231,0.6); 
       background: rgba(255,255,255,0.06); 
-      box-shadow: 0 0 0 1px rgba(200,168,78,0.3);
+      box-shadow: 0 0 0 1px rgba(91,194,231,0.3);
     }
     .qm-select option { background: #0a0e1a; color: #fff; }
     .qm-submit {
       width: 100%; padding: 18px;
-      background: linear-gradient(135deg, #f5d970 0%, #f5d970 40%, #c8a84e 100%);
-      color: #050508; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 12px;
+      background: linear-gradient(135deg, #8DD8F0 0%, #8DD8F0 40%, #5BC2E7 100%);
+      color: #091524; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 12px;
       font-family: 'DM Sans', sans-serif;
       font-size: 14px; font-weight: 900;
       letter-spacing: 0.2em; text-transform: uppercase;
@@ -66,8 +66,8 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
     }
     .qm-submit:hover:not(:disabled) { 
       transform: translateY(-2.5px); 
-      background: linear-gradient(135deg, #fff4a0 0%, #f5d970 40%, #f5d970 100%); 
-      box-shadow: 0 16px 40px rgba(200,168,78,0.45), 0 12px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.6); 
+      background: linear-gradient(135deg, #c4edfa 0%, #8DD8F0 40%, #8DD8F0 100%); 
+      box-shadow: 0 16px 40px rgba(91,194,231,0.45), 0 12px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.6); 
     }
     .qm-submit:active { transform: scale(0.975); }
     .qm-submit:disabled { opacity: 0.4; cursor: default; transform: none; }
@@ -76,22 +76,22 @@ if (typeof document !== 'undefined' && !document.getElementById(STYLE_ID)) {
       display: flex; flex-direction: column; align-items: center; gap: 8px;
       padding: 18px 12px 16px;
       border-radius: 12px;
-      border: 1.5px solid rgba(200,168,78,0.12);
+      border: 1.5px solid rgba(91,194,231,0.12);
       background: rgba(255,255,255,0.02);
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       user-select: none;
     }
     .qm-service-card:hover {
-      border-color: rgba(200,168,78,0.35);
-      background: rgba(200,168,78,0.06);
+      border-color: rgba(91,194,231,0.35);
+      background: rgba(91,194,231,0.06);
       transform: translateY(-3px);
       box-shadow: 0 12px 24px rgba(0,0,0,0.3);
     }
     .qm-service-card.active {
-      border-color: rgba(200,168,78,0.9);
-      background: rgba(200,168,78,0.12);
-      box-shadow: 0 0 20px rgba(200,168,78,0.22);
+      border-color: rgba(91,194,231,0.9);
+      background: rgba(91,194,231,0.12);
+      box-shadow: 0 0 20px rgba(91,194,231,0.22);
       animation: qm-service-select 0.28s ease;
     }
   `
@@ -154,10 +154,10 @@ export default function QuoteModal({ onClose }) {
       <div style={{
         width: '100%', maxWidth: 580,
         maxHeight: '90vh', overflowY: 'auto',
-        background: 'linear-gradient(170deg, #0f172a 0%, #050508 100%)',
-        border: '1.5px solid rgba(200,168,78,0.32)',
+        background: 'linear-gradient(170deg, #0f172a 0%, #091524 100%)',
+        border: '1.5px solid rgba(91,194,231,0.32)',
         borderRadius: 24,
-        boxShadow: submitted ? '0 40px 100px rgba(0,0,0,0.95), 0 0 30px rgba(200,168,78,0.2)' : '0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(200,168,78,0.12)',
+        boxShadow: submitted ? '0 40px 100px rgba(0,0,0,0.95), 0 0 30px rgba(91,194,231,0.2)' : '0 40px 100px rgba(0,0,0,0.9), 0 0 0 1px rgba(91,194,231,0.12)',
         animation: submitted 
           ? 'qm-success-glow 0.8s ease-out forwards' 
           : 'qm-panel-in 0.45s cubic-bezier(0.23, 1, 0.32, 1) forwards',
@@ -167,7 +167,7 @@ export default function QuoteModal({ onClose }) {
 
         <div style={{
           height: 4,
-          background: 'linear-gradient(90deg, transparent 0%, #c8a84e 30%, #f5d970 50%, #c8a84e 70%, transparent 100%)',
+          background: 'linear-gradient(90deg, transparent 0%, #5BC2E7 30%, #8DD8F0 50%, #5BC2E7 70%, transparent 100%)',
           borderRadius: '24px 24px 0 0',
         }} />
 
@@ -182,7 +182,7 @@ export default function QuoteModal({ onClose }) {
             <div style={{
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: 'clamp(1.8rem, 4vw, 2.4rem)',
-              letterSpacing: '0.12em', color: '#f5d970',
+              letterSpacing: '0.12em', color: '#8DD8F0',
             }}>
               Quote Request Sent!
             </div>
@@ -191,19 +191,19 @@ export default function QuoteModal({ onClose }) {
               fontSize: 14, color: 'rgba(255,255,255,0.65)',
               lineHeight: 1.7, maxWidth: 340,
             }}>
-              Our freight team will review your request and get back to you within <strong style={{ color: '#c8a84e' }}>1 hour</strong>. Expect a detailed quote tailored to your shipment.
+              Our freight team will review your request and get back to you within <strong style={{ color: '#5BC2E7' }}>1 hour</strong>. Expect a detailed quote tailored to your shipment.
             </p>
             <button
               onClick={onClose}
               style={{
                 marginTop: 12, padding: '14px 44px',
-                background: 'linear-gradient(135deg, #f5d970, #f5d970, #c8a84e)',
-                color: '#050508', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 12,
+                background: 'linear-gradient(135deg, #8DD8F0, #8DD8F0, #5BC2E7)',
+                color: '#091524', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 12,
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 14, fontWeight: 900, letterSpacing: '0.18em',
                 textTransform: 'uppercase', cursor: 'pointer',
                 position: 'relative', overflow: 'hidden',
-                boxShadow: '0 12px 32px rgba(200,168,78,0.4), 0 8px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.5)',
+                boxShadow: '0 12px 32px rgba(91,194,231,0.4), 0 8px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.5)',
               }}
             >
               <div className="btn-shine-overlay" />
@@ -236,7 +236,7 @@ export default function QuoteModal({ onClose }) {
               <div style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 11.5, letterSpacing: '0.28em',
-                color: '#c8a84e', textTransform: 'uppercase', marginBottom: 10,
+                color: '#5BC2E7', textTransform: 'uppercase', marginBottom: 10,
                 fontWeight: 700,
               }}>
                 Bejoice Freight · Premium Booking
@@ -250,7 +250,7 @@ export default function QuoteModal({ onClose }) {
               }}>
                 Get a Quick Quote
               </h2>
-              <div style={{ width: 60, height: 2, background: '#c8a84e', marginTop: 16, opacity: 0.6 }} />
+              <div style={{ width: 60, height: 2, background: '#5BC2E7', marginTop: 16, opacity: 0.6 }} />
             </div>
 
             <div style={{ padding: '24px 32px 32px', display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -269,7 +269,7 @@ export default function QuoteModal({ onClose }) {
                       <span style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: 11.5, fontWeight: 700,
-                        color: service === s.id ? '#f5d970' : 'rgba(255,255,255,0.8)',
+                        color: service === s.id ? '#8DD8F0' : 'rgba(255,255,255,0.8)',
                         textAlign: 'center', lineHeight: 1.3,
                         transition: 'color 0.2s',
                       }}>{s.label}</span>
@@ -282,14 +282,14 @@ export default function QuoteModal({ onClose }) {
                   ))}
                 </div>
                 {!service && (
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(200,168,78,0.6)', marginTop: 6 }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(91,194,231,0.6)', marginTop: 6 }}>
                     Please select a service to continue
                   </p>
                 )}
               </div>
 
               {/* ── Divider ── */}
-              <div style={{ height: 1, background: 'rgba(200,168,78,0.1)' }} />
+              <div style={{ height: 1, background: 'rgba(91,194,231,0.1)' }} />
 
               {/* ── Contact details ── */}
               <div>
@@ -312,7 +312,7 @@ export default function QuoteModal({ onClose }) {
                       <option value="" disabled>Origin Country / Region</option>
                       {ORIGINS.map(o => <option key={o} value={o}>{o}</option>)}
                     </select>
-                    <svg style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'rgba(200,168,78,0.5)' }} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    <svg style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'rgba(91,194,231,0.5)' }} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                   </div>
                   <input className="qm-input" placeholder="Destination" value={form.destination} onChange={e => set('destination', e.target.value)} />
                   <input

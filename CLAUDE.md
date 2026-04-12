@@ -29,8 +29,10 @@
 ## Project
 - **Stack:** React 18 + Vite + GSAP + ScrollTrigger + Lenis + Tailwind CSS 3
 - **Dev server:** `npm run dev` → http://localhost:5173
-- **GitHub:** https://github.com/jollyroyy/Bejoice-premium
+- **GitHub (gold theme):** https://github.com/jollyroyy/Bejoice-premium
+- **GitHub (blue theme fork):** https://github.com/jollyroyy/Bejoice-premium-Blue
 - **Netlify site ID:** `0e479bcc-353e-41bb-bfbd-68ee51a97096` (site: bejoice-premium.netlify.app)
+- **Push to blue repo:** `git push blue-theme master` (remote already configured)
 - **Image processing:** `sharp` installed as devDependency — use for PNG bg removal & recoloring
 - **Build:** `npm run build` → outputs to `dist/`
 - **Deploy:** `npx netlify-cli deploy --prod --dir=dist --site=0e479bcc-353e-41bb-bfbd-68ee51a97096`
@@ -72,7 +74,7 @@ Edit `CHAPTERS` array in `VideoHero.jsx`:
 ```js
 { frameRange: [startFrame, endFrame], eyebrow, headline: ['LINE1','LINE2'], sub, align: 'right'|'left'|'center' }
 ```
-- 9 chapters + 1 globe chapter (index 1), all mapped to absolute frame indices
+- 10 chapters + 1 globe chapter (index 1), all mapped to absolute frame indices
 - `FRAME_FADE = 18` — crossfade window in frames
 - `SCROLL_HEIGHT = 1800` vh
 - Globe chapter: `{ frameRange: [145, 210], headline: [], globeChapter: true }` — no text, shows BejoiceGlobe
@@ -80,6 +82,19 @@ Edit `CHAPTERS` array in `VideoHero.jsx`:
 - Canvas pre-dims 20 frames before globe chapter (`PRE_DIM_START = 125`) for seamless transition
 - Exit fade: last 3% of scroll (`smoothP > 0.97`)
 - Hero cards (TrackCard + FreightCalcCard + StatBar) fade out at frames 140–185 and 793–813
+- `vAlign: 'bottom'` supported on chapters — sets `justifyContent: flex-end`, `paddingBottom: clamp(60px,8vh,100px)`
+
+**Current chapter headlines (as of last session):**
+1. Intro 3D (frames 0–144)
+2. Globe chapter (145–210)
+3. CONNECTED GLOBALLY — bottom center (218–390)
+4. FROM BLUE PRINT TO DELIVERY, WE MOVE IT ALL (413–463)
+5. NAVIGATING OCEANS. DELIVERING CONFIDENCE — eyebrow: OCEAN FREIGHT (471–541)
+6. FROM PORT TO PORT. WORLD-CLASS LOGISTICS — eyebrow: FCL & LCL (621–707)
+7. DRIVEN BY TRANSPARENCY. DELIVERED WITH TRUST — eyebrow: CUSTOMS CLEARANCE · PORT OPERATIONS (557–613)
+8. SPEED ABOVE ALL. DELIVERED ON TIME — eyebrow: AIR FREIGHT · IATA CERTIFIED (726–780)
+9. WORLD CLASS AIR FREIGHT — eyebrow: AIR FREIGHT · IATA CERTIFIED (781–840)
+10. PRECISION IN HANDLING. EXCELLENCE IN DELIVERY — eyebrow: HEAVY LIFT · PROJECT CARGO (847–911)
 
 ### Globe Chapter (VideoHero.jsx)
 - Full-screen `BejoiceGlobe embedded fullscreen` rendered inside `globeChapterRef` div at zIndex 6

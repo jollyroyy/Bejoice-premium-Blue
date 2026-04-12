@@ -45,7 +45,7 @@ export default function GlobeVideo() {
       height: '100vh',
       width: '100%',
       overflow: 'hidden',
-      background: '#050508',
+      background: '#091524',
     }}>
       {/* ── Video ── */}
       <video
@@ -83,7 +83,7 @@ export default function GlobeVideo() {
       {/* ── Gold tint ── */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'radial-gradient(ellipse 90% 50% at 50% 50%, rgba(200,168,78,0.06) 0%, transparent 100%)',
+        background: 'radial-gradient(ellipse 90% 50% at 50% 50%, rgba(91,194,231,0.06) 0%, transparent 100%)',
         mixBlendMode: 'screen',
         pointerEvents: 'none',
       }} />
@@ -110,18 +110,22 @@ export default function GlobeVideo() {
           marginBottom: '1.4rem',
           opacity: 0,
         }}>
-          <img
-            src="/bejoice-wings-gold.png"
-            alt="Bejoice"
-            style={{ height: '2.2rem', width: 'auto', objectFit: 'contain' }}
-          />
+          <picture>
+            <source srcSet="/bejoice-wings-gold.webp" type="image/webp" />
+            <img
+              src="/bejoice-wings-gold.png"
+              alt="Bejoice"
+              width="400" height="223"
+              style={{ height: '2.2rem', width: 'auto', objectFit: 'contain' }}
+            />
+          </picture>
           <span style={{
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 500,
             fontSize: 'clamp(0.65rem, 1.1vw, 0.85rem)',
             letterSpacing: '0.32em',
             textTransform: 'uppercase',
-            color: 'rgba(200,168,78,0.88)',
+            color: 'rgba(91,194,231,0.88)',
           }}>
             Bejoice Logistics · Saudi Arabia
           </span>
@@ -133,7 +137,7 @@ export default function GlobeVideo() {
           style={{ lineHeight: 1, marginBottom: '0.08em', opacity: 0 }}
         >
           GLOBAL{' '}
-          <span style={{ color: 'rgba(200,168,78,0.78)' }}>REACH.</span>
+          <span style={{ color: 'rgba(91,194,231,0.78)' }}>REACH.</span>
         </h1>
 
         <h1
@@ -160,7 +164,7 @@ export default function GlobeVideo() {
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
         height: '28%',
-        background: 'linear-gradient(to bottom, transparent, #050508)',
+        background: 'linear-gradient(to bottom, transparent, #091524)',
         pointerEvents: 'none',
       }} />
     </section>

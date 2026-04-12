@@ -78,7 +78,7 @@ function Input({ placeholder, type = 'text', value, onChange, min, step, error }
         ...(isDate ? { cursor: 'pointer' } : {}),
       }}
       onClick={e => { if (isDate && e.target.showPicker) { try { e.target.showPicker() } catch(_) {} } }}
-      onFocus={e => (e.target.style.borderColor = error ? 'rgba(255,80,80,0.9)' : 'rgba(200,168,78,0.6)')}
+      onFocus={e => (e.target.style.borderColor = error ? 'rgba(255,80,80,0.9)' : 'rgba(91,194,231,0.6)')}
       onBlur={e => (e.target.style.borderColor = error ? 'rgba(255,80,80,0.7)' : 'rgba(255,255,255,0.2)')}
     />
   )
@@ -98,12 +98,12 @@ function Select({ value, onChange, options, placeholder }) {
         paddingRight: '2.2rem',
         cursor: 'pointer',
       }}
-      onFocus={e => (e.target.style.borderColor = 'rgba(200,168,78,0.45)')}
+      onFocus={e => (e.target.style.borderColor = 'rgba(91,194,231,0.45)')}
       onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.09)')}
     >
       {placeholder && <option value="">{placeholder}</option>}
       {options.map(o => (
-        <option key={o} value={o} style={{ background: '#0c0c14' }}>{o}</option>
+        <option key={o} value={o} style={{ background: '#0a1826' }}>{o}</option>
       ))}
     </select>
   );
@@ -130,10 +130,10 @@ function UnitDropdown({ value, onChange, options }) {
         style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem',
           background: '#0d1020',
-          border: `1px solid ${open ? 'rgba(200,168,78,0.8)' : 'rgba(200,168,78,0.35)'}`,
+          border: `1px solid ${open ? 'rgba(91,194,231,0.8)' : 'rgba(91,194,231,0.35)'}`,
           borderRadius: open ? '0.4rem 0.4rem 0 0' : '0.4rem',
           padding: '0.32rem 0.65rem',
-          color: '#c8a84e',
+          color: '#5BC2E7',
           fontFamily: "'Plus Jakarta Sans', sans-serif",
           fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.08em',
           cursor: 'pointer',
@@ -143,7 +143,7 @@ function UnitDropdown({ value, onChange, options }) {
         <span>{selected.label}</span>
         <svg
           width="10" height="10" viewBox="0 0 24 24" fill="none"
-          stroke="#c8a84e" strokeWidth="2.5"
+          stroke="#5BC2E7" strokeWidth="2.5"
           style={{ flexShrink: 0, transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
         >
           <path d="M6 9l6 6 6-6"/>
@@ -155,7 +155,7 @@ function UnitDropdown({ value, onChange, options }) {
         <div style={{
           position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 9999,
           background: '#0d1020',
-          border: '1px solid rgba(200,168,78,0.5)',
+          border: '1px solid rgba(91,194,231,0.5)',
           borderTop: 'none',
           borderRadius: '0 0 0.4rem 0.4rem',
           overflow: 'hidden',
@@ -167,8 +167,8 @@ function UnitDropdown({ value, onChange, options }) {
               onClick={() => { onChange(o.value); setOpen(false); }}
               style={{
                 padding: '0.55rem 0.65rem',
-                color: o.value === value ? '#c8a84e' : 'rgba(255,255,255,0.75)',
-                background: o.value === value ? 'rgba(200,168,78,0.1)' : 'transparent',
+                color: o.value === value ? '#5BC2E7' : 'rgba(255,255,255,0.75)',
+                background: o.value === value ? 'rgba(91,194,231,0.1)' : 'transparent',
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontSize: '0.82rem', fontWeight: o.value === value ? 700 : 500,
                 letterSpacing: '0.06em',
@@ -176,8 +176,8 @@ function UnitDropdown({ value, onChange, options }) {
                 transition: 'background 0.15s, color 0.15s',
                 borderBottom: '1px solid rgba(255,255,255,0.04)',
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(200,168,78,0.15)'; e.currentTarget.style.color = '#c8a84e'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = o.value === value ? 'rgba(200,168,78,0.1)' : 'transparent'; e.currentTarget.style.color = o.value === value ? '#c8a84e' : 'rgba(255,255,255,0.75)'; }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(91,194,231,0.15)'; e.currentTarget.style.color = '#5BC2E7'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = o.value === value ? 'rgba(91,194,231,0.1)' : 'transparent'; e.currentTarget.style.color = o.value === value ? '#5BC2E7' : 'rgba(255,255,255,0.75)'; }}
             >
               {o.label}
             </div>
@@ -200,7 +200,7 @@ function Textarea({ placeholder, value, onChange, rows = 3 }) {
         resize: 'vertical',
         lineHeight: 1.6,
       }}
-      onFocus={e => (e.target.style.borderColor = 'rgba(200,168,78,0.45)')}
+      onFocus={e => (e.target.style.borderColor = 'rgba(91,194,231,0.45)')}
       onBlur={e => (e.target.style.borderColor = 'rgba(255,255,255,0.09)')}
     />
   );
@@ -224,8 +224,8 @@ function CheckToggle({ label, checked, onChange }) {
           width: '2.2rem',
           height: '1.15rem',
           borderRadius: '2rem',
-          background: checked ? 'rgba(200,168,78,0.75)' : 'rgba(255,255,255,0.1)',
-          border: `1px solid ${checked ? 'rgba(200,168,78,0.5)' : 'rgba(255,255,255,0.12)'}`,
+          background: checked ? 'rgba(91,194,231,0.75)' : 'rgba(255,255,255,0.1)',
+          border: `1px solid ${checked ? 'rgba(91,194,231,0.5)' : 'rgba(255,255,255,0.12)'}`,
           position: 'relative',
           transition: 'all 0.2s',
           flexShrink: 0,
@@ -265,15 +265,15 @@ function StepIndicator({ steps, current }) {
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 600,
               background: i < current
-                ? 'rgba(200,168,78,0.2)'
+                ? 'rgba(91,194,231,0.2)'
                 : i === current
-                  ? 'rgba(200,168,78,0.85)'
+                  ? 'rgba(91,194,231,0.85)'
                   : 'rgba(255,255,255,0.05)',
-              border: `1px solid ${i <= current ? 'rgba(200,168,78,0.5)' : 'rgba(255,255,255,0.1)'}`,
+              border: `1px solid ${i <= current ? 'rgba(91,194,231,0.5)' : 'rgba(255,255,255,0.1)'}`,
               color: i < current
-                ? 'rgba(200,168,78,0.8)'
+                ? 'rgba(91,194,231,0.8)'
                 : i === current
-                  ? '#0c0c14'
+                  ? '#0a1826'
                   : 'rgba(255,255,255,0.25)',
               transition: 'all 0.3s',
             }}>
@@ -285,7 +285,7 @@ function StepIndicator({ steps, current }) {
               fontWeight: i === current ? 600 : 400,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: i === current ? 'rgba(200,168,78,0.95)' : 'rgba(255,255,255,0.38)',
+              color: i === current ? 'rgba(91,194,231,0.95)' : 'rgba(255,255,255,0.38)',
               whiteSpace: 'nowrap',
             }}>{s}</span>
           </div>
@@ -293,7 +293,7 @@ function StepIndicator({ steps, current }) {
             <div style={{
               flex: 1,
               height: '1px',
-              background: i < current ? 'rgba(200,168,78,0.35)' : 'rgba(255,255,255,0.07)',
+              background: i < current ? 'rgba(91,194,231,0.35)' : 'rgba(255,255,255,0.07)',
               margin: '0 0.5rem',
               marginBottom: '1.4rem',
               transition: 'background 0.3s',
@@ -395,9 +395,9 @@ function CargoLoad3D({ containerType, compact }) {
   const lS = { fontFamily:"'DM Sans',sans-serif", fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(255,255,255,0.55)', marginBottom:'0.3rem', display:'block' }
 
   return (
-    <div style={{ marginTop: '1.5rem', borderTop: '1px solid rgba(200,168,78,0.14)', paddingTop: '1.2rem' }}>
+    <div style={{ marginTop: '1.5rem', borderTop: '1px solid rgba(91,194,231,0.14)', paddingTop: '1.2rem' }}>
       <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:'1rem' }}>
-        <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1rem', color:'#c8a84e', letterSpacing:2 }}>3D LOAD CALCULATOR</span>
+        <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1rem', color:'#5BC2E7', letterSpacing:2 }}>3D LOAD CALCULATOR</span>
         <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:9, color:'rgba(255,255,255,0.28)', letterSpacing:1 }}>OPTIONAL — DRAG TO ROTATE</span>
       </div>
 
@@ -405,7 +405,7 @@ function CargoLoad3D({ containerType, compact }) {
       {items.map((item, idx) => (
         <div key={idx} style={{ background:'rgba(255,255,255,0.025)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:'0.6rem', padding:'0.8rem', marginBottom:'0.6rem' }}>
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.6rem' }}>
-            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:700, color:'#c8a84e', letterSpacing:1.5 }}>
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:700, color:'#5BC2E7', letterSpacing:1.5 }}>
               BOX {idx + 1}
             </span>
             <div style={{ display:'flex', gap:6, alignItems:'center' }}>
@@ -445,7 +445,7 @@ function CargoLoad3D({ containerType, compact }) {
 
           {/* Stackable toggle */}
           <button onClick={() => updCI(idx,'stackable',!item.stackable)} style={{ display:'flex', alignItems:'center', gap:8, background:'none', border:'none', cursor:'pointer', padding:0 }}>
-            <span style={{ width:34, height:18, borderRadius:9, position:'relative', flexShrink:0, background: item.stackable?'rgba(200,168,78,0.65)':'rgba(255,255,255,0.1)', transition:'background .2s', display:'block' }}>
+            <span style={{ width:34, height:18, borderRadius:9, position:'relative', flexShrink:0, background: item.stackable?'rgba(91,194,231,0.65)':'rgba(255,255,255,0.1)', transition:'background .2s', display:'block' }}>
               <span style={{ position:'absolute', top:2, width:14, height:14, borderRadius:7, background:'#fff', left:item.stackable?18:2, transition:'left .2s' }} />
             </span>
             <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:11, color: item.stackable?'rgba(255,255,255,0.65)':'rgba(255,255,255,0.38)' }}>
@@ -455,7 +455,7 @@ function CargoLoad3D({ containerType, compact }) {
         </div>
       ))}
 
-      <button onClick={addCI} style={{ width:'100%', padding:'0.5rem', borderRadius:7, border:'1px dashed rgba(200,168,78,0.3)', background:'transparent', color:'rgba(200,168,78,0.6)', fontFamily:"'DM Sans',sans-serif", fontSize:12, fontWeight:600, cursor:'pointer', letterSpacing:1, marginBottom:'1rem' }}>
+      <button onClick={addCI} style={{ width:'100%', padding:'0.5rem', borderRadius:7, border:'1px dashed rgba(91,194,231,0.3)', background:'transparent', color:'rgba(91,194,231,0.6)', fontFamily:"'DM Sans',sans-serif", fontSize:12, fontWeight:600, cursor:'pointer', letterSpacing:1, marginBottom:'1rem' }}>
         + ADD BOX TYPE
       </button>
 
@@ -1144,8 +1144,8 @@ function SuccessState({ type, onReset }) {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '3rem 1rem', textAlign: 'center', gap: '1.25rem' }}>
       <div style={{
         width: '4rem', height: '4rem', borderRadius: '50%',
-        background: 'rgba(200,168,78,0.1)',
-        border: '1px solid rgba(200,168,78,0.3)',
+        background: 'rgba(91,194,231,0.1)',
+        border: '1px solid rgba(91,194,231,0.3)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: '1.6rem',
       }}>✓</div>
@@ -1153,8 +1153,8 @@ function SuccessState({ type, onReset }) {
         Quote Requested
       </h3>
       <p style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.75, maxWidth: '22rem' }}>
-        Your <strong style={{ color: 'rgba(200,168,78,0.85)' }}>{SUCCESS_LABELS[type]}</strong> quote request has been received.
-        Our team will respond within <strong style={{ color: 'rgba(200,168,78,0.85)' }}>4 business hours</strong>.
+        Your <strong style={{ color: 'rgba(91,194,231,0.85)' }}>{SUCCESS_LABELS[type]}</strong> quote request has been received.
+        Our team will respond within <strong style={{ color: 'rgba(91,194,231,0.85)' }}>4 business hours</strong>.
       </p>
       <button onClick={onReset} className="qq-submit-btn" style={{ marginTop: '0.5rem' }}>
         Submit Another Quote

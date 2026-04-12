@@ -9,6 +9,7 @@ export default defineConfig({
   publicDir: 'public',     // ← ADD THIS
   base: './',             // ← ADD THIS  
   build: {
+    target: 'esnext',
     assetsInlineLimit: 0,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
@@ -17,6 +18,7 @@ export default defineConfig({
           vendor: ['react', 'react-dom'],
           gsap: ['gsap'],
           lenis: ['lenis'],
+          motion: ['framer-motion'],
         }
       }
     }

@@ -65,8 +65,8 @@ export default function SideSparkles() {
               width: d.size,
               height: d.size,
               borderRadius: '50%',
-              background: '#c8a84e',
-              boxShadow: `0 0 ${d.size * 3}px ${d.size * 1.5}px rgba(200,168,78,0.55)`,
+              background: '#5BC2E7',
+              boxShadow: `0 0 ${d.size * 3}px ${d.size * 1.5}px rgba(91,194,231,0.55)`,
               animation: `goldenFloat ${d.dur}s ${d.delay}s ease-in-out infinite`,
               pointerEvents: 'none',
             }}

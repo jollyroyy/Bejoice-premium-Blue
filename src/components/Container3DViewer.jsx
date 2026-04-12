@@ -12,7 +12,7 @@ export const CONTAINER_SPECS = {
 }
 
 // ── Cargo colours ─────────────────────────────────────────────────────────────
-const COLORS = ['#c8a84e','#3b82f6','#10b981','#e05252','#8b5cf6','#f59e0b','#06b6d4']
+const COLORS = ['#5BC2E7','#3b82f6','#10b981','#e05252','#8b5cf6','#f59e0b','#06b6d4']
 
 // ── Container weight limits table ─────────────────────────────────────────
 export const WEIGHT_TABLE = [
@@ -212,12 +212,12 @@ function drawContainerShell(ctx, ox, oy, cw, ch, cd, rX, rY, mode) {
 
   // Face definitions: [corner indices, fill, stroke, normal]
   const faces = [
-    { pts: [c[0],c[3],c[7],c[4]], norm: [-1,0,0], fill: 'rgba(200,168,78,0.06)', stroke: 'rgba(200,168,78,0.25)' }, // left (x=0)
-    { pts: [c[1],c[2],c[6],c[5]], norm: [1,0,0],  fill: 'rgba(200,168,78,0.05)', stroke: 'rgba(200,168,78,0.22)' }, // right (x=cw)
-    { pts: [c[0],c[1],c[2],c[3]], norm: [0,-1,0], fill: 'rgba(200,168,78,0.08)', stroke: 'rgba(200,168,78,0.3)' },  // floor (y=0)
-    { pts: [c[4],c[5],c[6],c[7]], norm: [0,1,0],  fill: 'rgba(200,168,78,0.04)', stroke: 'rgba(200,168,78,0.18)' }, // ceiling (y=ch)
-    { pts: [c[0],c[1],c[5],c[4]], norm: [0,0,-1], fill: 'rgba(200,168,78,0.04)', stroke: 'rgba(200,168,78,0.2)' },  // back (z=0)
-    { pts: [c[3],c[2],c[6],c[7]], norm: [0,0,1],  fill: 'rgba(200,168,78,0.02)', stroke: 'rgba(200,168,78,0.15)' }, // front (z=cd)
+    { pts: [c[0],c[3],c[7],c[4]], norm: [-1,0,0], fill: 'rgba(91,194,231,0.06)', stroke: 'rgba(91,194,231,0.25)' }, // left (x=0)
+    { pts: [c[1],c[2],c[6],c[5]], norm: [1,0,0],  fill: 'rgba(91,194,231,0.05)', stroke: 'rgba(91,194,231,0.22)' }, // right (x=cw)
+    { pts: [c[0],c[1],c[2],c[3]], norm: [0,-1,0], fill: 'rgba(91,194,231,0.08)', stroke: 'rgba(91,194,231,0.3)' },  // floor (y=0)
+    { pts: [c[4],c[5],c[6],c[7]], norm: [0,1,0],  fill: 'rgba(91,194,231,0.04)', stroke: 'rgba(91,194,231,0.18)' }, // ceiling (y=ch)
+    { pts: [c[0],c[1],c[5],c[4]], norm: [0,0,-1], fill: 'rgba(91,194,231,0.04)', stroke: 'rgba(91,194,231,0.2)' },  // back (z=0)
+    { pts: [c[3],c[2],c[6],c[7]], norm: [0,0,1],  fill: 'rgba(91,194,231,0.02)', stroke: 'rgba(91,194,231,0.15)' }, // front (z=cd)
   ]
 
   faces.forEach(f => {
@@ -228,7 +228,7 @@ function drawContainerShell(ctx, ox, oy, cw, ch, cd, rX, rY, mode) {
       drawFace(ctx, f.pts, f.fill, f.stroke)
     } else if (mode === 'front' && nz > 0) {
       // Draw as wireframe (transparent fill) so cargo is visible through it
-      drawFace(ctx, f.pts, 'rgba(200,168,78,0.015)', f.stroke)
+      drawFace(ctx, f.pts, 'rgba(91,194,231,0.015)', f.stroke)
     }
   })
 }
@@ -248,13 +248,13 @@ export function WeightDistributionGuide({ items, containerType }) {
   const status = getStatus(frontPct)
 
   const S = {
-    hd: { fontFamily:"'Bebas Neue',sans-serif", letterSpacing:2, color:'#c8a84e' },
+    hd: { fontFamily:"'Bebas Neue',sans-serif", letterSpacing:2, color:'#5BC2E7' },
     sm: { fontFamily:"'DM Sans',sans-serif", fontSize:10, color:'rgba(255,255,255,0.42)', lineHeight:1.55 },
     label: { fontFamily:"'DM Sans',sans-serif", fontSize:9, fontWeight:700, letterSpacing:1.2, textTransform:'uppercase', color:'rgba(255,255,255,0.3)' },
   }
 
   return (
-    <div style={{ marginTop:'1.4rem', borderTop:'1px solid rgba(200,168,78,0.12)', paddingTop:'1.2rem' }}>
+    <div style={{ marginTop:'1.4rem', borderTop:'1px solid rgba(91,194,231,0.12)', paddingTop:'1.2rem' }}>
       <div style={{ ...S.hd, fontSize:'0.95rem', marginBottom:'0.4rem' }}>CONTAINER WEIGHT DISTRIBUTION GUIDE</div>
       <p style={{ ...S.sm, marginBottom:'1rem' }}>
         Proper weight distribution is critical for safe transport, regulatory compliance, and preventing cargo damage during shipping.
@@ -263,11 +263,11 @@ export function WeightDistributionGuide({ items, containerType }) {
       {/* Top View */}
       <div style={{ marginBottom:'1rem' }}>
         <div style={{ ...S.label, marginBottom:'0.35rem' }}>Top View — 5,898 × 2,352 mm</div>
-        <div style={{ position:'relative', width:'100%', height:68, borderRadius:6, overflow:'hidden', border:'1px solid rgba(200,168,78,0.2)' }}>
-          <div style={{ position:'absolute', left:0, top:0, width:'60%', height:'100%', background:'rgba(200,168,78,0.11)', borderRight:'1.5px dashed rgba(200,168,78,0.4)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:1 }}>
-            <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:20, color:'#c8a84e', letterSpacing:1, lineHeight:1 }}>60%</span>
+        <div style={{ position:'relative', width:'100%', height:68, borderRadius:6, overflow:'hidden', border:'1px solid rgba(91,194,231,0.2)' }}>
+          <div style={{ position:'absolute', left:0, top:0, width:'60%', height:'100%', background:'rgba(91,194,231,0.11)', borderRight:'1.5px dashed rgba(91,194,231,0.4)', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:1 }}>
+            <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:20, color:'#5BC2E7', letterSpacing:1, lineHeight:1 }}>60%</span>
             <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:9, color:'rgba(255,255,255,0.4)' }}>Front Zone</span>
-            {totalWeight > 0 && <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:8, color:'rgba(200,168,78,0.55)' }}>{actualFront.toLocaleString()} kg</span>}
+            {totalWeight > 0 && <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:8, color:'rgba(91,194,231,0.55)' }}>{actualFront.toLocaleString()} kg</span>}
           </div>
           <div style={{ position:'absolute', right:18, top:0, width:'calc(40% - 18px)', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:1 }}>
             <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:20, color:'rgba(255,255,255,0.45)', letterSpacing:1, lineHeight:1 }}>40%</span>
@@ -275,11 +275,11 @@ export function WeightDistributionGuide({ items, containerType }) {
             {totalWeight > 0 && <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:8, color:'rgba(255,255,255,0.35)' }}>{actualRear.toLocaleString()} kg</span>}
           </div>
           <div style={{ position:'absolute', left:'57%', top:'50%', transform:'translate(-50%,-50%)', display:'flex', flexDirection:'column', alignItems:'center', gap:2, zIndex:2 }}>
-            <div style={{ width:10, height:10, borderRadius:'50%', background:'#f5d970', boxShadow:'0 0 10px rgba(200,168,78,0.9)', border:'1.5px solid rgba(200,168,78,0.7)' }} />
-            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:7, color:'#f5d970', letterSpacing:0.5, whiteSpace:'nowrap' }}>CoG</span>
+            <div style={{ width:10, height:10, borderRadius:'50%', background:'#8DD8F0', boxShadow:'0 0 10px rgba(91,194,231,0.9)', border:'1.5px solid rgba(91,194,231,0.7)' }} />
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:7, color:'#8DD8F0', letterSpacing:0.5, whiteSpace:'nowrap' }}>CoG</span>
           </div>
-          <div style={{ position:'absolute', right:0, top:0, bottom:0, width:18, background:'rgba(200,168,78,0.07)', display:'flex', alignItems:'center', justifyContent:'center', borderLeft:'1px solid rgba(200,168,78,0.18)' }}>
-            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:7, color:'rgba(200,168,78,0.45)', letterSpacing:1, writingMode:'vertical-rl', transform:'rotate(180deg)' }}>DOOR</span>
+          <div style={{ position:'absolute', right:0, top:0, bottom:0, width:18, background:'rgba(91,194,231,0.07)', display:'flex', alignItems:'center', justifyContent:'center', borderLeft:'1px solid rgba(91,194,231,0.18)' }}>
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:7, color:'rgba(91,194,231,0.45)', letterSpacing:1, writingMode:'vertical-rl', transform:'rotate(180deg)' }}>DOOR</span>
           </div>
         </div>
         <div style={{ display:'flex', justifyContent:'space-between', marginTop:3 }}>
@@ -292,9 +292,9 @@ export function WeightDistributionGuide({ items, containerType }) {
       {/* Side View */}
       <div style={{ marginBottom:'1rem' }}>
         <div style={{ ...S.label, marginBottom:'0.35rem' }}>Side View — 5,898 × 2,393 mm</div>
-        <div style={{ position:'relative', width:'100%', height:56, border:'1px solid rgba(200,168,78,0.18)', borderRadius:6, overflow:'hidden', background:'rgba(255,255,255,0.015)' }}>
-          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'52%', background:'rgba(200,168,78,0.09)', borderTop:'1.5px dashed rgba(200,168,78,0.32)', display:'flex', alignItems:'center', paddingLeft:8 }}>
-            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:8, color:'rgba(200,168,78,0.6)' }}>● HEAVY — load low &amp; forward</span>
+        <div style={{ position:'relative', width:'100%', height:56, border:'1px solid rgba(91,194,231,0.18)', borderRadius:6, overflow:'hidden', background:'rgba(255,255,255,0.015)' }}>
+          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'52%', background:'rgba(91,194,231,0.09)', borderTop:'1.5px dashed rgba(91,194,231,0.32)', display:'flex', alignItems:'center', paddingLeft:8 }}>
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:8, color:'rgba(91,194,231,0.6)' }}>● HEAVY — load low &amp; forward</span>
           </div>
           <div style={{ position:'absolute', top:0, left:0, right:0, height:'48%', display:'flex', alignItems:'center', paddingLeft:8 }}>
             <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:8, color:'rgba(255,255,255,0.28)' }}>○ LIGHT — stack on top</span>
@@ -338,7 +338,7 @@ export function WeightDistributionGuide({ items, containerType }) {
           <div key={title} style={{ background:'rgba(255,255,255,0.025)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:7, padding:'0.6rem 0.7rem' }}>
             <div style={{ display:'flex', alignItems:'center', gap:6, marginBottom:'0.3rem' }}>
               <span style={{ fontSize:13 }}>{icon}</span>
-              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:12, color:'#c8a84e', letterSpacing:1 }}>{title}</span>
+              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:12, color:'#5BC2E7', letterSpacing:1 }}>{title}</span>
             </div>
             <p style={{ ...S.sm, margin:0, fontSize:10 }}>{desc}</p>
           </div>
@@ -348,12 +348,12 @@ export function WeightDistributionGuide({ items, containerType }) {
       {/* Weight Limits Table */}
       <div>
         <div style={{ ...S.hd, fontSize:'0.85rem', marginBottom:'0.5rem' }}>CONTAINER WEIGHT LIMITS</div>
-        <div style={{ overflowX:'auto', borderRadius:8, border:'1px solid rgba(200,168,78,0.15)' }}>
+        <div style={{ overflowX:'auto', borderRadius:8, border:'1px solid rgba(91,194,231,0.15)' }}>
           <table style={{ width:'100%', borderCollapse:'collapse', fontFamily:"'DM Sans',sans-serif", fontSize:10, minWidth:360 }}>
             <thead>
-              <tr style={{ background:'rgba(200,168,78,0.08)' }}>
+              <tr style={{ background:'rgba(91,194,231,0.08)' }}>
                 {['Container','Max Payload','Tare Weight','Max Gross','Floor Load'].map(h => (
-                  <th key={h} style={{ padding:'0.5rem 0.6rem', textAlign:'left', color:'rgba(255,255,255,0.5)', fontWeight:700, letterSpacing:0.5, borderBottom:'1px solid rgba(200,168,78,0.15)', whiteSpace:'nowrap' }}>{h}</th>
+                  <th key={h} style={{ padding:'0.5rem 0.6rem', textAlign:'left', color:'rgba(255,255,255,0.5)', fontWeight:700, letterSpacing:0.5, borderBottom:'1px solid rgba(91,194,231,0.15)', whiteSpace:'nowrap' }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -361,7 +361,7 @@ export function WeightDistributionGuide({ items, containerType }) {
               {WEIGHT_TABLE.map((row, i) => (
                 <tr key={row.label} style={{ background: i%2===0 ? 'rgba(255,255,255,0.018)' : 'transparent' }}>
                   <td style={{ padding:'0.45rem 0.6rem', color:'rgba(255,255,255,0.7)', fontWeight:600 }}>{row.label}</td>
-                  <td style={{ padding:'0.45rem 0.6rem', color:'#c8a84e' }}>{row.payload} kg</td>
+                  <td style={{ padding:'0.45rem 0.6rem', color:'#5BC2E7' }}>{row.payload} kg</td>
                   <td style={{ padding:'0.45rem 0.6rem', color:'rgba(255,255,255,0.45)' }}>{row.tare} kg</td>
                   <td style={{ padding:'0.45rem 0.6rem', color:'rgba(255,255,255,0.45)' }}>{row.gross} kg</td>
                   <td style={{ padding:'0.45rem 0.6rem', color:'rgba(255,255,255,0.45)' }}>{row.floor} kg/m²</td>
@@ -382,8 +382,8 @@ export function WeightDistributionGuide({ items, containerType }) {
           const usePct = Math.min(100,(tw/spec.maxWeight)*100)
           const fW = Math.round(tw*0.58), rW = tw - fW
           return (
-            <div style={{ marginTop:'0.8rem', background:'rgba(200,168,78,0.06)', border:'1px solid rgba(200,168,78,0.18)', borderRadius:8, padding:'0.8rem' }}>
-              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:12, color:'#c8a84e', letterSpacing:1.5, marginBottom:'0.5rem' }}>YOUR CARGO ANALYSIS</div>
+            <div style={{ marginTop:'0.8rem', background:'rgba(91,194,231,0.06)', border:'1px solid rgba(91,194,231,0.18)', borderRadius:8, padding:'0.8rem' }}>
+              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:12, color:'#5BC2E7', letterSpacing:1.5, marginBottom:'0.5rem' }}>YOUR CARGO ANALYSIS</div>
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0.4rem' }}>
                 {[
                   ['Total Cargo Weight', `${tw.toLocaleString()} kg`],
@@ -393,7 +393,7 @@ export function WeightDistributionGuide({ items, containerType }) {
                 ].map(([k,v]) => (
                   <div key={k} style={{ background:'rgba(0,0,0,0.15)', borderRadius:5, padding:'0.4rem 0.5rem' }}>
                     <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:9, color:'rgba(255,255,255,0.35)', marginBottom:2 }}>{k}</div>
-                    <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:15, color:'#f5d970', letterSpacing:0.5 }}>{v}</div>
+                    <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:15, color:'#8DD8F0', letterSpacing:0.5 }}>{v}</div>
                   </div>
                 ))}
               </div>
@@ -418,12 +418,12 @@ function drawContainerShellWithOffset(ctx, cw, ch, cd, rX, rY, offX, offY, offZ,
   ]
 
   const faces = [
-    { pts: [c[0],c[3],c[7],c[4]], norm: [-1,0,0], fill: 'rgba(200,168,78,0.06)', stroke: 'rgba(200,168,78,0.25)' },
-    { pts: [c[1],c[2],c[6],c[5]], norm: [1,0,0],  fill: 'rgba(200,168,78,0.05)', stroke: 'rgba(200,168,78,0.22)' },
-    { pts: [c[0],c[1],c[2],c[3]], norm: [0,-1,0], fill: 'rgba(200,168,78,0.08)', stroke: 'rgba(200,168,78,0.3)' },
-    { pts: [c[4],c[5],c[6],c[7]], norm: [0,1,0],  fill: 'rgba(200,168,78,0.04)', stroke: 'rgba(200,168,78,0.18)' },
-    { pts: [c[0],c[1],c[5],c[4]], norm: [0,0,-1], fill: 'rgba(200,168,78,0.04)', stroke: 'rgba(200,168,78,0.2)' },
-    { pts: [c[3],c[2],c[6],c[7]], norm: [0,0,1],  fill: 'rgba(200,168,78,0.02)', stroke: 'rgba(200,168,78,0.15)' },
+    { pts: [c[0],c[3],c[7],c[4]], norm: [-1,0,0], fill: 'rgba(91,194,231,0.06)', stroke: 'rgba(91,194,231,0.25)' },
+    { pts: [c[1],c[2],c[6],c[5]], norm: [1,0,0],  fill: 'rgba(91,194,231,0.05)', stroke: 'rgba(91,194,231,0.22)' },
+    { pts: [c[0],c[1],c[2],c[3]], norm: [0,-1,0], fill: 'rgba(91,194,231,0.08)', stroke: 'rgba(91,194,231,0.3)' },
+    { pts: [c[4],c[5],c[6],c[7]], norm: [0,1,0],  fill: 'rgba(91,194,231,0.04)', stroke: 'rgba(91,194,231,0.18)' },
+    { pts: [c[0],c[1],c[5],c[4]], norm: [0,0,-1], fill: 'rgba(91,194,231,0.04)', stroke: 'rgba(91,194,231,0.2)' },
+    { pts: [c[3],c[2],c[6],c[7]], norm: [0,0,1],  fill: 'rgba(91,194,231,0.02)', stroke: 'rgba(91,194,231,0.15)' },
   ]
 
   faces.forEach(f => {
@@ -431,7 +431,7 @@ function drawContainerShellWithOffset(ctx, cw, ch, cd, rX, rY, offX, offY, offZ,
     if (mode === 'back' && nz <= 0) {
       drawFace(ctx, f.pts, f.fill, f.stroke)
     } else if (mode === 'front' && nz > 0) {
-      drawFace(ctx, f.pts, 'rgba(200,168,78,0.015)', f.stroke)
+      drawFace(ctx, f.pts, 'rgba(91,194,231,0.015)', f.stroke)
     }
   })
 }
@@ -631,8 +631,8 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
           ['WEIGHT', totalWeight >= 1000 ? (totalWeight / 1000).toFixed(1) + 't' : totalWeight + 'kg'],
           ['LOAD', utilization.toFixed(0) + '%'],
         ].map(([k, v]) => (
-          <div key={k} style={{ background: 'rgba(200,168,78,0.05)', border: '1px solid rgba(200,168,78,0.13)', borderRadius: 7, padding: '8px 6px', textAlign: 'center' }}>
-            <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 20, color: '#f5d970', letterSpacing: 1 }}>{v}</div>
+          <div key={k} style={{ background: 'rgba(91,194,231,0.05)', border: '1px solid rgba(91,194,231,0.13)', borderRadius: 7, padding: '8px 6px', textAlign: 'center' }}>
+            <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 20, color: '#8DD8F0', letterSpacing: 1 }}>{v}</div>
             <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.55)', letterSpacing: .6, marginTop: 1 }}>{k}</div>
           </div>
         ))}
@@ -640,7 +640,7 @@ export default function Container3DViewer({ items, containerType = '20ft', compa
 
       {/* Utilization bar */}
       <div style={{ height: 2, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginBottom: 8, overflow: 'hidden' }}>
-        <div style={{ height: '100%', width: `${utilization}%`, background: utilization > 90 ? '#ef4444' : utilization > 75 ? '#f59e0b' : 'linear-gradient(90deg,#c8a84e,#f5d970)', borderRadius: 2, transition: 'width .4s' }} />
+        <div style={{ height: '100%', width: `${utilization}%`, background: utilization > 90 ? '#ef4444' : utilization > 75 ? '#f59e0b' : 'linear-gradient(90deg,#5BC2E7,#8DD8F0)', borderRadius: 2, transition: 'width .4s' }} />
       </div>
 
       {/* Canvas 3D scene — data-lenis-prevent stops Lenis from scrolling on wheel inside */}

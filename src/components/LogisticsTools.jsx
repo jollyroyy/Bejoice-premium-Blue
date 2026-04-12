@@ -122,8 +122,8 @@ function UnitSelect({ value, onChange }) {
           padding: '0.6rem 1.8rem 0.6rem 0.6rem',
           fontSize: '0.88rem',
           cursor: 'pointer',
-          color: '#c8a84e',
-          border: `1px solid ${open ? 'rgba(200,168,78,0.8)' : 'rgba(200,168,78,0.35)'}`,
+          color: '#5BC2E7',
+          border: `1px solid ${open ? 'rgba(91,194,231,0.8)' : 'rgba(91,194,231,0.35)'}`,
           borderRadius: '0.5rem',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           background: '#0d1020',
@@ -132,7 +132,7 @@ function UnitSelect({ value, onChange }) {
         }}
       >
         <span style={{ fontWeight: 700, letterSpacing: '0.1em' }}>{value}</span>
-        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#c8a84e" strokeWidth="2.5"
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="2.5"
           style={{ position: 'absolute', right: '0.5rem', transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}>
           <path d="M6 9l6 6 6-6"/>
         </svg>
@@ -142,7 +142,7 @@ function UnitSelect({ value, onChange }) {
         <div style={{
           position: 'absolute', top: pos.top, left: pos.left, width: pos.width, zIndex: 99999,
           background: '#0d1020',
-          border: '1px solid rgba(200,168,78,0.5)',
+          border: '1px solid rgba(91,194,231,0.5)',
           borderRadius: '0.5rem',
           overflow: 'hidden',
           boxShadow: '0 8px 32px rgba(0,0,0,0.95)',
@@ -152,15 +152,15 @@ function UnitSelect({ value, onChange }) {
               onMouseDown={(e) => { e.preventDefault(); onChange(u); setOpen(false) }}
               style={{
                 padding: '0.5rem 0.7rem',
-                color: u === value ? '#c8a84e' : 'rgba(255,255,255,0.7)',
-                background: u === value ? 'rgba(200,168,78,0.12)' : 'transparent',
+                color: u === value ? '#5BC2E7' : 'rgba(255,255,255,0.7)',
+                background: u === value ? 'rgba(91,194,231,0.12)' : 'transparent',
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.88rem', fontWeight: u === value ? 700 : 400,
                 letterSpacing: '0.08em', cursor: 'pointer',
                 borderBottom: '1px solid rgba(255,255,255,0.04)',
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(200,168,78,0.18)'; e.currentTarget.style.color = '#c8a84e' }}
-              onMouseLeave={e => { e.currentTarget.style.background = u === value ? 'rgba(200,168,78,0.12)' : 'transparent'; e.currentTarget.style.color = u === value ? '#c8a84e' : 'rgba(255,255,255,0.7)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(91,194,231,0.18)'; e.currentTarget.style.color = '#5BC2E7' }}
+              onMouseLeave={e => { e.currentTarget.style.background = u === value ? 'rgba(91,194,231,0.12)' : 'transparent'; e.currentTarget.style.color = u === value ? '#5BC2E7' : 'rgba(255,255,255,0.7)' }}
             >{u}</div>
           ))}
         </div>,
@@ -207,8 +207,8 @@ function TruckSelect({ value, onChange }) {
           padding: '0.65rem 2rem 0.65rem 0.9rem',
           fontSize: '0.95rem',
           cursor: 'pointer',
-          color: '#c8a84e',
-          border: `1px solid ${open ? 'rgba(200,168,78,0.8)' : 'rgba(200,168,78,0.35)'}`,
+          color: '#5BC2E7',
+          border: `1px solid ${open ? 'rgba(91,194,231,0.8)' : 'rgba(91,194,231,0.35)'}`,
           borderRadius: '0.5rem',
           background: '#0d1020',
           position: 'relative',
@@ -216,7 +216,7 @@ function TruckSelect({ value, onChange }) {
         }}
       >
         <span>{selected.label}</span>
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#c8a84e" strokeWidth="2.5"
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="2.5"
           style={{ position: 'absolute', right: '0.7rem', top: '50%', transform: open ? 'translateY(-50%) rotate(180deg)' : 'translateY(-50%) rotate(0deg)', transition: 'transform 0.2s' }}>
           <path d="M6 9l6 6 6-6"/>
         </svg>
@@ -226,7 +226,7 @@ function TruckSelect({ value, onChange }) {
         <div style={{
           position: 'absolute', top: pos.top, left: pos.left, width: pos.width, zIndex: 99999,
           background: '#0d1020',
-          border: '1px solid rgba(200,168,78,0.5)',
+          border: '1px solid rgba(91,194,231,0.5)',
           borderRadius: '0.5rem',
           overflow: 'hidden',
           boxShadow: '0 8px 32px rgba(0,0,0,0.95)',
@@ -236,14 +236,14 @@ function TruckSelect({ value, onChange }) {
               onClick={() => { onChange(o.value); setOpen(false) }}
               style={{
                 padding: '0.6rem 0.9rem',
-                color: o.value === value ? '#c8a84e' : 'rgba(255,255,255,0.7)',
-                background: o.value === value ? 'rgba(200,168,78,0.12)' : 'transparent',
+                color: o.value === value ? '#5BC2E7' : 'rgba(255,255,255,0.7)',
+                background: o.value === value ? 'rgba(91,194,231,0.12)' : 'transparent',
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: '0.95rem', cursor: 'pointer',
                 borderBottom: '1px solid rgba(255,255,255,0.04)',
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(200,168,78,0.18)'; e.currentTarget.style.color = '#c8a84e' }}
-              onMouseLeave={e => { e.currentTarget.style.background = o.value === value ? 'rgba(200,168,78,0.12)' : 'transparent'; e.currentTarget.style.color = o.value === value ? '#c8a84e' : 'rgba(255,255,255,0.7)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(91,194,231,0.18)'; e.currentTarget.style.color = '#5BC2E7' }}
+              onMouseLeave={e => { e.currentTarget.style.background = o.value === value ? 'rgba(91,194,231,0.12)' : 'transparent'; e.currentTarget.style.color = o.value === value ? '#5BC2E7' : 'rgba(255,255,255,0.7)' }}
             >{o.label}</div>
           ))}
         </div>,
@@ -347,15 +347,15 @@ function LoadCalculator() {
   const exportPDF = () => {
     if (!results) return
     const w = window.open('','_blank')
-    w.document.write(`<html><head><title>Bejoice Load Calc</title><style>body{font-family:sans-serif;padding:2rem;color:#111}h2{color:#c8a84e}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:8px}th{background:#f5f5f5}</style></head><body><h2>Bejoice Group — Load Calculation</h2><p>${new Date().toLocaleString()}</p><table><tr><th>Field</th><th>Value</th></tr>${Object.entries(results).filter(([k])=>k!=='tab').map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</table></body></html>`)
+    w.document.write(`<html><head><title>Bejoice Load Calc</title><style>body{font-family:sans-serif;padding:2rem;color:#111}h2{color:#5BC2E7}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:8px}th{background:#f5f5f5}</style></head><body><h2>Bejoice Group — Load Calculation</h2><p>${new Date().toLocaleString()}</p><table><tr><th>Field</th><th>Value</th></tr>${Object.entries(results).filter(([k])=>k!=='tab').map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</table></body></html>`)
     w.document.close(); w.print()
   }
 
   const addRowBtn = (onClick) => (
     <button onClick={onClick}
-      style={{ background:'rgba(200,168,78,0.1)', border:'1px solid rgba(200,168,78,0.3)', borderRadius:'0.5rem', color:'#c8a84e', cursor:'pointer', padding:'0.45rem 1rem', fontFamily:"'DM Sans',sans-serif", fontSize:'0.8rem', fontWeight:700, whiteSpace:'nowrap', transition:'all 0.2s' }}
-      onMouseEnter={e=>e.currentTarget.style.background='rgba(200,168,78,0.18)'}
-      onMouseLeave={e=>e.currentTarget.style.background='rgba(200,168,78,0.1)'}
+      style={{ background:'rgba(91,194,231,0.1)', border:'1px solid rgba(91,194,231,0.3)', borderRadius:'0.5rem', color:'#5BC2E7', cursor:'pointer', padding:'0.45rem 1rem', fontFamily:"'DM Sans',sans-serif", fontSize:'0.8rem', fontWeight:700, whiteSpace:'nowrap', transition:'all 0.2s' }}
+      onMouseEnter={e=>e.currentTarget.style.background='rgba(91,194,231,0.18)'}
+      onMouseLeave={e=>e.currentTarget.style.background='rgba(91,194,231,0.1)'}
     >+ Add Row</button>
   )
 
@@ -376,17 +376,17 @@ function LoadCalculator() {
           <button key={t.id} onClick={() => { setTab(t.id); setResults(null) }}
             style={{
               flex:1, padding:'0.7rem 0.3rem',
-              background:   tab===t.id ? 'linear-gradient(135deg,#f0e090,#c8a84e)' : 'rgba(255,255,255,0.04)',
+              background:   tab===t.id ? 'linear-gradient(135deg,#a8e4f7,#5BC2E7)' : 'rgba(255,255,255,0.04)',
               border:       '1px solid',
               borderColor:  tab===t.id ? 'transparent' : 'rgba(255,255,255,0.12)',
               borderRadius: '0.65rem',
-              color:        tab===t.id ? '#0c0c14' : 'rgba(255,255,255,0.7)',
+              color:        tab===t.id ? '#0a1826' : 'rgba(255,255,255,0.7)',
               fontFamily:   "'DM Sans', sans-serif",
               fontSize:     '0.75rem', fontWeight: 800,
               cursor:       'pointer', letterSpacing: '0.04em',
               display:      'flex', flexDirection:'column', alignItems:'center', gap:'0.25rem',
               transition:   'all 0.2s',
-              boxShadow:    tab===t.id ? '0 4px 16px rgba(200,168,78,0.3)' : 'none',
+              boxShadow:    tab===t.id ? '0 4px 16px rgba(91,194,231,0.3)' : 'none',
             }}>
             <span style={{ fontSize:'1.1rem' }}>{t.icon}</span>
             <span>{t.label}</span>
@@ -428,19 +428,19 @@ function LoadCalculator() {
                     onClick={() => setSeaRows(rows => rows.map((row,idx) => idx===i ? {...row, stackable:!row.stackable} : row))}
                     style={{
                       width:18, height:18, borderRadius:4, flexShrink:0,
-                      border: `1.5px solid ${r.stackable ? '#c8a84e' : 'rgba(255,255,255,0.25)'}`,
-                      background: r.stackable ? 'rgba(200,168,78,0.2)' : 'rgba(255,255,255,0.04)',
+                      border: `1.5px solid ${r.stackable ? '#5BC2E7' : 'rgba(255,255,255,0.25)'}`,
+                      background: r.stackable ? 'rgba(91,194,231,0.2)' : 'rgba(255,255,255,0.04)',
                       display:'flex', alignItems:'center', justifyContent:'center',
                       transition:'all 0.2s',
                     }}
                   >
                     {r.stackable && (
                       <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                        <path d="M2 6l3 3 5-5" stroke="#c8a84e" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M2 6l3 3 5-5" stroke="#5BC2E7" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     )}
                   </div>
-                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.92rem', fontWeight:600, color: r.stackable ? 'rgba(200,168,78,0.9)' : 'rgba(255,255,255,0.4)', transition:'color 0.2s' }}>
+                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.92rem', fontWeight:600, color: r.stackable ? 'rgba(91,194,231,0.9)' : 'rgba(255,255,255,0.4)', transition:'color 0.2s' }}>
                     {r.stackable ? 'Stackable' : 'Non-stackable'}
                   </span>
                 </label>
@@ -578,11 +578,11 @@ function LoadCalculator() {
             animate={{ opacity:1, y:0 }}
             exit={{ opacity:0, y:8 }}
             transition={{ duration:0.35, ease:[0.16,1,0.3,1] }}
-            style={{ marginTop:'1.4rem', background:'rgba(8,8,18,0.9)', border:'1.5px solid rgba(200,168,78,0.4)', borderRadius:'1rem', padding:'1.5rem', boxShadow:'0 20px 50px rgba(0,0,0,0.5)', position:'relative', overflow:'hidden' }}
+            style={{ marginTop:'1.4rem', background:'rgba(8,8,18,0.9)', border:'1.5px solid rgba(91,194,231,0.4)', borderRadius:'1rem', padding:'1.5rem', boxShadow:'0 20px 50px rgba(0,0,0,0.5)', position:'relative', overflow:'hidden' }}
           >
-            <div style={{ position:'absolute', top:'-50%', right:'-20%', width:'160px', height:'160px', background:'rgba(200,168,78,0.12)', filter:'blur(40px)', borderRadius:'50%', pointerEvents:'none' }} />
+            <div style={{ position:'absolute', top:'-50%', right:'-20%', width:'160px', height:'160px', background:'rgba(91,194,231,0.12)', filter:'blur(40px)', borderRadius:'50%', pointerEvents:'none' }} />
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'1.1rem' }}>
-              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.4rem', letterSpacing:'0.1em', color:'#c8a84e' }}>AI LOAD ANALYSIS</span>
+              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.4rem', letterSpacing:'0.1em', color:'#5BC2E7' }}>AI LOAD ANALYSIS</span>
               <div style={{ width:9, height:9, background:'#25c864', borderRadius:'50%', boxShadow:'0 0 12px #25c864' }} />
             </div>
 
@@ -593,7 +593,7 @@ function LoadCalculator() {
                 </span>
                 <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color:'#fff', letterSpacing:'0.04em' }}>
                   {results.tab==='air' ? results.chargeable : results.cbm}
-                  <span style={{ fontSize:'0.8rem', marginLeft:'0.3rem', color:'#c8a84e' }}>{results.tab==='air' ? 'KG' : 'CBM'}</span>
+                  <span style={{ fontSize:'0.8rem', marginLeft:'0.3rem', color:'#5BC2E7' }}>{results.tab==='air' ? 'KG' : 'CBM'}</span>
                 </span>
               </div>
 
@@ -610,7 +610,7 @@ function LoadCalculator() {
               {results.tab==='air' && (
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)', gridColumn:'span 2' }}>
                   <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.4rem', letterSpacing:'0.1em' }}>Billing Basis</span>
-                  <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.1rem', color:'#c8a84e', letterSpacing:'0.05em' }}>
+                  <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.1rem', color:'#5BC2E7', letterSpacing:'0.05em' }}>
                     {results.basis} Weight — {results.basis==='Volumetric' ? results.volWeight : results.actWeight} kg
                   </span>
                 </div>
@@ -635,7 +635,7 @@ function LoadCalculator() {
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)', gridColumn:'span 2' }}>
                   <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Indicative Cost</span>
                   <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color:'#fff' }}>
-                    ${results.cost}<span style={{ fontSize:'0.8rem', marginLeft:'0.3rem', color:'#c8a84e' }}>USD</span>
+                    ${results.cost}<span style={{ fontSize:'0.8rem', marginLeft:'0.3rem', color:'#5BC2E7' }}>USD</span>
                   </span>
                 </div>
               )}
@@ -654,7 +654,7 @@ function LoadCalculator() {
                     initial={{ width:0 }}
                     animate={{ width:`${Math.min(100, results.loadPct)}%` }}
                     transition={{ duration:0.9, ease:'easeOut' }}
-                    style={{ height:'100%', background: results.actualLoadPct > 100 ? 'linear-gradient(90deg,#ff5050,#ff8080)' : results.loadPct > 90 ? 'linear-gradient(90deg,#c8a84e,#ff5050)' : 'linear-gradient(90deg,#c8a84e,#e8d48a)', borderRadius:'4px' }}
+                    style={{ height:'100%', background: results.actualLoadPct > 100 ? 'linear-gradient(90deg,#ff5050,#ff8080)' : results.loadPct > 90 ? 'linear-gradient(90deg,#5BC2E7,#ff5050)' : 'linear-gradient(90deg,#5BC2E7,#e8d48a)', borderRadius:'4px' }}
                   />
                 </div>
                 {results.actualLoadPct > 100 && (
@@ -681,12 +681,12 @@ function LoadCalculator() {
             )}
 
             {results.container && (
-              <div style={{ padding:'0.9rem', background:'rgba(200,168,78,0.1)', borderRadius:'0.7rem', border:'1px dashed rgba(200,168,78,0.35)', marginBottom:'1.2rem' }}>
-                <span style={{ display:'block', fontSize:'0.68rem', color:'#c8a84e', textTransform:'uppercase', fontWeight:700, marginBottom:'0.5rem', letterSpacing:'0.1em' }}>AI Recommendation</span>
+              <div style={{ padding:'0.9rem', background:'rgba(91,194,231,0.1)', borderRadius:'0.7rem', border:'1px dashed rgba(91,194,231,0.35)', marginBottom:'1.2rem' }}>
+                <span style={{ display:'block', fontSize:'0.68rem', color:'#5BC2E7', textTransform:'uppercase', fontWeight:700, marginBottom:'0.5rem', letterSpacing:'0.1em' }}>AI Recommendation</span>
                 <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.15rem', color:'#fff', letterSpacing:'0.05em', display:'block', marginBottom: results.containerCount > 1 ? '0.6rem' : 0 }}>{results.container}</span>
                 {results.containerCount > 1 && (
-                  <div style={{ fontSize:'0.72rem', color:'rgba(255,255,255,0.65)', lineHeight:1.55, borderTop:'1px solid rgba(200,168,78,0.2)', paddingTop:'0.5rem' }}>
-                    <strong style={{ color:'#c8a84e' }}>Cost tip:</strong> 40ft High Cube is most cost-effective per CBM for large volumes. Consolidating into fewer, larger containers reduces handling fees and port charges. Ask Bejoice for a multi-container rate.
+                  <div style={{ fontSize:'0.72rem', color:'rgba(255,255,255,0.65)', lineHeight:1.55, borderTop:'1px solid rgba(91,194,231,0.2)', paddingTop:'0.5rem' }}>
+                    <strong style={{ color:'#5BC2E7' }}>Cost tip:</strong> 40ft High Cube is most cost-effective per CBM for large volumes. Consolidating into fewer, larger containers reduces handling fees and port charges. Ask Bejoice for a multi-container rate.
                   </div>
                 )}
               </div>
@@ -711,8 +711,8 @@ function LoadCalculator() {
               const ctbm = parseFloat(results.cbm) || 0
               const ctype = ctbm <= 25 ? '20ft' : ctbm <= 67 ? '40ft' : '40hc'
               return (
-                <div style={{ marginTop:'1.4rem', borderTop:'1px solid rgba(200,168,78,0.15)', paddingTop:'1.2rem' }}>
-                  <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'2rem', color:'#c8a84e', letterSpacing:3, marginBottom:'0.8rem', textAlign:'center' }}>
+                <div style={{ marginTop:'1.4rem', borderTop:'1px solid rgba(91,194,231,0.15)', paddingTop:'1.2rem' }}>
+                  <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'2rem', color:'#5BC2E7', letterSpacing:3, marginBottom:'0.8rem', textAlign:'center' }}>
                     3D CONTAINER LOAD VISUALISATION
                   </div>
                   <Container3DViewer items={items3d} containerType={ctype} compact={true} />
@@ -729,7 +729,7 @@ function LoadCalculator() {
                 📥 CSV
               </button>
               <button onClick={exportPDF}
-                style={{ flex:1, background:'linear-gradient(135deg,#f0e090,#c8a84e)', border:'none', borderRadius:'0.6rem', color:'#0c0c14', padding:'0.7rem', cursor:'pointer', fontFamily:"'DM Sans',sans-serif", fontSize:'0.82rem', fontWeight:800, display:'flex', alignItems:'center', justifyContent:'center', gap:'0.4rem', transition:'all 0.2s' }}
+                style={{ flex:1, background:'linear-gradient(135deg,#a8e4f7,#5BC2E7)', border:'none', borderRadius:'0.6rem', color:'#0a1826', padding:'0.7rem', cursor:'pointer', fontFamily:"'DM Sans',sans-serif", fontSize:'0.82rem', fontWeight:800, display:'flex', alignItems:'center', justifyContent:'center', gap:'0.4rem', transition:'all 0.2s' }}
                 onMouseEnter={e=>e.currentTarget.style.opacity='0.88'}
                 onMouseLeave={e=>e.currentTarget.style.opacity='1'}>
                 📄 PDF Report
@@ -755,15 +755,15 @@ function LoadCalculator() {
 export default function LogisticsTools() {
   return (
     <section id="tools" style={{
-      background: '#050508',
+      background: '#091524',
       padding: 'clamp(80px,10vw,130px) clamp(1.5rem,8vw,8rem)',
       position: 'relative',
       overflow: 'hidden',
     }}>
 
-      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(200,168,78,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
+      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(91,194,231,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
       {/* Ambient glows */}
-      <div style={{ position:'absolute', top:'5%', right:'-10%', width:'600px', height:'600px', borderRadius:'50%', background:'radial-gradient(circle,rgba(200,168,78,0.05) 0%,transparent 65%)', pointerEvents:'none' }} />
+      <div style={{ position:'absolute', top:'5%', right:'-10%', width:'600px', height:'600px', borderRadius:'50%', background:'radial-gradient(circle,rgba(91,194,231,0.05) 0%,transparent 65%)', pointerEvents:'none' }} />
       <div style={{ position:'absolute', bottom:'5%', left:'-8%', width:'500px', height:'500px', borderRadius:'50%', background:'radial-gradient(circle,rgba(30,60,180,0.05) 0%,transparent 65%)', pointerEvents:'none' }} />
 
       <div style={{ maxWidth:'1400px', margin:'0 auto', position:'relative', zIndex:1 }}>
@@ -778,30 +778,30 @@ export default function LogisticsTools() {
         >
           <div style={{
             width:'100%', maxWidth:'1080px',
-            background:'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(200,168,78,0.018) 100%)',
+            background:'linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.015) 50%, rgba(91,194,231,0.018) 100%)',
             backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
-            border:'1px solid rgba(200,168,78,0.35)',
-            borderTop:'1px solid rgba(200,168,78,0.65)',
+            border:'1px solid rgba(91,194,231,0.35)',
+            borderTop:'1px solid rgba(91,194,231,0.65)',
             borderRadius:28, overflow:'hidden', position:'relative',
             padding:'clamp(2rem,5vw,4rem) clamp(1.5rem,4vw,3.5rem) clamp(2rem,4vw,3rem)',
             boxShadow:[
               '0 60px 120px rgba(0,0,0,0.75)',
-              '0 0 0 1px rgba(200,168,78,0.08) inset',
-              'inset 0 1px 0 rgba(200,168,78,0.30)',
-              '0 0 60px rgba(200,168,78,0.10)',
-              '0 0 120px rgba(200,168,78,0.05)',
+              '0 0 0 1px rgba(91,194,231,0.08) inset',
+              'inset 0 1px 0 rgba(91,194,231,0.30)',
+              '0 0 60px rgba(91,194,231,0.10)',
+              '0 0 120px rgba(91,194,231,0.05)',
             ].join(', '),
           }}>
 
             {/* Corner accent — top-left */}
             <div style={{ position:'absolute', top:0, left:0, width:120, height:120, pointerEvents:'none',
-              background:'radial-gradient(circle at 0% 0%, rgba(200,168,78,0.12) 0%, transparent 65%)' }}/>
+              background:'radial-gradient(circle at 0% 0%, rgba(91,194,231,0.12) 0%, transparent 65%)' }}/>
             {/* Corner accent — bottom-right */}
             <div style={{ position:'absolute', bottom:0, right:0, width:200, height:200, pointerEvents:'none',
-              background:'radial-gradient(circle at 100% 100%, rgba(200,168,78,0.07) 0%, transparent 60%)' }}/>
+              background:'radial-gradient(circle at 100% 100%, rgba(91,194,231,0.07) 0%, transparent 60%)' }}/>
             {/* Top gold shimmer line */}
             <div style={{ position:'absolute', top:0, left:0, right:0, height:1, pointerEvents:'none',
-              background:'linear-gradient(90deg, transparent 0%, rgba(200,168,78,0.6) 40%, rgba(200,168,78,0.8) 50%, rgba(200,168,78,0.6) 60%, transparent 100%)' }}/>
+              background:'linear-gradient(90deg, transparent 0%, rgba(91,194,231,0.6) 40%, rgba(91,194,231,0.8) 50%, rgba(91,194,231,0.6) 60%, transparent 100%)' }}/>
 
             {/* ── Heading ── */}
             <div style={{ textAlign:'center', marginBottom:'clamp(2rem,4vw,3.5rem)', position:'relative', zIndex:1 }}>
@@ -812,7 +812,7 @@ export default function LogisticsTools() {
                 margin:'0 0 clamp(0.6rem,1.5vw,1rem)',
                 color:'#ffffff',
               }}>
-                CONTAINER <span style={{ color:'#c8a84e' }}>LOAD CALCULATOR</span>
+                CONTAINER <span style={{ color:'#5BC2E7' }}>LOAD CALCULATOR</span>
               </h2>
               <p style={{
                 fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(15px,1.9vw,19px)',
@@ -821,7 +821,7 @@ export default function LogisticsTools() {
               }}>
                 Instant CBM &amp; chargeable weight — Sea, Air, Land or Warehouse.
               </p>
-              <div style={{ width:48, height:1, margin:'clamp(1rem,2vw,1.6rem) auto 0', background:'linear-gradient(90deg,transparent,rgba(200,168,78,0.5),transparent)' }}/>
+              <div style={{ width:48, height:1, margin:'clamp(1rem,2vw,1.6rem) auto 0', background:'linear-gradient(90deg,transparent,rgba(91,194,231,0.5),transparent)' }}/>
             </div>
 
             {/* ── Calculator widget ── */}

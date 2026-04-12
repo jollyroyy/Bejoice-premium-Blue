@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import Container3DViewer, { CONTAINER_SPECS, WeightDistributionGuide } from './Container3DViewer'
 
-const BOX_COLORS = ['#c8a84e','#3b82f6','#10b981','#e05252','#8b5cf6','#f59e0b','#06b6d4']
+const BOX_COLORS = ['#5BC2E7','#3b82f6','#10b981','#e05252','#8b5cf6','#f59e0b','#06b6d4']
 
 export default function ContainerCalculator() {
   const [containerType, setContainerType] = useState('20ft')
@@ -27,7 +27,7 @@ export default function ContainerCalculator() {
   const addItem = () => setItems(prev => [...prev, { id: Date.now(), l: 100, w: 80, h: 80, weight: 150, qty: 3, unit: 'cm', stackable: true }])
   const removeItem = (id) => setItems(prev => prev.filter(i => i.id !== id))
 
-  const utilizationColor = (totalContainersNeeded > 1 || utilization > 95) ? '#ef4444' : utilization > 75 ? '#f59e0b' : '#c8a84e'
+  const utilizationColor = (totalContainersNeeded > 1 || utilization > 95) ? '#ef4444' : utilization > 75 ? '#f59e0b' : '#5BC2E7'
 
   return (
     <section id="container-calculator" style={{
@@ -38,14 +38,14 @@ export default function ContainerCalculator() {
       {/* Grid bg */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
-        backgroundImage: 'linear-gradient(rgba(200,168,78,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,78,0.022) 1px,transparent 1px)',
+        backgroundImage: 'linear-gradient(rgba(91,194,231,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(91,194,231,0.022) 1px,transparent 1px)',
         backgroundSize: '56px 56px',
       }} />
       {/* Corner glow */}
       <div style={{
         position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)',
         width: 600, height: 300, borderRadius: '50%',
-        background: 'radial-gradient(ellipse,rgba(200,168,78,0.07) 0%,transparent 70%)',
+        background: 'radial-gradient(ellipse,rgba(91,194,231,0.07) 0%,transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -53,7 +53,7 @@ export default function ContainerCalculator() {
 
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 'clamp(36px,5vw,56px)' }}>
-          <div style={{ fontSize: 11, letterSpacing: 4, color: '#c8a84e', fontFamily: 'DM Sans,sans-serif', fontWeight: 600, marginBottom: 14, textTransform: 'uppercase' }}>
+          <div style={{ fontSize: 11, letterSpacing: 4, color: '#5BC2E7', fontFamily: 'DM Sans,sans-serif', fontWeight: 600, marginBottom: 14, textTransform: 'uppercase' }}>
             LOAD OPTIMISER
           </div>
           <h2 style={{
@@ -77,18 +77,18 @@ export default function ContainerCalculator() {
           display: 'grid',
           gridTemplateColumns: 'minmax(0,360px) 1fr',
           minHeight: 600,
-          border: '1px solid rgba(200,168,78,0.18)',
+          border: '1px solid rgba(91,194,231,0.18)',
           borderRadius: 20,
           overflow: 'hidden',
           background: 'rgba(4,4,10,0.7)',
           backdropFilter: 'blur(12px)',
-          boxShadow: '0 0 0 1px rgba(200,168,78,0.06), 0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(200,168,78,0.12)',
+          boxShadow: '0 0 0 1px rgba(91,194,231,0.06), 0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(91,194,231,0.12)',
           position: 'relative',
         }}>
 
           {/* ── LEFT: Form panel ── */}
           <div className="cc-form-panel" style={{
-            borderRight: '1px solid rgba(200,168,78,0.14)',
+            borderRight: '1px solid rgba(91,194,231,0.14)',
             display: 'flex', flexDirection: 'column',
             background: 'rgba(255,255,255,0.012)',
             position: 'relative',
@@ -96,17 +96,17 @@ export default function ContainerCalculator() {
             {/* Panel header bar */}
             <div style={{
               padding: '18px 24px 16px',
-              borderBottom: '1px solid rgba(200,168,78,0.1)',
-              background: 'rgba(200,168,78,0.04)',
+              borderBottom: '1px solid rgba(91,194,231,0.1)',
+              background: 'rgba(91,194,231,0.04)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#c8a84e', boxShadow: '0 0 8px rgba(200,168,78,0.8)' }} />
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#5BC2E7', boxShadow: '0 0 8px rgba(91,194,231,0.8)' }} />
                 <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: 2.5, color: 'rgba(255,255,255,0.55)', textTransform: 'uppercase' }}>
                   Cargo Input
                 </span>
               </div>
-              <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: 'rgba(200,168,78,0.5)', letterSpacing: 1 }}>
+              <span style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 10, color: 'rgba(91,194,231,0.5)', letterSpacing: 1 }}>
                 {items.length} item{items.length !== 1 ? 's' : ''}
               </span>
             </div>
@@ -121,12 +121,12 @@ export default function ContainerCalculator() {
                   {Object.entries(CONTAINER_SPECS).map(([key, c]) => (
                     <button key={key} onClick={() => setContainerType(key)} style={{
                       flex: 1, padding: '8px 4px', borderRadius: 8,
-                      border: `1px solid ${containerType === key ? '#c8a84e' : 'rgba(255,255,255,0.08)'}`,
-                      background: containerType === key ? 'rgba(200,168,78,0.13)' : 'rgba(255,255,255,0.025)',
-                      color: containerType === key ? '#c8a84e' : 'rgba(255,255,255,0.4)',
+                      border: `1px solid ${containerType === key ? '#5BC2E7' : 'rgba(255,255,255,0.08)'}`,
+                      background: containerType === key ? 'rgba(91,194,231,0.13)' : 'rgba(255,255,255,0.025)',
+                      color: containerType === key ? '#5BC2E7' : 'rgba(255,255,255,0.4)',
                       fontFamily: 'DM Sans,sans-serif', fontSize: 11, fontWeight: 700,
                       cursor: 'pointer', transition: 'all 0.2s', letterSpacing: 0.5,
-                      boxShadow: containerType === key ? '0 0 12px rgba(200,168,78,0.15)' : 'none',
+                      boxShadow: containerType === key ? '0 0 12px rgba(91,194,231,0.15)' : 'none',
                     }}>
                       {c.label}
                     </button>
@@ -196,9 +196,9 @@ export default function ContainerCalculator() {
                   }}>
                     <span style={{
                       width: 34, height: 17, borderRadius: 9, position: 'relative', flexShrink: 0,
-                      background: item.stackable ? 'rgba(200,168,78,0.6)' : 'rgba(255,255,255,0.08)',
+                      background: item.stackable ? 'rgba(91,194,231,0.6)' : 'rgba(255,255,255,0.08)',
                       transition: 'background 0.2s', display: 'block',
-                      boxShadow: item.stackable ? '0 0 8px rgba(200,168,78,0.3)' : 'none',
+                      boxShadow: item.stackable ? '0 0 8px rgba(91,194,231,0.3)' : 'none',
                     }}>
                       <span style={{
                         position: 'absolute', top: 1.5, width: 14, height: 14, borderRadius: 7, background: '#fff',
@@ -212,8 +212,8 @@ export default function ContainerCalculator() {
 
               <button onClick={addItem} style={{
                 width: '100%', padding: '10px 0', borderRadius: 8,
-                border: '1px dashed rgba(200,168,78,0.25)',
-                background: 'transparent', color: 'rgba(200,168,78,0.55)',
+                border: '1px dashed rgba(91,194,231,0.25)',
+                background: 'transparent', color: 'rgba(91,194,231,0.55)',
                 fontFamily: 'DM Sans,sans-serif', fontSize: 11, fontWeight: 700,
                 cursor: 'pointer', letterSpacing: 1.5, transition: 'all 0.2s',
               }}>
@@ -224,8 +224,8 @@ export default function ContainerCalculator() {
             {/* Stats footer inside form panel */}
             <div style={{
               padding: '14px 24px',
-              borderTop: '1px solid rgba(200,168,78,0.1)',
-              background: 'rgba(200,168,78,0.03)',
+              borderTop: '1px solid rgba(91,194,231,0.1)',
+              background: 'rgba(91,194,231,0.03)',
               display: 'grid', gridTemplateColumns: '1fr 1fr',
               gap: 10,
             }}>
@@ -235,7 +235,7 @@ export default function ContainerCalculator() {
               ].map(([k, v]) => (
                 <div key={k}>
                   <div style={{ fontFamily: 'DM Sans,sans-serif', fontSize: 9, color: 'rgba(255,255,255,0.3)', letterSpacing: 1.5, marginBottom: 3 }}>{k}</div>
-                  <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 18, color: '#f5d970', letterSpacing: 1 }}>{v}</div>
+                  <div style={{ fontFamily: 'Bebas Neue,sans-serif', fontSize: 18, color: '#8DD8F0', letterSpacing: 1 }}>{v}</div>
                 </div>
               ))}
             </div>
@@ -250,13 +250,13 @@ export default function ContainerCalculator() {
             {/* Subtle radial glow behind the 3D scene */}
             <div style={{
               position: 'absolute', inset: 0, pointerEvents: 'none',
-              background: 'radial-gradient(ellipse at 50% 45%, rgba(200,168,78,0.05) 0%, transparent 65%)',
+              background: 'radial-gradient(ellipse at 50% 45%, rgba(91,194,231,0.05) 0%, transparent 65%)',
             }} />
 
             {/* Viewer header bar */}
             <div style={{
               padding: '18px 28px 16px',
-              borderBottom: '1px solid rgba(200,168,78,0.1)',
+              borderBottom: '1px solid rgba(91,194,231,0.1)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               position: 'relative', zIndex: 1,
             }}>
@@ -291,7 +291,7 @@ export default function ContainerCalculator() {
             {/* Bottom bar: utilization bar + status + CTA */}
             <div style={{
               padding: '14px 28px 20px',
-              borderTop: '1px solid rgba(200,168,78,0.1)',
+              borderTop: '1px solid rgba(91,194,231,0.1)',
               position: 'relative', zIndex: 1,
             }}>
               {/* Utilization bar */}
@@ -317,7 +317,7 @@ export default function ContainerCalculator() {
                       ? 'linear-gradient(90deg,#ef4444,#ff6b6b)'
                       : utilization > 75
                         ? 'linear-gradient(90deg,#f59e0b,#fbbf24)'
-                        : 'linear-gradient(90deg,#c8a84e,#f5d970)',
+                        : 'linear-gradient(90deg,#5BC2E7,#8DD8F0)',
                     borderRadius: 2, transition: 'width 0.5s ease',
                     boxShadow: `0 0 8px ${utilizationColor}88`,
                   }} />
@@ -329,15 +329,15 @@ export default function ContainerCalculator() {
                 onClick={() => typeof window.__showCalModal === 'function' && window.__showCalModal()}
                 style={{
                   width: '100%', padding: '13px 0', borderRadius: 10,
-                  background: 'linear-gradient(135deg,#c8a84e 0%,#f5d970 50%,#c8a84e 100%)',
+                  background: 'linear-gradient(135deg,#5BC2E7 0%,#8DD8F0 50%,#5BC2E7 100%)',
                   border: 'none', cursor: 'pointer',
                   fontFamily: 'DM Sans,sans-serif', fontSize: 13, fontWeight: 700,
                   color: '#0a0a12', letterSpacing: 1.5,
-                  boxShadow: '0 4px 24px rgba(200,168,78,0.25)',
+                  boxShadow: '0 4px 24px rgba(91,194,231,0.25)',
                   transition: 'box-shadow 0.2s, transform 0.1s',
                 }}
-                onMouseOver={e => { e.currentTarget.style.boxShadow = '0 4px 36px rgba(200,168,78,0.45)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-                onMouseOut={e => { e.currentTarget.style.boxShadow = '0 4px 24px rgba(200,168,78,0.25)'; e.currentTarget.style.transform = 'translateY(0)' }}
+                onMouseOver={e => { e.currentTarget.style.boxShadow = '0 4px 36px rgba(91,194,231,0.45)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                onMouseOut={e => { e.currentTarget.style.boxShadow = '0 4px 24px rgba(91,194,231,0.25)'; e.currentTarget.style.transform = 'translateY(0)' }}
               >
                 GET A FREIGHT QUOTE →
               </button>
@@ -349,12 +349,12 @@ export default function ContainerCalculator() {
       <style>{`
         .cc-form-scroll::-webkit-scrollbar { width: 3px; }
         .cc-form-scroll::-webkit-scrollbar-track { background: transparent; }
-        .cc-form-scroll::-webkit-scrollbar-thumb { background: rgba(200,168,78,0.2); border-radius: 2px; }
+        .cc-form-scroll::-webkit-scrollbar-thumb { background: rgba(91,194,231,0.2); border-radius: 2px; }
 
         .cc-panel > * { min-width: 0; }
         @media (max-width: 640px) {
           .cc-panel { grid-template-columns: 1fr !important; }
-          .cc-form-panel { border-right: none !important; border-bottom: 1px solid rgba(200,168,78,0.14) !important; }
+          .cc-form-panel { border-right: none !important; border-bottom: 1px solid rgba(91,194,231,0.14) !important; }
           .cc-form-scroll { max-height: 380px; }
         }
       `}</style>

@@ -483,7 +483,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }}
           style={{ textAlign: 'center', marginBottom: 'clamp(0.6rem,1.5vw,1.2rem)' }}
         >
-          <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'#c8a84e', display:'block', marginBottom:'0.9rem' }}>
+          <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'#5BC2E7', display:'block', marginBottom:'0.9rem' }}>
             GLOBAL PRESENCE
           </span>
           <h2 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.3rem,3.5vw,3.2rem)', color:'#ffffff', letterSpacing:'0.04em', lineHeight:1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
@@ -501,7 +501,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             <div style={{
               position: 'absolute', inset: -28,
               borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(200,168,78,0.12) 0%, rgba(30,80,180,0.08) 55%, transparent 75%)',
+              background: 'radial-gradient(circle, rgba(91,194,231,0.12) 0%, rgba(30,80,180,0.08) 55%, transparent 75%)',
               filter: 'blur(18px)',
               pointerEvents: 'none',
               zIndex: 0,
@@ -518,7 +518,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
                 overflow: 'hidden',
                 position: 'relative',
                 zIndex: 1,
-                boxShadow: '0 0 0 1px rgba(200,168,78,0.12), 0 0 60px rgba(30,80,200,0.22), 0 0 120px rgba(10,20,60,0.6)',
+                boxShadow: '0 0 0 1px rgba(91,194,231,0.12), 0 0 60px rgba(30,80,200,0.22), 0 0 120px rgba(10,20,60,0.6)',
                 touchAction: 'none',
               }}
             />
@@ -530,10 +530,10 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
                 style={{
                   position:'absolute', bottom:24, left:'50%', transform:'translateX(-50%)',
                   background:'rgba(6,8,20,0.95)',
-                  border:'1px solid rgba(200,168,78,0.55)',
+                  border:'1px solid rgba(91,194,231,0.55)',
                   borderRadius:'2rem', padding:'0.45rem 1.3rem',
                   fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:700,
-                  color:'#c8a84e', whiteSpace:'nowrap', pointerEvents:'none',
+                  color:'#5BC2E7', whiteSpace:'nowrap', pointerEvents:'none',
                   boxShadow:'0 4px 24px rgba(0,0,0,0.8)',
                   zIndex: 2,
                 }}
@@ -542,7 +542,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
               </motion.div>
             )}
 
-            <div style={{ textAlign:'center', marginTop:'0.8rem', fontFamily:"'DM Sans',sans-serif", fontSize:'0.65rem', color:'rgba(200,168,78,0.4)', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+            <div style={{ textAlign:'center', marginTop:'0.8rem', fontFamily:"'DM Sans',sans-serif", fontSize:'0.65rem', color:'rgba(91,194,231,0.4)', letterSpacing:'0.22em', textTransform:'uppercase' }}>
               DRAG TO ROTATE
             </div>
           </motion.div>
@@ -555,15 +555,15 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
           >
             {/* HQ */}
             <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'0.7rem', marginBottom:'1rem' }}>
-              <span style={{ width:12, height:12, borderRadius:'50%', background:'#f5d970', flexShrink:0, boxShadow:'0 0 8px rgba(200,168,78,0.5)' }} />
-              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,3vw,1.4rem)', color:'#f5d970', letterSpacing:'0.08em' }}>DUBAI, UAE — HEADQUARTERS</span>
+              <span style={{ width:12, height:12, borderRadius:'50%', background:'#8DD8F0', flexShrink:0, boxShadow:'0 0 8px rgba(91,194,231,0.5)' }} />
+              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,3vw,1.4rem)', color:'#8DD8F0', letterSpacing:'0.08em' }}>DUBAI, UAE — HEADQUARTERS</span>
             </div>
 
             {/* Separator */}
             <div style={{ display:'flex', alignItems:'center', gap:12, margin:'0.6rem 0 0.3rem' }}>
-              <div style={{ flex:1, height:1, background:'rgba(200,168,78,0.15)' }} />
-              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:600, color:'rgba(200,168,78,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>Branch Offices</span>
-              <div style={{ flex:1, height:1, background:'rgba(200,168,78,0.15)' }} />
+              <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
+              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:600, color:'rgba(91,194,231,0.95)', letterSpacing:'0.2em', textTransform:'uppercase', flexShrink:0 }}>Branch Offices</span>
+              <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
             </div>
 
             <div style={{ display:'flex', justifyContent:'center', gap:'0.5rem 1.5rem', flexWrap:'wrap', marginBottom:'0.25rem' }}>
@@ -583,7 +583,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             <motion.p
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.9rem,2vw,1.05rem)', color:'rgba(200,168,78,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', textAlign:'center', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}
+              style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.9rem,2vw,1.05rem)', color:'rgba(91,194,231,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', textAlign:'center', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}
             >
               Strategically positioned for seamless global connectivity
             </motion.p>
@@ -608,7 +608,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
 
   return (
     <section id="globe" style={{ padding: 'clamp(3rem,6vw,5rem) 1.5rem', position: 'relative', overflow: 'hidden', background: 'transparent' }}>
-      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(200,168,78,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
+      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(91,194,231,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
       {inner}
     </section>
   )

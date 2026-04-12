@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useLang } from '../context/LangContext'
+import ar from '../i18n/ar'
 
 const testimonials = [
   { quote: "Bejoice transformed our supply chain for the Saudi market. Their ZATCA expertise saved us weeks of compliance headaches — goods now clear customs within hours.", name: "Ahmad Al-Rashidi", title: "Supply Chain Director", company: "Al-Rashidi Industrial Group", initials: "AR" },
@@ -9,6 +11,8 @@ const testimonials = [
 ]
 
 export default function Testimonials() {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   const [active, setActive] = useState(0)
   const sectionRef = useRef(null)
   const intervalRef = useRef(null)
@@ -39,14 +43,16 @@ export default function Testimonials() {
     intervalRef.current = setInterval(() => setActive(a => (a + 1) % testimonials.length), 6000)
   }
 
-  const t = testimonials[active]
+  const t = isAr
+    ? { ...testimonials[active], ...ar.testimonials.items[active] }
+    : testimonials[active]
 
   return (
     <section id="testimonials" ref={sectionRef} className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-6 md:px-12 lg:px-24 overflow-hidden">
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(200,168,78,0.05) 0%, transparent 65%)' }}/>
+        style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(91,194,231,0.05) 0%, transparent 65%)' }}/>
       <div className="absolute select-none pointer-events-none"
-        style={{ top: 'clamp(32px,4vw,64px)', right: 'clamp(8px,3vw,48px)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(80px,18vw,280px)', lineHeight: 1, color: 'rgba(200,168,78,0.05)' }}>
+        style={{ top: 'clamp(32px,4vw,64px)', right: 'clamp(8px,3vw,48px)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(80px,18vw,280px)', lineHeight: 1, color: 'rgba(91,194,231,0.05)' }}>
         "
       </div>
 
@@ -59,10 +65,10 @@ export default function Testimonials() {
           className="mb-20 flex flex-col items-end"
         >
           <div className="section-glass-header" style={{ textAlign: 'right' }}>
-            <div className="section-num mb-5" style={{ textAlign: 'right' }}>05 — Client Voices</div>
+            <div className="section-num mb-5" style={{ textAlign: 'right' }}>{isAr ? ar.testimonials.sectionNum : '05 — Client Voices'}</div>
             <h2 className="section-headline" style={{ textAlign: 'right' }}>
-              <span style={{ color: '#ffffff' }}>WHAT THEY</span><br />
-              <span style={{ color: 'rgba(200,168,78,0.98)' }}>SAY</span>
+              <span style={{ color: '#ffffff' }}>{isAr ? ar.testimonials.whatThey : 'WHAT THEY'}</span><br />
+              <span style={{ color: 'rgba(91,194,231,0.98)' }}>{isAr ? ar.testimonials.say : 'SAY'}</span>
             </h2>
           </div>
         </motion.div>
@@ -70,7 +76,7 @@ export default function Testimonials() {
         <div className="fade-up">
           <div className="glass-card p-6 sm:p-10 md:p-16 border-gold/25 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-28 h-28"
-              style={{ background: 'linear-gradient(135deg, rgba(200,168,78,0.12) 0%, transparent 65%)' }}/>
+              style={{ background: 'linear-gradient(135deg, rgba(91,194,231,0.12) 0%, transparent 65%)' }}/>
             <blockquote key={active} style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: 'clamp(16px, 2.2vw, 22px)',
@@ -83,7 +89,7 @@ export default function Testimonials() {
             </blockquote>
             <div className="flex items-center gap-5 flex-wrap">
               <div className="w-14 h-14 flex-shrink-0 flex items-center justify-center"
-                style={{ background: 'rgba(200,168,78,0.12)', border: '1.5px solid rgba(200,168,78,0.35)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(15px,2vw,22px)', letterSpacing: '0.05em', color: '#c8a84e' }}>
+                style={{ background: 'rgba(91,194,231,0.12)', border: '1.5px solid rgba(91,194,231,0.35)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(15px,2vw,22px)', letterSpacing: '0.05em', color: '#5BC2E7' }}>
                 {t.initials}
               </div>
               <div>
@@ -93,7 +99,7 @@ export default function Testimonials() {
               <div className="ml-auto flex items-center gap-3">
                 {testimonials.map((_, i) => (
                   <button key={i} onClick={() => goTo(i)}
-                    style={{ height: '4px', width: i === active ? 'clamp(24px,3.5vw,36px)' : 'clamp(10px,1.2vw,14px)', borderRadius: i === active ? 0 : '50%', background: i === active ? '#c8a84e' : 'rgba(255,255,255,0.2)', transition: 'all 0.3s ease', border: 'none', cursor: 'pointer', padding: '10px 6px', boxSizing: 'content-box' }}
+                    style={{ height: '4px', width: i === active ? 'clamp(24px,3.5vw,36px)' : 'clamp(10px,1.2vw,14px)', borderRadius: i === active ? 0 : '50%', background: i === active ? '#5BC2E7' : 'rgba(255,255,255,0.2)', transition: 'all 0.3s ease', border: 'none', cursor: 'pointer', padding: '10px 6px', boxSizing: 'content-box' }}
                   />
                 ))}
               </div>

@@ -45,11 +45,10 @@ export const LANGS = {
   },
 }
 
-// Read current language from the googtrans cookie (set on page reload)
-function detectLangFromCookie() {
+function detectLang() {
   try {
-    const match = document.cookie.split(';').find(s => s.trim().startsWith('googtrans='))
-    if (match && match.includes('/ar')) return 'ar'
+    const stored = localStorage.getItem('bejoice_lang')
+    if (stored === 'ar' || stored === 'en') return stored
   } catch {}
   return 'en'
 }
@@ -57,16 +56,17 @@ function detectLangFromCookie() {
 const LangContext = createContext({ lang: 'en', t: LANGS.en, setLang: () => {} })
 
 export function LangProvider({ children }) {
-  const [lang, setLangState] = useState(detectLangFromCookie)
+  const [lang, setLangState] = useState(detectLang)
 
   const setLang = (l) => {
     setLangState(l)
     document.documentElement.lang = l
     document.documentElement.dir = LANGS[l].dir
+    try { localStorage.setItem('bejoice_lang', l) } catch {}
   }
 
   useEffect(() => {
-    const l = detectLangFromCookie()
+    const l = detectLang()
     document.documentElement.lang = l
     document.documentElement.dir = LANGS[l].dir
   }, [])
