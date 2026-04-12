@@ -561,6 +561,12 @@ body {
   .lang-toggle-wrap { display: none !important; }
 }
 
+/* ── NAV: kill negative margins on mobile so nothing overflows ── */
+@media (max-width: 900px) {
+  .nav-logo-wrap { margin-left: 0 !important; }
+  .nav-right-wrap { margin-right: 0 !important; }
+}
+
 /* ── NAV: fluid compact on tablets ── */
 @media (max-width: 640px) {
   /* Book a Call: shorter label + tighter padding */

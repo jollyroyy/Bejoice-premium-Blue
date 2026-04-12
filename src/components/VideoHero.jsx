@@ -800,7 +800,7 @@ export default function VideoHero({ onQuoteClick }) {
             >
 
               {/* ── Text block with subtle dark backdrop ── */}
-              <div style={{
+              <div className="hero-chapter-textblock" style={{
                 display:'flex', flexDirection:'column',
                 alignItems: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                 background:'rgba(0,0,0,0.42)',
@@ -1145,6 +1145,18 @@ export default function VideoHero({ onQuoteClick }) {
 
         @media (max-width: 479px) {
           .hero-content-overlay { padding-top: 64px !important; }
+        }
+
+        /* ── Mobile: force chapter text blocks to center ── */
+        @media (max-width: 767px) {
+          .hero-chapter-textblock {
+            align-items: center !important;
+            align-self: center !important;
+            text-align: center !important;
+            max-width: calc(100vw - 2rem) !important;
+          }
+          .hero-chapter-textblock h1 { text-align: center !important; }
+          .hero-eyebrow { align-self: center !important; }
         }
       `}</style>
     </div>

@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as THREE from 'three';
 import { SparklesCore } from './ui/sparkles'
+import { useLang } from '../context/LangContext'
+import ar from '../i18n/ar'
 
 const OFFICES = [
   // HQ — Dubai, UAE
@@ -70,6 +72,8 @@ const ATM_FRAG = `
   }`;
 
 export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   const mountRef   = useRef(null);
   const isDragging = useRef(false);
   const prevMouse  = useRef({ x: 0, y: 0 });
@@ -483,11 +487,11 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }}
           style={{ textAlign: 'center', marginBottom: 'clamp(0.6rem,1.5vw,1.2rem)' }}
         >
-          <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:800, letterSpacing:'0.3em', textTransform:'uppercase', color:'#5BC2E7', display:'block', marginBottom:'0.9rem' }}>
-            GLOBAL PRESENCE
+          <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:800, letterSpacing: isAr ? '0' : '0.3em', textTransform: isAr ? 'none' : 'uppercase', color:'#5BC2E7', display:'block', marginBottom:'0.9rem' }}>
+            {isAr ? ar.globe.eyebrow : 'GLOBAL PRESENCE'}
           </span>
-          <h2 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.3rem,3.5vw,3.2rem)', color:'#ffffff', letterSpacing:'0.04em', lineHeight:1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
-            BEJOICE CONNECTS SAUDI TO THE WORLD
+          <h2 style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'clamp(1.3rem,3.5vw,3.2rem)', color:'#ffffff', letterSpacing: isAr ? '0' : '0.04em', lineHeight: isAr ? 1.3 : 1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
+            {isAr ? ar.globe.headline : 'BEJOICE CONNECTS SAUDI TO THE WORLD'}
           </h2>
         </motion.div>
 

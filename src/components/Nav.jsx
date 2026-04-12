@@ -128,7 +128,7 @@ export default function Nav({ onQuoteClick }) {
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
 
           {/* Logo */}
-          <div onClick={scrollToTop} style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', marginLeft: '-173px' }}>
+          <div onClick={scrollToTop} className="nav-logo-wrap" style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', marginLeft: '-173px' }}>
             <div style={{
               background: 'rgba(255,255,255,0.96)',
               borderRadius: '10px',
@@ -142,9 +142,9 @@ export default function Nav({ onQuoteClick }) {
                   alt="Bejoice"
                   width="480" height="200"
                   style={{
-                    height: 'clamp(62px, 8.5vw, 100px)',
+                    height: 'clamp(40px, 8.5vw, 100px)',
                     width: 'auto',
-                    maxWidth: 'clamp(240px, 32vw, 480px)',
+                    maxWidth: 'clamp(140px, 32vw, 480px)',
                     objectFit: 'contain',
                     display: 'block',
                   }}
@@ -154,7 +154,7 @@ export default function Nav({ onQuoteClick }) {
           </div>
 
           {/* Right side: CTA + Hamburger */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)', marginRight: '-200px' }}>
+          <div className="nav-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)', marginRight: '-200px' }}>
 
             {/* CTA — Book a Call */}
             <button
