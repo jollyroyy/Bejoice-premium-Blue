@@ -337,6 +337,74 @@ const ar = {
     followInstagram: 'تابعنا على إنستغرام',
   },
 
+  // ── LogisticsTools ───────────────────────────────────────────
+  logisticsTools: {
+    // Main heading
+    mainHeadingWhite: 'حاسبة',
+    mainHeadingBlue:  'تحميل الحاويات',
+    subtitle:         'حساب فوري للحجم والوزن القابل للشحن — بحري، جوي، بري أو مستودع.',
+
+    // Tab labels
+    tabSea:       'بحري',
+    tabAir:       'جوي',
+    tabLand:      'بري',
+    tabWarehouse: 'مستودع',
+
+    // Shared input labels
+    qty:  'الكمية',
+    unit: 'الوحدة',
+
+    // Sea freight
+    totalWeightKg: 'الوزن الإجمالي (كجم)',
+    stackable:     'قابل للتكديس',
+    nonStackable:  'غير قابل للتكديس',
+    addRow:        '+ إضافة صف',
+
+    // Air freight
+    actualWeightKg: 'الوزن الفعلي (كجم/قطعة)',
+    volWeightNote:  'الوزن الحجمي = ط×ع×ح ÷ 5000 (بالسنتيمتر) لكل قطعة',
+    volumetric:     'حجمي',
+    actual:         'فعلي',
+    weightLabel:    'وزن',
+
+    // Land
+    truckType: 'نوع الشاحنة',
+    kgPc:      'كجم/قطعة',
+
+    // Warehouse
+    storageDays:       'أيام التخزين',
+    warehouseRateNote: 'السعر: 0.35 دولار / م³ / يوم (تقريبي)',
+
+    // Results panel
+    aiLoadAnalysis:   'تحليل التحميل بالذكاء الاصطناعي',
+    chargeableWt:     'الوزن القابل للشحن',
+    totalVolume:      'الحجم الإجمالي',
+    usageEfficiency:  'كفاءة الاستخدام',
+    billingBasis:     'أساس الفوترة',
+    volumeFill:       'ملء الحجم',
+    weightFill:       'ملء الوزن',
+    indicativeCost:   'التكلفة التقريبية',
+    containerCapacity:'سعة الحاوية',
+    overflow:         'فائض',
+    cargoExceedsContainer: 'البضاعة تتجاوز سعة حاوية واحدة — انظر التوصية أدناه',
+
+    // Multi-container
+    containersRequired: 'عدد الحاويات المطلوبة',
+    cargoExceedsMulti1: 'البضاعة تتجاوز حاوية واحدة. يتم التقسيم على ',
+    cargoExceedsMulti2: ' حاوية لشحن الحجم الكامل.',
+
+    // AI Recommendation
+    aiRecommendation: 'توصية الذكاء الاصطناعي',
+    costTipLabel:     'نصيحة التكلفة:',
+    costTipBody:      '40 قدم High Cube هي الأكثر فعالية من حيث التكلفة لكل م³ للأحجام الكبيرة. دمج الشحنات في حاويات أقل وأكبر يقلل رسوم المناولة وتكاليف الميناء. اطلب من بيجويس سعر متعدد الحاويات.',
+
+    // 3D visualisation
+    viz3dTitle: 'تصور ثلاثي الأبعاد لتحميل الحاوية',
+
+    // Calculate button
+    generateAnalysis: 'توليد تحليل الذكاء الاصطناعي',
+  },
+
   // ── Layla chatbot ────────────────────────────────────────────
   layla: {
     floatingMessages: [

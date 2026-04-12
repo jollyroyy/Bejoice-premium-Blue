@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import Container3DViewer, { WeightDistributionGuide } from './Container3DViewer'
 import { SparklesCore } from './ui/sparkles'
+import { useLang } from '../context/LangContext'
+import ar from '../i18n/ar'
 
 // ── helpers ────────────────────────────────────────────────────────────────
 const CONTAINER_SPECS = {
@@ -255,14 +257,17 @@ function TruckSelect({ value, onChange }) {
 
 // ── tabs config ─────────────────────────────────────────────────────────────
 const TABS = [
-  { id: 'sea',       icon: '🚢', label: 'Sea'       },
-  { id: 'air',       icon: '✈️', label: 'Air'       },
-  { id: 'land',      icon: '🚛', label: 'Land'      },
-  { id: 'warehouse', icon: '🏭', label: 'Warehouse' },
+  { id: 'sea',       icon: '🚢', labelEn: 'Sea',       labelArKey: 'tabSea'       },
+  { id: 'air',       icon: '✈️', labelEn: 'Air',       labelArKey: 'tabAir'       },
+  { id: 'land',      icon: '🚛', labelEn: 'Land',      labelArKey: 'tabLand'      },
+  { id: 'warehouse', icon: '🏭', labelEn: 'Warehouse', labelArKey: 'tabWarehouse' },
 ]
 
 // ── main calculator ─────────────────────────────────────────────────────────
 function LoadCalculator() {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
+
   const [tab,     setTab]     = useState('sea')
   const [results, setResults] = useState(null)
 
@@ -356,7 +361,7 @@ function LoadCalculator() {
       style={{ background:'rgba(91,194,231,0.1)', border:'1px solid rgba(91,194,231,0.3)', borderRadius:'0.5rem', color:'#5BC2E7', cursor:'pointer', padding:'0.45rem 1rem', fontFamily:"'DM Sans',sans-serif", fontSize:'0.8rem', fontWeight:700, whiteSpace:'nowrap', transition:'all 0.2s' }}
       onMouseEnter={e=>e.currentTarget.style.background='rgba(91,194,231,0.18)'}
       onMouseLeave={e=>e.currentTarget.style.background='rgba(91,194,231,0.1)'}
-    >+ Add Row</button>
+    >{isAr ? ar.logisticsTools.addRow : '+ Add Row'}</button>
   )
 
   const removeBtn = (onClick) => (
@@ -389,7 +394,7 @@ function LoadCalculator() {
               boxShadow:    tab===t.id ? '0 4px 16px rgba(91,194,231,0.3)' : 'none',
             }}>
             <span style={{ fontSize:'1.1rem' }}>{t.icon}</span>
-            <span>{t.label}</span>
+            <span>{isAr ? ar.logisticsTools[t.labelArKey] : t.labelEn}</span>
           </button>
         ))}
       </div>
@@ -411,12 +416,12 @@ function LoadCalculator() {
                     </div>
                   ))}
                   <div>
-                    <Lbl>Qty</Lbl>
+                    <Lbl>{isAr ? ar.logisticsTools.qty : 'Qty'}</Lbl>
                     <input style={inp} type="number" value={r.qty}
                       onChange={e=>setSeaRows(rows=>rows.map((row,idx)=>idx===i?{...row,qty:e.target.value}:row))} />
                   </div>
                   <div>
-                    <Lbl>Unit</Lbl>
+                    <Lbl>{isAr ? ar.logisticsTools.unit : 'Unit'}</Lbl>
                     <UnitSelect value={r.unit} onChange={v=>setSeaRows(rows=>rows.map((row,idx)=>idx===i?{...row,unit:v}:row))} />
                   </div>
                   {seaRows.length>1 && removeBtn(()=>setSeaRows(r=>r.filter((_,idx)=>idx!==i)))}
@@ -441,7 +446,7 @@ function LoadCalculator() {
                     )}
                   </div>
                   <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.92rem', fontWeight:600, color: r.stackable ? 'rgba(91,194,231,0.9)' : 'rgba(255,255,255,0.4)', transition:'color 0.2s' }}>
-                    {r.stackable ? 'Stackable' : 'Non-stackable'}
+                    {r.stackable ? (isAr ? ar.logisticsTools.stackable : 'Stackable') : (isAr ? ar.logisticsTools.nonStackable : 'Non-stackable')}
                   </span>
                 </label>
               </div>
@@ -449,7 +454,7 @@ function LoadCalculator() {
             <div style={{ display:'flex', gap:'0.8rem', alignItems:'flex-end' }}>
               {addRowBtn(()=>setSeaRows(r=>[...r,{l:'',w:'',h:'',qty:'1',unit:'cm',stackable:true}]))}
               <div style={{ flex:1 }}>
-                <Lbl>Total Weight (kg)</Lbl>
+                <Lbl>{isAr ? ar.logisticsTools.totalWeightKg : 'Total Weight (kg)'}</Lbl>
                 <input style={inp} type="number" value={seaWeight} placeholder="0" onChange={e=>setSeaWeight(e.target.value)} />
               </div>
             </div>
@@ -470,18 +475,18 @@ function LoadCalculator() {
                     </div>
                   ))}
                   <div>
-                    <Lbl>Qty</Lbl>
+                    <Lbl>{isAr ? ar.logisticsTools.qty : 'Qty'}</Lbl>
                     <input style={inp} type="number" value={r.qty}
                       onChange={e=>setAirRows(rows=>rows.map((row,idx)=>idx===i?{...row,qty:e.target.value}:row))} />
                   </div>
                   <div>
-                    <Lbl>Unit</Lbl>
+                    <Lbl>{isAr ? ar.logisticsTools.unit : 'Unit'}</Lbl>
                     <UnitSelect value={r.unit} onChange={v=>setAirRows(rows=>rows.map((row,idx)=>idx===i?{...row,unit:v}:row))} />
                   </div>
                 </div>
                 <div style={{ display:'flex', gap:'0.4rem', alignItems:'flex-end' }}>
                   <div style={{ flex:1 }}>
-                    <Lbl>Actual Weight (kg/pc)</Lbl>
+                    <Lbl>{isAr ? ar.logisticsTools.actualWeightKg : 'Actual Weight (kg/pc)'}</Lbl>
                     <input style={inp} type="number" value={r.actual} placeholder="0"
                       onChange={e=>setAirRows(rows=>rows.map((row,idx)=>idx===i?{...row,actual:e.target.value}:row))} />
                   </div>
@@ -491,7 +496,7 @@ function LoadCalculator() {
             ))}
             {addRowBtn(()=>setAirRows(r=>[...r,{l:'',w:'',h:'',qty:'1',unit:'cm',actual:''}]))}
             <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.78rem', color:'rgba(255,255,255,0.75)', margin:0 }}>
-              Volumetric weight = L×W×H ÷ 5000 (in cm) per piece
+              {isAr ? ar.logisticsTools.volWeightNote : 'Volumetric weight = L×W×H ÷ 5000 (in cm) per piece'}
             </p>
           </div>
         )}
@@ -500,7 +505,7 @@ function LoadCalculator() {
         {tab==='land' && (
           <div style={{ display:'flex', flexDirection:'column', gap:'0.9rem' }}>
             <div>
-              <Lbl>Truck Type</Lbl>
+              <Lbl>{isAr ? ar.logisticsTools.truckType : 'Truck Type'}</Lbl>
               <TruckSelect value={truckType} onChange={setTruckType} />
             </div>
             {landRows.map((r,i)=>(
@@ -513,16 +518,16 @@ function LoadCalculator() {
                   </div>
                 ))}
                 <div>
-                  <Lbl>Qty</Lbl>
+                  <Lbl>{isAr ? ar.logisticsTools.qty : 'Qty'}</Lbl>
                   <input style={inp} type="number" value={r.qty}
                     onChange={e=>setLandRows(rows=>rows.map((row,idx)=>idx===i?{...row,qty:e.target.value}:row))} />
                 </div>
                 <div>
-                  <Lbl>Unit</Lbl>
+                  <Lbl>{isAr ? ar.logisticsTools.unit : 'Unit'}</Lbl>
                   <UnitSelect value={r.unit} onChange={v=>setLandRows(rows=>rows.map((row,idx)=>idx===i?{...row,unit:v}:row))} />
                 </div>
                 <div>
-                  <Lbl>kg/pc</Lbl>
+                  <Lbl>{isAr ? ar.logisticsTools.kgPc : 'kg/pc'}</Lbl>
                   <input style={inp} type="number" value={r.weight}
                     onChange={e=>setLandRows(rows=>rows.map((row,idx)=>idx===i?{...row,weight:e.target.value}:row))} />
                 </div>
@@ -546,12 +551,12 @@ function LoadCalculator() {
                   </div>
                 ))}
                 <div>
-                  <Lbl>Qty</Lbl>
+                  <Lbl>{isAr ? ar.logisticsTools.qty : 'Qty'}</Lbl>
                   <input style={inp} type="number" value={r.qty}
                     onChange={e=>setWhRows(rows=>rows.map((row,idx)=>idx===i?{...row,qty:e.target.value}:row))} />
                 </div>
                 <div>
-                  <Lbl>Unit</Lbl>
+                  <Lbl>{isAr ? ar.logisticsTools.unit : 'Unit'}</Lbl>
                   <UnitSelect value={r.unit} onChange={v=>setWhRows(rows=>rows.map((row,idx)=>idx===i?{...row,unit:v}:row))} />
                 </div>
                 {whRows.length>1 && removeBtn(()=>setWhRows(r=>r.filter((_,idx)=>idx!==i)))}
@@ -560,12 +565,12 @@ function LoadCalculator() {
             <div style={{ display:'flex', gap:'0.8rem', alignItems:'flex-end' }}>
               {addRowBtn(()=>setWhRows(r=>[...r,{l:'',w:'',h:'',qty:'1',unit:'cm'}]))}
               <div style={{ flex:1 }}>
-                <Lbl>Storage Days</Lbl>
+                <Lbl>{isAr ? ar.logisticsTools.storageDays : 'Storage Days'}</Lbl>
                 <input style={inp} type="number" value={whDays} placeholder="30" onChange={e=>setWhDays(e.target.value)} />
               </div>
             </div>
             <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.78rem', color:'rgba(255,255,255,0.75)', margin:0 }}>
-              Rate: $0.35 / CBM / day (indicative)
+              {isAr ? ar.logisticsTools.warehouseRateNote : 'Rate: $0.35 / CBM / day (indicative)'}
             </p>
           </div>
         )}
@@ -582,14 +587,14 @@ function LoadCalculator() {
           >
             <div style={{ position:'absolute', top:'-50%', right:'-20%', width:'160px', height:'160px', background:'rgba(91,194,231,0.12)', filter:'blur(40px)', borderRadius:'50%', pointerEvents:'none' }} />
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'1.1rem' }}>
-              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.4rem', letterSpacing:'0.1em', color:'#5BC2E7' }}>AI LOAD ANALYSIS</span>
+              <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.4rem', letterSpacing: isAr ? 0 : '0.1em', color:'#5BC2E7' }}>{isAr ? ar.logisticsTools.aiLoadAnalysis : 'AI LOAD ANALYSIS'}</span>
               <div style={{ width:9, height:9, background:'#25c864', borderRadius:'50%', boxShadow:'0 0 12px #25c864' }} />
             </div>
 
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0.9rem', marginBottom:'1.2rem' }}>
               <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)' }}>
                 <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>
-                  {results.tab==='air' ? 'Chargeable Wt' : 'Total Volume'}
+                  {results.tab==='air' ? (isAr ? ar.logisticsTools.chargeableWt : 'Chargeable Wt') : (isAr ? ar.logisticsTools.totalVolume : 'Total Volume')}
                 </span>
                 <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color:'#fff', letterSpacing:'0.04em' }}>
                   {results.tab==='air' ? results.chargeable : results.cbm}
@@ -599,7 +604,7 @@ function LoadCalculator() {
 
               {results.loadPct && (
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Usage Efficiency</span>
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>{isAr ? ar.logisticsTools.usageEfficiency : 'Usage Efficiency'}</span>
                   <div style={{ display:'flex', alignItems:'baseline', gap:'0.2rem' }}>
                     <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color: results.loadPct>90 ? '#ff5050' : '#fff' }}>{results.loadPct}</span>
                     <span style={{ fontSize:'0.9rem', color:'rgba(255,255,255,0.85)', fontFamily:"'Bebas Neue',sans-serif" }}>%</span>
@@ -609,22 +614,22 @@ function LoadCalculator() {
 
               {results.tab==='air' && (
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)', gridColumn:'span 2' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.4rem', letterSpacing:'0.1em' }}>Billing Basis</span>
-                  <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.1rem', color:'#5BC2E7', letterSpacing:'0.05em' }}>
-                    {results.basis} Weight — {results.basis==='Volumetric' ? results.volWeight : results.actWeight} kg
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.4rem', letterSpacing:'0.1em' }}>{isAr ? ar.logisticsTools.billingBasis : 'Billing Basis'}</span>
+                  <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.1rem', color:'#5BC2E7', letterSpacing: isAr ? 0 : '0.05em' }}>
+                    {isAr ? (results.basis==='Volumetric' ? ar.logisticsTools.volumetric : ar.logisticsTools.actual) : results.basis} {isAr ? ar.logisticsTools.weightLabel : 'Weight'} — {results.basis==='Volumetric' ? results.volWeight : results.actWeight} kg
                   </span>
                 </div>
               )}
 
               {results.tab==='land' && (<>
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Volume Fill</span>
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>{isAr ? ar.logisticsTools.volumeFill : 'Volume Fill'}</span>
                   <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color: results.volPct>90?'#ff5050':'#fff' }}>
                     {results.volPct}<span style={{ fontSize:'0.9rem', color:'rgba(255,255,255,0.85)', fontFamily:"'Bebas Neue',sans-serif" }}>%</span>
                   </span>
                 </div>
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Weight Fill</span>
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>{isAr ? ar.logisticsTools.weightFill : 'Weight Fill'}</span>
                   <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color: results.wtPct>90?'#ff5050':'#fff' }}>
                     {results.wtPct}<span style={{ fontSize:'0.9rem', color:'rgba(255,255,255,0.85)', fontFamily:"'Bebas Neue',sans-serif" }}>%</span>
                   </span>
@@ -633,7 +638,7 @@ function LoadCalculator() {
 
               {results.tab==='warehouse' && (
                 <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)', gridColumn:'span 2' }}>
-                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>Indicative Cost</span>
+                  <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>{isAr ? ar.logisticsTools.indicativeCost : 'Indicative Cost'}</span>
                   <span style={{ fontSize:'1.7rem', fontFamily:"'Bebas Neue',sans-serif", color:'#fff' }}>
                     ${results.cost}<span style={{ fontSize:'0.8rem', marginLeft:'0.3rem', color:'#5BC2E7' }}>USD</span>
                   </span>
@@ -644,9 +649,9 @@ function LoadCalculator() {
             {results.loadPct && (
               <div style={{ marginBottom:'1.2rem' }}>
                 <div style={{ display:'flex', justifyContent:'space-between', fontSize:'0.7rem', color:'rgba(255,255,255,0.85)', marginBottom:'0.5rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase' }}>
-                  <span>Container Capacity</span>
+                  <span>{isAr ? ar.logisticsTools.containerCapacity : 'Container Capacity'}</span>
                   <span style={{ color: results.actualLoadPct > 100 ? '#ff5050' : 'rgba(255,255,255,0.85)' }}>
-                    {results.actualLoadPct}%{results.actualLoadPct > 100 ? ' ⚠ OVERFLOW' : ''}
+                    {results.actualLoadPct}%{results.actualLoadPct > 100 ? (isAr ? ' ⚠ ' + ar.logisticsTools.overflow : ' ⚠ OVERFLOW') : ''}
                   </span>
                 </div>
                 <div style={{ height:'6px', background:'rgba(255,255,255,0.08)', borderRadius:'4px', overflow:'hidden' }}>
@@ -659,7 +664,7 @@ function LoadCalculator() {
                 </div>
                 {results.actualLoadPct > 100 && (
                   <div style={{ marginTop:'0.4rem', fontSize:'0.65rem', color:'rgba(255,80,80,0.9)', fontWeight:600, letterSpacing:'0.08em' }}>
-                    Cargo exceeds single container capacity — see recommendation below
+                    {isAr ? ar.logisticsTools.cargoExceedsContainer : 'Cargo exceeds single container capacity — see recommendation below'}
                   </div>
                 )}
               </div>
@@ -672,9 +677,11 @@ function LoadCalculator() {
                   {results.containerCount}
                 </div>
                 <div>
-                  <div style={{ fontSize:'0.65rem', color:'rgba(255,130,130,0.9)', textTransform:'uppercase', fontWeight:700, letterSpacing:'0.12em', marginBottom:'0.2rem' }}>Containers Required</div>
+                  <div style={{ fontSize:'0.65rem', color:'rgba(255,130,130,0.9)', textTransform:'uppercase', fontWeight:700, letterSpacing:'0.12em', marginBottom:'0.2rem' }}>{isAr ? ar.logisticsTools.containersRequired : 'Containers Required'}</div>
                   <div style={{ fontSize:'0.78rem', color:'rgba(255,255,255,0.75)', lineHeight:1.4 }}>
-                    Your cargo exceeds one container. Split across <strong style={{ color:'#fff' }}>{results.containerCount}</strong> containers to ship the full volume.
+                    {isAr
+                      ? <>{ar.logisticsTools.cargoExceedsMulti1}<strong style={{ color:'#fff' }}>{results.containerCount}</strong>{ar.logisticsTools.cargoExceedsMulti2}</>
+                      : <>Your cargo exceeds one container. Split across <strong style={{ color:'#fff' }}>{results.containerCount}</strong> containers to ship the full volume.</>}
                   </div>
                 </div>
               </div>
@@ -682,11 +689,11 @@ function LoadCalculator() {
 
             {results.container && (
               <div style={{ padding:'0.9rem', background:'rgba(91,194,231,0.1)', borderRadius:'0.7rem', border:'1px dashed rgba(91,194,231,0.35)', marginBottom:'1.2rem' }}>
-                <span style={{ display:'block', fontSize:'0.68rem', color:'#5BC2E7', textTransform:'uppercase', fontWeight:700, marginBottom:'0.5rem', letterSpacing:'0.1em' }}>AI Recommendation</span>
-                <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.15rem', color:'#fff', letterSpacing:'0.05em', display:'block', marginBottom: results.containerCount > 1 ? '0.6rem' : 0 }}>{results.container}</span>
+                <span style={{ display:'block', fontSize:'0.68rem', color:'#5BC2E7', textTransform:'uppercase', fontWeight:700, marginBottom:'0.5rem', letterSpacing:'0.1em' }}>{isAr ? ar.logisticsTools.aiRecommendation : 'AI Recommendation'}</span>
+                <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.15rem', color:'#fff', letterSpacing: isAr ? 0 : '0.05em', display:'block', marginBottom: results.containerCount > 1 ? '0.6rem' : 0 }}>{results.container}</span>
                 {results.containerCount > 1 && (
                   <div style={{ fontSize:'0.72rem', color:'rgba(255,255,255,0.65)', lineHeight:1.55, borderTop:'1px solid rgba(91,194,231,0.2)', paddingTop:'0.5rem' }}>
-                    <strong style={{ color:'#5BC2E7' }}>Cost tip:</strong> 40ft High Cube is most cost-effective per CBM for large volumes. Consolidating into fewer, larger containers reduces handling fees and port charges. Ask Bejoice for a multi-container rate.
+                    <strong style={{ color:'#5BC2E7' }}>{isAr ? ar.logisticsTools.costTipLabel : 'Cost tip:'}</strong> {isAr ? ar.logisticsTools.costTipBody : '40ft High Cube is most cost-effective per CBM for large volumes. Consolidating into fewer, larger containers reduces handling fees and port charges. Ask Bejoice for a multi-container rate.'}
                   </div>
                 )}
               </div>
@@ -712,8 +719,8 @@ function LoadCalculator() {
               const ctype = ctbm <= 25 ? '20ft' : ctbm <= 67 ? '40ft' : '40hc'
               return (
                 <div style={{ marginTop:'1.4rem', borderTop:'1px solid rgba(91,194,231,0.15)', paddingTop:'1.2rem' }}>
-                  <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'2rem', color:'#5BC2E7', letterSpacing:3, marginBottom:'0.8rem', textAlign:'center' }}>
-                    3D CONTAINER LOAD VISUALISATION
+                  <div style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'2rem', color:'#5BC2E7', letterSpacing: isAr ? 0 : 3, marginBottom:'0.8rem', textAlign:'center' }}>
+                    {isAr ? ar.logisticsTools.viz3dTitle : '3D CONTAINER LOAD VISUALISATION'}
                   </div>
                   <Container3DViewer items={items3d} containerType={ctype} compact={true} />
                   <WeightDistributionGuide items={items3d} containerType={ctype} />
@@ -742,9 +749,9 @@ function LoadCalculator() {
 
       {/* ── Calculate button ── */}
       <div style={{ padding:'1rem 1.4rem', borderTop:'1px solid rgba(255,255,255,0.08)', flexShrink:0, display:'flex', justifyContent:'center' }}>
-        <button onClick={calculate} className="btn-gold" style={{ width:'auto' }}>
+        <button onClick={calculate} className="btn-gold" style={{ width:'auto', fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : undefined }}>
           <div className="btn-shine-overlay" />
-          GENERATE AI ANALYSIS
+          {isAr ? ar.logisticsTools.generateAnalysis : 'GENERATE AI ANALYSIS'}
         </button>
       </div>
     </div>
@@ -753,6 +760,8 @@ function LoadCalculator() {
 
 // ── Section wrapper ─────────────────────────────────────────────────────────
 export default function LogisticsTools() {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   return (
     <section id="tools" style={{
       background: '#091524',
@@ -806,20 +815,22 @@ export default function LogisticsTools() {
             {/* ── Heading ── */}
             <div style={{ textAlign:'center', marginBottom:'clamp(2rem,4vw,3.5rem)', position:'relative', zIndex:1 }}>
               <h2 style={{
-                fontFamily:"'Bebas Neue',sans-serif",
+                fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
                 fontSize:'clamp(2.4rem,5.5vw,4.8rem)',
-                letterSpacing:'0.07em', lineHeight:1,
+                letterSpacing: isAr ? 0 : '0.07em', lineHeight:1,
                 margin:'0 0 clamp(0.6rem,1.5vw,1rem)',
                 color:'#ffffff',
               }}>
-                CONTAINER <span style={{ color:'#5BC2E7' }}>LOAD CALCULATOR</span>
+                {isAr
+                  ? <>{ar.logisticsTools.mainHeadingWhite} <span style={{ color:'#5BC2E7' }}>{ar.logisticsTools.mainHeadingBlue}</span></>
+                  : <>CONTAINER <span style={{ color:'#5BC2E7' }}>LOAD CALCULATOR</span></>}
               </h2>
               <p style={{
                 fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(15px,1.9vw,19px)',
                 color:'#ffffff', maxWidth:700, margin:'0 auto', lineHeight:1.8,
                 fontWeight:500, textShadow:'0 0 24px rgba(255,255,255,0.25)', opacity:0.95,
               }}>
-                Instant CBM &amp; chargeable weight — Sea, Air, Land or Warehouse.
+                {isAr ? ar.logisticsTools.subtitle : 'Instant CBM & chargeable weight — Sea, Air, Land or Warehouse.'}
               </p>
               <div style={{ width:48, height:1, margin:'clamp(1rem,2vw,1.6rem) auto 0', background:'linear-gradient(90deg,transparent,rgba(91,194,231,0.5),transparent)' }}/>
             </div>
