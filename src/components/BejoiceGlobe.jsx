@@ -587,7 +587,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             <motion.p
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.9rem,2vw,1.05rem)', color:'rgba(91,194,231,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', textAlign:'center', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}
+              style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(1rem,2.2vw,1.15rem)', color:'rgba(91,194,231,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', textAlign:'center', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}
             >
               {isAr ? ar.globe.tagline : 'Strategically positioned for seamless global connectivity'}
             </motion.p>

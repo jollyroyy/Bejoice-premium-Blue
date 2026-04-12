@@ -358,13 +358,14 @@ export default function Services() {
                           background: isExpanded ? 'rgba(91,194,231,0.18)' : 'rgba(91,194,231,0.08)',
                           border: '1px solid rgba(91,194,231,0.35)',
                           borderRadius: '4px',
-                          padding: '4px 10px',
+                          padding: '10px 16px',
                           cursor: 'pointer',
                           flexShrink: 0,
                           transition: 'all 0.25s ease',
+                          minHeight: 44,
                         }}
                       >
-                        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.9)' }}>
+                        <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: '13px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.9)' }}>
                           {isExpanded ? (isAr ? ar.services.viewLess : 'Less') : (isAr ? ar.services.viewMore : 'View')}
                         </span>
                         <motion.svg

@@ -139,7 +139,7 @@ function PolicyModal({ title, onClose }) {
             style={{
               background: 'none', border: '1px solid rgba(255,255,255,0.15)',
               color: 'rgba(255,255,255,0.6)', cursor: 'pointer',
-              width: '36px', height: '36px', borderRadius: '8px',
+              width: '44px', height: '44px', borderRadius: '8px',
               fontSize: '18px', flexShrink: 0, marginLeft: '16px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
@@ -210,7 +210,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               {['LI', 'X', 'WA'].map(s => (
-                <button key={s} style={{ width: 'clamp(30px,4vw,40px)', height: 'clamp(30px,4vw,40px)', border: '1px solid rgba(255,255,255,0.12)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(9px,1.1vw,12px)', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', background: 'none', cursor: 'pointer', transition: 'all 0.3s' }}
+                <button key={s} style={{ width: 'clamp(44px,4vw,44px)', height: 'clamp(44px,4vw,44px)', border: '1px solid rgba(255,255,255,0.12)', fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(9px,1.1vw,12px)', letterSpacing: '0.1em', color: 'rgba(255,255,255,0.4)', background: 'none', cursor: 'pointer', transition: 'all 0.3s' }}
                   onMouseEnter={e => { e.target.style.borderColor = 'rgba(91,194,231,0.5)'; e.target.style.color = '#5BC2E7' }}
                   onMouseLeave={e => { e.target.style.borderColor = 'rgba(255,255,255,0.12)'; e.target.style.color = 'rgba(255,255,255,0.4)' }}
                 >

@@ -1175,3 +1175,38 @@ section {
     -webkit-font-smoothing: subpixel-antialiased;
   }
 }
+
+/* ── GLOBAL MOBILE OPTIMIZATIONS ── */
+@media (max-width: 767px) {
+  /* Prevent horizontal overflow globally */
+  body, #root { overflow-x: hidden; max-width: 100vw; }
+
+  /* All sections: tighter padding on mobile */
+  section { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+  /* Contact form inputs — larger tap targets */
+  input, textarea, select {
+    font-size: 16px !important; /* prevents iOS zoom */
+    min-height: 44px;
+  }
+
+  /* Service pills — bigger tap area */
+  .service-pill { padding: 8px 14px !important; font-size: 13px !important; min-height: 36px !important; }
+
+  /* Footer social buttons — min 44px */
+  .footer-social-btn { width: 44px !important; height: 44px !important; min-width: 44px !important; min-height: 44px !important; }
+
+  /* Nav social icons — min 44px */
+  .nav-social-icon { width: 44px !important; height: 44px !important; }
+
+  /* General button tap targets */
+  button { min-height: 40px; }
+}
+
+@media (max-width: 480px) {
+  /* Stack any flex rows that are side-by-side */
+  .mobile-stack { flex-direction: column !important; }
+
+  /* Reduce section headlines on very small screens */
+  h1, h2 { word-break: break-word; }
+}

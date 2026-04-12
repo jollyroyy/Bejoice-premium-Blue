@@ -254,9 +254,10 @@ export default function Contact() {
                           onClick={() => setForm(f => ({ ...f, type: f.type === (isAr ? SERVICES[sIdx] : s) ? '' : (isAr ? SERVICES[sIdx] : s) }))}
                           style={{
                             fontFamily:"'DM Sans',sans-serif",
-                            fontSize:'clamp(9px,1vw,11px)', fontWeight:600,
+                            fontSize:'clamp(13px,1vw,13px)', fontWeight:600,
                             letterSpacing:'0.1em', textTransform:'uppercase',
-                            padding:'clamp(6px,0.8vw,9px) clamp(10px,1.3vw,16px)',
+                            padding:'clamp(8px,0.8vw,9px) clamp(12px,1.3vw,16px)',
+                            minHeight: 36,
                             borderRadius:6, cursor:'pointer', transition:'all 0.18s',
                             background: form.type === (isAr ? SERVICES[sIdx] : s) ? 'rgba(91,194,231,0.12)' : 'rgba(255,255,255,0.04)',
                             border: `1px solid ${form.type === (isAr ? SERVICES[sIdx] : s) ? 'rgba(91,194,231,0.45)' : 'rgba(255,255,255,0.08)'}`,
