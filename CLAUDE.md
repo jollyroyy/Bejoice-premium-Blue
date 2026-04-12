@@ -6,6 +6,8 @@
 
 ## Before Editing
 - Before editing a file, verify it's the **correct file** that renders the component in question. Use Grep to confirm which file is actually imported/used before making changes.
+- For complex changes, run this investigation first:
+  > "Before making any edits, use a task agent to find exactly which file renders the [component name] that's visible on the page. Check imports, not just filenames. Report back which file to edit."
 
 ## Debugging
 - When debugging, start with the **simplest possible causes first** (CSS visibility, z-index, pointer-events, opacity) before investigating complex scenarios. Spend no more than 2 minutes on exploratory investigation before checking the obvious.
