@@ -378,10 +378,10 @@ function FreightCalcCard() {
     <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
-          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#ffffff', letterSpacing:'0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
+          <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#ffffff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             {isAr ? ar.hero.calcTitle : 'LOAD CALCULATOR'}
           </p>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
+          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing: isAr ? '0' : '0.14em', textTransform: isAr ? 'none' : 'uppercase', fontWeight:600 }}>
             {isAr ? ar.hero.calcSub : 'Container Volume Advisor'}
           </p>
         </div>
@@ -401,10 +401,10 @@ function TrackCard() {
     <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
-          <p style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing:'0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
+          <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             {isAr ? ar.hero.trackTitle : 'SHIPMENT TRACKING'}
           </p>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing:'0.14em', textTransform:'uppercase', fontWeight:600 }}>
+          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing: isAr ? '0' : '0.14em', textTransform: isAr ? 'none' : 'uppercase', fontWeight:600 }}>
             {isAr ? ar.hero.trackSub : 'Real-Time Global Visibility'}
           </p>
         </div>
@@ -818,8 +818,8 @@ export default function VideoHero({ onQuoteClick }) {
                   <div className="hero-eyebrow" style={{
                     display:'inline-flex', alignItems:'center', gap:'8px',
                     fontFamily:"'DM Sans',sans-serif",
-                    fontSize:'clamp(10px,1.1vw,13px)', letterSpacing:'0.22em',
-                    textTransform:'uppercase', fontWeight:600,
+                    fontSize:'clamp(10px,1.1vw,13px)', letterSpacing: isAr ? '0' : '0.22em',
+                    textTransform: isAr ? 'none' : 'uppercase', fontWeight:600,
                     color:'rgba(91,194,231,1)',
                     background:'rgba(91,194,231,0.18)',
                     border:'1px solid rgba(91,194,231,0.55)',
@@ -837,9 +837,9 @@ export default function VideoHero({ onQuoteClick }) {
                 <div style={{ pointerEvents:'all', cursor:'default' }}>
                   {displayHeadline.map((line, li) => (
                     <h1 key={li} style={{
-                      fontFamily:"'Bebas Neue',sans-serif",
-                      fontSize:'clamp(2rem,5.5vw,5.5rem)',
-                      lineHeight:0.87, letterSpacing:'0.06em', margin:0,
+                      fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
+                      fontSize: isAr ? 'clamp(1.8rem,5vw,5rem)' : 'clamp(2rem,5.5vw,5.5rem)',
+                      lineHeight: isAr ? 1.1 : 0.87, letterSpacing: isAr ? '0' : '0.06em', margin:0,
                       color: li % 2 === 0 ? '#ffffff' : 'rgba(91,194,231,1)',
                       textShadow: li % 2 === 0
                         ? '0 1px 12px rgba(0,0,0,0.9)'

@@ -35,7 +35,7 @@ const ar = {
   // ── VideoHero chapters ────────────────────────────────────────
   hero: {
     chapters: [
-      null, // ch0: 3D intro — no text
+      { eyebrow: 'نربط المملكة بالعالم', headline: ['شحن ذكي', 'مدعوم بالذكاء الاصطناعي'] }, // ch0: intro
       null, // ch1: globe — no text
       { eyebrow: 'المملكة العربية السعودية · رؤية 2030', headline: ['متصلون بالعالم'] },
       { eyebrow: 'شبكة الطرق الخليجية · نقل عابر للحدود', headline: ['من التخطيط إلى التسليم،', 'نحن نحرك كل شيء'] },
