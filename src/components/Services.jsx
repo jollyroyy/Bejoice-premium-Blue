@@ -389,7 +389,7 @@ export default function Services() {
                   {/* Description */}
                   <p style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 'clamp(13px,1.3vw,15px)', fontWeight: 450,
+                    fontSize: isAr ? 'clamp(17px,1.7vw,19px)' : 'clamp(13px,1.3vw,15px)', fontWeight: 450,
                     color: 'rgba(255,255,255,0.72)', lineHeight: 1.7,
                     margin: 0,
                   }}>

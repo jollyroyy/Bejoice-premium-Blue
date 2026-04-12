@@ -30,10 +30,10 @@ export default function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.1,
+      lerp: 0.12,
       smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.8,
+      wheelMultiplier: 1.05,
+      touchMultiplier: 2,
       infinite: false,
     })
 

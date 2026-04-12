@@ -137,7 +137,7 @@ export default function HeavyLift() {
           {/* Subheading */}
           <p style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 'clamp(17px, 2.2vw, 24px)',
+            fontSize: isAr ? 'clamp(21px, 2.6vw, 28px)' : 'clamp(17px, 2.2vw, 24px)',
             fontWeight: 600,
             color: '#ffffff',
             lineHeight: 1.5,

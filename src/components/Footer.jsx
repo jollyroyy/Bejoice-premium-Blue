@@ -133,7 +133,7 @@ function PolicyModal({ title, onClose }) {
             fontFamily: "'Bebas Neue', sans-serif",
             fontSize: 'clamp(1.8rem,4vw,3rem)',
             letterSpacing: '0.08em', color: '#ffffff', margin: 0,
-          }}>{title}</h2>
+          }}>{isAr ? (ar.footer.policies[title] || title) : title}</h2>
           <button
             onClick={onClose}
             style={{
@@ -145,8 +145,8 @@ function PolicyModal({ title, onClose }) {
             }}
           >✕</button>
         </div>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', color: 'rgba(91,194,231,0.8)', marginBottom: '32px', letterSpacing: '0.05em' }}>
-          Last updated: {policy.updated}
+        <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'DM Sans', sans-serif", fontSize: '13px', color: 'rgba(91,194,231,0.8)', marginBottom: '32px', letterSpacing: '0.05em' }}>
+          {isAr ? ar.footer.lastUpdated : 'Last updated:'} {policy.updated}
         </p>
 
         {/* Sections */}
@@ -171,7 +171,7 @@ function PolicyModal({ title, onClose }) {
             onClick={onClose}
             className="btn-gold"
             style={{ padding: '10px 32px' }}
-          >Close</button>
+          >{isAr ? ar.footer.close : 'Close'}</button>
         </div>
       </div>
     </div>
@@ -283,8 +283,8 @@ export default function Footer() {
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <svg style={{ flexShrink: 0, marginTop: '3px' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.7)" strokeWidth="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.3vw,13px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.6 }}>
-                  Block A, Al Raja Avenue,<br/>1st floor, Office No. 2, Dammam 32234, KSA
+                <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.3vw,13px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, textAlign: isAr ? 'right' : 'left', direction: isAr ? 'rtl' : 'ltr' }}>
+                  {isAr ? ar.footer.address.split('\n').map((line, i) => <span key={i}>{line}<br/></span>) : <>Block A, Al Raja Avenue,<br/>1st floor, Office No. 2, Dammam 32234, KSA</>}
                 </span>
               </li>
 
@@ -395,7 +395,7 @@ export default function Footer() {
                 style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(10px,1.3vw,13px)', color: 'rgba(255,255,255,0.55)', background: 'none', border: 'none', cursor: 'pointer', letterSpacing: '0.05em', transition: 'color 0.3s', padding: 0 }}
                 onMouseEnter={e => e.target.style.color = 'rgba(255,255,255,0.9)'}
                 onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.55)'}
-              >{item}</button>
+              >{isAr ? (ar.footer.policies[item] || item) : item}</button>
             ))}
           </div>
         </div>

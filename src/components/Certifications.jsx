@@ -4,16 +4,17 @@ import { SparklesCore } from './ui/sparkles'
 import { useLang } from '../context/LangContext'
 
 const certs = [
-  { code: 'ZATCA',    ar: 'زاتكا',      color: '#2aaa5e' },
-  { code: 'ISO 9001', ar: 'آيزو 9001',  color: '#5BC2E7' },
-  { code: 'FIATA',    ar: 'فياتا',      color: '#5a9de8' },
-  { code: 'JC TRANS', ar: 'جي سي ترانس', color: '#e85a5a' },
-  { code: 'GLA',      ar: 'جي إل إيه',  color: '#a05ae8' },
+  { code: 'ZATCA',    ar: 'هيئة الزكاة والضريبة والجمارك',      color: '#2aaa5e' },
+  { code: 'ISO 9001', ar: 'شهادة الآيزو 9001',  color: '#5BC2E7' },
+  { code: 'FIATA',    ar: 'الاتحاد الدولي لوكلاء الشحن',      color: '#5a9de8' },
+  { code: 'JC TRANS', ar: 'شبكة جي سي ترانس', color: '#e85a5a' },
+  { code: 'GLA',      ar: 'تحالف اللوجستيات العالمي',  color: '#a05ae8' },
 ]
 
 export default function Certifications() {
   const sectionRef = useRef(null)
   const { lang } = useLang()
+  const isAr = lang === 'ar'
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -174,36 +175,37 @@ export default function Certifications() {
                 <div style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 'clamp(7px,0.8vw,9px)',
+                    fontSize: isAr ? 'clamp(15px,1.6vw,18px)' : 'clamp(11px,1.2vw,14px)',
                     letterSpacing: '0.35em',
                     textTransform: 'uppercase',
                     color: `${c.color}99`,
                     marginBottom: 10,
                     fontWeight: 700,
-                  }}>CERTIFIED</div>
+                  }}>{isAr ? 'معتمد' : 'CERTIFIED'}</div>
 
                   <div style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: 'clamp(1.6rem,3vw,2.8rem)',
-                    letterSpacing: '0.12em',
+                    fontFamily: isAr ? "'Cairo', sans-serif" : "'Bebas Neue', sans-serif",
+                    fontSize: isAr ? 'clamp(1.4rem,2.8vw,2.4rem)' : 'clamp(1.6rem,3vw,2.8rem)',
+                    letterSpacing: isAr ? '0' : '0.12em',
                     lineHeight: 1,
                     color: '#ffffff',
                     textShadow: `0 0 40px ${c.color}55, 0 2px 24px rgba(0,0,0,0.9)`,
                   }}>
-                    {c.code}
+                    {isAr ? c.ar : c.code}
                   </div>
 
-                  {lang === 'ar' && (
+                  {isAr && (
                     <div style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 'clamp(0.75rem,1.2vw,1rem)',
+                      fontSize: 'clamp(0.8rem,1.2vw,0.95rem)',
                       color: `${c.color}cc`,
-                      marginTop: 6,
-                      letterSpacing: '0.02em',
-                      direction: 'rtl',
+                      marginTop: 8,
+                      letterSpacing: isAr ? '0' : '0.05em',
+                      direction: isAr ? 'rtl' : 'ltr',
                       fontWeight: 600,
+                      opacity: 0.8,
                     }}>
-                      {c.ar}
+                      {c.code}
                     </div>
                   )}
 

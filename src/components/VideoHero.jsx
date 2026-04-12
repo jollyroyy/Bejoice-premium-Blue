@@ -135,7 +135,7 @@ const CHAPTERS = [
     frameRange: [471, 541],
     eyebrow:    'OCEAN FREIGHT',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
-    sub:        'End-to-end road freight solutions engineered for reliability — from first mile to final destination across KSA and the wider GCC.',
+    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
     align:      'left',
   },
   // ── port: 549–717 ──
@@ -143,7 +143,7 @@ const CHAPTERS = [
     frameRange: [557, 613],
     eyebrow:    'CUSTOMS CLEARANCE · PORT OPERATIONS',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
-    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
+    sub:        'ZATCA-certified experts navigating complex regulatory landscapes to ensure rapid, compliant clearance for every shipment.',
     align:      'right',
   },
   {
@@ -381,7 +381,7 @@ function FreightCalcCard() {
           <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#ffffff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             {isAr ? ar.hero.calcTitle : 'LOAD CALCULATOR'}
           </p>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing: isAr ? '0' : '0.14em', textTransform: isAr ? 'none' : 'uppercase', fontWeight:600 }}>
+          <p style={{ fontFamily:"'Inter',sans-serif", fontSize: isAr ? '15px' : '11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing: isAr ? '0' : '0.14em', textTransform: isAr ? 'none' : 'uppercase', fontWeight:600 }}>
             {isAr ? ar.hero.calcSub : 'Container Volume Advisor'}
           </p>
         </div>
@@ -404,7 +404,7 @@ function TrackCard() {
           <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             {isAr ? ar.hero.trackTitle : 'SHIPMENT TRACKING'}
           </p>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing: isAr ? '0' : '0.14em', textTransform: isAr ? 'none' : 'uppercase', fontWeight:600 }}>
+          <p style={{ fontFamily:"'Inter',sans-serif", fontSize: isAr ? '15px' : '11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing: isAr ? '0' : '0.14em', textTransform: isAr ? 'none' : 'uppercase', fontWeight:600 }}>
             {isAr ? ar.hero.trackSub : 'Real-Time Global Visibility'}
           </p>
         </div>
@@ -521,12 +521,9 @@ export default function VideoHero({ onQuoteClick }) {
     const y = (ch - h) / 2
 
     ctx.imageSmoothingEnabled = true
-    ctx.imageSmoothingQuality = 'high'
+    ctx.imageSmoothingQuality = 'medium'
 
-    // HDR-like enhancement: richer contrast, saturation & sharpness
-    ctx.filter = 'contrast(1.18) saturate(1.3) brightness(1.04)'
     ctx.drawImage(img, x, y, w, h)
-    ctx.filter = 'none'
   }, [])
 
   // ── Progressive frame loader ──────────────────────────────────────
@@ -615,7 +612,7 @@ export default function VideoHero({ onQuoteClick }) {
 
     const render = () => {
       // Overlays and Frames use smoothP — gentle lerp for cinematic coherence
-      smoothP = lerp(smoothP, targetP, 0.1) 
+      smoothP = lerp(smoothP, targetP, 0.15) 
 
       const frameIdx = Math.min(Math.round(smoothP * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1)
       loadAhead(frameIdx)
@@ -740,6 +737,7 @@ export default function VideoHero({ onQuoteClick }) {
           width:'100%', height:'100%',
           opacity:1,
           willChange:'transform',
+          filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
         }} />
 
         {/* Exit overlay */}
@@ -827,7 +825,7 @@ export default function VideoHero({ onQuoteClick }) {
                   <div className="hero-eyebrow" style={{
                     display:'inline-flex', alignItems:'center', gap:'8px',
                     fontFamily:"'DM Sans',sans-serif",
-                    fontSize:'clamp(13px,1.4vw,16px)', letterSpacing: isAr ? '0' : '0.22em',
+                    fontSize: isAr ? 'clamp(19px,1.6vw,20px)' : 'clamp(13px,1.4vw,16px)', letterSpacing: isAr ? '0' : '0.22em',
                     textTransform: isAr ? 'none' : 'uppercase', fontWeight:700,
                     color:'rgba(91,194,231,1)',
                     background:'rgba(91,194,231,0.22)',
@@ -952,7 +950,7 @@ export default function VideoHero({ onQuoteClick }) {
                   }}>
                     <CountUp target={isAr && s.arV ? s.arV : s.v} suffix={isAr && s.suffix ? toArabicNum(s.suffix) : s.suffix} duration={1000} arabic={isAr && !s.arV} />
                   </div>
-                  <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize:'11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(91,194,231,0.85)', fontWeight:600, marginTop:'6px', whiteSpace:'nowrap' }}>
+                  <div className="hero-stat-label" style={{ fontFamily:"'Inter',sans-serif", fontSize: isAr ? '15px' : '11px', letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(91,194,231,0.85)', fontWeight:600, marginTop:'6px', whiteSpace:'nowrap' }}>
                     {isAr ? s.ar : s.l}
                   </div>
                 </div>
