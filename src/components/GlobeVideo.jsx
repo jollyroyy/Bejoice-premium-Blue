@@ -111,9 +111,9 @@ export default function GlobeVideo() {
           opacity: 0,
         }}>
           <picture>
-            <source srcSet="/bejoice-wings-gold.webp" type="image/webp" />
+            <source srcSet="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-wings-gold.webp" type="image/webp" />
             <img
-              src="/bejoice-wings-gold.png"
+              src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-wings-gold.webp"
               alt="Bejoice"
               width="400" height="223"
               style={{ height: '2.2rem', width: 'auto', objectFit: 'contain' }}

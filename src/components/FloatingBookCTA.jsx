@@ -1131,9 +1131,9 @@ function Avatar({ size }) {
         position: "relative", zIndex: 1,
       }}>
         <picture>
-          <source srcSet="/ai-assistant-female.webp" type="image/webp" />
+          <source srcSet="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/ai-assistant-female.webp" type="image/webp" />
           <img
-            src="/ai-assistant-female.png"
+            src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/ai-assistant-female.webp"
             alt="Layla — Bejoice AI"
             width="200" height="200"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}

@@ -136,9 +136,9 @@ export default function Nav({ onQuoteClick }) {
               boxShadow: '0 2px 16px rgba(0,0,0,0.25)',
             }}>
               <picture>
-                <source srcSet="/bejoice-logo-new.webp" type="image/webp" />
+                <source srcSet="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp" type="image/webp" />
                 <img
-                  src="/bejoice-logo-new.png"
+                  src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp"
                   alt="Bejoice"
                   width="480" height="200"
                   style={{
@@ -318,8 +318,8 @@ export default function Nav({ onQuoteClick }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0px' }}>
             <div style={{ background: 'rgba(255,255,255,0.95)', borderRadius: '8px', padding: '3px 8px' }}>
               <picture>
-                <source srcSet="/bejoice-logo-new.webp" type="image/webp" />
-                <img src="/bejoice-logo-new.png" alt="Bejoice" width="480" height="200" style={{ height: '44px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+                <source srcSet="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp" type="image/webp" />
+                <img src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp" alt="Bejoice" width="480" height="200" style={{ height: '44px', width: 'auto', objectFit: 'contain', display: 'block' }} />
               </picture>
             </div>
             <div style={{ borderLeft: '1.5px solid rgba(91,194,231,0.35)', paddingLeft: '9px', marginLeft: '6px' }}>

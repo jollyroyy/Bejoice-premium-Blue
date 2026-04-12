@@ -65,27 +65,28 @@ const FRAMES8_COUNT      = 121
 const FRAMES_TECH_COUNT  = 145
 const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_SAUDI_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT  // 984
 
+const S3 = 'https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com'
 const FRAME_URLS = [
   // 3d intro sequence (idx 0–144) — hero
   ...Array.from({ length: FRAMES3D_COUNT }, (_, i) =>
-    `/3d/${String(i + 1).padStart(4, '0')}.webp`),
+    `${S3}/3d/${String(i + 1).padStart(4, '0')}.webp`),
   // globe bridge (idx 145–210) — repeats last 3d frame; invisible behind globe dim
-  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `/3d/0145.webp`),
+  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `${S3}/3d/0145.webp`),
   // saudi seg (idx 211–403) — 3rd segment, plays right after globe
   ...Array.from({ length: FRAMES_SAUDI_COUNT }, (_, i) =>
-    `/saudi/${String(i + 1).padStart(4, '0')}.webp`),
+    `${S3}/saudi/${String(i + 1).padStart(4, '0')}.webp`),
   // bejoice_truck seg (idx 404–548) — starts from frame 1 after globe ends
   ...Array.from({ length: FRAMES_TRUCK_COUNT }, (_, i) =>
-    `/bejoice_truck/${String(i + 1).padStart(4, '0')}.webp`),
+    `${S3}/bejoice_truck/${String(i + 1).padStart(4, '0')}.webp`),
   // port seg (idx 549–717)
   ...Array.from({ length: FRAMES_PORT_COUNT }, (_, i) =>
-    `/port/${String(i + 1).padStart(4, '0')}.webp`),
+    `${S3}/port/${String(i + 1).padStart(4, '0')}.webp`),
   // frames8 seg (idx 718–838)
   ...Array.from({ length: FRAMES8_COUNT }, (_, i) =>
-    `/frames8/${String(i + 1).padStart(4, '0')}.webp`),
+    `${S3}/frames8/${String(i + 1).padStart(4, '0')}.webp`),
   // tech_enng seg (idx 839–983)
   ...Array.from({ length: FRAMES_TECH_COUNT }, (_, i) =>
-    `/tech_enng/${String(i + 1).padStart(4, '0')}.webp`),
+    `${S3}/tech_enng/${String(i + 1).padStart(4, '0')}.webp`),
 ]
 
 // Fade window in frames — how many frames to crossfade between chapters
