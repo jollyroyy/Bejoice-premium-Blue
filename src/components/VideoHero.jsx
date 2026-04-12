@@ -824,12 +824,13 @@ export default function VideoHero({ onQuoteClick }) {
                   <div className="hero-eyebrow" style={{
                     display:'inline-flex', alignItems:'center', gap:'8px',
                     fontFamily:"'DM Sans',sans-serif",
-                    fontSize:'clamp(10px,1.1vw,13px)', letterSpacing: isAr ? '0' : '0.22em',
-                    textTransform: isAr ? 'none' : 'uppercase', fontWeight:600,
+                    fontSize:'clamp(12px,1.3vw,15px)', letterSpacing: isAr ? '0' : '0.22em',
+                    textTransform: isAr ? 'none' : 'uppercase', fontWeight:700,
                     color:'rgba(91,194,231,1)',
-                    background:'rgba(91,194,231,0.18)',
-                    border:'1px solid rgba(91,194,231,0.55)',
-                    borderRadius:'2px', padding:'5px 14px',
+                    background:'rgba(91,194,231,0.22)',
+                    border:'1.5px solid rgba(91,194,231,0.75)',
+                    borderRadius:'3px', padding:'6px 16px',
+                    boxShadow:'0 0 12px rgba(91,194,231,0.2)',
                     marginBottom:'14px',
                     alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                     backdropFilter:'blur(8px)',
@@ -1134,7 +1135,7 @@ export default function VideoHero({ onQuoteClick }) {
           }
 
           /* Hero text */
-          .hero-eyebrow { font-size: 9px !important; letter-spacing: 0.16em !important; padding: 4px 10px !important; margin-bottom: 8px !important; }
+          .hero-eyebrow { font-size: 11px !important; letter-spacing: 0.16em !important; padding: 5px 11px !important; margin-bottom: 8px !important; }
           .hero-intro-sub { display: none !important; }
           .hero-chapter-sub { display: none !important; }
           .hero-intro-cta {
