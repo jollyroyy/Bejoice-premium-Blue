@@ -1279,3 +1279,6 @@ section {
 .cv-contact    { contain-intrinsic-size: 0 800px; }
 .cv-certs      { contain-intrinsic-size: 0 560px; }
 .cv-footer     { contain-intrinsic-size: 0 420px; }
+
+@keyframes db-spin-cw  { from { transform: rotate(0deg)    } to { transform: rotate(360deg)  } }
+@keyframes db-spin-ccw { from { transform: rotate(0deg)    } to { transform: rotate(-360deg) } }

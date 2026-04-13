@@ -130,7 +130,7 @@ const CHAPTERS = [
   // ── bejoice_truck: 404–548 ──
   {
     frameRange: [413, 463],
-    eyebrow:    'GCC ROAD NETWORK · CROSS-BORDER TRANSPORT',
+    eyebrow:    '',
     headline:   ['FROM BLUE PRINT TO DELIVERY,', 'WE MOVE IT ALL'],
     sub:        'Seamless cross-border land transport across the GCC — powered by a modern fleet connecting Saudi Arabia to every regional hub.',
     align:      'right',
@@ -182,7 +182,7 @@ const CHAPTERS = [
   },
   {
     frameRange: [919, 978],
-    eyebrow:    'ISO 9001 CERTIFIED · FIATA MEMBER',
+    eyebrow:    '',
     headline:   ['TECHNICAL', 'ENGINEERING'],
     sub:        'Specialised handling of oversized, overweight and high-value cargo — engineered solutions for every challenge.',
     align:      'center',
@@ -523,6 +523,9 @@ export default function VideoHero({ onQuoteClick }) {
     const x = (cw - w) / 2
     const y = (ch - h) / 2
 
+    ctx.fillStyle = '#183650'
+    ctx.fillRect(0, 0, cw, ch)
+
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'medium'
 
@@ -747,6 +750,7 @@ export default function VideoHero({ onQuoteClick }) {
           opacity:1,
           willChange:'transform',
           filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
+          background:'#183650',
         }} />
 
         {/* Exit overlay */}
