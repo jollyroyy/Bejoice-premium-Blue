@@ -64,34 +64,34 @@ const FRAMES_TECH_COUNT  = 145
 const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_SAUDI_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT  // 984
 
 // ─── CDN BASE ────────────────────────────────────────────────────────────────
-// Current: S3 ap-southeast-2 (Sydney) — ~300ms RTT for Saudi Arabia users.
-// TO FIX global latency: set up AWS CloudFront in front of this S3 bucket.
-//   CloudFront has edge nodes in Riyadh, Dubai, Bahrain (~20ms RTT).
-//   Then set VITE_CDN_BASE=https://YOUR_CLOUDFRONT_ID.cloudfront.net
-//   in Netlify environment variables and redeploy — zero code changes needed.
-const S3 = import.meta.env.VITE_CDN_BASE || 'https://bejoice-premium.s3.me-central-1.amazonaws.com'
+// Primary: CloudFront edge (~5–20ms RTT for KSA/UAE users).
+// Fallback: S3 direct — used automatically if any CloudFront request fails.
+const CDN = 'https://d22ga4j7bn728b.cloudfront.net'
+const S3  = 'https://bejoice-premium.s3.me-central-1.amazonaws.com'
 const FRAME_URLS = [
   // 3d intro sequence (idx 0–144) — hero
   ...Array.from({ length: FRAMES3D_COUNT }, (_, i) =>
-    `${S3}/3d/${String(i + 1).padStart(4, '0')}.webp`),
+    `${CDN}/3d/${String(i + 1).padStart(4, '0')}.webp`),
   // globe bridge (idx 145–210) — repeats last 3d frame; invisible behind globe dim
-  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `${S3}/3d/0145.webp`),
+  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `${CDN}/3d/0145.webp`),
   // saudi seg (idx 211–403) — 3rd segment, plays right after globe
   ...Array.from({ length: FRAMES_SAUDI_COUNT }, (_, i) =>
-    `${S3}/saudi/${String(i + 1).padStart(4, '0')}.webp`),
+    `${CDN}/saudi/${String(i + 1).padStart(4, '0')}.webp`),
   // bejoice_truck seg (idx 404–548) — starts from frame 1 after globe ends
   ...Array.from({ length: FRAMES_TRUCK_COUNT }, (_, i) =>
-    `${S3}/bejoice_truck/${String(i + 1).padStart(4, '0')}.webp`),
+    `${CDN}/bejoice_truck/${String(i + 1).padStart(4, '0')}.webp`),
   // port seg (idx 549–717)
   ...Array.from({ length: FRAMES_PORT_COUNT }, (_, i) =>
-    `${S3}/port/${String(i + 1).padStart(4, '0')}.webp`),
+    `${CDN}/port/${String(i + 1).padStart(4, '0')}.webp`),
   // frames8 seg (idx 718–838)
   ...Array.from({ length: FRAMES8_COUNT }, (_, i) =>
-    `${S3}/frames8/${String(i + 1).padStart(4, '0')}.webp`),
+    `${CDN}/frames8/${String(i + 1).padStart(4, '0')}.webp`),
   // tech_enng seg (idx 839–983)
   ...Array.from({ length: FRAMES_TECH_COUNT }, (_, i) =>
-    `${S3}/tech_enng/${String(i + 1).padStart(4, '0')}.webp`),
+    `${CDN}/tech_enng/${String(i + 1).padStart(4, '0')}.webp`),
 ]
+// S3 fallback URLs (same path, different origin)
+const FRAME_URLS_S3 = FRAME_URLS.map(u => u.replace(CDN, S3))
 
 // Fade window in frames — how many frames to crossfade between chapters
 const FRAME_FADE = 18
@@ -539,6 +539,12 @@ export default function VideoHero({ onQuoteClick }) {
     for (let i = Math.max(0, from); i <= end; i++) {
       if (imgs[i]) continue          // already loading/loaded
       const img = new window.Image()
+      img.onerror = () => {
+        // CloudFront failed — silently retry from S3
+        const fallback = new window.Image()
+        fallback.src = FRAME_URLS_S3[i]
+        imgs[i] = fallback
+      }
       img.src = FRAME_URLS[i]
       imgs[i] = img
       if (i > loadedUpToRef.current) loadedUpToRef.current = i
