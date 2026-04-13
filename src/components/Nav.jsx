@@ -148,9 +148,9 @@ export default function Nav({ onQuoteClick }) {
               boxShadow: '0 2px 16px rgba(0,0,0,0.25)',
             }}>
               <picture>
-                <source srcSet="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp" type="image/webp" />
+                <source srcSet="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-new.webp" type="image/webp" />
                 <img
-                  src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp"
+                  src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-new.webp"
                   alt="Bejoice"
                   width="480" height="200"
                   fetchPriority="high"
@@ -333,8 +333,8 @@ export default function Nav({ onQuoteClick }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0px' }}>
             <div style={{ background: 'rgba(255,255,255,0.95)', borderRadius: '8px', padding: '3px 8px' }}>
               <picture>
-                <source srcSet="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp" type="image/webp" />
-                <img src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-new.webp" alt="Bejoice" width="480" height="200" loading="lazy" decoding="async" style={{ height: '44px', width: 'auto', aspectRatio: '480 / 200', objectFit: 'contain', display: 'block' }} />
+                <source srcSet="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-new.webp" type="image/webp" />
+                <img src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-new.webp" alt="Bejoice" width="480" height="200" loading="lazy" decoding="async" style={{ height: '44px', width: 'auto', aspectRatio: '480 / 200', objectFit: 'contain', display: 'block' }} />
               </picture>
             </div>
             <div style={{ borderLeft: '1.5px solid rgba(91,194,231,0.35)', paddingLeft: '9px', marginLeft: '6px' }}>

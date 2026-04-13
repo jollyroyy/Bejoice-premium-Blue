@@ -193,8 +193,8 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <div className="flex items-center gap-3 mb-6">
               <picture>
-                <source srcSet="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-white.webp" type="image/webp" />
-                <img src="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/bejoice-logo-white.webp" alt="Bejoice" width="480" height="267" loading="lazy" decoding="async" style={{ height: 'clamp(36px,5vw,56px)', width: 'auto', aspectRatio: '480 / 267' }} />
+                <source srcSet="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-white.webp" type="image/webp" />
+                <img src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-white.webp" alt="Bejoice" width="480" height="267" loading="lazy" decoding="async" style={{ height: 'clamp(36px,5vw,56px)', width: 'auto', aspectRatio: '480 / 267' }} />
               </picture>
               <div style={{ borderLeft: '2px solid rgba(91,194,231,0.45)', paddingLeft: '12px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
                 <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '15px', letterSpacing: '0.18em', color: '#ffffff' }}>BEJOICE</span>

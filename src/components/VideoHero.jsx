@@ -69,7 +69,7 @@ const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_SAUDI_CO
 //   CloudFront has edge nodes in Riyadh, Dubai, Bahrain (~20ms RTT).
 //   Then set VITE_CDN_BASE=https://YOUR_CLOUDFRONT_ID.cloudfront.net
 //   in Netlify environment variables and redeploy — zero code changes needed.
-const S3 = import.meta.env.VITE_CDN_BASE || 'https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com'
+const S3 = import.meta.env.VITE_CDN_BASE || 'https://bejoice-premium.s3.me-central-1.amazonaws.com'
 const FRAME_URLS = [
   // 3d intro sequence (idx 0–144) — hero
   ...Array.from({ length: FRAMES3D_COUNT }, (_, i) =>
