@@ -73,8 +73,14 @@
          STEP 3 — CRITICAL RESOURCE PRELOADS
          Fetched at highest priority, in parallel with HTML parse.
     ════════════════════════════════════════════════════════════ -->
-    <!-- First hero frame — must paint before user sees anything -->
-    <link rel="preload" as="image" href="/frames1/0001.jpg" fetchpriority="high" />
+    <!-- Hero frames — NO crossorigin: VideoHero loads via new Image() (no-CORS).
+         crossorigin="anonymous" creates a separate cache entry → double download.
+         Frame 0001 = high priority (LCP). Frames 0002-0005 = low priority buffer. -->
+    <link rel="preload" as="image" href="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/3d/0001.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/3d/0002.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/3d/0003.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/3d/0004.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com/3d/0005.webp" type="image/webp" fetchpriority="low" />
     <!-- Critical font CSS — preloaded but applied NON-BLOCKING (see font links below) -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" as="style" fetchpriority="high" />
 

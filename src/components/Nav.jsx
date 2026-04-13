@@ -376,10 +376,10 @@ export default function Nav({ onQuoteClick }) {
         <div style={{ padding: '0 1.4rem 0.5rem', flexShrink: 0 }}>
           <div style={{ display: 'flex', gap: 8, paddingTop: 16, borderTop: '1px solid rgba(91,194,231,0.15)' }}>
             <button onClick={() => setLang('en')} style={{ flex: 1, padding: '10px', borderRadius: 8, border: `1.5px solid ${lang === 'en' ? 'rgba(91,194,231,0.7)' : 'rgba(255,255,255,0.12)'}`, background: lang === 'en' ? 'rgba(91,194,231,0.15)' : 'rgba(255,255,255,0.04)', color: lang === 'en' ? '#5BC2E7' : 'rgba(255,255,255,0.5)', fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 44 }}>
-              <img src="https://flagcdn.com/w40/gb.png" width="18" height="12" alt="" style={{ borderRadius: 2 }} /> EN
+              <img src="https://flagcdn.com/w40/gb.png" width="18" height="12" alt="" loading="lazy" decoding="async" style={{ borderRadius: 2 }} /> EN
             </button>
             <button onClick={() => setLang('ar')} style={{ flex: 1, padding: '10px', borderRadius: 8, border: `1.5px solid ${lang === 'ar' ? 'rgba(91,194,231,0.7)' : 'rgba(255,255,255,0.12)'}`, background: lang === 'ar' ? 'rgba(91,194,231,0.15)' : 'rgba(255,255,255,0.04)', color: lang === 'ar' ? '#5BC2E7' : 'rgba(255,255,255,0.5)', fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 44 }}>
-              <img src="https://flagcdn.com/w40/sa.png" width="18" height="12" alt="" style={{ borderRadius: 2 }} /> AR
+              <img src="https://flagcdn.com/w40/sa.png" width="18" height="12" alt="" loading="lazy" decoding="async" style={{ borderRadius: 2 }} /> AR
             </button>
           </div>
         </div>

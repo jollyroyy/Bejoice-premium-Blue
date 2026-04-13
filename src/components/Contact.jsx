@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { SparklesCore } from './ui/sparkles'
 import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
+import useFadeUpBatch from '../hooks/useFadeUpBatch'
 
 const SERVICES = ['Air Freight','Sea Freight','Road Transport','Customs Clearance','Warehousing','Project Cargo']
 
@@ -45,18 +46,7 @@ export default function Contact() {
     if (glow) glow.style.background = 'transparent'
   }, [])
 
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting)
-          e.target.querySelectorAll('.fade-up').forEach((el, i) =>
-            setTimeout(() => el.classList.add('visible'), i * 70))
-      }),
-      { threshold: 0.05 }
-    )
-    if (sectionRef.current) io.observe(sectionRef.current)
-    return () => io.disconnect()
-  }, [])
+  useFadeUpBatch(sectionRef)
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
 
@@ -88,6 +78,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
+      className="cv-section cv-contact"
       style={{
         /* Deep dark base — echoes hero palette */
         background: 'linear-gradient(160deg, #060810 0%, #080b14 45%, #091524 100%)',
@@ -200,7 +191,6 @@ export default function Contact() {
                 overflow: 'hidden',
                 position: 'relative',
                 transition: 'transform 0.15s ease, box-shadow 0.3s ease',
-                willChange: 'transform',
               }}
             >
 

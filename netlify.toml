@@ -1,0 +1,34 @@
+# ── Bejoice Premium — Netlify Configuration ─────────────────────────────────
+# Vite handles all bundling/minification. Netlify handles CDN edge distribution.
+
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION  = "20"
+  NODE_OPTIONS  = "--max-old-space-size=4096"
+
+# Vite already optimises JS/CSS/images — skip Netlify's post-processing
+# to avoid double-minification and unexpected asset transforms.
+[build.processing]
+  skip_processing = true
+
+# ── Edge CDN caching ─────────────────────────────────────────────────────────
+# Netlify CDN has 100+ edge nodes globally.
+# Hashed JS/CSS chunks (e.g. index-Abc123.js) are served from the nearest edge
+# with immutable cache headers — repeat visitors get instant loads worldwide.
+#
+# FRAME IMAGES: Served from S3 ap-southeast-2 (Sydney).
+# For Saudi Arabia / Middle East users, set up AWS CloudFront:
+#   1. Create CloudFront distribution pointing to bejoice-premium-assets bucket
+#   2. Enable edge locations: me-south-1 (Bahrain), me-central-1 (UAE)
+#   3. Set VITE_CDN_BASE env var to your CloudFront URL in Netlify dashboard
+#   4. Redeploy — no code changes needed (VideoHero.jsx reads VITE_CDN_BASE)
+
+# ── Deploy contexts ──────────────────────────────────────────────────────────
+[context.production]
+  command = "npm run build"
+
+[context.deploy-preview]
+  command = "npm run build"

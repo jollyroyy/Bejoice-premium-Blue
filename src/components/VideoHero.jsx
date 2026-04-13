@@ -10,8 +10,6 @@ function toArabicNum(str) {
   return String(str).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[+d])
 }
 
-gsap.registerPlugin(ScrollTrigger)
-
 // ─────────────────────────────────────────────────────────────────────────────
 // Animated counter
 // ─────────────────────────────────────────────────────────────────────────────
@@ -65,7 +63,13 @@ const FRAMES8_COUNT      = 121
 const FRAMES_TECH_COUNT  = 145
 const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_SAUDI_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT  // 984
 
-const S3 = 'https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com'
+// ─── CDN BASE ────────────────────────────────────────────────────────────────
+// Current: S3 ap-southeast-2 (Sydney) — ~300ms RTT for Saudi Arabia users.
+// TO FIX global latency: set up AWS CloudFront in front of this S3 bucket.
+//   CloudFront has edge nodes in Riyadh, Dubai, Bahrain (~20ms RTT).
+//   Then set VITE_CDN_BASE=https://YOUR_CLOUDFRONT_ID.cloudfront.net
+//   in Netlify environment variables and redeploy — zero code changes needed.
+const S3 = import.meta.env.VITE_CDN_BASE || 'https://bejoice-premium-assets.s3.ap-southeast-2.amazonaws.com'
 const FRAME_URLS = [
   // 3d intro sequence (idx 0–144) — hero
   ...Array.from({ length: FRAMES3D_COUNT }, (_, i) =>
@@ -345,7 +349,6 @@ function SleekCard({ children, className = '', style = {} }) {
         boxShadow:'0 24px 64px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 20px rgba(91,194,231,0.04)',
         display:'flex', flexDirection:'column',
         transition:'transform 0.15s ease-out, box-shadow 0.4s ease, border-color 0.4s ease',
-        willChange:'transform',
         ...style
       }}
     >
@@ -935,7 +938,7 @@ export default function VideoHero({ onQuoteClick }) {
               { v:'25',   arV:null, suffix:'+', l:'Years',      ar: 'عامًا'     },
               { v:'500',  arV:null, suffix:'+', l:'Deliveries', ar: 'عملية تسليم' },
               { v:'24/7', arV:'٢٤/٧', suffix:'',  l:'Operations', ar: 'عمليات'    },
-              { v:'KSA',  arV:'KSA',  suffix:'',  l:'Specialist', ar: 'متخصص'     },
+              { v:'KSA',  arV:'م.ع.س',  suffix:'',  l:'Specialist', ar: 'متخصص'     },
             ].map((s, idx, arr) => (
               <div key={s.l} className="hero-stat-cell" style={{
                 display:'flex', alignItems:'center', padding:'1.25rem clamp(8px,1.2vw,16px)',

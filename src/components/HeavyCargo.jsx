@@ -143,7 +143,6 @@ export default function HeavyCargo() {
             overflow: 'hidden', position: 'relative',
             padding: 'clamp(24px,3.5vw,48px)',
             transition: 'transform 0.15s ease',
-            willChange: 'transform',
           }}>
 
           {/* Sparkles background */}

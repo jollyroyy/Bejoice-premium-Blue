@@ -300,9 +300,12 @@ body {
     0 32px 64px rgba(0,0,0,0.3);
   backdrop-filter: blur(32px) saturate(1.4);
   -webkit-backdrop-filter: blur(32px) saturate(1.4);
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  /* Scope transition to non-GSAP props — GSAP owns rotateX/Y/scale/transform */
+  transition: background 0.5s cubic-bezier(0.23,1,0.32,1), border-color 0.5s cubic-bezier(0.23,1,0.32,1), box-shadow 0.5s cubic-bezier(0.23,1,0.32,1);
   position: relative;
 }
+/* Promote GPU layer only while actively being hovered/animated */
+.glass-card:hover { will-change: transform; }
 .glass-card::before {
   content: '';
   position: absolute;
@@ -414,7 +417,9 @@ body {
   pointer-events: none;
   z-index: 100000;
   mix-blend-mode: difference;
-  transition: transform 0.1s ease-out, width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-radius 0.3s ease;
+  /* GSAP animates x/y (transform) on every mousemove — remove transform from transition to avoid conflict */
+  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-radius 0.3s ease;
+  will-change: transform;
   transform: translate(-50%, -50%);
 }
 .custom-cursor.hovering {
@@ -432,14 +437,22 @@ body {
 /* scroll-progress styles are now inline in ScrollProgress.jsx */
 
 /* ── FADE UP ── */
+/* Initial state prevents CLS — GSAP owns the transition (set via useFadeUpBatch hook).
+   .visible class is added by GSAP onComplete as a CSS fallback marker only. */
 .fade-up {
   opacity: 0;
-  transform: translateY(36px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  transform: translateY(28px);
 }
 .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
+}
+/* Reduced motion: skip animation entirely */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up, .fade-up.visible {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ── NAV LINK ── */
@@ -478,7 +491,8 @@ body {
   box-shadow:
     0 10px 40px rgba(91,194,231,0.35),
     inset 0 1px 0 rgba(255,255,255,0.4);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  /* GSAP owns transform (magnetic x/y) — exclude it to prevent double-easing */
+  transition: box-shadow 0.4s cubic-bezier(0.23,1,0.32,1), background-position 0.4s cubic-bezier(0.23,1,0.32,1);
   z-index: 1;
 }
 .btn-gold::before {
@@ -501,6 +515,7 @@ body {
     0 0 20px rgba(141,216,240,0.3),
     inset 0 1px 0 rgba(255,255,255,0.5);
   transform: translateY(-3px) scale(1.02);
+  will-change: transform;
 }
 .btn-gold:hover::before {
   animation: btnPremiumShine 1.5s infinite;
@@ -525,7 +540,8 @@ body {
   cursor: pointer;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  /* GSAP owns transform (magnetic x/y) — exclude it to prevent double-easing */
+  transition: border-color 0.4s cubic-bezier(0.23,1,0.32,1), background 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s cubic-bezier(0.23,1,0.32,1);
   position: relative; overflow: hidden;
 }
 .btn-ghost:hover {
@@ -536,6 +552,7 @@ body {
     0 0 20px rgba(91,194,231,0.2);
   transform: translateY(-2px);
   color: var(--gold-light);
+  will-change: transform;
 }
 
 .btn-shine-overlay {
@@ -1203,9 +1220,8 @@ body {
   canvas { image-rendering: -webkit-optimize-contrast; }
 }
 
-/* Smooth section transitions */
+/* Prevent subpixel rendering artifacts on sections with GPU-composited children */
 section {
-  will-change: auto;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -1251,3 +1267,15 @@ section {
   /* Reduce section headlines on very small screens */
   h1, h2 { word-break: break-word; }
 }
+
+/* ── CONTENT-VISIBILITY: defers paint/layout for off-screen sections ──
+   Browser skips rendering until the section enters the viewport.
+   contain-intrinsic-size reserves layout space so scroll positions
+   and GSAP ScrollTrigger calculations remain accurate.
+   Applied only to static/non-canvas sections below the fold.        */
+.cv-section {
+  content-visibility: auto;
+}
+.cv-contact    { contain-intrinsic-size: 0 800px; }
+.cv-certs      { contain-intrinsic-size: 0 560px; }
+.cv-footer     { contain-intrinsic-size: 0 420px; }

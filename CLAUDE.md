@@ -240,3 +240,12 @@ sharp('input.png').resize(w, h, { kernel: sharp.kernel.lanczos3 }).ensureAlpha()
 - Stat card `overflow: 'hidden'` clips content — use `overflow: 'visible'` on outer panel, scroll on inner messages div
 - Globe video crossfade: opacity interpolates over first 10% of scroll progress (`fadeEnd = 0.10`)
 - Hero chapter `align: 'right'` sets both `alignItems: 'flex-end'` and `textAlign: 'right'` on the overlay
+
+### Animation Architecture
+- **Pattern**: IO for detection, GSAP for animation execution — never CSS `transition` on GSAP-animated elements
+- **`useFadeUpBatch(sectionRef)`** hook (`src/hooks/useFadeUpBatch.js`) — use this in any section component that has `.fade-up` children. Replaces the old IO-on-section + `setTimeout` + `classList.add('visible')` pattern.
+- **`data-animation` attribute** — add `data-animation="fade-up|fade-left|fade-right|scale-in|fade-down"` to any element for automatic IO+GSAP entrance via ScrollReveal.jsx. Only works for elements in the initial DOM (not lazy-loaded sections — use hook for those).
+- **`.fade-up` CSS**: initial state only (`opacity:0; transform:translateY(28px)`). NO transition — GSAP owns it. `.visible` class added by hook's `onComplete` as marker only.
+- **`will-change`**: only on constantly-animating elements (cursor, hero canvas, chapter overlays). Hover-only: use `:hover` state. Never static on cards.
+- **`content-visibility: auto`**: Contact (800px), Certifications (560px), Footer (420px). Skip canvas/interactive sections.
+- **GSAP plugins**: core + ScrollTrigger only. `registerPlugin` only in App.jsx. Do not add other plugins.

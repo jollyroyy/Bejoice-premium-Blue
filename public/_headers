@@ -11,35 +11,11 @@
   Service-Worker-Allowed: /
 
 # ── Hashed JS/CSS bundles (Vite content-hash in filename) — cache forever ─────
+# New deploys produce new filenames → users never get stale code.
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
-# ── Local frame sequences — immutable (filenames are stable) ──────────────────
-/frames1/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/frames2/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/3d/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/port/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/saudi/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/bejoice_truck/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/frames8/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/tech_enng/*
-  Cache-Control: public, max-age=31536000, immutable
-
-# ── Static images (logos, icons) — 7 days + stale-while-revalidate ────────────
+# ── Static images (logos, icons served from Netlify) ──────────────────────────
 /*.webp
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
@@ -52,10 +28,14 @@
 /*.png
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
-# ── Security headers — every response ─────────────────────────────────────────
+# ── Security + performance headers — every response ───────────────────────────
 /*
+  # HSTS: forces HTTPS on repeat visits — eliminates redirect round-trip (saves ~200ms)
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: upgrade-insecure-requests; block-all-mixed-content;
+  # Hint to Netlify CDN: vary responses by encoding for Brotli/gzip delivery
+  Vary: Accept-Encoding
