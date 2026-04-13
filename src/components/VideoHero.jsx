@@ -43,7 +43,7 @@ function CountUp({ target, suffix = '', duration = 900, arabic = false }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // Config
 // ─────────────────────────────────────────────────────────────────────────────
-const SCROLL_HEIGHT = 1800
+const SCROLL_HEIGHT = 2000
 
 // ── Frame sequences ───────────────────────────────────────────────────
 // 3d:            0–144   (145) 3D HDR intro PNGs — hero
@@ -562,8 +562,8 @@ export default function VideoHero({ onQuoteClick }) {
       }
     }
     
-    // Phase 1b — Eager batch: load first 30 frames (smaller chunk for less lag)
-    loadFrameRange(1, 30)
+    // Phase 1b — Eager batch: load first 60 frames for smooth initial scroll
+    loadFrameRange(1, 60)
 
     // Phase 2 — idle background: load all remaining frames when browser is free
     const scheduleIdle = (start) => {
@@ -573,7 +573,7 @@ export default function VideoHero({ onQuoteClick }) {
         : setTimeout(() => { loadFrameRange(start, start + 39); scheduleIdle(start + 40) }, 300)
       return handle
     }
-    scheduleIdle(31)
+    scheduleIdle(61)
   }, [loadFrameRange, paintFrame])
 
   // Phase 3 — scroll-ahead: called from RAF loop to stay 80 frames ahead

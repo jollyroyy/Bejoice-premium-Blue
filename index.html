@@ -55,9 +55,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <!-- S3 CDN for hero WebP frames + logo assets -->
-    <link rel="preconnect" href="https://bejoice-premium.s3.me-central-1.amazonaws.com" crossorigin />
-    <link rel="dns-prefetch" href="https://bejoice-premium.s3.me-central-1.amazonaws.com" />
+    <!-- CloudFront CDN for hero WebP frames + logo assets -->
+    <link rel="preconnect" href="https://d22ga4j7bn728b.cloudfront.net" crossorigin />
+    <link rel="dns-prefetch" href="https://d22ga4j7bn728b.cloudfront.net" />
     <!-- Cal.com booking modal -->
     <link rel="preconnect" href="https://cal.com" />
     <link rel="preconnect" href="https://app.cal.com" />
@@ -75,12 +75,22 @@
     ════════════════════════════════════════════════════════════ -->
     <!-- Hero frames — NO crossorigin: VideoHero loads via new Image() (no-CORS).
          crossorigin="anonymous" creates a separate cache entry → double download.
-         Frame 0001 = high priority (LCP). Frames 0002-0005 = low priority buffer. -->
-    <link rel="preload" as="image" href="https://bejoice-premium.s3.me-central-1.amazonaws.com/3d/0001.webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="https://bejoice-premium.s3.me-central-1.amazonaws.com/3d/0002.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://bejoice-premium.s3.me-central-1.amazonaws.com/3d/0003.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://bejoice-premium.s3.me-central-1.amazonaws.com/3d/0004.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://bejoice-premium.s3.me-central-1.amazonaws.com/3d/0005.webp" type="image/webp" fetchpriority="low" />
+         Frame 0001 = high priority (LCP). Frames 0002-0015 = low priority buffer. -->
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0001.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0002.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0003.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0004.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0005.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0006.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0007.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0008.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0009.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0010.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0011.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0012.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0013.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0014.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0015.webp" type="image/webp" fetchpriority="low" />
     <!-- Critical font CSS — preloaded but applied NON-BLOCKING (see font links below) -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" as="style" fetchpriority="high" />
 
