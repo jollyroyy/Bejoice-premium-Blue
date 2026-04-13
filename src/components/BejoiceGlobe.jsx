@@ -480,87 +480,89 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
   }, []);
 
   const inner = (
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 'clamp(1.5rem,4vw,4rem)', padding: '0 clamp(1rem,3vw,2rem)' }}>
 
+        {/* ── LEFT: Globe ── */}
         <motion.div
-          initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }}
-          style={{ textAlign: 'center', marginBottom: 'clamp(0.6rem,1.5vw,1.2rem)' }}
+          initial={{ opacity: 0, scale: 0.88 }} whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }} transition={{ duration: 1.2, ease: [0.16,1,0.3,1] }}
+          style={{ position: 'relative', flexShrink: 0, width: 'clamp(320px, 55vw, 720px)' }}
         >
-          <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:800, letterSpacing: isAr ? '0' : '0.3em', textTransform: isAr ? 'none' : 'uppercase', color:'#5BC2E7', display:'block', marginBottom:'0.9rem' }}>
-            {isAr ? ar.globe.eyebrow : 'GLOBAL PRESENCE'}
-          </span>
-          <h2 style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'clamp(1.3rem,3.5vw,3.2rem)', color:'#ffffff', letterSpacing: isAr ? '0' : '0.04em', lineHeight: isAr ? 1.3 : 1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
-            {isAr ? ar.globe.headline : 'BEJOICE CONNECTS SAUDI TO THE WORLD'}
-          </h2>
+          {/* Outer glow ring */}
+          <div style={{
+            position: 'absolute', inset: -40,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(91,194,231,0.14) 0%, rgba(30,80,180,0.09) 55%, transparent 75%)',
+            filter: 'blur(24px)',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }} />
+
+          {/* Globe canvas */}
+          <div
+            ref={mountRef}
+            style={{
+              width: '100%',
+              aspectRatio: '1 / 1',
+              cursor: 'grab',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              position: 'relative',
+              zIndex: 1,
+              boxShadow: '0 0 0 1px rgba(91,194,231,0.12), 0 0 80px rgba(30,80,200,0.28), 0 0 160px rgba(10,20,60,0.7)',
+              touchAction: 'none',
+            }}
+          />
+
+          {/* Hover tooltip */}
+          {hovered && (
+            <motion.div
+              initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
+              style={{
+                position:'absolute', bottom:32, left:'50%', transform:'translateX(-50%)',
+                background:'rgba(6,8,20,0.95)',
+                border:'1px solid rgba(91,194,231,0.55)',
+                borderRadius:'2rem', padding:'0.45rem 1.3rem',
+                fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:700,
+                color:'#5BC2E7', whiteSpace:'nowrap', pointerEvents:'none',
+                boxShadow:'0 4px 24px rgba(0,0,0,0.8)',
+                zIndex: 2,
+              }}
+            >
+              {hovered}
+            </motion.div>
+          )}
+
+          <div style={{ textAlign:'center', marginTop:'0.8rem', fontFamily:"'DM Sans',sans-serif", fontSize:'0.65rem', color:'rgba(91,194,231,0.4)', letterSpacing:'0.22em', textTransform:'uppercase' }}>
+            DRAG TO ROTATE
+          </div>
         </motion.div>
 
-        <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'clamp(0.6rem,1.5vw,1rem)' }}>
+        {/* ── RIGHT: All text ── */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'clamp(1rem,2.5vw,2rem)', minWidth: 0 }}>
+
+          {/* Eyebrow + headline */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.88 }} whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }} transition={{ duration: 1.2, ease: [0.16,1,0.3,1] }}
-            style={{ position: 'relative', flexShrink: 0, width: '100%', maxWidth: 'min(380px, 55vh, 70vw)' }}
+            initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }}
           >
-            {/* Outer glow ring */}
-            <div style={{
-              position: 'absolute', inset: -28,
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(91,194,231,0.12) 0%, rgba(30,80,180,0.08) 55%, transparent 75%)',
-              filter: 'blur(18px)',
-              pointerEvents: 'none',
-              zIndex: 0,
-            }} />
-
-            {/* Globe canvas */}
-            <div
-              ref={mountRef}
-              style={{
-                width: '100%',
-                aspectRatio: '1 / 1',
-                cursor: 'grab',
-                borderRadius: '50%',
-                overflow: 'hidden',
-                position: 'relative',
-                zIndex: 1,
-                boxShadow: '0 0 0 1px rgba(91,194,231,0.12), 0 0 60px rgba(30,80,200,0.22), 0 0 120px rgba(10,20,60,0.6)',
-                touchAction: 'none',
-              }}
-            />
-
-            {/* Hover tooltip */}
-            {hovered && (
-              <motion.div
-                initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }}
-                style={{
-                  position:'absolute', bottom:24, left:'50%', transform:'translateX(-50%)',
-                  background:'rgba(6,8,20,0.95)',
-                  border:'1px solid rgba(91,194,231,0.55)',
-                  borderRadius:'2rem', padding:'0.45rem 1.3rem',
-                  fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:700,
-                  color:'#5BC2E7', whiteSpace:'nowrap', pointerEvents:'none',
-                  boxShadow:'0 4px 24px rgba(0,0,0,0.8)',
-                  zIndex: 2,
-                }}
-              >
-                {hovered}
-              </motion.div>
-            )}
-
-            <div style={{ textAlign:'center', marginTop:'0.8rem', fontFamily:"'DM Sans',sans-serif", fontSize:'0.65rem', color:'rgba(91,194,231,0.4)', letterSpacing:'0.22em', textTransform:'uppercase' }}>
-              DRAG TO ROTATE
-            </div>
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:800, letterSpacing: isAr ? '0' : '0.3em', textTransform: isAr ? 'none' : 'uppercase', color:'#5BC2E7', display:'block', marginBottom:'0.9rem' }}>
+              {isAr ? ar.globe.eyebrow : 'GLOBAL PRESENCE'}
+            </span>
+            <h2 style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'clamp(1.6rem,4vw,3.8rem)', color:'#ffffff', letterSpacing: isAr ? '0' : '0.04em', lineHeight: isAr ? 1.3 : 1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
+              {isAr ? ar.globe.headline : 'BEJOICE CONNECTS SAUDI TO THE WORLD'}
+            </h2>
           </motion.div>
 
-          {/* Office list — grouped */}
+          {/* Office list */}
           <motion.div
-            initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }}
-            viewport={{ once:true }} transition={{ duration:0.7, delay:0.4 }}
-            style={{ width:'100%', maxWidth:600 }}
+            initial={{ opacity:0, x:30 }} whileInView={{ opacity:1, x:0 }}
+            viewport={{ once:true }} transition={{ duration:0.7, delay:0.2 }}
           >
             {/* HQ */}
-            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'0.7rem', marginBottom:'1rem' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:'0.7rem', marginBottom:'1rem' }}>
               <span style={{ width:12, height:12, borderRadius:'50%', background:'#8DD8F0', flexShrink:0, boxShadow:'0 0 8px rgba(91,194,231,0.5)' }} />
-              <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,3vw,1.4rem)', color:'#8DD8F0', letterSpacing: isAr ? '0' : '0.08em' }}>{isAr ? ar.globe.hq : 'DUBAI, UAE — HEADQUARTERS'}</span>
+              <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,2.5vw,1.4rem)', color:'#8DD8F0', letterSpacing: isAr ? '0' : '0.08em' }}>{isAr ? ar.globe.hq : 'DUBAI, UAE — HEADQUARTERS'}</span>
             </div>
 
             {/* Separator */}
@@ -570,7 +572,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
               <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
             </div>
 
-            <div style={{ display:'flex', justifyContent:'center', gap:'0.5rem 1.5rem', flexWrap:'wrap', marginBottom:'0.25rem' }}>
+            <div style={{ display:'flex', gap:'0.5rem 1.5rem', flexWrap:'wrap', marginBottom:'0.25rem' }}>
               {(isAr ? ar.globe.offices : [
                 { label:'Saudi Arabia', flag:'🇸🇦' },
                 { label:'UAE',          flag:'🇦🇪' },
@@ -587,12 +589,12 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             <motion.p
               animate={{ opacity: [0.7, 1, 0.7] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(1rem,2.2vw,1.15rem)', color:'rgba(91,194,231,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', textAlign:'center', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}
+              style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.85rem,2vw,1.1rem)', color:'rgba(91,194,231,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}
             >
               {isAr ? ar.globe.tagline : 'Strategically positioned for seamless global connectivity'}
             </motion.p>
-
           </motion.div>
+
         </div>
       </div>
   )
@@ -600,8 +602,8 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
   if (embedded) {
     if (fullscreen) {
       return (
-        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ width: '100%', maxWidth: 1200, padding: '0 clamp(1rem,4vw,3rem)' }}>
+        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: 'clamp(1rem,3vw,2rem)' }}>
+          <div style={{ width: '100%' }}>
             {inner}
           </div>
         </div>

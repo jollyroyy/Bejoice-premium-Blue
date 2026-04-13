@@ -81,7 +81,7 @@ export default function Contact() {
       className="cv-section cv-contact"
       style={{
         /* Deep dark base — echoes hero palette */
-        background: 'linear-gradient(160deg, #060810 0%, #080b14 45%, #091524 100%)',
+        background: '#183650',
         borderTop: '1px solid rgba(91,194,231,0.08)',
         position: 'relative', overflow: 'hidden',
         padding: 'clamp(3rem,8vw,7rem) clamp(1rem,5vw,2.5rem)',

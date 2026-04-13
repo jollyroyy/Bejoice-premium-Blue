@@ -738,7 +738,7 @@ export default function VideoHero({ onQuoteClick }) {
       <div className="hero-sticky-viewport" style={{ position:'sticky', top:0, height:'100vh', overflow:'hidden' }}>
 
         {/* Dark base */}
-        <div style={{ position:'absolute', inset:0, zIndex:0, background:'#091524' }} />
+        <div style={{ position:'absolute', inset:0, zIndex:0, background:'#183650' }} />
 
         {/* ── CANVAS — sits beneath globe, always ready ── */}
         <canvas ref={canvasRef} style={{
@@ -752,7 +752,7 @@ export default function VideoHero({ onQuoteClick }) {
         {/* Exit overlay */}
         <div ref={exitOverlayRef} style={{
           position:'absolute', inset:0, zIndex:8,
-          background:'linear-gradient(to bottom,rgba(7,16,28,0.96) 0%,#091524 100%)',
+          background:'linear-gradient(to bottom,rgba(24,54,80,0.96) 0%,#183650 100%)',
           pointerEvents:'none', opacity:0, willChange:'opacity',
         }} />
 
@@ -760,8 +760,8 @@ export default function VideoHero({ onQuoteClick }) {
         <div style={{
           position:'absolute', inset:0, zIndex:3, pointerEvents:'none',
           background:`
-            radial-gradient(ellipse 75% 65% at 50% 50%,rgba(7,16,28,0) 0%,rgba(7,16,28,0.45) 100%),
-            linear-gradient(to bottom,rgba(7,16,28,0.50) 0%,rgba(7,16,28,0.01) 22%,rgba(7,16,28,0.01) 76%,rgba(7,16,28,0.70) 100%)
+            radial-gradient(ellipse 75% 65% at 50% 50%,rgba(24,54,80,0) 0%,rgba(24,54,80,0.45) 100%),
+            linear-gradient(to bottom,rgba(24,54,80,0.50) 0%,rgba(24,54,80,0.01) 22%,rgba(24,54,80,0.01) 76%,rgba(24,54,80,0.70) 100%)
           `,
         }} />
 
@@ -769,7 +769,7 @@ export default function VideoHero({ onQuoteClick }) {
         {/* ── Canvas dimmer — darkens frame scrubbing during globe chapter ── */}
         <div ref={canvasDimRef} style={{
           position: 'absolute', inset: 0, zIndex: 2,
-          background: '#091524', opacity: 0, pointerEvents: 'none', transition: 'none',
+          background: '#183650', opacity: 0, pointerEvents: 'none', transition: 'none',
         }} />
 
         {/* ── GLOBE CHAPTER — full-screen, sits above canvas ── */}
@@ -777,7 +777,7 @@ export default function VideoHero({ onQuoteClick }) {
           position: 'absolute', inset: 0, zIndex: 6,
           opacity: 0, pointerEvents: 'none', transition: 'none',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(10,18,40,0.85) 0%, rgba(7,16,28,0.98) 100%)',
+          background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(24,54,80,0.85) 0%, rgba(18,40,64,0.98) 100%)',
         }}>
           <Suspense fallback={null}>
             <BejoiceGlobe embedded fullscreen />
@@ -1027,7 +1027,7 @@ export default function VideoHero({ onQuoteClick }) {
 
         /* ── Globe video: contain (full frame) on portrait/mobile ── */
         @media (max-width: 767px) and (orientation: portrait) {
-          .hero-globe-video { object-fit: contain !important; background: #091524; }
+          .hero-globe-video { object-fit: contain !important; background: #183650; }
         }
 
         /* ════════════════════════════════════════════════════
