@@ -891,10 +891,17 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Grids */
-.qq-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.qq-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
-.qq-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+/* Grids — mobile-first */
+.qq-grid-2 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.qq-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.qq-grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+@media (min-width: 540px) {
+  .qq-grid-2 { grid-template-columns: 1fr 1fr; }
+  .qq-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (min-width: 769px) {
+  .qq-grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
 
 /* Type buttons */
 .qq-type-btn {
@@ -951,11 +958,14 @@ body {
   border-color: rgba(91,194,231,0.25);
 }
 
-/* Services grid */
+/* Services grid — mobile-first */
 .qq-services-grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
+}
+@media (min-width: 769px) {
+  .qq-services-grid { grid-template-columns: repeat(4, 1fr); }
 }
 .qq-service-card {
   position: relative;
@@ -1079,15 +1089,16 @@ body {
 
 /* Mobile */
 @media (max-width: 768px) {
-  .qq-panel { padding: 1.5rem; }
-  .qq-grid-2, .qq-grid-3 { grid-template-columns: 1fr; }
-  .qq-grid-4 { grid-template-columns: 1fr 1fr; }
-  .qq-services-grid { grid-template-columns: 1fr 1fr; }
-  .qq-section { padding: 2rem 1.5rem; }
-  /* Inputs: prevent iOS zoom */
-  .qq-panel input, .qq-panel select, .qq-panel textarea {
-    font-size: 16px !important;
-  }
+  .qq-panel { padding: 1.2rem; }
+  .qq-section { padding: 2rem 1rem; }
+  /* Prevent iOS zoom on ALL inputs */
+  .qq-panel input, .qq-panel select, .qq-panel textarea { font-size: 16px !important; }
+  /* Tabs: tighter on tablet */
+  .qq-tab { padding: 0.7rem 1rem; }
+  /* Type buttons: always full height */
+  .qq-type-btn { min-height: 52px; }
+  /* Nav buttons: full width stack */
+  .qq-next-btn, .qq-submit-btn { width: 100%; }
 }
 /* ── HEAVY CARGO / WHY BEJOICE outer glass cards: fluid on mobile ── */
 @media (max-width: 767px) {
@@ -1111,10 +1122,18 @@ body {
 .testimonial-dot { min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
 
 @media (max-width: 480px) {
-  .qq-panel { padding: 0.9rem !important; }
-  .qq-grid-4 { grid-template-columns: 1fr 1fr; }
-  .qq-services-grid { grid-template-columns: 1fr 1fr !important; }
-  .qq-tab { min-height: 44px; }
+  .qq-panel { padding: 0.8rem !important; }
+  .qq-tab { min-height: 48px; padding: 0.6rem 0.75rem; }
+  .qq-tab-label { font-size: 0.7rem; }
+  .qq-tab-sub { display: none; } /* hide subtitles on very small screens */
+  .qq-type-btn { min-height: 56px; font-size: 0.9rem; }
+  .qq-add-btn { min-height: 44px; padding: 0.6rem 1rem; font-size: 0.75rem; }
+  .qq-service-card { min-height: 80px; padding: 0.85rem 0.6rem; }
+  /* Step indicator: smaller dots on mobile */
+  .qq-step-dot { width: 24px !important; height: 24px !important; font-size: 0.65rem !important; }
+  /* Back/next nav: full width, stacked */
+  .qq-nav-row { flex-direction: column-reverse; gap: 0.5rem; }
+  .qq-next-btn, .qq-submit-btn { width: 100% !important; min-height: 52px; font-size: 1rem; }
 }
 
 /* ── MOBILE AUDIT FIXES (March 2026) ── */
@@ -1282,3 +1301,5 @@ section {
 
 @keyframes db-spin-cw  { from { transform: rotate(0deg)    } to { transform: rotate(360deg)  } }
 @keyframes db-spin-ccw { from { transform: rotate(0deg)    } to { transform: rotate(-360deg) } }
+
+@keyframes qqToastIn { from { opacity: 0; transform: translateX(-50%) translateY(-16px) scale(0.95); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }
