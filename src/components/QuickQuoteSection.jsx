@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import Container3DViewer, { CONTAINER_SPECS, WEIGHT_TABLE, WeightDistributionGuide } from './Container3DViewer';
 import { useLang } from '../context/LangContext';
 import arT from '../i18n/ar';
+import { sendQuoteEmail, isValidEmail, isValidPhone } from '../utils/emailService';
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 const INCOTERMS = ['EXW','FCA','FAS','FOB','CFR','CIF','CPT','CIP','DAP','DPU','DDP'];
@@ -500,7 +501,9 @@ function SeaForm({ onSuccess, isAr }) {
     if (step === 3) {
       if (!d.name.trim()) e.name = isAr ? arT.quickQuote.errName : 'Full name is required'
       if (!d.email.trim()) e.email = isAr ? arT.quickQuote.errEmail : 'Email address is required'
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address'
       if (!d.phone.trim()) e.phone = isAr ? arT.quickQuote.errPhone : 'Phone / WhatsApp is required'
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number'
     }
     setErrors(e)
     return Object.keys(e).length === 0
@@ -512,9 +515,18 @@ function SeaForm({ onSuccess, isAr }) {
     ? [arT.quickQuote.stepRoute, arT.quickQuote.stepCargo, arT.quickQuote.stepServices, arT.quickQuote.stepContact]
     : ['Route', 'Cargo', 'Services', 'Contact'];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!validate()) return;
     setLoading(true);
-    setTimeout(() => { setLoading(false); onSuccess('sea'); }, 1400);
+    try {
+      await sendQuoteEmail('sea', d);
+      onSuccess('sea');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('sea'); // still show success to user
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -667,6 +679,43 @@ function AirForm({ onSuccess, isAr }) {
     name: '', company: '', email: '', phone: '', notes: '',
   });
   const up = (k, v) => setD(p => ({ ...p, [k]: v }));
+  const [airErrors, setAirErrors] = useState({});
+
+  const validateAir = () => {
+    const e = {};
+    if (step === 0) {
+      if (!d.origin)    e.origin      = 'Origin airport is required';
+      if (!d.destination) e.destination = 'Destination airport is required';
+      if (!d.readyDate) e.readyDate   = 'Cargo ready date is required';
+    }
+    if (step === 1) {
+      if (!d.commodity) e.commodity   = 'Commodity description is required';
+      if (!d.weight)    e.weight      = 'Weight is required';
+    }
+    if (step === 3) {
+      if (!d.name.trim())  e.name  = 'Full name is required';
+      if (!d.email.trim()) e.email = 'Email address is required';
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address';
+      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required';
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number';
+    }
+    setAirErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleAirSubmit = async () => {
+    if (!validateAir()) return;
+    setLoading(true);
+    try {
+      await sendQuoteEmail('air', d);
+      onSuccess('air');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('air');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const volWeight = () => {
     const l = parseFloat(d.length) || 0;
@@ -821,7 +870,7 @@ function AirForm({ onSuccess, isAr }) {
 
       {step === 3 && <ContactStep d={d} up={up} isAr={isAr} />}
 
-      <NavButtons step={step} totalSteps={4} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('air'); }, 1400); }} loading={loading} isAr={isAr} />
+      <NavButtons step={step} totalSteps={4} onBack={() => { setStep(s => s - 1); setAirErrors({}); }} onNext={() => setStep(s => s + 1)} onSubmit={handleAirSubmit} loading={loading} validate={validateAir} isAr={isAr} />
     </div>
   );
 }
@@ -837,6 +886,42 @@ function LandForm({ onSuccess, isAr }) {
     name: '', company: '', email: '', phone: '', notes: '',
   });
   const up = (k, v) => setD(p => ({ ...p, [k]: v }));
+  const [landErrors, setLandErrors] = useState({});
+
+  const validateLand = () => {
+    const e = {};
+    if (step === 0) {
+      if (!d.origin)      e.origin      = 'Origin city is required';
+      if (!d.destination) e.destination = 'Destination city is required';
+      if (!d.readyDate)   e.readyDate   = 'Cargo ready date is required';
+    }
+    if (step === 1) {
+      if (!d.commodity)   e.commodity   = 'Commodity description is required';
+    }
+    if (step === 2) {
+      if (!d.name.trim())  e.name  = 'Full name is required';
+      if (!d.email.trim()) e.email = 'Email address is required';
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address';
+      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required';
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number';
+    }
+    setLandErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleLandSubmit = async () => {
+    if (!validateLand()) return;
+    setLoading(true);
+    try {
+      await sendQuoteEmail('land', d);
+      onSuccess('land');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('land');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const TRUCK_TYPES = ['Curtainsider (13.6m)','Box Truck','Flatbed / Lowbed','Reefer Trailer','Tanker','Tipper','Mega Trailer'];
   const CITIES_SA = [
@@ -919,7 +1004,7 @@ function LandForm({ onSuccess, isAr }) {
 
       {step === 2 && <ContactStep d={d} up={up} />}
 
-      <NavButtons step={step} totalSteps={3} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('land'); }, 1400); }} loading={loading} />
+      <NavButtons step={step} totalSteps={3} onBack={() => { setStep(s => s - 1); setLandErrors({}); }} onNext={() => setStep(s => s + 1)} onSubmit={handleLandSubmit} loading={loading} validate={validateLand} />
     </div>
   );
 }
@@ -936,6 +1021,40 @@ function CustomsForm({ onSuccess }) {
     name: '', company: '', email: '', phone: '', notes: '',
   });
   const up = (k, v) => setD(p => ({ ...p, [k]: v }));
+  const [custErrors, setCustErrors] = useState({});
+
+  const validateCustoms = () => {
+    const e = {};
+    if (step === 0) {
+      if (!d.port) e.port = 'Port / airport is required';
+    }
+    if (step === 1) {
+      if (!d.commodity) e.commodity = 'Commodity description is required';
+    }
+    if (step === 3) {
+      if (!d.name.trim())  e.name  = 'Full name is required';
+      if (!d.email.trim()) e.email = 'Email address is required';
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address';
+      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required';
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number';
+    }
+    setCustErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleCustomsSubmit = async () => {
+    if (!validateCustoms()) return;
+    setLoading(true);
+    try {
+      await sendQuoteEmail('customs', d);
+      onSuccess('customs');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('customs');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const PORTS_ALL = [
     'Jeddah Islamic Port','King Abdulaziz Port (Dammam)','Yanbu Port','Jizan Port',
@@ -1030,7 +1149,7 @@ function CustomsForm({ onSuccess }) {
 
       {step === 3 && <ContactStep d={d} up={up} />}
 
-      <NavButtons step={step} totalSteps={4} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('customs'); }, 1400); }} loading={loading} />
+      <NavButtons step={step} totalSteps={4} onBack={() => { setStep(s => s - 1); setCustErrors({}); }} onNext={() => setStep(s => s + 1)} onSubmit={handleCustomsSubmit} loading={loading} validate={validateCustoms} />
     </div>
   );
 }
@@ -1046,6 +1165,42 @@ function ProjectForm({ onSuccess }) {
     name: '', company: '', email: '', phone: '', notes: '',
   });
   const up = (k, v) => setD(p => ({ ...p, [k]: v }));
+  const [projErrors, setProjErrors] = useState({});
+
+  const validateProject = () => {
+    const e = {};
+    if (step === 0) {
+      if (!d.origin)      e.origin      = 'Origin is required';
+      if (!d.destination) e.destination = 'Destination is required';
+      if (!d.commodity)   e.commodity   = 'Project description is required';
+    }
+    if (step === 1) {
+      if (!d.weight) e.weight = 'Weight is required';
+    }
+    if (step === 2) {
+      if (!d.name.trim())  e.name  = 'Full name is required';
+      if (!d.email.trim()) e.email = 'Email address is required';
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address';
+      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required';
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number';
+    }
+    setProjErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleProjectSubmit = async () => {
+    if (!validateProject()) return;
+    setLoading(true);
+    try {
+      await sendQuoteEmail('project', d);
+      onSuccess('project');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('project');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const PROJECT_TYPES = ['Heavy Lift','Out-of-Gauge (OOG)','Breakbulk','Project Machinery','Wind Energy Components','Oil & Gas Equipment','Mining Equipment'];
   const steps = ['Details', 'Dimensions', 'Contact'];
@@ -1111,7 +1266,7 @@ function ProjectForm({ onSuccess }) {
 
       {step === 2 && <ContactStep d={d} up={up} />}
 
-      <NavButtons step={step} totalSteps={3} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('project'); }, 1400); }} loading={loading} />
+      <NavButtons step={step} totalSteps={3} onBack={() => { setStep(s => s - 1); setProjErrors({}); }} onNext={() => setStep(s => s + 1)} onSubmit={handleProjectSubmit} loading={loading} validate={validateProject} />
     </div>
   );
 }

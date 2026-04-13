@@ -244,51 +244,6 @@ export default function Nav({ onQuoteClick }) {
               </button>
             </div>
 
-            {/* Social icons — app-icon style squares */}
-            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-              <a
-                href="https://www.linkedin.com/company/bejoice-shipping-llc/"
-                target="_blank" rel="noopener noreferrer"
-                aria-label="Bejoice on LinkedIn"
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 30, height: 30, borderRadius: '7px',
-                  background: 'linear-gradient(145deg, #0d7ad6 0%, #0A66C2 60%, #084ea1 100%)',
-                  border: 'none', color: '#ffffff', textDecoration: 'none',
-                  transition: 'all 0.22s',
-                  boxShadow: '0 2px 8px rgba(10,102,194,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.06)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(10,102,194,0.75), 0 0 0 1px rgba(255,255,255,0.15) inset' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(10,102,194,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)' }}
-              >
-                {/* Official LinkedIn "in" lettermark */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                  <path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/>
-                </svg>
-              </a>
-              <a
-                href="https://www.instagram.com/bejoice_shipping"
-                target="_blank" rel="noopener noreferrer"
-                aria-label="Bejoice on Instagram"
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 30, height: 30, borderRadius: '7px',
-                  background: 'linear-gradient(135deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%)',
-                  border: 'none', color: '#ffffff', textDecoration: 'none',
-                  transition: 'all 0.22s',
-                  boxShadow: '0 2px 8px rgba(220,39,100,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.06)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(220,39,100,0.7), 0 0 0 1px rgba(255,255,255,0.15) inset' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(220,39,100,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)' }}
-              >
-                {/* Official Instagram camera icon */}
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                </svg>
-              </a>
-            </div>
           </div>
         </div>
       </nav>
@@ -323,6 +278,7 @@ export default function Nav({ onQuoteClick }) {
             <img src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-white.avif" alt="Bejoice" style={{ height: '52px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.8))' }} />
             <div style={{ borderLeft: '1.5px solid rgba(91,194,231,0.35)', paddingLeft: '9px', marginLeft: '6px' }}>
               <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', letterSpacing: '0.18em', color: '#ffffff', textTransform: 'uppercase', fontWeight: 700, lineHeight: 1 }}>Bejoice</div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', letterSpacing: '0.14em', color: '#ffffff', textTransform: 'uppercase', fontWeight: 600, lineHeight: 1, marginTop: '3px' }}>Group</div>
             </div>
           </div>
           <button
