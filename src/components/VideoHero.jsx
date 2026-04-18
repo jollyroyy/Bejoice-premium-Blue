@@ -69,11 +69,11 @@ const TOTAL_FRAMES       = FRAMES_BIC_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_TRUCK_
 const CDN = 'https://d22ga4j7bn728b.cloudfront.net'
 const S3  = 'https://bejoice-premium.s3.me-central-1.amazonaws.com'
 const FRAME_URLS = [
-  // bic zoomout sequence (idx 0–144) — local /bic/, 0001.webp–0145.webp
+  // bic zoomout sequence (idx 0–144) — CDN, 0001.webp–0145.webp
   ...Array.from({ length: FRAMES_BIC_COUNT }, (_, i) =>
-    `/bic/${String(i + 1).padStart(4, '0')}.webp`),
+    `${CDN}/bic/${String(i + 1).padStart(4, '0')}.webp`),
   // globe bridge (idx 145–210) — repeats last bic frame; invisible behind globe dim
-  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `/bic/0145.webp`),
+  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `${CDN}/bic/0145.webp`),
   // bejoice_truck seg (idx 486–630)
   ...Array.from({ length: FRAMES_TRUCK_COUNT }, (_, i) =>
     `${CDN}/bejoice_truck/${String(i + 1).padStart(4, '0')}.webp`),
