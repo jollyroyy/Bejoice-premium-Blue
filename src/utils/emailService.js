@@ -252,9 +252,15 @@ const MODE_LABELS = {
 }
 
 // ─── Main send function ───────────────────────────────────────────────────────
-export async function sendQuoteEmail(mode, rawData) {
+export async function sendQuoteEmail(mode, rawData, extraServices = []) {
   const d = sanitizeAll(rawData)
-  const body = BODY_BUILDERS[mode]?.(d) ?? JSON.stringify(d, null, 2)
+  let body = BODY_BUILDERS[mode]?.(d) ?? JSON.stringify(d, null, 2)
+
+  if (extraServices.length > 0) {
+    const labels = { sea:'Sea Freight', air:'Air Freight', land:'Road/Land Freight', customs:'Customs Clearance', project:'Project Cargo' }
+    const extras = extraServices.map(s => labels[s] || s).join(', ')
+    body += `\n\n➕ ALSO INTERESTED IN\n${extras}`
+  }
 
   const templateParams = {
     to_email: 'jollyroyy@gmail.com',

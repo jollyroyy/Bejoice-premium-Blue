@@ -48,20 +48,20 @@ const SCROLL_HEIGHT = 2000
 // ── Frame sequences ───────────────────────────────────────────────────
 // 3d:            0–144   (145) 3D HDR intro PNGs — hero
 // globe-bridge:  145–210 (66)  last 3d frame repeated — canvas fully dimmed during globe widget
-// saudi:         211–403 (193) Saudi Arabia footage PNGs — 3rd segment (after globe)
-// bejoice_truck: 404–548 (145) Truck/road footage PNGs
-// port:          549–717 (169) Port/sea footage PNGs
-// frames8:       718–838 (121) additional footage PNGs
-// tech_enng:     839–983 (145) tech/engineering footage PNGs
+// bejoice_truck: 211–355 (145) Truck/road footage PNGs
+// port:          356–524 (169) Port/sea footage PNGs
+// frames8:       525–645 (121) additional footage PNGs
+// tech_enng:     646–790 (145) tech/engineering footage PNGs
+// saudi:         791–983 (193) Saudi Arabia footage PNGs — moved to end
 // TOTAL: 984
 const FRAMES3D_COUNT     = 145
 const GLOBE_BRIDGE_COUNT = 66   // frames 145–210 — hidden behind globe widget
-const FRAMES_SAUDI_COUNT = 193
 const FRAMES_TRUCK_COUNT = 145
 const FRAMES_PORT_COUNT  = 169
 const FRAMES8_COUNT      = 121
 const FRAMES_TECH_COUNT  = 145
-const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_SAUDI_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT  // 984
+const FRAMES_SAUDI_COUNT = 193
+const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT + FRAMES_SAUDI_COUNT  // 984
 
 // ─── CDN BASE ────────────────────────────────────────────────────────────────
 // Primary: CloudFront edge (~5–20ms RTT for KSA/UAE users).
@@ -74,21 +74,21 @@ const FRAME_URLS = [
     `${CDN}/3d/${String(i + 1).padStart(4, '0')}.webp`),
   // globe bridge (idx 145–210) — repeats last 3d frame; invisible behind globe dim
   ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `${CDN}/3d/0145.webp`),
-  // saudi seg (idx 211–403) — 3rd segment, plays right after globe
-  ...Array.from({ length: FRAMES_SAUDI_COUNT }, (_, i) =>
-    `${CDN}/saudi/${String(i + 1).padStart(4, '0')}.webp`),
-  // bejoice_truck seg (idx 404–548) — starts from frame 1 after globe ends
+  // bejoice_truck seg (idx 211–355)
   ...Array.from({ length: FRAMES_TRUCK_COUNT }, (_, i) =>
     `${CDN}/bejoice_truck/${String(i + 1).padStart(4, '0')}.webp`),
-  // port seg (idx 549–717)
+  // port seg (idx 356–524)
   ...Array.from({ length: FRAMES_PORT_COUNT }, (_, i) =>
     `${CDN}/port/${String(i + 1).padStart(4, '0')}.webp`),
-  // frames8 seg (idx 718–838)
+  // frames8 seg (idx 525–645)
   ...Array.from({ length: FRAMES8_COUNT }, (_, i) =>
     `${CDN}/frames8/${String(i + 1).padStart(4, '0')}.webp`),
-  // tech_enng seg (idx 839–983)
+  // tech_enng seg (idx 646–790)
   ...Array.from({ length: FRAMES_TECH_COUNT }, (_, i) =>
     `${CDN}/tech_enng/${String(i + 1).padStart(4, '0')}.webp`),
+  // saudi seg (idx 791–983) — moved to end, after heavy lift
+  ...Array.from({ length: FRAMES_SAUDI_COUNT }, (_, i) =>
+    `${CDN}/saudi/${String(i + 1).padStart(4, '0')}.webp`),
 ]
 // S3 fallback URLs (same path, different origin)
 const FRAME_URLS_S3 = FRAME_URLS.map(u => u.replace(CDN, S3))
@@ -97,7 +97,7 @@ const FRAME_URLS_S3 = FRAME_URLS.map(u => u.replace(CDN, S3))
 const FRAME_FADE = 18
 
 // Chapters mapped to segments.
-// 3d:0–144 | globe-bridge:145–210 | saudi:211–403 | bejoice_truck:404–548 | port:549–717 | frames8:718–838 | tech_enng:839–983
+// 3d:0–144 | globe-bridge:145–210 | bejoice_truck:211–355 | port:356–524 | frames8:525–645 | tech_enng:646–790 | saudi:791–983
 const GLOBE_CHAPTER_START = 145
 const GLOBE_CHAPTER_END   = 210
 
@@ -118,73 +118,73 @@ const CHAPTERS = [
     align:        'center',
     globeChapter: true,
   },
-  // ── saudi: 211–403 — 3rd chapter ──
+  // ── bejoice_truck: 211–355 ──
   {
-    frameRange: [218, 390],
-    eyebrow:    'KINGDOM OF SAUDI ARABIA · VISION 2030',
-    headline:   ['CONNECTED GLOBALLY'],
-    sub:        'Born in Saudi Arabia. Trusted across 180+ countries. Bejoice Group — the Kingdom\'s premier freight forwarder powering Vision 2030 trade ambitions.',
-    align:      'center',
-    vAlign:     'bottom',
-  },
-  // ── bejoice_truck: 404–548 ──
-  {
-    frameRange: [413, 463],
+    frameRange: [220, 270],
     eyebrow:    '',
     headline:   ['FROM BLUE PRINT TO DELIVERY,', 'WE MOVE IT ALL'],
     sub:        'Seamless cross-border land transport across the GCC — powered by a modern fleet connecting Saudi Arabia to every regional hub.',
     align:      'right',
   },
   {
-    frameRange: [471, 541],
+    frameRange: [278, 348],
     eyebrow:    'OCEAN FREIGHT',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
     align:      'left',
   },
-  // ── port: 549–717 ──
+  // ── port: 356–524 ──
   {
-    frameRange: [557, 613],
+    frameRange: [363, 419],
     eyebrow:    'CUSTOMS CLEARANCE · PORT OPERATIONS',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
     sub:        'ZATCA-certified experts navigating complex regulatory landscapes to ensure rapid, compliant clearance for every shipment.',
     align:      'right',
   },
   {
-    frameRange: [621, 707],
+    frameRange: [427, 513],
     eyebrow:    'FCL & LCL',
     headline:   ['FROM PORT TO PORT.', 'WORLD-CLASS LOGISTICS'],
     sub:        'Comprehensive ocean freight solutions — full container loads, consolidated shipments, and breakbulk cargo managed with Saudi expertise.',
     align:      'left',
   },
-  // ── frames8: 718–838 ──
+  // ── frames8: 525–645 ──
   {
-    frameRange: [726, 780],
+    frameRange: [532, 586],
     eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
     headline:   ['SPEED ABOVE ALL.', 'DELIVERED ON TIME'],
     sub:        'Express air cargo solutions connecting Saudi Arabia to global hubs — critical shipments, time-sensitive freight, temperature-controlled cargo.',
     align:      'right',
   },
   {
-    frameRange: [781, 840],
+    frameRange: [587, 638],
     eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
     headline:   ['WORLD CLASS AIR FREIGHT'],
     sub:        '',
     align:      'right',
   },
-  // ── tech_enng: 839–983 ──
+  // ── tech_enng: 646–790 ──
   {
-    frameRange: [847, 911],
+    frameRange: [653, 717],
     eyebrow:    'HEAVY LIFT · PROJECT CARGO',
     headline:   ['PRECISION IN HANDLING.', 'EXCELLENCE IN DELIVERY'],
     sub:        'End-to-end technical cargo solutions engineered for complexity — heavy machinery, industrial equipment, and high-value freight delivered with zero compromise.',
     align:      'right',
   },
   {
-    frameRange: [919, 978],
+    frameRange: [725, 784],
     eyebrow:    '',
     headline:   ['TECHNICAL', 'ENGINEERING'],
     sub:        'Specialised handling of oversized, overweight and high-value cargo — engineered solutions for every challenge.',
+    align:      'center',
+    vAlign:     'bottom',
+  },
+  // ── saudi: 791–983 — moved to end, after heavy lift ──
+  {
+    frameRange: [797, 969],
+    eyebrow:    'KINGDOM OF SAUDI ARABIA · VISION 2030',
+    headline:   ['CONNECTED GLOBALLY'],
+    sub:        'Born in Saudi Arabia. Trusted across 180+ countries. Bejoice Group — the Kingdom\'s premier freight forwarder powering Vision 2030 trade ambitions.',
     align:      'center',
     vAlign:     'bottom',
   },
@@ -637,8 +637,8 @@ export default function VideoHero({ onQuoteClick }) {
       if (heroCardsRef.current) {
         const CARD_FADE_START  = 140
         const CARD_FADE_END    = 185
-        const CARGO_FADE_START = 793
-        const CARGO_FADE_END   = 813
+        const CARGO_FADE_START = 600
+        const CARGO_FADE_END   = 620
         const introOp = frameIdx < CARD_FADE_START ? 1
           : frameIdx > CARD_FADE_END ? 0
           : 1 - (frameIdx - CARD_FADE_START) / (CARD_FADE_END - CARD_FADE_START)
