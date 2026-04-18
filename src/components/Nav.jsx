@@ -124,7 +124,7 @@ export default function Nav({ onQuoteClick }) {
         aria-label={isAr ? 'الملاحة الرئيسية' : 'Main Navigation'}
         style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        transition: 'all 0.5s ease',
+        transition: 'background 0.5s ease, backdrop-filter 0.5s ease',
         padding: '12px 0',
         background: pastHero ? 'rgba(24,54,80,0.97)' : 'transparent',
         backdropFilter: pastHero ? 'blur(18px)' : 'none',

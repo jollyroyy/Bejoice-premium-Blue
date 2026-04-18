@@ -784,11 +784,12 @@ export default function VideoHero({ onQuoteClick }) {
           aria-hidden="true"
           id="hero-lcp-img"
           style={{
-            position:'absolute', inset:0, zIndex:1,
+            position:'absolute', inset:0, zIndex:2,
             width:'100%', height:'100%',
             objectFit:'cover',
             filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
-            transition:'opacity 0.3s ease',
+            transition:'opacity 0.4s ease',
+            willChange:'opacity',
           }}
         />
 
@@ -879,11 +880,11 @@ export default function VideoHero({ onQuoteClick }) {
                     fontFamily:"'DM Sans',sans-serif",
                     fontSize: isAr ? 'clamp(19px,1.6vw,20px)' : 'clamp(13px,1.4vw,16px)', letterSpacing: isAr ? '0' : '0.22em',
                     textTransform: isAr ? 'none' : 'uppercase', fontWeight:700,
-                    color:'rgba(91,194,231,1)',
-                    background:'rgba(91,194,231,0.22)',
-                    border:'1.5px solid rgba(91,194,231,0.75)',
+                    color:'rgba(255,255,255,1)',
+                    background:'rgba(255,255,255,0.12)',
+                    border:'1.5px solid rgba(255,255,255,0.55)',
                     borderRadius:'3px', padding:'6px 16px',
-                    boxShadow:'0 0 12px rgba(91,194,231,0.2)',
+                    boxShadow:'0 0 12px rgba(255,255,255,0.1)',
                     marginBottom:'14px',
                     alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                     backdropFilter:'blur(8px)',
