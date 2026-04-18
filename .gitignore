@@ -32,3 +32,32 @@ public/frames4/
 public/frames8/
 public/tech_enng/
 
+
+# IDE/tool config folders
+.adal/
+.agents/
+.augment/
+.codebuddy/
+.commandcode/
+.continue/
+.factory/
+.iflow/
+.junie/
+.kilocode/
+.kiro/
+.kode/
+.mcpjam/
+.mux/
+.neovate/
+.openhands/
+.playwright-mcp/
+.pochi/
+.qoder/
+.qwen/
+.roo/
+.trae/
+.vibe/
+.zencoder/
+skills/
+frames1/
+fracht-bg.png
