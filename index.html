@@ -81,21 +81,11 @@
          crossorigin="anonymous" creates a separate cache entry → double download.
          Frame 0001 = high priority (LCP). Frames 0002-0015 = low priority buffer. -->
     <link rel="preload" as="image" href="/bejoice-logo-nav.webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="/bic/0001.webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="/bic/0002.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0003.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0004.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0005.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0006.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0007.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0008.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0009.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0010.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0011.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0012.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0013.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0014.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="/bic/0015.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/bic/0001.webp" type="image/webp" fetchpriority="high" crossorigin="anonymous" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/bic/0002.webp" type="image/webp" fetchpriority="high" crossorigin="anonymous" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/bic/0003.webp" type="image/webp" fetchpriority="low" crossorigin="anonymous" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/bic/0004.webp" type="image/webp" fetchpriority="low" crossorigin="anonymous" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/bic/0005.webp" type="image/webp" fetchpriority="low" crossorigin="anonymous" />
     <!-- Critical font CSS — preloaded but applied NON-BLOCKING (see font links below) -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" as="style" fetchpriority="high" />
 
@@ -265,13 +255,20 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script>
-      /* Signal hero ready — fades in #root once critical frames are painted */
-      window.__markHeroReady = function() {
-        requestAnimationFrame(function() {
-          var root = document.getElementById('root');
-          if (root) root.style.opacity = '1';
-        });
-      };
+      /* Signal hero ready — fades in #root once critical frames are painted.
+         Hard 500ms fallback ensures LCP is never blocked by CDN latency. */
+      (function() {
+        var shown = false;
+        function show() {
+          if (shown) return; shown = true;
+          requestAnimationFrame(function() {
+            var root = document.getElementById('root');
+            if (root) root.style.opacity = '1';
+          });
+        }
+        window.__markHeroReady = show;
+        setTimeout(show, 500);
+      })();
     </script>
 
     <!-- Service Worker registration — fires after 'load' so it never blocks
