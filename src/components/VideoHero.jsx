@@ -573,6 +573,9 @@ export default function VideoHero({ onQuoteClick }) {
       // If we haven't scrolled yet, paint it instantly
       if (lastIdxRef.current === -1) {
         paintFrame(0)
+        // Fade out the static LCP placeholder image now that canvas has the frame
+        const lcpImg = document.getElementById('hero-lcp-img')
+        if (lcpImg) { lcpImg.style.opacity = '0'; setTimeout(() => { if (lcpImg) lcpImg.style.display = 'none' }, 350) }
         // Ensure first chapter is visible before showing the app
         applyProgress(FRAME_FADE)
         // Signal root to fade in (prevents FOUT/flash)
@@ -770,6 +773,24 @@ export default function VideoHero({ onQuoteClick }) {
           filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
           background:'#183650',
         }} />
+
+        {/* ── LCP IMAGE — static img so browser preloads before JS runs.
+             Sits on top of canvas at z:1, fades out once canvas paints frame 0. ── */}
+        <img
+          src="/hero-frame0.webp"
+          alt=""
+          fetchPriority="high"
+          decoding="sync"
+          aria-hidden="true"
+          id="hero-lcp-img"
+          style={{
+            position:'absolute', inset:0, zIndex:1,
+            width:'100%', height:'100%',
+            objectFit:'cover',
+            filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
+            transition:'opacity 0.3s ease',
+          }}
+        />
 
         {/* Exit overlay */}
         <div ref={exitOverlayRef} style={{
