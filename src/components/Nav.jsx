@@ -20,6 +20,7 @@ export default function Nav({ onQuoteClick }) {
   const isAr = lang === 'ar'
   const [scrolled, setScrolled]   = useState(false)
   const [pastHero, setPastHero]   = useState(false)
+  const [navVisible, setNavVisible] = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
   const [heavyOpen, setHeavyOpen] = useState(false)
   const drawerRef                 = useRef(null)
@@ -32,10 +33,14 @@ export default function Nav({ onQuoteClick }) {
   }, [])
 
   // Detect when scrollytelling hero ends (1800vh)
+  // Nav appears after CONNECTED GLOBALLY chapter (frame 390/983 ≈ 714vh)
   useEffect(() => {
     const update = (scrollY) => {
       const heroEnd = (1800 / 100) * window.innerHeight
+      // frame 390 of 983 across 1800vh = ~714vh
+      const connectedGloballyEnd = (714 / 100) * window.innerHeight
       setPastHero(scrollY > heroEnd)
+      setNavVisible(scrollY > connectedGloballyEnd)
     }
     const attach = () => {
       if (window.__lenis) {
@@ -124,11 +129,13 @@ export default function Nav({ onQuoteClick }) {
         aria-label={isAr ? 'الملاحة الرئيسية' : 'Main Navigation'}
         style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        transition: 'all 0.5s ease',
+        transition: 'opacity 0.6s ease, background 0.5s ease, backdrop-filter 0.5s ease',
         padding: '12px 0',
-        background: pastHero ? 'rgba(24,54,80,0.97)' : 'transparent',
-        backdropFilter: pastHero ? 'blur(18px)' : 'none',
-        WebkitBackdropFilter: pastHero ? 'blur(18px)' : 'none',
+        opacity: navVisible ? 1 : 0,
+        pointerEvents: navVisible ? 'auto' : 'none',
+        background: pastHero ? 'rgba(24,54,80,0.97)' : navVisible ? 'rgba(24,54,80,0.65)' : 'transparent',
+        backdropFilter: navVisible ? 'blur(18px)' : 'none',
+        WebkitBackdropFilter: navVisible ? 'blur(18px)' : 'none',
         borderBottom: 'none',
       }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
