@@ -47,7 +47,7 @@ const services = [
     ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><path d="M8 30L12 18H36L40 30" strokeLinejoin="round" /><path d="M4 34C8 30 12 38 16 34C20 30 24 38 28 34C32 30 36 38 40 34" strokeLinecap="round" /><rect x="20" y="10" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-1',
-    videoPoster: '/frames2/0160.jpg',
+    videoPoster: null,
     videoFrames: { folder: 'frames2', count: 289 },
   },
   {
@@ -64,9 +64,9 @@ const services = [
     ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><rect x="4" y="18" width="28" height="16" rx="1" /><path d="M32 24H40L44 30V34H32V24Z" /><circle cx="12" cy="36" r="4" /><circle cx="36" cy="36" r="4" /></svg>),
     span: 'md:col-span-1',
-    videoPoster: '/hero-truck-poster.jpg',
+    videoPoster: null,
     videoFrames: null,
-    truckBg: '/hero-truck-poster.jpg',
+    truckBg: null,
   },
   {
     num: '04', title: 'Customs Clearance',
@@ -84,7 +84,7 @@ const services = [
     ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><rect x="10" y="6" width="28" height="36" rx="2" /><path d="M16 16H32M16 22H32M16 28H26" strokeLinecap="round" /><circle cx="34" cy="34" r="7" fill="#091524" strokeWidth="1.5" /><path d="M30 34L33 37L38 31" strokeLinecap="round" strokeLinejoin="round" /></svg>),
     span: 'md:col-span-2',
-    videoPoster: '/frames4/0001.jpg',
+    videoPoster: null,
     videoFrames: { folder: 'frames4', count: 32 },
   },
   {
@@ -101,7 +101,7 @@ const services = [
     ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><path d="M4 20L24 8L44 20V42H4V20Z" /><rect x="18" y="28" width="12" height="14" rx="0.5" /><rect x="8" y="24" width="8" height="8" rx="0.5" /><rect x="32" y="24" width="8" height="8" rx="0.5" /></svg>),
     span: 'md:col-span-2',
-    truckBg: '/warehouse.png',
+    truckBg: null,
   },
   {
     num: '06', title: 'Heavy Lift & Project Logistics',
@@ -115,7 +115,7 @@ const services = [
     ],
     icon: (<svg viewBox="0 0 48 48" fill="none" stroke="#5BC2E7" strokeWidth="1.3" className="w-10 h-10"><path d="M6 36L16 20L28 28L38 12" strokeLinecap="round" strokeLinejoin="round" /><path d="M32 12H38V18" strokeLinecap="round" strokeLinejoin="round" /><circle cx="8" cy="40" r="3" /><circle cx="24" cy="40" r="3" /><circle cx="40" cy="40" r="3" /></svg>),
     span: 'md:col-span-1',
-    truckBg: '/project-cargo.jpg',
+    truckBg: null,
   },
 ]
 
