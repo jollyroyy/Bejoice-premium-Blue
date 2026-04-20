@@ -141,31 +141,20 @@ export default function Nav({ onQuoteClick }) {
             aria-label={isAr ? 'الصفحة الرئيسية بيجويس' : 'Bejoice Home'}
             aria-current="page"
             style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', marginLeft: '-173px' }}>
-            <div style={{
-              background: 'rgba(255,255,255,0.96)',
-              borderRadius: '10px',
-              padding: '4px 10px',
-              boxShadow: '0 2px 16px rgba(0,0,0,0.25)',
-            }}>
-              <picture>
-                <source srcSet="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-new.webp" type="image/webp" />
-                <img
-                  src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-new.webp"
-                  alt="Bejoice"
-                  width="480" height="200"
-                  fetchPriority="high"
-                  decoding="async"
-                  style={{
-                    height: 'clamp(40px, 8.5vw, 100px)',
-                    width: 'auto',
-                    aspectRatio: '480 / 200',
-                    maxWidth: 'clamp(140px, 32vw, 480px)',
-                    objectFit: 'contain',
-                    display: 'block',
-                  }}
-                />
-              </picture>
-            </div>
+              <img
+                src="/bejoice-logo-white.png"
+                alt="Bejoice"
+                className="nav-logo-img"
+                width="1509" height="839"
+                fetchPriority="high"
+                decoding="async"
+                style={{
+                  height: 'clamp(36px, 5vw, 56px)',
+                  width: 'auto',
+                  objectFit: 'contain',
+                  display: 'block',
+                }}
+              />
           </div>
 
           {/* Right side: CTA + Hamburger */}
@@ -331,12 +320,7 @@ export default function Nav({ onQuoteClick }) {
         {/* Header row */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.2rem 1.4rem', borderBottom: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0px' }}>
-            <div style={{ background: 'rgba(255,255,255,0.95)', borderRadius: '8px', padding: '3px 8px' }}>
-              <picture>
-                <source srcSet="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-new.webp" type="image/webp" />
-                <img src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-new.webp" alt="Bejoice" width="480" height="200" loading="lazy" decoding="async" style={{ height: '44px', width: 'auto', aspectRatio: '480 / 200', objectFit: 'contain', display: 'block' }} />
-              </picture>
-            </div>
+              <img src="/bejoice-logo-white.png" alt="Bejoice" width="1509" height="839" loading="lazy" decoding="async" style={{ height: '52px', width: 'auto', objectFit: 'contain', display: 'block', filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.8))' }} />
             <div style={{ borderLeft: '1.5px solid rgba(91,194,231,0.35)', paddingLeft: '9px', marginLeft: '6px' }}>
               <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', letterSpacing: '0.18em', color: '#ffffff', textTransform: 'uppercase', fontWeight: 700, lineHeight: 1 }}>Bejoice</div>
             </div>
