@@ -29,7 +29,7 @@ const POLICIES = {
       },
       {
         title: '5. Your Rights',
-        body: `Under the Saudi Personal Data Protection Law (PDPL), you have the right to access, correct, or delete your personal data. To exercise these rights, contact us at privacy@bejoice.com.`,
+        body: `Under the Saudi Personal Data Protection Law (PDPL), you have the right to access, correct, or delete your personal data. To exercise these rights, contact us at info@bejoiceshipping-ksa.com.`,
       },
       {
         title: '6. Security',
@@ -37,7 +37,7 @@ const POLICIES = {
       },
       {
         title: '7. Contact',
-        body: `Bejoice Global Logistics LLC\nBlock A, Al Raja Avenue, 1st floor, Office No. 2, Dammam 32234, Saudi Arabia\nEmail: privacy@bejoice.com\nPhone: +966 13 823 3461`,
+        body: `Bejoice Global Logistics LLC\nBlock A, Al Raja Avenue, 1st floor, Office No. 2, Dammam 32234, Saudi Arabia\nEmail: info@bejoiceshipping-ksa.com\nPhone: +966 13 823 3461`,
       },
     ],
   },
@@ -99,7 +99,7 @@ const POLICIES = {
       },
       {
         title: '6. Contact',
-        body: `If you have questions about our use of cookies, contact us at info@bejoiceshipping.com.`,
+        body: `If you have questions about our use of cookies, contact us at info@bejoiceshipping-ksa.com.`,
       },
     ],
   },
@@ -264,10 +264,10 @@ export default function Footer() {
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <svg style={{ flexShrink: 0, marginTop: '3px' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.7)" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <a href="mailto:info@bejoiceshipping.com" dir="ltr" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5, direction: 'ltr', unicodeBidi: 'embed' }}
+                <a href="mailto:info@bejoiceshipping-ksa.com" dir="ltr" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5, direction: 'ltr', unicodeBidi: 'embed' }}
                   onMouseEnter={e => e.target.style.color = '#ffffff'}
                   onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.72)'}
-                >info@bejoiceshipping.com</a>
+                >info@bejoiceshipping-ksa.com</a>
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <svg style={{ flexShrink: 0, marginTop: '3px' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.7)" strokeWidth="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>

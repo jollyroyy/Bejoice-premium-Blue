@@ -264,7 +264,7 @@ export async function sendQuoteEmail(mode, rawData, extraServices = []) {
 
   const templateParams = {
     to_email: 'jollyroyy@gmail.com',
-    reply_to: d.email || 'noreply@bejoice.com',
+    reply_to: d.email || 'info@bejoiceshipping-ksa.com',
     from_name: d.name || 'Bejoice Quote System',
     subject: `[Bejoice Quote] ${MODE_LABELS[mode] || mode} — ${d.name || 'Anonymous'}`,
     mode: MODE_LABELS[mode] || mode,

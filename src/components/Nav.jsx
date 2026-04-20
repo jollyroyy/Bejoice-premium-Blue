@@ -333,7 +333,7 @@ export default function Nav({ onQuoteClick }) {
             {toolCard('🚢', isAr ? ar.nav.quickQuote : 'Quick Quote', isAr ? 'أسعار شحن فورية' : 'Instant freight rates', handleQuote)}
             {toolCard('📡', isAr ? ar.nav.trackShipment : 'Track Shipment', isAr ? 'BL / AWB تتبع مباشر' : 'BL / AWB live tracking', () => { setMenuOpen(false); window.open('https://www.track-trace.com/', '_blank', 'noopener,noreferrer') })}
             {toolCard('📞', isAr ? ar.nav.bookCallTool : 'Book a Call', isAr ? 'تحدث مع خبير شحن' : 'Talk to a freight expert', () => { setMenuOpen(false); setTimeout(() => openCalPopup(), 350) })}
-            {toolCard('✉️', isAr ? ar.nav.emailUs : 'Email Us', 'quotes@bejoice.com', () => { setMenuOpen(false); window.location.href = 'mailto:quotes@bejoice.com' })}
+            {toolCard('✉️', isAr ? ar.nav.emailUs : 'Email Us', 'info@bejoiceshipping-ksa.com', () => { setMenuOpen(false); window.location.href = 'mailto:info@bejoiceshipping-ksa.com' })}
           </div>
 
           {/* Social links — app-icon squares */}
