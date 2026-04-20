@@ -3,7 +3,7 @@ import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
 
 const footerLinks = {
-  Company: ['About Bejoice', 'Certifications', 'Key Markets', 'Careers'],
+  Company: ['Why Bejoice', 'Certifications', 'Key Markets', 'Careers'],
   Support: ['Track Shipment', 'Get a Quote', 'Contact Us', 'Our Offices'],
 }
 
@@ -199,7 +199,7 @@ export default function Footer() {
                 <span className="shine-ltr" data-text="Connecting KSA to the World" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '14px', color: '#8DD8F0', letterSpacing: '0.04em' }}>Connecting KSA to the World</span>
               )}
               <img
-                src="/bejoice-logo-white.webp"
+                src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-white.webp"
                 alt="Bejoice"
                 width="1509" height="839"
                 loading="lazy" decoding="async"
@@ -227,7 +227,7 @@ export default function Footer() {
                           'Why Bejoice': 'certifications',
                           'Our Offices': 'globe',
                           'Key Markets': 'markets',
-                          'About Bejoice': 'hero'
+                          'Why Bejoice': 'hero'
                         }
                         const targetId = targets[item]
                         if (targetId) {
