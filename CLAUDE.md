@@ -24,13 +24,23 @@
 
 ## 🔴 STANDING RULE — MOBILE-FIRST ALWAYS
 **Every single change — new component, style tweak, layout fix, or feature — MUST be mobile-optimized without being asked.**
-- Test mentally at 375px (iPhone SE), 390px (iPhone 14), 768px (iPad) before finalising
+- Test mentally at 375px (iPhone SE), 390px (iPhone 14), 768px (iPad), 912px (Surface Pro) before finalising
 - Never use fixed `px` widths without a `min()` or `clamp()` guard
 - Use `100svh` (with `100vh` fallback) for full-viewport sticky containers
 - All tap targets ≥ 44px; input `font-size ≥ 16px` (prevents iOS zoom)
 - Overlapping / z-index issues MUST be caught and fixed in the same change
 - If a component is hidden on mobile to save space, ensure it is accessible via another path (e.g. hamburger drawer)
 - Floating elements (chatbot, FABs) must not block primary content on any screen size
+
+## 🚀 STANDING RULE — ALWAYS PUSH TO MAIN
+**After every change, always push to the `main` branch on the blue repo:**
+```bash
+git push origin main
+```
+- Active working branch is `feature/blue-theme-183650` locally
+- Remote `origin` = `https://github.com/jollyroyy/Bejoice-premium-Blue`
+- The `.claude/skills/audit-website` path is a **symlink** locally — `git reset --hard` and `git merge` will fail with "cannot create directory" error. Use `git push origin main` directly after committing on any branch, or use `git push origin feature/blue-theme-183650:main --force` as fallback.
+- Frame folders are gitignored — code-only pushes work fine
 
 ## About Bejoice
 - **Company:** Bejoice Group — Saudi Arabia's premier freight forwarding & logistics company
@@ -46,41 +56,39 @@
 ## Project
 - **Stack:** React 18 + Vite + GSAP + ScrollTrigger + Lenis + Tailwind CSS 3
 - **Dev server:** `npm run dev` → http://localhost:5173
-- **GitHub (gold theme):** https://github.com/jollyroyy/Bejoice-premium
-- **GitHub (blue theme fork):** https://github.com/jollyroyy/Bejoice-premium-Blue
+- **GitHub (gold theme):** https://github.com/jollyroyy/Bejoice-premium — remote `origin` on gold project
+- **GitHub (blue theme fork):** https://github.com/jollyroyy/Bejoice-premium-Blue — remote `origin` in this working dir
 - **Netlify site ID:** `0e479bcc-353e-41bb-bfbd-68ee51a97096` (site: bejoice-premium.netlify.app)
-- **Push to blue repo:** `git push blue-theme master` (remote already configured)
 - **Image processing:** `sharp` installed as devDependency — use for PNG bg removal & recoloring
 - **Build:** `npm run build` → outputs to `dist/`
 - **Deploy:** `npx netlify-cli deploy --prod --dir=dist --site=0e479bcc-353e-41bb-bfbd-68ee51a97096`
 
 ## Architecture
 - `src/App.jsx` — page composition, section order, Lenis init, scroll-to-top on load
-- `src/components/VideoHero.jsx` — scrollytelling hero with globe video bg + JPEG frame scrubbing; chapters defined in `CHAPTERS` array at top of file; TrackCard + CountUp defined inline
-- `src/components/FloatingBookCTA.jsx` — Layla AI chatbot (bottom-right corner)
-- `src/components/Nav.jsx` — fixed nav with logo, tagline, Book a Call CTA, animated hamburger menu
+- `src/components/VideoHero.jsx` — scrollytelling hero with frame scrubbing; chapters defined in `CHAPTERS` array at top of file; TrackCard + FreightCalcCard + CountUp defined inline
+- `src/components/BejoiceGlobe.jsx` — 3D Three.js globe shown during globe chapter; branch offices, HQ, arcs; text panel right side
+- `src/components/FloatingBookCTA.jsx` — Layla AI chatbot (bottom-right, moves to bottom-left on mobile)
+- `src/components/Nav.jsx` — fixed nav with logo, Book a Call CTA, hamburger menu
 - `src/index.css` — ALL global CSS classes (section-headline, body-text, card-body, shine-text, shine-gold, shine-ltr, btn-gold, hamburger-btn, etc.)
-- `public/` — static assets (logo PNGs, frames, videos)
-- `public/bejoice-logo-white.png` — main logo used in Nav (white wings, transparent bg, 1509×839px)
+- `public/` — static assets
+- `public/bejoice-logo-white.webp` — main logo used in Nav (white wings, transparent bg). **Note: `.png` does NOT exist in public/ — use `.webp`**
 - `public/ai-assistant-female.png` — Layla avatar image
-- `public/saudi-connected.mp4` — globe video (legacy, no longer used for scrubbing)
-- `public/3d/` — 145 PNGs: 3D HDR intro sequence (frameIdx 0–144)
-- `public/frames2/` — 246 PNGs: ocean/ship footage (frameIdx 145–390, files 0044–0289)
-- `public/frames8/` — 121 PNGs: additional footage (frameIdx 391–511)
-- `public/frames6/` — 121 JPEGs: road/project cargo (frameIdx 512–632)
-- Total: 633 frames across 4 sequences
+- `public/bic/` — 145 WebPs: BIC zoomout intro sequence (frameIdx 0–144)
+- Frame folders are gitignored and served from S3/CloudFront CDN
 
 ## Section Order (App.jsx)
-VideoHero → OceanFreight → Services → HeavyLift → HeavyCargo → WhyBejoice → KeyMarkets → Certifications → Testimonials → Contact → Footer
+VideoHero → Contact → LogisticsTools → Services → Certifications → Footer
 
-> StatsBar removed. QuickQuoteSection removed from page bottom — only accessible via modal.
+> HeavyLift, HeavyCargo, WhyBejoice, KeyMarkets, Testimonials files exist but are NOT rendered.
+> StatsBar removed. QuickQuoteSection only accessible via modal.
 > QuickQuoteModal opens via `onQuoteClick` prop on VideoHero hero CTA button.
 
 ## Brand Identity & Guardrails
 - **DO NOT** change brand colors without explicit instruction
 - **DO NOT** alter company facts (years, certifications, country count)
 - **DO NOT** modify the Bejoice logo image files
-- **Brand gold:** `#c8a84e` | **Bright gold:** `#ffe680` | **Dark bg:** `#050508`
+- **Blue theme brand color:** `#183650` (navy blue) | **Accent blue:** `#5BC2E7` | **Dark bg:** `#050508`
+- **Gold theme brand color:** `#c8a84e` | **Bright gold:** `#ffe680`
 - **Fonts:** Bebas Neue (headings) + DM Sans (body/UI)
 - **Tone:** Premium, authoritative, Saudi-focused logistics expertise
 
@@ -101,8 +109,8 @@ Edit `CHAPTERS` array in `VideoHero.jsx`:
 - Hero cards (TrackCard + FreightCalcCard + StatBar) fade out at frames 140–185 and 793–813
 - `vAlign: 'bottom'` supported on chapters — sets `justifyContent: flex-end`, `paddingBottom: clamp(60px,8vh,100px)`
 
-**Current chapter headlines (as of last session):**
-1. Intro 3D (frames 0–144)
+**Current chapter headlines:**
+1. Intro BIC zoomout (frames 0–144)
 2. Globe chapter (145–210)
 3. CONNECTED GLOBALLY — bottom center (218–390)
 4. FROM BLUE PRINT TO DELIVERY, WE MOVE IT ALL (413–463)
@@ -118,6 +126,13 @@ Edit `CHAPTERS` array in `VideoHero.jsx`:
 - `canvasDimRef` darkens frame canvas during globe chapter (zIndex 2, opacity driven by RAF)
 - Pre-dim starts at frame 125 → fully dark by 145 → stays dark through 210 → fades out by frame 232
 - Progressive frame loading: first 30 frames eager, rest via `requestIdleCallback`, scroll-ahead 150 frames
+
+### BejoiceGlobe (BejoiceGlobe.jsx)
+- Three.js globe with office markers: Dubai HQ, Riyadh/Jeddah/Dammam offices, Mumbai/Shanghai partners
+- Branch offices displayed as: `SAUDI ARABIA · UAE · INDIA · CHINA` — Bebas Neue, uppercase, dot-separated, `clamp(1.1rem,2.8vw,1.5rem)`
+- Right-panel text layout: eyebrow → headline → HQ line → separator → branch offices → tagline
+- Gap between elements: `clamp(1.5rem,3.5vw,3rem)` on right column flex container
+- OFFICES array at top of file — edit to add/remove markers
 
 ### Social Media (Nav.jsx)
 - LinkedIn: `https://www.linkedin.com/company/bejoice-shipping-llc/`
@@ -164,47 +179,49 @@ Three shine classes — all use `::after` pseudo-element with `content: attr(dat
 - Both animations disabled when menu is open (`className={!menuOpen ? 'hamburger-btn' : ''}`)
 
 ### Layla AI Chatbot (FloatingBookCTA.jsx)
-- Bottom-right fixed position, zIndex 9999
+- Fixed position, zIndex 9999; moves to **bottom-left** on mobile (≤767px via `.layla-fab-wrap` CSS)
 - **RAG system**: `src/data/laylaKnowledgeBase.js` — 30 Sea Freight PDF chunks, always consulted first via `retrieveChunks(query, topN=2, threshold=1)` before KB/RESPONSES
 - **Session memory**: `_memory` object tracks name, company, origin, destination, cargo type, mode, container type, incoterm, weight, volume, urgency — updated on every message via `updateMemory()`
-- **Personalization**: `personalizeOpening()` prepends "Hi [Name]!" when name is known; `buildContextHint()` appends route/cargo context to all logistics responses
-- RAG skipped only for social messages (greetings, thanks, goodbye) matched by `isSocial` regex
-- Name acknowledgement handler fires when user shares their name — "Nice to meet you, [Name]!"
-- Knowledge base covers: B/L types, FCL/LCL, container specs, demurrage rates (KSA/UAE/Oman/Qatar), all 11 INCO Terms, sea import procedure, Letter of Credit, SABER/SASO, customs, CBM calc, transit times, DG cargo, cargo insurance
-- Chat panel: `overflowY: 'scroll'`, height `min(360px, 45svh)` — fully scrollable
+- Chat panel: `ca-panel-mobile` class; max-height `calc(100svh - 120px)` on mobile; `padding-bottom: env(safe-area-inset-bottom)` for iPhone notch
 - Avatar: `public/ai-assistant-female.png`
-- Quick replies: Start Shipment, Air Freight, Sea Freight, Heavy Cargo, Saudi Logistics, Market Updates, Talk to Expert
 - CTA actions: `"call"` → opens Cal.com popup | `"quote"` → scrolls to contact section
-- **Mobile**: CSS class `ca-panel-mobile` (width: calc(100vw - 16px) at ≤480px), `ca-msgs-mobile` (height: min(320px, 42svh)), `ca-bubble-mobile`, `ca-qr-btn-mobile`, `ca-fab-mobile`; input font-size 16px (prevents iOS zoom); all tap targets ≥ 44px; send button 44×44px
+- **Mobile**: CSS class `ca-panel-mobile` (width: `min(380px, calc(100vw - 16px))`), `ca-msgs-mobile`, `ca-fab-mobile`; input font-size 16px (prevents iOS zoom); all tap targets ≥ 44px
 
 ### Logo (Nav.jsx)
-- `public/bejoice-logo-white.png` — white wings on transparent bg
-- Height: `clamp(36px, 5vw, 56px)`, width: `auto`
+- `public/bejoice-logo-white.webp` — white wings on transparent bg (`.png` does NOT exist)
+- Height: `clamp(108px, 5vw, 128px)` (increased across sessions), width: `auto`
+- Nav negative margins reset at ≤1280px via `.nav-logo-wrap` and `.nav-right-wrap` CSS classes
 - Clicking logo scrolls to top (Lenis or native)
-- Two-line tagline: "BEJOICE" (white, 15px) + "Connecting KSA to the World" (gold `#ffe680`, 12px, shine-ltr)
-- Gold divider line between logo and tagline: `borderLeft: '2px solid rgba(200,168,78,0.45)'`
 
 ### Hero Bottom Bar Cards (VideoHero.jsx)
-All three cards share identical glassmorphism: `rgba(10,10,14,0.55)` bg, `rgba(255,215,120,0.12)` border, `blur(40px)`, gold top line accent, `borderRadius: 14px`
+All three cards share glassmorphism styling.
 
 **StatBar** — `hero-stats-bar` div:
 - Stats: 120+ Countries | 25+ Years | 24/7 Operations | KSA Specialist
-- Numbers: `1.8rem` Bebas Neue, white with glow
-- Labels: `11px` Inter, `rgba(255,215,120,0.85)`, `0.14em` tracking, uppercase
-- Cell padding: `1.25rem` vertical — matches SleekCard height naturally
-- CountUp: fires 600ms after mount via setTimeout
 
-**TrackCard** — `SleekCard` with `justifyContent: center`, `padding: 1.25rem 1.75rem`:
-- Title: `1.8rem` Bebas Neue + `textShadow` white glow
-- Subtitle: `11px` Inter, `rgba(255,255,255,0.75)` — "Real-Time Global Visibility"
+**TrackCard** — `SleekCard`:
+- Title: `1.8rem` Bebas Neue — "WHERE IS YOUR SHIPMENT?"
 - Button: `btn-gold`, opens `https://www.track-trace.com/` in new tab
 
-**FreightCalcCard** — same layout as TrackCard:
-- Title: `1.8rem` Bebas Neue + `textShadow` white glow — "LOAD CALCULATOR"
-- Subtitle: `11px` Inter, `rgba(255,255,255,0.75)` — "Container Volume Advisor"
+**FreightCalcCard** — `SleekCard`:
+- Title: `1.8rem` Bebas Neue — "LOAD CALCULATION" (renamed from LOAD CALCULATOR)
+- No subtitle (subtitle removed per user request)
 - Button: `btn-gold`, scrolls to `#tools` section via Lenis
 
-> Hero bottom bar hides on mobile (`.hero-bottom-bar { display: none }`) — cards appear inline below CTA in mobile layout
+> Hero bottom bar hides on mobile (`.hero-bottom-bar { display: none }`) — TrackCard + stats rendered inline below CTA via `.hero-mobile-cards` div (only visible at ≤767px via CSS)
+
+### Responsive Breakpoints (index.css)
+- `≤479px` — very small phones (nav book-call icon-only)
+- `≤480px` — small mobile
+- `≤767px` — mobile (hero overlay padding-top: 114px to clear nav; Layla moves left)
+- `≤768px` → `≤912px` — tablet / Surface Pro (LogisticsTools grids collapse at 912px)
+- `768px–1024px` — tablet/Surface Pro section padding: `clamp(1.5rem,4vw,3rem)`
+- `≤1280px` — nav negative margins reset, overflow-x hidden
+
+### LogisticsTools Grids (LogisticsTools.jsx)
+- Row grids collapse at **912px** (covers Surface Pro), not 768px
+- AI results panel uses `repeat(auto-fit, minmax(min(160px,100%), 1fr))` for single-column on mobile
+- Breakpoints: 912px → 3–4 col, 480px → 2 col
 
 ### Section Padding
 - All sections: `pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32`
@@ -238,8 +255,12 @@ sharp('input.png').resize(w, h, { kernel: sharp.kernel.lanczos3 }).ensureAlpha()
 - `background-clip: text` + `-webkit-text-fill-color: transparent` overrides inline `color` — use `::after` overlay approach instead
 - `CountUp` non-numeric values (e.g. '24/7', 'KSA') skip animation and display immediately
 - Stat card `overflow: 'hidden'` clips content — use `overflow: 'visible'` on outer panel, scroll on inner messages div
-- Globe video crossfade: opacity interpolates over first 10% of scroll progress (`fadeEnd = 0.10`)
 - Hero chapter `align: 'right'` sets both `alignItems: 'flex-end'` and `textAlign: 'right'` on the overlay
+- **Logo file**: `bejoice-logo-white.png` does NOT exist in `public/` — always use `bejoice-logo-white.webp`
+- **Git symlink conflict**: `.claude/skills/audit-website` is a symlink locally. `git reset --hard origin/main` and `git merge` will fail with "cannot create directory". Use `git checkout origin/main -- src/ public/` to pull specific folders, or just `git push origin main` to push.
+- **Nav negative margins**: `marginLeft: '-173px'` on logo wrap causes overflow at ≤1280px — reset via CSS `.nav-logo-wrap { margin-left: 0 !important }` at that breakpoint
+- **Hero chapter textBlock**: use `maxWidth: 'min(calc(100vw - 2rem), max-content)'` — never a bare `px` value or it overflows on 375px
+- **Mobile hero cards**: `.hero-mobile-cards` must exist as JSX (inside `ch.showCTA` block) AND have `display: none` by default in CSS — only shown at ≤767px
 
 ### Animation Architecture
 - **Pattern**: IO for detection, GSAP for animation execution — never CSS `transition` on GSAP-animated elements
