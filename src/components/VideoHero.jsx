@@ -952,6 +952,60 @@ export default function VideoHero({ onQuoteClick }) {
                   </button>
                 )}
 
+                {/* ── Mobile inline cards (hidden on desktop via CSS) ── */}
+                {ch.showCTA && (
+                  <div className="hero-mobile-cards">
+                    {/* OR divider */}
+                    <div className="hero-mobile-divider">
+                      <div className="hero-mobile-divider-line" />
+                      <span className="hero-mobile-divider-text">OR</span>
+                      <div className="hero-mobile-divider-line" />
+                    </div>
+
+                    {/* Track shipment */}
+                    <div className="hero-mobile-track-section">
+                      <div className="hero-mobile-section-label">
+                        <svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="rgba(91,194,231,0.8)" strokeWidth="1.5"/><circle cx="5" cy="5" r="1" fill="rgba(91,194,231,0.8)"/></svg>
+                        TRACK SHIPMENT
+                      </div>
+                      <div className="hero-mobile-track">
+                        <TrackCard />
+                      </div>
+                    </div>
+
+                    {/* Stats */}
+                    <div>
+                      <div className="hero-mobile-section-label" style={{ marginTop:'14px' }}>
+                        <svg viewBox="0 0 10 10" fill="none"><rect x="1" y="5" width="2" height="4" rx="0.5" fill="rgba(91,194,231,0.8)"/><rect x="4" y="3" width="2" height="6" rx="0.5" fill="rgba(91,194,231,0.8)"/><rect x="7" y="1" width="2" height="8" rx="0.5" fill="rgba(91,194,231,0.8)"/></svg>
+                        BY THE NUMBERS
+                      </div>
+                      <div className="hero-mobile-stats">
+                        {[
+                          { v:'120', suffix:'+', l:'Countries' },
+                          { v:'25',  suffix:'+', l:'Years' },
+                          { v:'24/7',suffix:'',  l:'Operations' },
+                          { v:'KSA', suffix:'',  l:'Specialist' },
+                        ].map((s, idx, arr) => (
+                          <div key={s.l} style={{
+                            flex:'1', display:'flex', alignItems:'center', justifyContent:'center',
+                            padding:'0.75rem 0.25rem',
+                            borderRight: idx < arr.length-1 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+                          }}>
+                            <div style={{ textAlign:'center' }}>
+                              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.35rem', letterSpacing:'0.06em', color:'#ffffff', textShadow:'0 0 16px rgba(255,255,255,0.25)', lineHeight:1.1 }}>
+                                <CountUp target={s.v} suffix={s.suffix} duration={1000} />
+                              </div>
+                              <div style={{ fontFamily:"'Inter',sans-serif", fontSize:'8px', letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(91,194,231,0.85)', fontWeight:600, marginTop:'4px' }}>
+                                {s.l}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
               </div>{/* end text backdrop */}
             </div>
           )
@@ -1022,6 +1076,9 @@ export default function VideoHero({ onQuoteClick }) {
         @keyframes introSlide   { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
         @keyframes trackScanBar { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
         @keyframes trackPulseRing { 0%{transform:scale(0.8);opacity:1} 100%{transform:scale(1.6);opacity:0} }
+
+        /* Mobile inline cards — hidden on desktop */
+        .hero-mobile-cards { display: none; }
 
         .sleek-input, .sleek-select {
           width: 100%;
