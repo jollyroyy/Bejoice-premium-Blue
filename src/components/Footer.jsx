@@ -375,7 +375,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(13px,1.4vw,16px)', color: 'rgba(255,255,255,0.55)' }}>
-            {isAr ? ar.footer.rights : '© 2026 Bejoice Global Logistics LLC. All rights reserved.'}
+            {isAr ? ar.footer.rights : '© Bejoice Shipping Company'}
           </div>
           <div className="flex flex-wrap gap-6">
             {Object.keys(POLICIES).map(item => (
