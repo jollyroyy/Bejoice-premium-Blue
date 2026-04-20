@@ -866,7 +866,7 @@ export default function VideoHero({ onQuoteClick }) {
                 borderRadius:'10px',
                 padding:'clamp(14px,2vw,24px) clamp(16px,2.5vw,28px)',
                 border:'1px solid rgba(255,255,255,0.06)',
-                maxWidth: 'max-content',
+                maxWidth: 'min(calc(100vw - 2rem), max-content)',
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
               }}>
 

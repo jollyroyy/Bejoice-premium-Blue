@@ -686,6 +686,7 @@ body {
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
   }
   /* Let messages area flex-grow to fill remaining space inside the panel */
   .ca-msgs-mobile {
@@ -695,6 +696,11 @@ body {
     overflow-y: scroll !important;
     -webkit-overflow-scrolling: touch !important;
   }
+}
+
+/* ── Surface Pro / tablet (768px–1024px): section side padding ── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  section { padding-left: clamp(1.5rem, 4vw, 3rem) !important; padding-right: clamp(1.5rem, 4vw, 3rem) !important; }
 }
 
 /* ── Hero sticky height: use small viewport height on mobile to avoid browser-chrome clipping ── */

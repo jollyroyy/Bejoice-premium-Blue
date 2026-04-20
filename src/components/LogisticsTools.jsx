@@ -591,7 +591,7 @@ function LoadCalculator() {
               <div style={{ width:9, height:9, background:'#25c864', borderRadius:'50%', boxShadow:'0 0 12px #25c864' }} />
             </div>
 
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0.9rem', marginBottom:'1.2rem' }}>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(min(160px,100%), 1fr))', gap:'0.9rem', marginBottom:'1.2rem' }}>
               <div style={{ background:'rgba(255,255,255,0.04)', padding:'0.9rem', borderRadius:'0.7rem', border:'1px solid rgba(255,255,255,0.07)' }}>
                 <span style={{ display:'block', fontSize:'0.68rem', color:'rgba(255,255,255,0.88)', textTransform:'uppercase', fontWeight:700, marginBottom:'0.25rem', letterSpacing:'0.1em' }}>
                   {results.tab==='air' ? (isAr ? ar.logisticsTools.chargeableWt : 'Chargeable Wt') : (isAr ? ar.logisticsTools.totalVolume : 'Total Volume')}
@@ -849,14 +849,10 @@ export default function LogisticsTools() {
           0%   { background-position: -100% center; }
           100% { background-position: 200% center; }
         }
-        @media (max-width: 768px) {
-          /* Sea: L W H / Qty Unit [remove] */
+        @media (max-width: 912px) {
           .sea-row-grid  { grid-template-columns: 1fr 1fr 1fr !important; }
-          /* Air: L W H / Qty Unit */
           .air-row-grid  { grid-template-columns: 1fr 1fr 1fr !important; }
-          /* Land: L W H Qty / Unit kg/pc [remove] */
           .land-row-grid { grid-template-columns: 1fr 1fr 1fr 1fr !important; }
-          /* Warehouse: L W H / Qty Unit [remove] */
           .wh-row-grid   { grid-template-columns: 1fr 1fr 1fr !important; }
         }
         @media (max-width: 480px) {
