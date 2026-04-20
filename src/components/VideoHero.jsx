@@ -382,7 +382,7 @@ function FreightCalcCard() {
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
           <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#ffffff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
-            {isAr ? ar.hero.calcTitle : 'LOAD CALCULATOR'}
+            {isAr ? ar.hero.calcTitle : 'LOAD CALCULATION'}
           </p>
         </div>
         <button onClick={handleOpen} className="btn-gold"
