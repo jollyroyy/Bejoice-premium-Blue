@@ -192,18 +192,12 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '24px' }}>
-              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '17px', letterSpacing: '0.18em', color: '#ffffff' }}>BEJOICE</span>
-              {isAr ? (
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '14px', color: '#8DD8F0', letterSpacing: '0.04em' }}>{ar.footer.tagline}</span>
-              ) : (
-                <span className="shine-ltr" data-text="Connecting KSA to the World" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '14px', color: '#8DD8F0', letterSpacing: '0.04em' }}>Connecting KSA to the World</span>
-              )}
               <img
                 src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-white.webp"
                 alt="Bejoice"
                 width="1509" height="839"
                 loading="lazy" decoding="async"
-                style={{ height: '72px', width: 'auto', objectFit: 'contain', display: 'block', marginTop: '12px', opacity: 0.92, marginLeft: '-185px' }}
+                style={{ height: '72px', width: 'auto', objectFit: 'contain', display: 'block', opacity: 0.92, marginLeft: '-185px' }}
               />
             </div>
           </div>
