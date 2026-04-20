@@ -572,18 +572,10 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
               <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
             </div>
 
-            <div style={{ display:'flex', gap:'0.5rem 1.5rem', flexWrap:'wrap', marginBottom:'0.25rem' }}>
-              {(isAr ? ar.globe.offices : [
-                { label:'Saudi Arabia', flag:'🇸🇦' },
-                { label:'UAE',          flag:'🇦🇪' },
-                { label:'India',        flag:'🇮🇳' },
-                { label:'China',        flag:'🇨🇳' },
-              ]).map(({ label }) => (
-                <motion.div key={label} whileHover={{ y:-3 }} transition={{ type:'spring', stiffness:300, damping:20 }}
-                  style={{ display:'flex', alignItems:'center', minHeight:44 }}>
-                  <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.75rem,1.8vw,0.88rem)', fontWeight:600, color:'rgba(255,255,255,0.82)' }}>{label}</span>
-                </motion.div>
-              ))}
+            <div style={{ marginBottom:'0.25rem', minHeight:44, display:'flex', alignItems:'center' }}>
+              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,2.8vw,1.5rem)', letterSpacing:'0.14em', color:'rgba(255,255,255,0.92)', lineHeight:1.2 }}>
+                SAUDI ARABIA · UAE · INDIA · CHINA
+              </span>
             </div>
 
             <motion.p
