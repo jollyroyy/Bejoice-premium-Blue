@@ -131,7 +131,7 @@ export default function Nav({ onQuoteClick }) {
         WebkitBackdropFilter: pastHero ? 'blur(18px)' : 'none',
         borderBottom: 'none',
       }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
+        <div className="nav-inner" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
 
           {/* Logo */}
           <div

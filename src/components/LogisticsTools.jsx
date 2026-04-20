@@ -849,7 +849,7 @@ export default function LogisticsTools() {
           0%   { background-position: -100% center; }
           100% { background-position: 200% center; }
         }
-        @media (max-width: 540px) {
+        @media (max-width: 768px) {
           /* Sea: L W H / Qty Unit [remove] */
           .sea-row-grid  { grid-template-columns: 1fr 1fr 1fr !important; }
           /* Air: L W H / Qty Unit */
@@ -858,6 +858,12 @@ export default function LogisticsTools() {
           .land-row-grid { grid-template-columns: 1fr 1fr 1fr 1fr !important; }
           /* Warehouse: L W H / Qty Unit [remove] */
           .wh-row-grid   { grid-template-columns: 1fr 1fr 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .sea-row-grid  { grid-template-columns: 1fr 1fr !important; }
+          .air-row-grid  { grid-template-columns: 1fr 1fr !important; }
+          .land-row-grid { grid-template-columns: 1fr 1fr !important; }
+          .wh-row-grid   { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
     </section>

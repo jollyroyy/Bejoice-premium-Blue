@@ -3,6 +3,10 @@ import { SparklesCore } from './ui/sparkles'
 import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
 import useFadeUpBatch from '../hooks/useFadeUpBatch'
+import emailjs from '@emailjs/browser'
+import { EMAILJS_SERVICE_ID, EMAILJS_PUBLIC_KEY, sanitize } from '../utils/emailService'
+
+const CONTACT_TEMPLATE_ID = 'template_vr3kf0w'
 
 const SERVICES = ['Air Freight','Sea Freight','Road Transport','Customs Clearance','Warehousing','Project Cargo']
 
@@ -204,18 +208,50 @@ export default function Contact() {
 
               {/* Inner padding */}
               <div style={{ padding: 'clamp(1.6rem,4vw,2.8rem)', position: 'relative', zIndex: 2 }}>
-                <form onSubmit={e => {
+                <form onSubmit={async e => {
                   e.preventDefault()
                   if (submitting) return
-                  // OPTIMISTIC: mark as submitting immediately — UI responds at click speed
                   setSubmitting(true)
-                  // Fire background "API" call (replace with real fetch when backend exists)
-                  Promise.resolve().then(() => new Promise(res => setTimeout(res, 400)))
-                    .then(() => {
-                      setSent(true)     // success state snaps in
-                      setSubmitting(false)
-                    })
-                    .catch(() => setSubmitting(false))  // on error: revert (form stays)
+                  try {
+                    const body = [
+                      `📋 CONTACT FORM — BEJOICE PREMIUM`,
+                      ``,
+                      `👤 CONTACT DETAILS`,
+                      `• Name:        ${sanitize(form.name)}`,
+                      `• Company:     ${sanitize(form.company)}`,
+                      `• Email:       ${sanitize(form.email)}`,
+                      `• Phone:       ${sanitize(form.phone)}`,
+                      ``,
+                      `🚚 SHIPMENT DETAILS`,
+                      `• Origin:      ${sanitize(form.origin)}`,
+                      `• Destination: ${sanitize(form.destination)}`,
+                      `• Service:     ${sanitize(form.type)}`,
+                      ``,
+                      form.message ? `📝 MESSAGE\n${sanitize(form.message)}` : '',
+                    ].filter(Boolean).join('\n')
+
+                    await emailjs.send(
+                      EMAILJS_SERVICE_ID,
+                      CONTACT_TEMPLATE_ID,
+                      {
+                        to_email:    'jollyroyy@gmail.com',
+                        reply_to:    sanitize(form.email) || 'noreply@bejoice.com',
+                        from_name:   sanitize(form.name) || 'Bejoice Contact Form',
+                        subject:     `[Bejoice Contact] ${sanitize(form.name)} — ${sanitize(form.type) || 'General Enquiry'}`,
+                        client_name: sanitize(form.name) || '—',
+                        company:     sanitize(form.company) || '—',
+                        client_email:sanitize(form.email) || '—',
+                        phone:       sanitize(form.phone) || '—',
+                        message:     body,
+                      },
+                      EMAILJS_PUBLIC_KEY,
+                    )
+                    setSent(true)
+                  } catch {
+                    // silently keep form open on failure; could add error toast here
+                  } finally {
+                    setSubmitting(false)
+                  }
                 }}>
 
                   {/* Row 1 — Name / Company */}

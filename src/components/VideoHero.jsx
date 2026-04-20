@@ -1083,7 +1083,7 @@ export default function VideoHero({ onQuoteClick }) {
             justify-content: flex-start !important;
             align-items: center !important;
             text-align: center !important;
-            padding-top: 72px !important;
+            padding-top: 114px !important;
             padding-left: 1rem !important;
             padding-right: 1rem !important;
             padding-bottom: 1rem !important;
@@ -1214,7 +1214,7 @@ export default function VideoHero({ onQuoteClick }) {
         }
 
         @media (max-width: 479px) {
-          .hero-content-overlay { padding-top: 64px !important; }
+          .hero-content-overlay { padding-top: 114px !important; }
         }
 
         /* ── Mobile: force chapter text blocks to center ── */
