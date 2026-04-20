@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import Container3DViewer, { CONTAINER_SPECS, WEIGHT_TABLE, WeightDistributionGuide } from './Container3DViewer';
 import { useLang } from '../context/LangContext';
 import arT from '../i18n/ar';
+import { sendQuoteEmail, isValidEmail, isValidPhone } from '../utils/emailService';
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
 const INCOTERMS = ['EXW','FCA','FAS','FOB','CFR','CIF','CPT','CIP','DAP','DPU','DDP'];
@@ -219,10 +220,17 @@ function CheckToggle({ label, checked, onChange }) {
       fontSize: '0.88rem',
       color: 'rgba(255,255,255,0.72)',
       userSelect: 'none',
+      minHeight: '44px',        // 44px tap target height
     }}>
+      {/* Tap target wrapper — 44×44px minimum */}
       <div
         onClick={() => onChange(!checked)}
         style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          minWidth: 44, minHeight: 44, flexShrink: 0, cursor: 'pointer',
+        }}
+      >
+        <div style={{
           width: '2.2rem',
           height: '1.15rem',
           borderRadius: '2rem',
@@ -231,19 +239,19 @@ function CheckToggle({ label, checked, onChange }) {
           position: 'relative',
           transition: 'all 0.2s',
           flexShrink: 0,
-        }}
-      >
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: checked ? 'calc(100% - 0.9rem)' : '0.1rem',
-          transform: 'translateY(-50%)',
-          width: '0.8rem',
-          height: '0.8rem',
-          borderRadius: '50%',
-          background: '#fff',
-          transition: 'left 0.2s',
-        }} />
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: checked ? 'calc(100% - 0.9rem)' : '0.1rem',
+            transform: 'translateY(-50%)',
+            width: '0.8rem',
+            height: '0.8rem',
+            borderRadius: '50%',
+            background: '#fff',
+            transition: 'left 0.2s',
+          }} />
+        </div>
       </div>
       {label}
     </label>
@@ -393,7 +401,7 @@ function CargoLoad3D({ containerType, compact }) {
   const addCI   = () => setItems(p => [...p, { l: 100, w: 80, h: 80, weight: 150, qty: 3, unit: 'cm', stackable: true }])
   const removeCI = (i) => setItems(p => p.filter((_, idx) => idx !== i))
 
-  const iS = { background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.14)', borderRadius:'0.4rem', padding:'0.45rem 0.6rem', color:'#fff', fontFamily:"'DM Sans',sans-serif", fontSize:'0.9rem', width:'100%', outline:'none', boxSizing:'border-box' }
+  const iS = { background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.14)', borderRadius:'0.4rem', padding:'0.55rem 0.6rem', color:'#fff', fontFamily:"'DM Sans',sans-serif", fontSize:'16px', width:'100%', outline:'none', boxSizing:'border-box', minHeight:44 }
   const lS = { fontFamily:"'DM Sans',sans-serif", fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(255,255,255,0.55)', marginBottom:'0.3rem', display:'block' }
 
   return (
@@ -416,7 +424,7 @@ function CargoLoad3D({ containerType, compact }) {
                 <option value="in">in</option>
               </select>
               {items.length > 1 && (
-                <button onClick={() => removeCI(idx)} style={{ background:'none', border:'none', color:'rgba(255,255,255,0.25)', cursor:'pointer', fontSize:'1rem', minWidth:28, minHeight:28 }}>×</button>
+                <button onClick={() => removeCI(idx)} style={{ background:'none', border:'none', color:'rgba(255,255,255,0.25)', cursor:'pointer', fontSize:'1.1rem', minWidth:44, minHeight:44, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>
               )}
             </div>
           </div>
@@ -438,9 +446,9 @@ function CargoLoad3D({ containerType, compact }) {
             <div>
               <span style={lS}>Qty</span>
               <div style={{ display:'flex', gap:3 }}>
-                <button onClick={() => updCI(idx,'qty',Math.max(1,item.qty-1))} style={{ width:28, flexShrink:0, background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:6, color:'#fff', cursor:'pointer', fontSize:14 }}>−</button>
-                <input type="number" min="1" value={item.qty} onChange={e => updCI(idx,'qty',Math.max(1,+e.target.value||1))} style={{ ...iS, textAlign:'center' }} />
-                <button onClick={() => updCI(idx,'qty',item.qty+1)} style={{ width:28, flexShrink:0, background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:6, color:'#fff', cursor:'pointer', fontSize:14 }}>+</button>
+                <button onClick={() => updCI(idx,'qty',Math.max(1,item.qty-1))} style={{ width:44, height:44, flexShrink:0, background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:6, color:'#fff', cursor:'pointer', fontSize:16 }}>−</button>
+                <input type="number" min="1" value={item.qty} onChange={e => updCI(idx,'qty',Math.max(1,+e.target.value||1))} style={{ ...iS, textAlign:'center', fontSize:16 }} />
+                <button onClick={() => updCI(idx,'qty',item.qty+1)} style={{ width:44, height:44, flexShrink:0, background:'rgba(255,255,255,0.06)', border:'1px solid rgba(255,255,255,0.12)', borderRadius:6, color:'#fff', cursor:'pointer', fontSize:16 }}>+</button>
               </div>
             </div>
           </div>
@@ -470,7 +478,7 @@ function CargoLoad3D({ containerType, compact }) {
   )
 }
 
-function SeaForm({ onSuccess, isAr }) {
+function SeaForm({ onSuccess, isAr, extraServices = [] }) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [d, setD] = useState({
@@ -500,7 +508,9 @@ function SeaForm({ onSuccess, isAr }) {
     if (step === 3) {
       if (!d.name.trim()) e.name = isAr ? arT.quickQuote.errName : 'Full name is required'
       if (!d.email.trim()) e.email = isAr ? arT.quickQuote.errEmail : 'Email address is required'
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address'
       if (!d.phone.trim()) e.phone = isAr ? arT.quickQuote.errPhone : 'Phone / WhatsApp is required'
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number'
     }
     setErrors(e)
     return Object.keys(e).length === 0
@@ -512,9 +522,17 @@ function SeaForm({ onSuccess, isAr }) {
     ? [arT.quickQuote.stepRoute, arT.quickQuote.stepCargo, arT.quickQuote.stepServices, arT.quickQuote.stepContact]
     : ['Route', 'Cargo', 'Services', 'Contact'];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true);
-    setTimeout(() => { setLoading(false); onSuccess('sea'); }, 1400);
+    try {
+      await sendQuoteEmail('sea', d, extraServices);
+      onSuccess('sea');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('sea'); // still show success to user
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -654,7 +672,7 @@ function SeaForm({ onSuccess, isAr }) {
 }
 
 // ─── AIR FREIGHT FORM ─────────────────────────────────────────────────────────
-function AirForm({ onSuccess, isAr }) {
+function AirForm({ onSuccess, isAr, extraServices = [] }) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [d, setD] = useState({
@@ -667,6 +685,43 @@ function AirForm({ onSuccess, isAr }) {
     name: '', company: '', email: '', phone: '', notes: '',
   });
   const up = (k, v) => setD(p => ({ ...p, [k]: v }));
+  const [airErrors, setAirErrors] = useState({});
+
+  const validateAir = () => {
+    const e = {};
+    if (step === 0) {
+      if (!d.origin)    e.origin      = 'Origin airport is required';
+      if (!d.destination) e.destination = 'Destination airport is required';
+      if (!d.readyDate) e.readyDate   = 'Cargo ready date is required';
+    }
+    if (step === 1) {
+      if (!d.commodity) e.commodity   = 'Commodity description is required';
+      if (!d.weight)    e.weight      = 'Weight is required';
+    }
+    if (step === 3) {
+      if (!d.name.trim())  e.name  = 'Full name is required';
+      if (!d.email.trim()) e.email = 'Email address is required';
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address';
+      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required';
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number';
+    }
+    setAirErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleAirSubmit = async () => {
+    if (!validateAir()) return;
+    setLoading(true);
+    try {
+      await sendQuoteEmail('air', d, extraServices);
+      onSuccess('air');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('air');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const volWeight = () => {
     const l = parseFloat(d.length) || 0;
@@ -821,13 +876,13 @@ function AirForm({ onSuccess, isAr }) {
 
       {step === 3 && <ContactStep d={d} up={up} isAr={isAr} />}
 
-      <NavButtons step={step} totalSteps={4} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('air'); }, 1400); }} loading={loading} isAr={isAr} />
+      <NavButtons step={step} totalSteps={4} onBack={() => { setStep(s => s - 1); setAirErrors({}); }} onNext={() => setStep(s => s + 1)} onSubmit={handleAirSubmit} loading={loading} validate={validateAir} isAr={isAr} />
     </div>
   );
 }
 
 // ─── LAND / ROAD FREIGHT FORM ─────────────────────────────────────────────────
-function LandForm({ onSuccess, isAr }) {
+function LandForm({ onSuccess, isAr, extraServices = [] }) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [d, setD] = useState({
@@ -837,6 +892,42 @@ function LandForm({ onSuccess, isAr }) {
     name: '', company: '', email: '', phone: '', notes: '',
   });
   const up = (k, v) => setD(p => ({ ...p, [k]: v }));
+  const [landErrors, setLandErrors] = useState({});
+
+  const validateLand = () => {
+    const e = {};
+    if (step === 0) {
+      if (!d.origin)      e.origin      = 'Origin city is required';
+      if (!d.destination) e.destination = 'Destination city is required';
+      if (!d.readyDate)   e.readyDate   = 'Cargo ready date is required';
+    }
+    if (step === 1) {
+      if (!d.commodity)   e.commodity   = 'Commodity description is required';
+    }
+    if (step === 2) {
+      if (!d.name.trim())  e.name  = 'Full name is required';
+      if (!d.email.trim()) e.email = 'Email address is required';
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address';
+      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required';
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number';
+    }
+    setLandErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleLandSubmit = async () => {
+    if (!validateLand()) return;
+    setLoading(true);
+    try {
+      await sendQuoteEmail('land', d, extraServices);
+      onSuccess('land');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('land');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const TRUCK_TYPES = ['Curtainsider (13.6m)','Box Truck','Flatbed / Lowbed','Reefer Trailer','Tanker','Tipper','Mega Trailer'];
   const CITIES_SA = [
@@ -919,13 +1010,13 @@ function LandForm({ onSuccess, isAr }) {
 
       {step === 2 && <ContactStep d={d} up={up} />}
 
-      <NavButtons step={step} totalSteps={3} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('land'); }, 1400); }} loading={loading} />
+      <NavButtons step={step} totalSteps={3} onBack={() => { setStep(s => s - 1); setLandErrors({}); }} onNext={() => setStep(s => s + 1)} onSubmit={handleLandSubmit} loading={loading} validate={validateLand} />
     </div>
   );
 }
 
 // ─── CUSTOMS CLEARANCE FORM ───────────────────────────────────────────────────
-function CustomsForm({ onSuccess }) {
+function CustomsForm({ onSuccess, extraServices = [] }) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [d, setD] = useState({
@@ -936,6 +1027,40 @@ function CustomsForm({ onSuccess }) {
     name: '', company: '', email: '', phone: '', notes: '',
   });
   const up = (k, v) => setD(p => ({ ...p, [k]: v }));
+  const [custErrors, setCustErrors] = useState({});
+
+  const validateCustoms = () => {
+    const e = {};
+    if (step === 0) {
+      if (!d.port) e.port = 'Port / airport is required';
+    }
+    if (step === 1) {
+      if (!d.commodity) e.commodity = 'Commodity description is required';
+    }
+    if (step === 3) {
+      if (!d.name.trim())  e.name  = 'Full name is required';
+      if (!d.email.trim()) e.email = 'Email address is required';
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address';
+      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required';
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number';
+    }
+    setCustErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleCustomsSubmit = async () => {
+    if (!validateCustoms()) return;
+    setLoading(true);
+    try {
+      await sendQuoteEmail('customs', d, extraServices);
+      onSuccess('customs');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('customs');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const PORTS_ALL = [
     'Jeddah Islamic Port','King Abdulaziz Port (Dammam)','Yanbu Port','Jizan Port',
@@ -1030,13 +1155,13 @@ function CustomsForm({ onSuccess }) {
 
       {step === 3 && <ContactStep d={d} up={up} />}
 
-      <NavButtons step={step} totalSteps={4} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('customs'); }, 1400); }} loading={loading} />
+      <NavButtons step={step} totalSteps={4} onBack={() => { setStep(s => s - 1); setCustErrors({}); }} onNext={() => setStep(s => s + 1)} onSubmit={handleCustomsSubmit} loading={loading} validate={validateCustoms} />
     </div>
   );
 }
 
 // ─── PROJECT CARGO FORM ───────────────────────────────────────────────────────
-function ProjectForm({ onSuccess }) {
+function ProjectForm({ onSuccess, extraServices = [] }) {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [d, setD] = useState({
@@ -1046,6 +1171,42 @@ function ProjectForm({ onSuccess }) {
     name: '', company: '', email: '', phone: '', notes: '',
   });
   const up = (k, v) => setD(p => ({ ...p, [k]: v }));
+  const [projErrors, setProjErrors] = useState({});
+
+  const validateProject = () => {
+    const e = {};
+    if (step === 0) {
+      if (!d.origin)      e.origin      = 'Origin is required';
+      if (!d.destination) e.destination = 'Destination is required';
+      if (!d.commodity)   e.commodity   = 'Project description is required';
+    }
+    if (step === 1) {
+      if (!d.weight) e.weight = 'Weight is required';
+    }
+    if (step === 2) {
+      if (!d.name.trim())  e.name  = 'Full name is required';
+      if (!d.email.trim()) e.email = 'Email address is required';
+      else if (!isValidEmail(d.email.trim())) e.email = 'Please enter a valid email address';
+      if (!d.phone.trim()) e.phone = 'Phone / WhatsApp is required';
+      else if (!isValidPhone(d.phone.trim())) e.phone = 'Please enter a valid phone number';
+    }
+    setProjErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleProjectSubmit = async () => {
+    if (!validateProject()) return;
+    setLoading(true);
+    try {
+      await sendQuoteEmail('project', d, extraServices);
+      onSuccess('project');
+    } catch (err) {
+      console.error('Email send failed:', err);
+      onSuccess('project');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const PROJECT_TYPES = ['Heavy Lift','Out-of-Gauge (OOG)','Breakbulk','Project Machinery','Wind Energy Components','Oil & Gas Equipment','Mining Equipment'];
   const steps = ['Details', 'Dimensions', 'Contact'];
@@ -1111,7 +1272,7 @@ function ProjectForm({ onSuccess }) {
 
       {step === 2 && <ContactStep d={d} up={up} />}
 
-      <NavButtons step={step} totalSteps={3} onBack={() => setStep(s => s - 1)} onNext={() => setStep(s => s + 1)} onSubmit={() => { setLoading(true); setTimeout(() => { setLoading(false); onSuccess('project'); }, 1400); }} loading={loading} />
+      <NavButtons step={step} totalSteps={3} onBack={() => { setStep(s => s - 1); setProjErrors({}); }} onNext={() => setStep(s => s + 1)} onSubmit={handleProjectSubmit} loading={loading} validate={validateProject} />
     </div>
   );
 }
@@ -1195,9 +1356,20 @@ export default function QuickQuoteSection({ sectionRef, lang: langProp, inModal 
   const isAr = lang === 'ar';
   const [activeTab, setActiveTab] = useState('sea');
   const [successType, setSuccessType] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [extraServices, setExtraServices] = useState([]);
 
-  const handleSuccess = (type) => setSuccessType(type);
-  const handleReset = () => setSuccessType(null);
+  const handleSuccess = (type) => {
+    setSuccessType(type);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 5000);
+  };
+  const handleReset = () => { setSuccessType(null); setExtraServices([]); };
+
+  const toggleExtra = (id) =>
+    setExtraServices(prev =>
+      prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]
+    );
 
   return (
     <div ref={sectionRef} id="quick-quote-section" className="qq-section">
@@ -1244,17 +1416,66 @@ export default function QuickQuoteSection({ sectionRef, lang: langProp, inModal 
           })}
         </div>
 
+        {/* Success toast — fixed overlay, always visible */}
+        {showToast && (
+          <div style={{
+            position: 'fixed', top: 24, left: '50%', transform: 'translateX(-50%)',
+            zIndex: 99999, display: 'flex', alignItems: 'center', gap: 12,
+            background: 'linear-gradient(135deg,rgba(10,30,50,0.97),rgba(15,40,65,0.97))',
+            border: '1px solid rgba(91,194,231,0.45)', borderRadius: 12,
+            padding: '14px 22px', boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
+            fontFamily: "'DM Sans',sans-serif", color: '#fff', maxWidth: 'calc(100vw - 32px)',
+            animation: 'qqToastIn 0.35s cubic-bezier(0.34,1.56,0.64,1)',
+          }}>
+            <span style={{ fontSize: 22 }}>✅</span>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 15 }}>Quote Request Submitted!</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', marginTop: 2 }}>
+                We'll respond within 4 business hours.
+              </div>
+            </div>
+            <button onClick={() => setShowToast(false)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: 18, padding: '0 0 0 8px' }}>✕</button>
+          </div>
+        )}
+
+        {/* Multi-service selector */}
+        {!successType && (
+          <div style={{ marginBottom: '1rem', padding: '0.75rem 1rem', background: 'rgba(91,194,231,0.06)', borderRadius: 10, border: '1px solid rgba(91,194,231,0.15)' }}>
+            <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.8)', fontWeight: 700, marginBottom: 8 }}>
+              Also need assistance with:
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {TABS.filter(t => t.id !== activeTab).map(t => {
+                const sel = extraServices.includes(t.id);
+                return (
+                  <button key={t.id} onClick={() => toggleExtra(t.id)} style={{
+                    display: 'flex', alignItems: 'center', gap: 6, padding: '5px 12px',
+                    borderRadius: 20, border: `1px solid ${sel ? 'rgba(91,194,231,0.7)' : 'rgba(255,255,255,0.15)'}`,
+                    background: sel ? 'rgba(91,194,231,0.15)' : 'rgba(255,255,255,0.04)',
+                    color: sel ? '#5BC2E7' : 'rgba(255,255,255,0.6)',
+                    fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 600,
+                    cursor: 'pointer', transition: 'all 0.2s',
+                  }}>
+                    <span style={{ fontSize: 14 }}>{sel ? '✓' : t.icon}</span>
+                    {t.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* Form panel */}
         <div className="qq-panel">
           {successType ? (
             <SuccessState type={successType} onReset={handleReset} isAr={isAr} />
           ) : (
             <>
-              {activeTab === 'sea'     && <SeaForm     onSuccess={handleSuccess} isAr={isAr} />}
-              {activeTab === 'air'     && <AirForm     onSuccess={handleSuccess} isAr={isAr} />}
-              {activeTab === 'land'    && <LandForm    onSuccess={handleSuccess} isAr={isAr} />}
-              {activeTab === 'customs' && <CustomsForm onSuccess={handleSuccess} isAr={isAr} />}
-              {activeTab === 'project' && <ProjectForm onSuccess={handleSuccess} isAr={isAr} />}
+              {activeTab === 'sea'     && <SeaForm     onSuccess={handleSuccess} isAr={isAr} extraServices={extraServices} />}
+              {activeTab === 'air'     && <AirForm     onSuccess={handleSuccess} isAr={isAr} extraServices={extraServices} />}
+              {activeTab === 'land'    && <LandForm    onSuccess={handleSuccess} extraServices={extraServices} />}
+              {activeTab === 'customs' && <CustomsForm onSuccess={handleSuccess} extraServices={extraServices} />}
+              {activeTab === 'project' && <ProjectForm onSuccess={handleSuccess} extraServices={extraServices} />}
             </>
           )}
         </div>

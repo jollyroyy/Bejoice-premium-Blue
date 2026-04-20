@@ -75,6 +75,10 @@ self.addEventListener('fetch', event => {
   // + our CDN Cache-Control) handles them. Caching in SW would fill storage fast.
   if (isS3Frame(url)) return
 
+  // ── 1b. Local BIC frames — skip SW ────────────────────────────────────────
+  // 145 × 124KB = ~18MB. HTTP cache handles them via _headers Cache-Control.
+  if (url.pathname.startsWith('/bic/')) return
+
   // ── 2. Third-party origins — skip SW ──────────────────────────────────────
   // Google Fonts, Cal.com, flagcdn, jsdelivr — they have their own caching.
   if (isThirdParty(url)) return

@@ -124,37 +124,37 @@ export default function Nav({ onQuoteClick }) {
         aria-label={isAr ? 'الملاحة الرئيسية' : 'Main Navigation'}
         style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        transition: 'all 0.5s ease',
+        transition: 'background 0.5s ease, backdrop-filter 0.5s ease',
         padding: '12px 0',
-        background: pastHero ? 'rgba(7,16,28,0.95)' : 'transparent',
+        background: pastHero ? 'rgba(24,54,80,0.97)' : 'transparent',
         backdropFilter: pastHero ? 'blur(18px)' : 'none',
         WebkitBackdropFilter: pastHero ? 'blur(18px)' : 'none',
         borderBottom: 'none',
       }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
+        <div className="nav-inner" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(16px, 4vw, 32px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 'clamp(82px, 11.2vw, 128px)' }}>
 
           {/* Logo */}
-          <div 
-            onClick={scrollToTop} 
-            className="nav-logo-wrap" 
+          <div
+            onClick={scrollToTop}
+            className="nav-logo-wrap"
             role="link"
             aria-label={isAr ? 'الصفحة الرئيسية بيجويس' : 'Bejoice Home'}
             aria-current="page"
-            style={{ position: 'relative', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', marginLeft: '-173px' }}>
-              <img
-                src="/bejoice-logo-white.webp"
-                alt="Bejoice"
-                className="nav-logo-img"
-                width="1509" height="839"
-                fetchPriority="high"
-                decoding="async"
-                style={{
-                  height: 'clamp(108px, 5vw, 128px)',
-                  width: 'auto',
-                  objectFit: 'contain',
-                  display: 'block',
-                }}
-              />
+            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-395px' }}>
+            <img
+              src="/bejoice-logo-nav.webp"
+              alt="Bejoice"
+              className="nav-logo-img"
+              fetchPriority="high"
+              decoding="async"
+              style={{
+                height: 'clamp(82px, 11.2vw, 128px)',
+                width: 'clamp(315px, 42vw, 630px)',
+                objectFit: 'contain',
+                display: 'block',
+                filter: 'brightness(1.45) contrast(1.1) drop-shadow(0 2px 14px rgba(0,0,0,0.6)) drop-shadow(0 0 28px rgba(255,255,255,0.12))',
+              }}
+            />
           </div>
 
           {/* Right side: CTA + Hamburger */}
@@ -244,51 +244,6 @@ export default function Nav({ onQuoteClick }) {
               </button>
             </div>
 
-            {/* Social icons — app-icon style squares */}
-            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-              <a
-                href="https://www.linkedin.com/company/bejoice-shipping-llc/"
-                target="_blank" rel="noopener noreferrer"
-                aria-label="Bejoice on LinkedIn"
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 30, height: 30, borderRadius: '7px',
-                  background: 'linear-gradient(145deg, #0d7ad6 0%, #0A66C2 60%, #084ea1 100%)',
-                  border: 'none', color: '#ffffff', textDecoration: 'none',
-                  transition: 'all 0.22s',
-                  boxShadow: '0 2px 8px rgba(10,102,194,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.06)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(10,102,194,0.75), 0 0 0 1px rgba(255,255,255,0.15) inset' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(10,102,194,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)' }}
-              >
-                {/* Official LinkedIn "in" lettermark */}
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                  <path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z"/>
-                </svg>
-              </a>
-              <a
-                href="https://www.instagram.com/bejoice_shipping"
-                target="_blank" rel="noopener noreferrer"
-                aria-label="Bejoice on Instagram"
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  width: 30, height: 30, borderRadius: '7px',
-                  background: 'linear-gradient(135deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%)',
-                  border: 'none', color: '#ffffff', textDecoration: 'none',
-                  transition: 'all 0.22s',
-                  boxShadow: '0 2px 8px rgba(220,39,100,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.06)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(220,39,100,0.7), 0 0 0 1px rgba(255,255,255,0.15) inset' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(220,39,100,0.55), 0 0 0 1px rgba(255,255,255,0.12) inset, inset 0 1px 0 rgba(255,255,255,0.25)' }}
-              >
-                {/* Official Instagram camera icon */}
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-                </svg>
-              </a>
-            </div>
           </div>
         </div>
       </nav>
@@ -320,9 +275,10 @@ export default function Nav({ onQuoteClick }) {
         {/* Header row */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.2rem 1.4rem', borderBottom: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0px' }}>
-              <img src="/bejoice-logo-white.webp" alt="Bejoice" width="1509" height="839" loading="lazy" decoding="async" style={{ height: '52px', width: 'auto', objectFit: 'contain', display: 'block', filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.8))' }} />
+            <img src="/bejoice-logo-nav.webp" alt="Bejoice" style={{ height: '52px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.8))' }} />
             <div style={{ borderLeft: '1.5px solid rgba(91,194,231,0.35)', paddingLeft: '9px', marginLeft: '6px' }}>
               <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '13px', letterSpacing: '0.18em', color: '#ffffff', textTransform: 'uppercase', fontWeight: 700, lineHeight: 1 }}>Bejoice</div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '11px', letterSpacing: '0.14em', color: '#ffffff', textTransform: 'uppercase', fontWeight: 600, lineHeight: 1, marginTop: '3px' }}>Group</div>
             </div>
           </div>
           <button

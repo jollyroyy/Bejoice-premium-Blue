@@ -14,6 +14,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     // Minify with esbuild (default) — fastest
     minify: 'esbuild',
+    esbuild: { drop: ['console', 'debugger'] },
     rollupOptions: {
       output: {
         manualChunks: {

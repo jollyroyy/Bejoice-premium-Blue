@@ -10,7 +10,7 @@
   --gold-muted: rgba(91,194,231,0.45);
 
   /* Navy Palette — deep blues for contrast */
-  --obsidian: #07101c;
+  --obsidian: #183650;
   --obsidian-50: #0c1c30;
   --obsidian-100: #0a1826;
 
@@ -190,7 +190,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Cinematic Vignette for all sections */
-  background-image: radial-gradient(circle at center, rgba(12, 24, 40, 0) 0%, rgba(5, 12, 24, 0.8) 100%);
+  background-image: radial-gradient(circle at center, rgba(24, 54, 80, 0) 0%, rgba(16, 36, 58, 0.5) 100%);
   background-attachment: fixed;
 }
 
@@ -619,14 +619,23 @@ body {
   .lang-toggle-wrap { display: none !important; }
 }
 
-/* ── NAV: kill negative margins on mobile so nothing overflows ── */
-@media (max-width: 900px) {
+/* ── NAV: kill negative margins on tablet + mobile ── */
+/* Logo is 200×130px natural; inline style forces it wide (315-630px) which overflows tablets.
+   Remove negative margins at ≤1280px so Surface Pro (912px) and iPad Pro (1024px) are clean. */
+@media (max-width: 1280px) {
   .nav-logo-wrap { margin-left: 0 !important; }
   .nav-right-wrap { margin-right: 0 !important; }
+  /* Tighten side padding of the inner container */
+  .nav-inner { padding: 0 clamp(12px, 2.5vw, 24px) !important; }
 }
 
-/* ── NAV: fluid compact on tablets ── */
-@media (max-width: 640px) {
+/* ── NAV: constrain logo WIDTH only — height stays from inline clamp(82px,11.2vw,128px) ── */
+/* objectFit:contain ensures the 200×130 logo fills height-first inside the box.          */
+@media (max-width: 1280px) {
+  .nav-logo-img { width: clamp(220px, 28vw, 315px) !important; }
+}
+@media (max-width: 900px) {
+  .nav-logo-img { width: clamp(180px, 32vw, 260px) !important; }
   /* Book a Call: shorter label + tighter padding */
   .nav-book-call {
     padding: 9px 14px !important;
@@ -636,25 +645,8 @@ body {
     white-space: nowrap !important;
   }
 }
-
-/* ── NAV: compact layout on very small phones (≤479px) ── */
 @media (max-width: 479px) {
-  /* Shrink brand text — keep both "Bejoice" and tagline, just smaller */
-  .nav-brand-text {
-    display: flex !important;
-    padding-left: 5px !important;
-    margin-left: 3px !important;
-    gap: 2px !important;
-  }
-  .nav-brand-text > div:first-child {
-    font-size: 10px !important;
-    letter-spacing: 0.12em !important;
-  }
-  .nav-tagline {
-    display: inline-block !important;
-    font-size: 7px !important;
-    letter-spacing: 0.08em !important;
-  }
+  .nav-logo-img { width: clamp(120px, 36vw, 160px) !important; }
   /* Book a Call → icon-only square pill to free up horizontal space */
   .nav-book-call {
     padding: 8px 9px !important;
@@ -686,6 +678,22 @@ body {
     right: auto !important;
     left: clamp(10px, 3vw, 20px) !important;
     align-items: flex-start !important;  /* panel opens leftward */
+  }
+  /* Constrain chat panel height so it never bleeds behind the fixed nav */
+  .ca-panel-mobile {
+    max-height: calc(100svh - 120px) !important;
+    max-height: calc(100vh - 120px) !important; /* fallback */
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+  /* Let messages area flex-grow to fill remaining space inside the panel */
+  .ca-msgs-mobile {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 80px !important;
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 }
 
@@ -891,10 +899,17 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Grids */
-.qq-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.qq-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
-.qq-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+/* Grids — mobile-first */
+.qq-grid-2 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.qq-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.qq-grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+@media (min-width: 540px) {
+  .qq-grid-2 { grid-template-columns: 1fr 1fr; }
+  .qq-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (min-width: 769px) {
+  .qq-grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
 
 /* Type buttons */
 .qq-type-btn {
@@ -951,11 +966,14 @@ body {
   border-color: rgba(91,194,231,0.25);
 }
 
-/* Services grid */
+/* Services grid — mobile-first */
 .qq-services-grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
+}
+@media (min-width: 769px) {
+  .qq-services-grid { grid-template-columns: repeat(4, 1fr); }
 }
 .qq-service-card {
   position: relative;
@@ -1079,15 +1097,16 @@ body {
 
 /* Mobile */
 @media (max-width: 768px) {
-  .qq-panel { padding: 1.5rem; }
-  .qq-grid-2, .qq-grid-3 { grid-template-columns: 1fr; }
-  .qq-grid-4 { grid-template-columns: 1fr 1fr; }
-  .qq-services-grid { grid-template-columns: 1fr 1fr; }
-  .qq-section { padding: 2rem 1.5rem; }
-  /* Inputs: prevent iOS zoom */
-  .qq-panel input, .qq-panel select, .qq-panel textarea {
-    font-size: 16px !important;
-  }
+  .qq-panel { padding: 1.2rem; }
+  .qq-section { padding: 2rem 1rem; }
+  /* Prevent iOS zoom on ALL inputs */
+  .qq-panel input, .qq-panel select, .qq-panel textarea { font-size: 16px !important; }
+  /* Tabs: tighter on tablet */
+  .qq-tab { padding: 0.7rem 1rem; }
+  /* Type buttons: always full height */
+  .qq-type-btn { min-height: 52px; }
+  /* Nav buttons: full width stack */
+  .qq-next-btn, .qq-submit-btn { width: 100%; }
 }
 /* ── HEAVY CARGO / WHY BEJOICE outer glass cards: fluid on mobile ── */
 @media (max-width: 767px) {
@@ -1111,10 +1130,18 @@ body {
 .testimonial-dot { min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
 
 @media (max-width: 480px) {
-  .qq-panel { padding: 0.9rem !important; }
-  .qq-grid-4 { grid-template-columns: 1fr 1fr; }
-  .qq-services-grid { grid-template-columns: 1fr 1fr !important; }
-  .qq-tab { min-height: 44px; }
+  .qq-panel { padding: 0.8rem !important; }
+  .qq-tab { min-height: 48px; padding: 0.6rem 0.75rem; }
+  .qq-tab-label { font-size: 0.7rem; }
+  .qq-tab-sub { display: none; } /* hide subtitles on very small screens */
+  .qq-type-btn { min-height: 56px; font-size: 0.9rem; }
+  .qq-add-btn { min-height: 44px; padding: 0.6rem 1rem; font-size: 0.75rem; }
+  .qq-service-card { min-height: 80px; padding: 0.85rem 0.6rem; }
+  /* Step indicator: smaller dots on mobile */
+  .qq-step-dot { width: 24px !important; height: 24px !important; font-size: 0.65rem !important; }
+  /* Back/next nav: full width, stacked */
+  .qq-nav-row { flex-direction: column-reverse; gap: 0.5rem; }
+  .qq-next-btn, .qq-submit-btn { width: 100% !important; min-height: 52px; font-size: 1rem; }
 }
 
 /* ── MOBILE AUDIT FIXES (March 2026) ── */
@@ -1233,6 +1260,11 @@ section {
   }
 }
 
+/* ── GLOBAL: prevent horizontal overflow at ALL sizes up to desktop ── */
+@media (max-width: 1280px) {
+  body, #root { overflow-x: hidden; max-width: 100vw; }
+}
+
 /* ── GLOBAL MOBILE OPTIMIZATIONS ── */
 @media (max-width: 767px) {
   /* Prevent horizontal overflow globally */
@@ -1279,3 +1311,8 @@ section {
 .cv-contact    { contain-intrinsic-size: 0 800px; }
 .cv-certs      { contain-intrinsic-size: 0 560px; }
 .cv-footer     { contain-intrinsic-size: 0 420px; }
+
+@keyframes db-spin-cw  { from { transform: rotate(0deg)    } to { transform: rotate(360deg)  } }
+@keyframes db-spin-ccw { from { transform: rotate(0deg)    } to { transform: rotate(-360deg) } }
+
+@keyframes qqToastIn { from { opacity: 0; transform: translateX(-50%) translateY(-16px) scale(0.95); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }

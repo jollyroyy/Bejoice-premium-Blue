@@ -46,22 +46,22 @@ function CountUp({ target, suffix = '', duration = 900, arabic = false }) {
 const SCROLL_HEIGHT = 2000
 
 // ── Frame sequences ───────────────────────────────────────────────────
-// 3d:            0–144   (145) 3D HDR intro PNGs — hero
-// globe-bridge:  145–210 (66)  last 3d frame repeated — canvas fully dimmed during globe widget
-// saudi:         211–403 (193) Saudi Arabia footage PNGs — 3rd segment (after globe)
-// bejoice_truck: 404–548 (145) Truck/road footage PNGs
-// port:          549–717 (169) Port/sea footage PNGs
-// frames8:       718–838 (121) additional footage PNGs
-// tech_enng:     839–983 (145) tech/engineering footage PNGs
+// bic:           0–144   (145) BIC zoomout WebPs — hero (local /bic/, 0001.webp–0145.webp)
+// globe-bridge:  145–210 (66)  last bic frame repeated — canvas fully dimmed during globe widget
+// bejoice_truck: 211–355 (145) Truck/road footage WebPs
+// port:          356–524 (169) Port/sea footage WebPs
+// frames8:       525–645 (121) additional footage WebPs
+// tech_enng:     646–790 (145) tech/engineering footage WebPs
+// saudi:         791–983 (193) Saudi Arabia footage WebPs — end
 // TOTAL: 984
-const FRAMES3D_COUNT     = 145
+const FRAMES_BIC_COUNT   = 145  // frames 0001–0145 (145 images, WebP)
 const GLOBE_BRIDGE_COUNT = 66   // frames 145–210 — hidden behind globe widget
-const FRAMES_SAUDI_COUNT = 193
 const FRAMES_TRUCK_COUNT = 145
 const FRAMES_PORT_COUNT  = 169
 const FRAMES8_COUNT      = 121
 const FRAMES_TECH_COUNT  = 145
-const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_SAUDI_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT  // 984
+const FRAMES_SAUDI_COUNT = 193
+const TOTAL_FRAMES       = FRAMES_BIC_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT + FRAMES_SAUDI_COUNT  // 984
 
 // ─── CDN BASE ────────────────────────────────────────────────────────────────
 // Primary: CloudFront edge (~5–20ms RTT for KSA/UAE users).
@@ -69,40 +69,40 @@ const TOTAL_FRAMES       = FRAMES3D_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_SAUDI_CO
 const CDN = 'https://d22ga4j7bn728b.cloudfront.net'
 const S3  = 'https://bejoice-premium.s3.me-central-1.amazonaws.com'
 const FRAME_URLS = [
-  // 3d intro sequence (idx 0–144) — hero
-  ...Array.from({ length: FRAMES3D_COUNT }, (_, i) =>
-    `${CDN}/3d/${String(i + 1).padStart(4, '0')}.webp`),
-  // globe bridge (idx 145–210) — repeats last 3d frame; invisible behind globe dim
-  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `${CDN}/3d/0145.webp`),
-  // saudi seg (idx 211–403) — 3rd segment, plays right after globe
-  ...Array.from({ length: FRAMES_SAUDI_COUNT }, (_, i) =>
-    `${CDN}/saudi/${String(i + 1).padStart(4, '0')}.webp`),
-  // bejoice_truck seg (idx 404–548) — starts from frame 1 after globe ends
+  // bic zoomout sequence (idx 0–144) — CDN, 0001.webp–0145.webp
+  ...Array.from({ length: FRAMES_BIC_COUNT }, (_, i) =>
+    `${CDN}/bic/${String(i + 1).padStart(4, '0')}.webp`),
+  // globe bridge (idx 145–210) — repeats last bic frame; invisible behind globe dim
+  ...Array.from({ length: GLOBE_BRIDGE_COUNT }, () => `${CDN}/bic/0145.webp`),
+  // bejoice_truck seg (idx 486–630)
   ...Array.from({ length: FRAMES_TRUCK_COUNT }, (_, i) =>
     `${CDN}/bejoice_truck/${String(i + 1).padStart(4, '0')}.webp`),
-  // port seg (idx 549–717)
+  // port seg (idx 631–799)
   ...Array.from({ length: FRAMES_PORT_COUNT }, (_, i) =>
     `${CDN}/port/${String(i + 1).padStart(4, '0')}.webp`),
-  // frames8 seg (idx 718–838)
+  // frames8 seg (idx 800–920)
   ...Array.from({ length: FRAMES8_COUNT }, (_, i) =>
     `${CDN}/frames8/${String(i + 1).padStart(4, '0')}.webp`),
-  // tech_enng seg (idx 839–983)
+  // tech_enng seg (idx 921–1065)
   ...Array.from({ length: FRAMES_TECH_COUNT }, (_, i) =>
     `${CDN}/tech_enng/${String(i + 1).padStart(4, '0')}.webp`),
+  // saudi seg (idx 1066–1258) — end
+  ...Array.from({ length: FRAMES_SAUDI_COUNT }, (_, i) =>
+    `${CDN}/saudi/${String(i + 1).padStart(4, '0')}.webp`),
 ]
-// S3 fallback URLs (same path, different origin)
-const FRAME_URLS_S3 = FRAME_URLS.map(u => u.replace(CDN, S3))
+// S3 fallback URLs — bic frames are local, keep as-is; CDN frames get S3 fallback
+const FRAME_URLS_S3 = FRAME_URLS.map(u => u.startsWith('/bic/') ? u : u.replace(CDN, S3))
 
 // Fade window in frames — how many frames to crossfade between chapters
 const FRAME_FADE = 18
 
 // Chapters mapped to segments.
-// 3d:0–144 | globe-bridge:145–210 | saudi:211–403 | bejoice_truck:404–548 | port:549–717 | frames8:718–838 | tech_enng:839–983
+// bic:0–144 | globe-bridge:145–210 | bejoice_truck:211–355 | port:356–524 | frames8:525–645 | tech_enng:646–790 | saudi:791–983
 const GLOBE_CHAPTER_START = 145
 const GLOBE_CHAPTER_END   = 210
 
 const CHAPTERS = [
-  // ── 3d: 0–144 — hero ──
+  // ── bic: 0–144 — hero ──
   {
     frameRange: [0, 144],
     eyebrow:    'CONNECTING KSA TO THE WORLD',
@@ -111,80 +111,80 @@ const CHAPTERS = [
     align:      'left',
     showCTA:    true,
   },
-  // ── GLOBE CHAPTER: 145–210 ── (full-screen 3D globe, canvas hidden, no text overlay)
+  // ── GLOBE CHAPTER: 228–293 ── (full-screen 3D globe, canvas hidden, no text overlay)
   {
     frameRange:   [GLOBE_CHAPTER_START, GLOBE_CHAPTER_END],
     headline:     [],
     align:        'center',
     globeChapter: true,
   },
-  // ── saudi: 211–403 — 3rd chapter ──
+  // ── bejoice_truck: 294–438 ──
   {
-    frameRange: [218, 390],
-    eyebrow:    'KINGDOM OF SAUDI ARABIA · VISION 2030',
-    headline:   ['CONNECTED GLOBALLY'],
-    sub:        'Born in Saudi Arabia. Trusted across 180+ countries. Bejoice Group — the Kingdom\'s premier freight forwarder powering Vision 2030 trade ambitions.',
-    align:      'center',
-    vAlign:     'bottom',
-  },
-  // ── bejoice_truck: 404–548 ──
-  {
-    frameRange: [413, 463],
-    eyebrow:    'GCC ROAD NETWORK · CROSS-BORDER TRANSPORT',
+    frameRange: [303, 353],
+    eyebrow:    '',
     headline:   ['FROM BLUE PRINT TO DELIVERY,', 'WE MOVE IT ALL'],
     sub:        'Seamless cross-border land transport across the GCC — powered by a modern fleet connecting Saudi Arabia to every regional hub.',
     align:      'right',
   },
   {
-    frameRange: [471, 541],
+    frameRange: [361, 431],
     eyebrow:    'OCEAN FREIGHT',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
     align:      'left',
   },
-  // ── port: 549–717 ──
+  // ── port: 439–607 ──
   {
-    frameRange: [557, 613],
+    frameRange: [446, 502],
     eyebrow:    'CUSTOMS CLEARANCE · PORT OPERATIONS',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
     sub:        'ZATCA-certified experts navigating complex regulatory landscapes to ensure rapid, compliant clearance for every shipment.',
     align:      'right',
   },
   {
-    frameRange: [621, 707],
+    frameRange: [510, 596],
     eyebrow:    'FCL & LCL',
     headline:   ['FROM PORT TO PORT.', 'WORLD-CLASS LOGISTICS'],
     sub:        'Comprehensive ocean freight solutions — full container loads, consolidated shipments, and breakbulk cargo managed with Saudi expertise.',
     align:      'left',
   },
-  // ── frames8: 718–838 ──
+  // ── frames8: 608–728 ──
   {
-    frameRange: [726, 780],
+    frameRange: [615, 669],
     eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
     headline:   ['SPEED ABOVE ALL.', 'DELIVERED ON TIME'],
     sub:        'Express air cargo solutions connecting Saudi Arabia to global hubs — critical shipments, time-sensitive freight, temperature-controlled cargo.',
     align:      'right',
   },
   {
-    frameRange: [781, 840],
+    frameRange: [670, 721],
     eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
     headline:   ['WORLD CLASS AIR FREIGHT'],
     sub:        '',
     align:      'right',
   },
-  // ── tech_enng: 839–983 ──
+  // ── tech_enng: 729–873 ──
   {
-    frameRange: [847, 911],
+    frameRange: [736, 800],
     eyebrow:    'HEAVY LIFT · PROJECT CARGO',
     headline:   ['PRECISION IN HANDLING.', 'EXCELLENCE IN DELIVERY'],
     sub:        'End-to-end technical cargo solutions engineered for complexity — heavy machinery, industrial equipment, and high-value freight delivered with zero compromise.',
     align:      'right',
   },
   {
-    frameRange: [919, 978],
-    eyebrow:    'ISO 9001 CERTIFIED · FIATA MEMBER',
+    frameRange: [808, 867],
+    eyebrow:    '',
     headline:   ['TECHNICAL', 'ENGINEERING'],
     sub:        'Specialised handling of oversized, overweight and high-value cargo — engineered solutions for every challenge.',
+    align:      'center',
+    vAlign:     'bottom',
+  },
+  // ── saudi: 874–1066 — end ──
+  {
+    frameRange: [880, 1052],
+    eyebrow:    'KINGDOM OF SAUDI ARABIA · VISION 2030',
+    headline:   ['CONNECTED GLOBALLY'],
+    sub:        'Born in Saudi Arabia. Trusted across 180+ countries. Bejoice Group — the Kingdom\'s premier freight forwarder powering Vision 2030 trade ambitions.',
     align:      'center',
     vAlign:     'bottom',
   },
@@ -435,6 +435,7 @@ export default function VideoHero({ onQuoteClick }) {
   const canvasDimRef    = useRef(null)   // canvas dimmer during globe chapter
   const framesRef       = useRef([])     // decoded Image objects
   const lastIdxRef      = useRef(-1)     // last drawn frame index
+  const kickRenderRef   = useRef(null)   // fn to restart RAF when a frame loads late
 
   // ── Chapter opacity driven by exact frame index (hardcoded to footage) ──
   const applyProgress = useCallback((frameIdx) => {
@@ -520,6 +521,9 @@ export default function VideoHero({ onQuoteClick }) {
     const x = (cw - w) / 2
     const y = (ch - h) / 2
 
+    ctx.fillStyle = '#183650'
+    ctx.fillRect(0, 0, cw, ch)
+
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'medium'
 
@@ -536,6 +540,14 @@ export default function VideoHero({ onQuoteClick }) {
     for (let i = Math.max(0, from); i <= end; i++) {
       if (imgs[i]) continue          // already loading/loaded
       const img = new window.Image()
+      img.onload = () => {
+        // If we painted a fallback while this frame was loading, invalidate
+        // the cache and kick the RAF loop so it redraws with the real frame
+        if (lastIdxRef.current === i) {
+          lastIdxRef.current = -1
+          if (kickRenderRef.current) kickRenderRef.current()
+        }
+      }
       img.onerror = () => {
         // CloudFront failed — silently retry from S3
         const fallback = new window.Image()
@@ -558,6 +570,9 @@ export default function VideoHero({ onQuoteClick }) {
       // If we haven't scrolled yet, paint it instantly
       if (lastIdxRef.current === -1) {
         paintFrame(0)
+        // Fade out the static LCP placeholder image now that canvas has the frame
+        const lcpImg = document.getElementById('hero-lcp-img')
+        if (lcpImg) { lcpImg.style.opacity = '0'; setTimeout(() => { if (lcpImg) lcpImg.style.display = 'none' }, 350) }
         // Ensure first chapter is visible before showing the app
         applyProgress(FRAME_FADE)
         // Signal root to fade in (prevents FOUT/flash)
@@ -565,8 +580,12 @@ export default function VideoHero({ onQuoteClick }) {
       }
     }
     
-    // Phase 1b — Eager batch: load first 60 frames for smooth initial scroll
-    loadFrameRange(1, 60)
+    // Phase 1b — Adaptive eager batch: scale with connection speed
+    // fast (4g/wifi): 60 frames | slow (3g): 20 frames | very slow: 8 frames
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection
+    const effectiveType = conn?.effectiveType || '4g'
+    const eagerCount = effectiveType === '4g' ? 60 : effectiveType === '3g' ? 20 : 8
+    loadFrameRange(1, eagerCount)
 
     // Phase 2 — idle background: load all remaining frames when browser is free
     const scheduleIdle = (start) => {
@@ -576,7 +595,7 @@ export default function VideoHero({ onQuoteClick }) {
         : setTimeout(() => { loadFrameRange(start, start + 39); scheduleIdle(start + 40) }, 300)
       return handle
     }
-    scheduleIdle(61)
+    scheduleIdle(eagerCount + 1)
   }, [loadFrameRange, paintFrame])
 
   // Phase 3 — scroll-ahead: called from RAF loop to stay 80 frames ahead
@@ -629,10 +648,10 @@ export default function VideoHero({ onQuoteClick }) {
 
       // ── Hero cards fade ──
       if (heroCardsRef.current) {
-        const CARD_FADE_START  = 140
-        const CARD_FADE_END    = 185
-        const CARGO_FADE_START = 793
-        const CARGO_FADE_END   = 813
+        const CARD_FADE_START  = 100
+        const CARD_FADE_END    = 145
+        const CARGO_FADE_START = 683
+        const CARGO_FADE_END   = 703
         const introOp = frameIdx < CARD_FADE_START ? 1
           : frameIdx > CARD_FADE_END ? 0
           : 1 - (frameIdx - CARD_FADE_START) / (CARD_FADE_END - CARD_FADE_START)
@@ -653,32 +672,34 @@ export default function VideoHero({ onQuoteClick }) {
       }
 
       // ── Globe chapter — full-screen, replaces canvas ──
-      // Canvas pre-dims BEFORE globe chapter so no frames2 footage ever shows
-      const GLOBE_FADE     = 18
-      const PRE_DIM_START  = GLOBE_CHAPTER_START - 20  // start darkening 20 frames early (frame 125)
-      const POST_DIM_END   = GLOBE_CHAPTER_END   + 22  // stay dark 22 frames after globe fades out
+      // Canvas pre-dims BEFORE globe chapter so bic footage fades out gracefully.
+      // Globe begins fading in WHILE canvas is still dimming → seamless cross-dissolve.
+      const GLOBE_FADE      = 30   // globe fade-in/out window in frames
+      const PRE_DIM_FRAMES  = 50   // how many frames to dim canvas before globe start
+      const PRE_DIM_START   = GLOBE_CHAPTER_START - PRE_DIM_FRAMES
+      const GLOBE_EARLY     = 20   // globe starts fading in this many frames before GLOBE_CHAPTER_START
+      const POST_DIM_END    = GLOBE_CHAPTER_END + 28
 
       if (globeChapterRef.current && canvasDimRef.current) {
-        // ── Canvas dimmer: independent of globe opacity ──
+        // ── Canvas dimmer: slow fade to black over 50 frames ──
         let dimOp = 0
         if (frameIdx >= PRE_DIM_START && frameIdx < GLOBE_CHAPTER_START) {
-          // pre-dim: ramps from 0→1 over 20 frames before globe chapter
-          dimOp = (frameIdx - PRE_DIM_START) / (GLOBE_CHAPTER_START - PRE_DIM_START)
+          dimOp = (frameIdx - PRE_DIM_START) / PRE_DIM_FRAMES
         } else if (frameIdx >= GLOBE_CHAPTER_START && frameIdx <= GLOBE_CHAPTER_END) {
-          // fully dim throughout the entire globe chapter
           dimOp = 1
         } else if (frameIdx > GLOBE_CHAPTER_END && frameIdx <= POST_DIM_END) {
-          // post-dim: ramps from 1→0 so canvas returns smoothly after globe
           dimOp = 1 - (frameIdx - GLOBE_CHAPTER_END) / (POST_DIM_END - GLOBE_CHAPTER_END)
         }
         canvasDimRef.current.style.opacity = String(Math.max(0, Math.min(1, dimOp)))
 
-        // ── Globe: fades in/out within the chapter window ──
+        // ── Globe: starts fading in GLOBE_EARLY frames before chapter start ──
+        // This overlaps with the canvas dim → direct dissolve, no black gap
+        const GLOBE_FADE_IN_START = GLOBE_CHAPTER_START - GLOBE_EARLY
         let globeOp = 0
-        if (frameIdx >= GLOBE_CHAPTER_START + GLOBE_FADE && frameIdx <= GLOBE_CHAPTER_END - GLOBE_FADE) {
+        if (frameIdx >= GLOBE_FADE_IN_START && frameIdx < GLOBE_FADE_IN_START + GLOBE_FADE) {
+          globeOp = (frameIdx - GLOBE_FADE_IN_START) / GLOBE_FADE
+        } else if (frameIdx >= GLOBE_FADE_IN_START + GLOBE_FADE && frameIdx <= GLOBE_CHAPTER_END - GLOBE_FADE) {
           globeOp = 1
-        } else if (frameIdx >= GLOBE_CHAPTER_START && frameIdx < GLOBE_CHAPTER_START + GLOBE_FADE) {
-          globeOp = (frameIdx - GLOBE_CHAPTER_START) / GLOBE_FADE
         } else if (frameIdx > GLOBE_CHAPTER_END - GLOBE_FADE && frameIdx <= GLOBE_CHAPTER_END) {
           globeOp = (GLOBE_CHAPTER_END - frameIdx) / GLOBE_FADE
         }
@@ -693,6 +714,9 @@ export default function VideoHero({ onQuoteClick }) {
         rafId = null
       }
     }
+
+    // Expose a kick function so late-loading frames can restart the RAF
+    kickRenderRef.current = () => { if (!rafId) rafId = requestAnimationFrame(render) }
 
     const onScroll = () => {
       const rect  = wrapper.getBoundingClientRect()
@@ -735,7 +759,7 @@ export default function VideoHero({ onQuoteClick }) {
       <div className="hero-sticky-viewport" style={{ position:'sticky', top:0, height:'100vh', overflow:'hidden' }}>
 
         {/* Dark base */}
-        <div style={{ position:'absolute', inset:0, zIndex:0, background:'#091524' }} />
+        <div style={{ position:'absolute', inset:0, zIndex:0, background:'#183650' }} />
 
         {/* ── CANVAS — sits beneath globe, always ready ── */}
         <canvas ref={canvasRef} style={{
@@ -744,12 +768,32 @@ export default function VideoHero({ onQuoteClick }) {
           opacity:1,
           willChange:'transform',
           filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
+          background:'#183650',
         }} />
+
+        {/* ── LCP IMAGE — static img so browser preloads before JS runs.
+             Sits on top of canvas at z:1, fades out once canvas paints frame 0. ── */}
+        <img
+          src="/hero-frame0.webp"
+          alt=""
+          fetchPriority="high"
+          decoding="sync"
+          aria-hidden="true"
+          id="hero-lcp-img"
+          style={{
+            position:'absolute', inset:0, zIndex:2,
+            width:'100%', height:'100%',
+            objectFit:'cover',
+            filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
+            transition:'opacity 0.4s ease',
+            willChange:'opacity',
+          }}
+        />
 
         {/* Exit overlay */}
         <div ref={exitOverlayRef} style={{
           position:'absolute', inset:0, zIndex:8,
-          background:'linear-gradient(to bottom,rgba(7,16,28,0.96) 0%,#091524 100%)',
+          background:'linear-gradient(to bottom,rgba(24,54,80,0.96) 0%,#183650 100%)',
           pointerEvents:'none', opacity:0, willChange:'opacity',
         }} />
 
@@ -757,8 +801,8 @@ export default function VideoHero({ onQuoteClick }) {
         <div style={{
           position:'absolute', inset:0, zIndex:3, pointerEvents:'none',
           background:`
-            radial-gradient(ellipse 75% 65% at 50% 50%,rgba(7,16,28,0) 0%,rgba(7,16,28,0.45) 100%),
-            linear-gradient(to bottom,rgba(7,16,28,0.50) 0%,rgba(7,16,28,0.01) 22%,rgba(7,16,28,0.01) 76%,rgba(7,16,28,0.70) 100%)
+            radial-gradient(ellipse 75% 65% at 50% 50%,rgba(24,54,80,0) 0%,rgba(24,54,80,0.45) 100%),
+            linear-gradient(to bottom,rgba(24,54,80,0.50) 0%,rgba(24,54,80,0.01) 22%,rgba(24,54,80,0.01) 76%,rgba(24,54,80,0.70) 100%)
           `,
         }} />
 
@@ -766,7 +810,7 @@ export default function VideoHero({ onQuoteClick }) {
         {/* ── Canvas dimmer — darkens frame scrubbing during globe chapter ── */}
         <div ref={canvasDimRef} style={{
           position: 'absolute', inset: 0, zIndex: 2,
-          background: '#091524', opacity: 0, pointerEvents: 'none', transition: 'none',
+          background: '#183650', opacity: 0, pointerEvents: 'none', transition: 'none',
         }} />
 
         {/* ── GLOBE CHAPTER — full-screen, sits above canvas ── */}
@@ -774,7 +818,7 @@ export default function VideoHero({ onQuoteClick }) {
           position: 'absolute', inset: 0, zIndex: 6,
           opacity: 0, pointerEvents: 'none', transition: 'none',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(10,18,40,0.85) 0%, rgba(7,16,28,0.98) 100%)',
+          background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(24,54,80,0.85) 0%, rgba(18,40,64,0.98) 100%)',
         }}>
           <Suspense fallback={null}>
             <BejoiceGlobe embedded fullscreen />
@@ -833,11 +877,11 @@ export default function VideoHero({ onQuoteClick }) {
                     fontFamily:"'DM Sans',sans-serif",
                     fontSize: isAr ? 'clamp(19px,1.6vw,20px)' : 'clamp(13px,1.4vw,16px)', letterSpacing: isAr ? '0' : '0.22em',
                     textTransform: isAr ? 'none' : 'uppercase', fontWeight:700,
-                    color:'rgba(91,194,231,1)',
-                    background:'rgba(91,194,231,0.22)',
-                    border:'1.5px solid rgba(91,194,231,0.75)',
+                    color:'rgba(255,255,255,1)',
+                    background:'rgba(255,255,255,0.12)',
+                    border:'1.5px solid rgba(255,255,255,0.55)',
                     borderRadius:'3px', padding:'6px 16px',
-                    boxShadow:'0 0 12px rgba(91,194,231,0.2)',
+                    boxShadow:'0 0 12px rgba(255,255,255,0.1)',
                     marginBottom:'14px',
                     alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                     backdropFilter:'blur(8px)',
@@ -905,6 +949,60 @@ export default function VideoHero({ onQuoteClick }) {
                   </button>
                 )}
 
+                {/* ── Mobile inline cards (hidden on desktop via CSS) ── */}
+                {ch.showCTA && (
+                  <div className="hero-mobile-cards">
+                    {/* OR divider */}
+                    <div className="hero-mobile-divider">
+                      <div className="hero-mobile-divider-line" />
+                      <span className="hero-mobile-divider-text">OR</span>
+                      <div className="hero-mobile-divider-line" />
+                    </div>
+
+                    {/* Track shipment */}
+                    <div className="hero-mobile-track-section">
+                      <div className="hero-mobile-section-label">
+                        <svg viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="rgba(91,194,231,0.8)" strokeWidth="1.5"/><circle cx="5" cy="5" r="1" fill="rgba(91,194,231,0.8)"/></svg>
+                        TRACK SHIPMENT
+                      </div>
+                      <div className="hero-mobile-track">
+                        <TrackCard />
+                      </div>
+                    </div>
+
+                    {/* Stats */}
+                    <div>
+                      <div className="hero-mobile-section-label" style={{ marginTop:'14px' }}>
+                        <svg viewBox="0 0 10 10" fill="none"><rect x="1" y="5" width="2" height="4" rx="0.5" fill="rgba(91,194,231,0.8)"/><rect x="4" y="3" width="2" height="6" rx="0.5" fill="rgba(91,194,231,0.8)"/><rect x="7" y="1" width="2" height="8" rx="0.5" fill="rgba(91,194,231,0.8)"/></svg>
+                        BY THE NUMBERS
+                      </div>
+                      <div className="hero-mobile-stats">
+                        {[
+                          { v:'120', suffix:'+', l:'Countries' },
+                          { v:'25',  suffix:'+', l:'Years' },
+                          { v:'24/7',suffix:'',  l:'Operations' },
+                          { v:'KSA', suffix:'',  l:'Specialist' },
+                        ].map((s, idx, arr) => (
+                          <div key={s.l} style={{
+                            flex:'1', display:'flex', alignItems:'center', justifyContent:'center',
+                            padding:'0.75rem 0.25rem',
+                            borderRight: idx < arr.length-1 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+                          }}>
+                            <div style={{ textAlign:'center' }}>
+                              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'1.35rem', letterSpacing:'0.06em', color:'#ffffff', textShadow:'0 0 16px rgba(255,255,255,0.25)', lineHeight:1.1 }}>
+                                <CountUp target={s.v} suffix={s.suffix} duration={1000} />
+                              </div>
+                              <div style={{ fontFamily:"'Inter',sans-serif", fontSize:'8px', letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(91,194,231,0.85)', fontWeight:600, marginTop:'4px' }}>
+                                {s.l}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
               </div>{/* end text backdrop */}
             </div>
           )
@@ -939,7 +1037,6 @@ export default function VideoHero({ onQuoteClick }) {
             {[
               { v:'120',  arV:null, suffix:'+', l:'Countries',  ar: 'دولة'      },
               { v:'25',   arV:null, suffix:'+', l:'Years',      ar: 'عامًا'     },
-              { v:'500',  arV:null, suffix:'+', l:'Deliveries', ar: 'عملية تسليم' },
               { v:'24/7', arV:'٢٤/٧', suffix:'',  l:'Operations', ar: 'عمليات'    },
               { v:'KSA',  arV:'م.ع.س',  suffix:'',  l:'Specialist', ar: 'متخصص'     },
             ].map((s, idx, arr) => (
@@ -976,6 +1073,9 @@ export default function VideoHero({ onQuoteClick }) {
         @keyframes introSlide   { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
         @keyframes trackScanBar { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
         @keyframes trackPulseRing { 0%{transform:scale(0.8);opacity:1} 100%{transform:scale(1.6);opacity:0} }
+
+        /* Mobile inline cards — hidden on desktop */
+        .hero-mobile-cards { display: none; }
 
         .sleek-input, .sleek-select {
           width: 100%;
@@ -1024,7 +1124,7 @@ export default function VideoHero({ onQuoteClick }) {
 
         /* ── Globe video: contain (full frame) on portrait/mobile ── */
         @media (max-width: 767px) and (orientation: portrait) {
-          .hero-globe-video { object-fit: contain !important; background: #091524; }
+          .hero-globe-video { object-fit: contain !important; background: #183650; }
         }
 
         /* ════════════════════════════════════════════════════
@@ -1037,7 +1137,7 @@ export default function VideoHero({ onQuoteClick }) {
             justify-content: flex-start !important;
             align-items: center !important;
             text-align: center !important;
-            padding-top: 72px !important;
+            padding-top: 114px !important;
             padding-left: 1rem !important;
             padding-right: 1rem !important;
             padding-bottom: 1rem !important;
@@ -1168,7 +1268,7 @@ export default function VideoHero({ onQuoteClick }) {
         }
 
         @media (max-width: 479px) {
-          .hero-content-overlay { padding-top: 64px !important; }
+          .hero-content-overlay { padding-top: 114px !important; }
         }
 
         /* ── Mobile: force chapter text blocks to center ── */

@@ -128,7 +128,7 @@ function UnitSelect({ value, onChange }) {
           border: `1px solid ${open ? 'rgba(91,194,231,0.8)' : 'rgba(91,194,231,0.35)'}`,
           borderRadius: '0.5rem',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          background: '#0d1020',
+          background: '#0c1c30',
           transition: 'border-color 0.2s',
           position: 'relative',
         }}
@@ -143,7 +143,7 @@ function UnitSelect({ value, onChange }) {
       {open && createPortal(
         <div style={{
           position: 'absolute', top: pos.top, left: pos.left, width: pos.width, zIndex: 99999,
-          background: '#0d1020',
+          background: '#0c1c30',
           border: '1px solid rgba(91,194,231,0.5)',
           borderRadius: '0.5rem',
           overflow: 'hidden',
@@ -212,7 +212,7 @@ function TruckSelect({ value, onChange }) {
           color: '#5BC2E7',
           border: `1px solid ${open ? 'rgba(91,194,231,0.8)' : 'rgba(91,194,231,0.35)'}`,
           borderRadius: '0.5rem',
-          background: '#0d1020',
+          background: '#0c1c30',
           position: 'relative',
           transition: 'border-color 0.2s',
         }}
@@ -227,7 +227,7 @@ function TruckSelect({ value, onChange }) {
       {open && createPortal(
         <div style={{
           position: 'absolute', top: pos.top, left: pos.left, width: pos.width, zIndex: 99999,
-          background: '#0d1020',
+          background: '#0c1c30',
           border: '1px solid rgba(91,194,231,0.5)',
           borderRadius: '0.5rem',
           overflow: 'hidden',
@@ -764,7 +764,7 @@ export default function LogisticsTools() {
   const isAr = lang === 'ar'
   return (
     <section id="tools" style={{
-      background: '#091524',
+      background: '#183650',
       padding: 'clamp(80px,10vw,130px) clamp(1.5rem,8vw,8rem)',
       position: 'relative',
       overflow: 'hidden',
@@ -849,7 +849,7 @@ export default function LogisticsTools() {
           0%   { background-position: -100% center; }
           100% { background-position: 200% center; }
         }
-        @media (max-width: 540px) {
+        @media (max-width: 768px) {
           /* Sea: L W H / Qty Unit [remove] */
           .sea-row-grid  { grid-template-columns: 1fr 1fr 1fr !important; }
           /* Air: L W H / Qty Unit */
@@ -858,6 +858,12 @@ export default function LogisticsTools() {
           .land-row-grid { grid-template-columns: 1fr 1fr 1fr 1fr !important; }
           /* Warehouse: L W H / Qty Unit [remove] */
           .wh-row-grid   { grid-template-columns: 1fr 1fr 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .sea-row-grid  { grid-template-columns: 1fr 1fr !important; }
+          .air-row-grid  { grid-template-columns: 1fr 1fr !important; }
+          .land-row-grid { grid-template-columns: 1fr 1fr !important; }
+          .wh-row-grid   { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
     </section>

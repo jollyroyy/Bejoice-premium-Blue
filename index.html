@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/bejoice-logo-blue.png" />
-    <link rel="apple-touch-icon" href="/bejoice-logo-blue.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="/favicon-192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bejoice — Saudi's Leading Smart Freight, AI Powered</title>
     <meta name="description" content="Bejoice — Saudi Arabia's AI-powered freight forwarder. Seamless end-to-end logistics with global reach, reliability, and smart efficiency." />
@@ -30,9 +31,9 @@
       /* Rendering */
       html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;scroll-behavior:auto}
       /* Body — dark bg painted immediately, before external CSS */
-      body{background:#07101c;color:#fff;font-family:'DM Sans',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+      body{background:#183650;color:#fff;font-family:'DM Sans',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
       /* Root fade-in placeholder */
-      #root{opacity:0;transition:opacity .5s ease-out;background:#030306;min-height:100svh}
+      #root{opacity:0;transition:opacity .5s ease-out;background:#183650;min-height:100svh}
       /* Scrollbar — prevents width-jump on content load */
       ::-webkit-scrollbar{width:3px}
       ::-webkit-scrollbar-track{background:#060f1a}
@@ -79,21 +80,12 @@
     <!-- Hero frames — NO crossorigin: VideoHero loads via new Image() (no-CORS).
          crossorigin="anonymous" creates a separate cache entry → double download.
          Frame 0001 = high priority (LCP). Frames 0002-0015 = low priority buffer. -->
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0001.webp" type="image/webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0002.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0003.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0004.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0005.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0006.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0007.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0008.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0009.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0010.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0011.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0012.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0013.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0014.webp" type="image/webp" fetchpriority="low" />
-    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/3d/0015.webp" type="image/webp" fetchpriority="low" />
+    <link rel="preload" as="image" href="/bejoice-logo-nav.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/hero-frame0.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/bic/0002.webp" type="image/webp" fetchpriority="high" crossorigin="anonymous" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/bic/0003.webp" type="image/webp" fetchpriority="low" crossorigin="anonymous" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/bic/0004.webp" type="image/webp" fetchpriority="low" crossorigin="anonymous" />
+    <link rel="preload" as="image" href="https://d22ga4j7bn728b.cloudfront.net/bic/0005.webp" type="image/webp" fetchpriority="low" crossorigin="anonymous" />
     <!-- Critical font CSS — preloaded but applied NON-BLOCKING (see font links below) -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" as="style" fetchpriority="high" />
 
@@ -263,13 +255,20 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script>
-      /* Signal hero ready — fades in #root once critical frames are painted */
-      window.__markHeroReady = function() {
-        requestAnimationFrame(function() {
-          var root = document.getElementById('root');
-          if (root) root.style.opacity = '1';
-        });
-      };
+      /* Signal hero ready — fades in #root once critical frames are painted.
+         Hard 500ms fallback ensures LCP is never blocked by CDN latency. */
+      (function() {
+        var shown = false;
+        function show() {
+          if (shown) return; shown = true;
+          requestAnimationFrame(function() {
+            var root = document.getElementById('root');
+            if (root) root.style.opacity = '1';
+          });
+        }
+        window.__markHeroReady = show;
+        setTimeout(show, 500);
+      })();
     </script>
 
     <!-- Service Worker registration — fires after 'load' so it never blocks

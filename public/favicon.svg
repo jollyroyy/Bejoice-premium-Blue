@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="14" fill="#050508"/>
   <defs>
     <linearGradient id="wL" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#e8cc7a"/>
-      <stop offset="100%" stop-color="#c8a84e"/>
+      <stop offset="0%" stop-color="#2a3fa0"/>
+      <stop offset="100%" stop-color="#1a237e"/>
     </linearGradient>
     <linearGradient id="wR" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#e8cc7a"/>
-      <stop offset="100%" stop-color="#c8a84e"/>
+      <stop offset="0%" stop-color="#2a3fa0"/>
+      <stop offset="100%" stop-color="#1a237e"/>
     </linearGradient>
   </defs>
 
@@ -24,5 +23,5 @@
   <path d="M35 38 C41 41 48 43 55 40 C50 44 42 44 37 41 Z" fill="url(#wR)" opacity="0.75"/>
 
   <!-- Center B letter mark -->
-  <text x="32" y="37" text-anchor="middle" font-family="Arial Narrow, Arial, sans-serif" font-size="14" font-weight="900" letter-spacing="1" fill="url(#wL)">B</text>
+  <text x="32" y="37" text-anchor="middle" font-family="Arial Narrow, Arial, sans-serif" font-size="14" font-weight="900" letter-spacing="1" fill="#1a237e">B</text>
 </svg>

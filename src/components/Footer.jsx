@@ -145,7 +145,7 @@ function PolicyModal({ title, onClose }) {
             }}
           >✕</button>
         </div>
-        <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'DM Sans', sans-serif", fontSize: '13px', color: 'rgba(91,194,231,0.8)', marginBottom: '32px', letterSpacing: '0.05em' }}>
+        <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'DM Sans', sans-serif", fontSize: '15px', color: 'rgba(91,194,231,0.8)', marginBottom: '32px', letterSpacing: '0.05em' }}>
           {isAr ? ar.footer.lastUpdated : 'Last updated:'} {policy.updated}
         </p>
 
@@ -154,12 +154,12 @@ function PolicyModal({ title, onClose }) {
           <div key={s.title} style={{ marginBottom: '28px' }}>
             <h3 style={{
               fontFamily: "'DM Sans', sans-serif", fontWeight: 700,
-              fontSize: 'clamp(13px,1.6vw,16px)',
+              fontSize: 'clamp(15px,1.6vw,18px)',
               color: 'rgba(255,255,255,0.95)', marginBottom: '10px',
             }}>{s.title}</h3>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 'clamp(13px,1.5vw,15px)',
+              fontSize: 'clamp(15px,1.5vw,17px)',
               color: 'rgba(255,255,255,0.72)', lineHeight: 1.75,
               whiteSpace: 'pre-line', margin: 0,
             }}>{s.body}</p>
@@ -184,7 +184,7 @@ export default function Footer() {
   const [openPolicy, setOpenPolicy] = useState(null)
 
   return (
-    <footer className="relative border-t pt-10 md:pt-20 pb-10 px-6 md:px-12 lg:px-24 overflow-hidden cv-section cv-footer" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
+    <footer className="relative border-t pt-10 md:pt-20 pb-10 px-6 md:px-12 lg:px-24 overflow-hidden cv-section cv-footer" style={{ borderColor: 'rgba(255,255,255,0.08)', background: '#183650' }}>
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(91,194,231,0.05) 0%, transparent 60%)' }}/>
       <div className="max-w-7xl mx-auto relative">
@@ -197,15 +197,15 @@ export default function Footer() {
                 <img src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-white.webp" alt="Bejoice" width="480" height="267" loading="lazy" decoding="async" style={{ height: 'clamp(36px,5vw,56px)', width: 'auto', aspectRatio: '480 / 267' }} />
               </picture>
               <div style={{ borderLeft: '2px solid rgba(91,194,231,0.45)', paddingLeft: '12px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '15px', letterSpacing: '0.18em', color: '#ffffff' }}>BEJOICE</span>
+                <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '17px', letterSpacing: '0.18em', color: '#ffffff' }}>BEJOICE</span>
                 {isAr ? (
-                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', color: '#8DD8F0', letterSpacing: '0.04em' }}>{ar.footer.tagline}</span>
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '14px', color: '#8DD8F0', letterSpacing: '0.04em' }}>{ar.footer.tagline}</span>
                 ) : (
-                  <span className="shine-ltr" data-text="Connecting KSA to the World" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', color: '#8DD8F0', letterSpacing: '0.04em' }}>Connecting KSA to the World</span>
+                  <span className="shine-ltr" data-text="Connecting KSA to the World" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '14px', color: '#8DD8F0', letterSpacing: '0.04em' }}>Connecting KSA to the World</span>
                 )}
               </div>
             </div>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.78)', lineHeight: 1.7, maxWidth: '280px', marginBottom: '28px' }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.78)', lineHeight: 1.7, maxWidth: '280px', marginBottom: '28px' }}>
               {isAr ? ar.footer.description : 'Premium global freight forwarding and logistics solutions. Trusted by industry leaders across Saudi Arabia and beyond since 2006.'}
             </p>
           </div>
@@ -213,7 +213,7 @@ export default function Footer() {
           {/* Company + Support links */}
           {Object.entries(footerLinks).map(([category, items]) => (
             <div key={category}>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(9px,1.1vw,12px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.92)', fontWeight: 600, marginBottom: '20px' }}>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.1vw,14px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.92)', fontWeight: 600, marginBottom: '20px' }}>
                 {isAr ? (ar.footer.categories[category] || category) : category}
               </div>
               <ul className="space-y-3">
@@ -243,7 +243,7 @@ export default function Footer() {
                       }}
                       target={item === 'Track Shipment' ? '_blank' : undefined}
                       rel={item === 'Track Shipment' ? 'noopener noreferrer' : undefined}
-                      style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s' }}
+                      style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s' }}
                       onMouseEnter={e => e.target.style.color = '#ffffff'}
                       onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.72)'}
                     >{isAr ? (ar.footer.links[item] || item) : item}</a>
@@ -255,25 +255,25 @@ export default function Footer() {
 
           {/* Contact Us */}
           <div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(9px,1.1vw,12px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.92)', fontWeight: 600, marginBottom: '20px' }}>{isAr ? ar.footer.categories['Contact Us'] : 'Contact Us'}</div>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.1vw,14px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.92)', fontWeight: 600, marginBottom: '20px' }}>{isAr ? ar.footer.categories['Contact Us'] : 'Contact Us'}</div>
             <ul className="space-y-4">
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <svg style={{ flexShrink: 0, marginTop: '3px' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.7)" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.4 2 2 0 0 1 3.62 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <a href="tel:+966138233461" dir="ltr" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5, direction: 'ltr', unicodeBidi: 'embed' }}
+                <a href="tel:+966138233461" dir="ltr" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5, direction: 'ltr', unicodeBidi: 'embed' }}
                   onMouseEnter={e => e.target.style.color = '#ffffff'}
                   onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.72)'}
                 >+966 13 823 3461</a>
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <svg style={{ flexShrink: 0, marginTop: '3px' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.7)" strokeWidth="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <a href="mailto:info@bejoiceshipping.com" dir="ltr" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.5vw,15px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5, direction: 'ltr', unicodeBidi: 'embed' }}
+                <a href="mailto:info@bejoiceshipping.com" dir="ltr" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.72)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5, direction: 'ltr', unicodeBidi: 'embed' }}
                   onMouseEnter={e => e.target.style.color = '#ffffff'}
                   onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.72)'}
                 >info@bejoiceshipping.com</a>
               </li>
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                 <svg style={{ flexShrink: 0, marginTop: '3px' }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.7)" strokeWidth="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.3vw,13px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, textAlign: isAr ? 'right' : 'left', direction: isAr ? 'rtl' : 'ltr' }}>
+                <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'DM Sans', sans-serif", fontSize: 'clamp(13px,1.3vw,15px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, textAlign: isAr ? 'right' : 'left', direction: isAr ? 'rtl' : 'ltr' }}>
                   {isAr ? ar.footer.address.split('\n').map((line, i) => <span key={i}>{line}<br/></span>) : <>Block A, Al Raja Avenue,<br/>1st floor, Office No. 2, Dammam 32234, KSA</>}
                 </span>
               </li>
@@ -321,8 +321,8 @@ export default function Footer() {
               </svg>
             </div>
             <div>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(13px,1.4vw,16px)', letterSpacing: '0.18em', color: '#ffffff', lineHeight: 1.1 }}>BEJOICE SHIPPING LLC</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(9px,1vw,11px)', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(0,169,255,0.75)', marginTop: 3, fontWeight: 600 }}>{isAr ? ar.footer.followLinkedIn : 'Follow on LinkedIn'}</div>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(15px,1.4vw,18px)', letterSpacing: '0.18em', color: '#ffffff', lineHeight: 1.1 }}>BEJOICE SHIPPING LLC</div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1vw,13px)', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(0,169,255,0.75)', marginTop: 3, fontWeight: 600 }}>{isAr ? ar.footer.followLinkedIn : 'Follow on LinkedIn'}</div>
             </div>
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ marginLeft: 4, flexShrink: 0, opacity: 0.6 }}>
               <path d="M3 8h10M9 4l4 4-4 4" stroke="rgba(0,169,255,0.8)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -363,8 +363,8 @@ export default function Footer() {
               </svg>
             </div>
             <div>
-              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(13px,1.4vw,16px)', letterSpacing: '0.18em', color: '#ffffff', lineHeight: 1.1 }}>@BEJOICE_SHIPPING</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(9px,1vw,11px)', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,120,160,0.75)', marginTop: 3, fontWeight: 600 }}>{isAr ? ar.footer.followInstagram : 'Follow on Instagram'}</div>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(15px,1.4vw,18px)', letterSpacing: '0.18em', color: '#ffffff', lineHeight: 1.1 }}>@BEJOICE_SHIPPING</div>
+              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1vw,13px)', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(255,120,160,0.75)', marginTop: 3, fontWeight: 600 }}>{isAr ? ar.footer.followInstagram : 'Follow on Instagram'}</div>
             </div>
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ marginLeft: 4, flexShrink: 0, opacity: 0.6 }}>
               <path d="M3 8h10M9 4l4 4-4 4" stroke="rgba(255,120,160,0.8)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -376,13 +376,13 @@ export default function Footer() {
         <div className="gold-line mb-10" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.4vw,14px)', color: 'rgba(255,255,255,0.55)' }}>
+          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(13px,1.4vw,16px)', color: 'rgba(255,255,255,0.55)' }}>
             {isAr ? ar.footer.rights : '© 2026 Bejoice Global Logistics LLC. All rights reserved.'}
           </div>
           <div className="flex flex-wrap gap-6">
             {Object.keys(POLICIES).map(item => (
               <button key={item} onClick={() => setOpenPolicy(item)}
-                style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(10px,1.3vw,13px)', color: 'rgba(255,255,255,0.55)', background: 'none', border: 'none', cursor: 'pointer', letterSpacing: '0.05em', transition: 'color 0.3s', padding: 0 }}
+                style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(12px,1.3vw,15px)', color: 'rgba(255,255,255,0.55)', background: 'none', border: 'none', cursor: 'pointer', letterSpacing: '0.05em', transition: 'color 0.3s', padding: 0 }}
                 onMouseEnter={e => e.target.style.color = 'rgba(255,255,255,0.9)'}
                 onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.55)'}
               >{isAr ? (ar.footer.policies[item] || item) : item}</button>
