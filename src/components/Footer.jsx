@@ -188,7 +188,7 @@ export default function Footer() {
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 50% 100%, rgba(91,194,231,0.05) 0%, transparent 60%)' }}/>
       <div className="max-w-7xl mx-auto relative">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 md:gap-12 lg:gap-16 mb-12 md:mb-16 lg:mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 md:gap-12 lg:gap-16 mb-12 md:mb-16 lg:mb-20" style={{ justifyItems: 'center' }}>
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '24px' }}>
@@ -204,7 +204,7 @@ export default function Footer() {
 
           {/* Company + Support links */}
           {Object.entries(footerLinks).map(([category, items]) => (
-            <div key={category} style={{ marginLeft: '-80px' }}>
+            <div key={category} style={{ }}>
               <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.1vw,14px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.92)', fontWeight: 600, marginBottom: '20px' }}>
                 {isAr ? (ar.footer.categories[category] || category) : category}
               </div>
@@ -246,7 +246,7 @@ export default function Footer() {
           ))}
 
           {/* Contact Us */}
-          <div style={{ marginLeft: '-80px' }}>
+          <div style={{ }}>
             <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.1vw,14px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.92)', fontWeight: 600, marginBottom: '20px' }}>{isAr ? ar.footer.categories['Contact Us'] : 'Contact Us'}</div>
             <ul className="space-y-4">
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
