@@ -573,8 +573,8 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             </div>
 
             <div style={{ marginBottom:'0.25rem', minHeight:44, display:'flex', alignItems:'center' }}>
-              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,2.8vw,1.5rem)', letterSpacing:'0.14em', color:'rgba(255,255,255,0.92)', lineHeight:1.2 }}>
-                SAUDI ARABIA · UAE · INDIA · CHINA
+              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,2.8vw,1.5rem)', letterSpacing:'0.22em', color:'rgba(255,255,255,0.92)', lineHeight:1.2 }}>
+                SAUDI ARABIA &nbsp;·&nbsp; UAE &nbsp;·&nbsp; INDIA &nbsp;·&nbsp; CHINA
               </span>
             </div>
 
