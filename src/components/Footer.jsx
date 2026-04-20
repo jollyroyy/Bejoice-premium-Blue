@@ -203,15 +203,15 @@ export default function Footer() {
                 ) : (
                   <span className="shine-ltr" data-text="Connecting KSA to the World" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '14px', color: '#8DD8F0', letterSpacing: '0.04em' }}>Connecting KSA to the World</span>
                 )}
+                <img
+                  src="/bejoice-logo-white.webp"
+                  alt="Bejoice"
+                  width="1509" height="839"
+                  loading="lazy" decoding="async"
+                  style={{ height: '72px', width: 'auto', objectFit: 'contain', display: 'block', marginTop: '10px', opacity: 0.92 }}
+                />
               </div>
             </div>
-            <img
-              src="/bejoice-logo-white.webp"
-              alt="Bejoice"
-              width="1509" height="839"
-              loading="lazy" decoding="async"
-              style={{ height: '72px', width: 'auto', objectFit: 'contain', display: 'block', marginBottom: '28px', opacity: 0.92 }}
-            />
           </div>
 
           {/* Company + Support links */}
