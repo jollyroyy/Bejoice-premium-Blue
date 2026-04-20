@@ -384,9 +384,6 @@ function FreightCalcCard() {
           <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#ffffff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             {isAr ? ar.hero.calcTitle : 'LOAD CALCULATOR'}
           </p>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize: isAr ? '15px' : '11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing: isAr ? '0' : '0.14em', textTransform: isAr ? 'none' : 'uppercase', fontWeight:600 }}>
-            {isAr ? ar.hero.calcSub : 'Container Volume Advisor'}
-          </p>
         </div>
         <button onClick={handleOpen} className="btn-gold"
           style={{ padding:'12px 28px', fontSize:'1rem', borderRadius:'10px', whiteSpace:'nowrap', flexShrink:0, fontWeight:400 }}>
