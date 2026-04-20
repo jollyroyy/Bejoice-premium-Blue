@@ -52,16 +52,14 @@ const SCROLL_HEIGHT = 2000
 // port:          356–524 (169) Port/sea footage WebPs
 // frames8:       525–645 (121) additional footage WebPs
 // tech_enng:     646–790 (145) tech/engineering footage WebPs
-// saudi:         791–983 (193) Saudi Arabia footage WebPs — end
-// TOTAL: 984
+// TOTAL: 791
 const FRAMES_BIC_COUNT   = 145  // frames 0001–0145 (145 images, WebP)
 const GLOBE_BRIDGE_COUNT = 66   // frames 145–210 — hidden behind globe widget
 const FRAMES_TRUCK_COUNT = 145
 const FRAMES_PORT_COUNT  = 169
 const FRAMES8_COUNT      = 121
 const FRAMES_TECH_COUNT  = 145
-const FRAMES_SAUDI_COUNT = 193
-const TOTAL_FRAMES       = FRAMES_BIC_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT + FRAMES_SAUDI_COUNT  // 984
+const TOTAL_FRAMES       = FRAMES_BIC_COUNT + GLOBE_BRIDGE_COUNT + FRAMES_TRUCK_COUNT + FRAMES_PORT_COUNT + FRAMES8_COUNT + FRAMES_TECH_COUNT  // 791
 
 // ─── CDN BASE ────────────────────────────────────────────────────────────────
 // Primary: CloudFront edge (~5–20ms RTT for KSA/UAE users).
@@ -83,12 +81,9 @@ const FRAME_URLS = [
   // frames8 seg (idx 800–920)
   ...Array.from({ length: FRAMES8_COUNT }, (_, i) =>
     `${CDN}/frames8/${String(i + 1).padStart(4, '0')}.webp`),
-  // tech_enng seg (idx 921–1065)
+  // tech_enng seg (idx 646–790) — end
   ...Array.from({ length: FRAMES_TECH_COUNT }, (_, i) =>
     `${CDN}/tech_enng/${String(i + 1).padStart(4, '0')}.webp`),
-  // saudi seg (idx 1066–1258) — end
-  ...Array.from({ length: FRAMES_SAUDI_COUNT }, (_, i) =>
-    `${CDN}/saudi/${String(i + 1).padStart(4, '0')}.webp`),
 ]
 // S3 fallback URLs — bic frames are local, keep as-is; CDN frames get S3 fallback
 const FRAME_URLS_S3 = FRAME_URLS.map(u => u.startsWith('/bic/') ? u : u.replace(CDN, S3))
@@ -97,7 +92,7 @@ const FRAME_URLS_S3 = FRAME_URLS.map(u => u.startsWith('/bic/') ? u : u.replace(
 const FRAME_FADE = 18
 
 // Chapters mapped to segments.
-// bic:0–144 | globe-bridge:145–210 | bejoice_truck:211–355 | port:356–524 | frames8:525–645 | tech_enng:646–790 | saudi:791–983
+// bic:0–144 | globe-bridge:145–210 | bejoice_truck:211–355 | port:356–524 | frames8:525–645 | tech_enng:646–790
 const GLOBE_CHAPTER_START = 145
 const GLOBE_CHAPTER_END   = 210
 
