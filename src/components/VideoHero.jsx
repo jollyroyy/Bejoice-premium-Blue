@@ -179,15 +179,6 @@ const CHAPTERS = [
     align:      'center',
     vAlign:     'bottom',
   },
-  // ── saudi: 874–1066 — end ──
-  {
-    frameRange: [880, 1052],
-    eyebrow:    'KINGDOM OF SAUDI ARABIA · VISION 2030',
-    headline:   ['CONNECTED GLOBALLY'],
-    sub:        'Born in Saudi Arabia. Trusted across 180+ countries. Bejoice Group — the Kingdom\'s premier freight forwarder powering Vision 2030 trade ambitions.',
-    align:      'center',
-    vAlign:     'bottom',
-  },
 ]
 
 // ─────────────────────────────────────────────────────────────────────────────
