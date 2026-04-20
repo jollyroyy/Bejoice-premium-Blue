@@ -539,7 +539,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
         </motion.div>
 
         {/* ── RIGHT: All text ── */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'clamp(1rem,2.5vw,2rem)', minWidth: 0 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'clamp(1.5rem,3.5vw,3rem)', minWidth: 0 }}>
 
           {/* Eyebrow + headline */}
           <motion.div
@@ -560,13 +560,13 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             viewport={{ once:true }} transition={{ duration:0.7, delay:0.2 }}
           >
             {/* HQ */}
-            <div style={{ display:'flex', alignItems:'center', gap:'0.7rem', marginBottom:'1rem' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:'0.7rem', marginBottom:'1.5rem' }}>
               <span style={{ width:12, height:12, borderRadius:'50%', background:'#8DD8F0', flexShrink:0, boxShadow:'0 0 8px rgba(91,194,231,0.5)' }} />
               <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,2.5vw,1.4rem)', color:'#8DD8F0', letterSpacing: isAr ? '0' : '0.08em' }}>{isAr ? ar.globe.hq : 'DUBAI, UAE — HEADQUARTERS'}</span>
             </div>
 
             {/* Separator */}
-            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'0.6rem 0 0.3rem' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'1.2rem 0 0.8rem' }}>
               <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
               <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:600, color:'rgba(91,194,231,0.95)', letterSpacing: isAr ? '0' : '0.2em', textTransform: isAr ? 'none' : 'uppercase', flexShrink:0 }}>{isAr ? ar.globe.branchOffices : 'Branch Offices'}</span>
               <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
