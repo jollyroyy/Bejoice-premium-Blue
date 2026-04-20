@@ -205,9 +205,13 @@ export default function Footer() {
                 )}
               </div>
             </div>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.78)', lineHeight: 1.7, maxWidth: '280px', marginBottom: '28px' }}>
-              {isAr ? ar.footer.description : 'Premium global freight forwarding and logistics solutions. Trusted by industry leaders across Saudi Arabia and beyond since 2006.'}
-            </p>
+            <img
+              src="/bejoice-logo-white.webp"
+              alt="Bejoice"
+              width="1509" height="839"
+              loading="lazy" decoding="async"
+              style={{ height: '72px', width: 'auto', objectFit: 'contain', display: 'block', marginBottom: '28px', opacity: 0.92 }}
+            />
           </div>
 
           {/* Company + Support links */}
