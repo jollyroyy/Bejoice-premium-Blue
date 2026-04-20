@@ -149,7 +149,7 @@ export default function Nav({ onQuoteClick }) {
                 fetchPriority="high"
                 decoding="async"
                 style={{
-                  height: 'clamp(36px, 5vw, 56px)',
+                  height: 'clamp(40px, 5vw, 60px)',
                   width: 'auto',
                   objectFit: 'contain',
                   display: 'block',
