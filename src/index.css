@@ -1274,6 +1274,17 @@ section {
 /* ── GLOBAL: prevent horizontal overflow at ALL sizes up to desktop ── */
 @media (max-width: 1280px) {
   body, #root { overflow-x: hidden; max-width: 100vw; }
+  /* Ensure all sections and containers respect viewport width */
+  section, footer, nav { max-width: 100vw; box-sizing: border-box; }
+}
+
+/* ── TABLET: Surface Pro / iPad range ── */
+@media (max-width: 1024px) {
+  /* Tighten section side padding */
+  section { padding-left: clamp(1rem, 3vw, 2rem) !important; padding-right: clamp(1rem, 3vw, 2rem) !important; }
+  footer { padding-left: clamp(1rem, 3vw, 2rem) !important; padding-right: clamp(1rem, 3vw, 2rem) !important; }
+  /* Cap all inner containers */
+  .max-w-7xl { max-width: calc(100vw - 2rem) !important; }
 }
 
 /* ── GLOBAL MOBILE OPTIMIZATIONS ── */
