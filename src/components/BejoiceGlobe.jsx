@@ -20,7 +20,7 @@ const OFFICES = [
 // Country region highlights — center lat/lng + approximate radius on the globe
 const COUNTRIES = [
   { name: 'UAE',   lat: 24.0,  lng: 54.5,  radius: 0.04, color: 0xffe680, type: 'hq'      },
-  { name: 'KSA',   lat: 24.0,  lng: 44.5,  radius: 0.12, color: 0xc8a84e, type: 'office'  },
+  { name: 'KSA',   lat: 24.0,  lng: 44.5,  radius: 0.12, color: 0x5BC2E7, type: 'office'  },
   { name: 'India', lat: 22.0,  lng: 78.5,  radius: 0.14, color: 0x5ec4d4, type: 'partner' },
   { name: 'China', lat: 35.0,  lng: 105.0, radius: 0.18, color: 0x5ec4d4, type: 'partner' },
 ];
@@ -178,7 +178,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
 
       const isHQ = o.type === 'hq';
       const isPartner = o.type === 'partner';
-      const dotColor = isHQ ? 0xffe680 : isPartner ? 0x5ec4d4 : 0xc8a84e;
+      const dotColor = isHQ ? 0xffe680 : isPartner ? 0x5ec4d4 : 0x5BC2E7;
       const dotSize = isHQ ? 0.018 : 0.012;
 
       const dot = new THREE.Mesh(
