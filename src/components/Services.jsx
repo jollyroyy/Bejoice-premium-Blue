@@ -429,20 +429,33 @@ export default function Services() {
                                 background: 'rgba(91,194,231,0.7)',
                                 boxShadow: '0 0 6px rgba(91,194,231,0.4)',
                               }} />
-                              <span style={{
-                                fontFamily: "'DM Sans', sans-serif",
-                                fontSize: 'clamp(12px,1.2vw,13.5px)',
-                                fontWeight: 500,
-                                color: 'rgba(255,255,255,0.82)',
-                                lineHeight: 1.5,
-                              }}>
+                              <span style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                                 {item.includes(' — ') ? (
                                   <>
-                                    <span style={{ color: '#5BC2E7', fontWeight: 600 }}>{item.split(' — ')[0]}</span>
-                                    {' — '}
-                                    {item.split(' — ').slice(1).join(' — ')}
+                                    <span style={{
+                                      fontFamily: "'Bebas Neue', sans-serif",
+                                      fontSize: 'clamp(14px,1.35vw,16px)',
+                                      letterSpacing: '0.06em',
+                                      color: '#5BC2E7',
+                                      lineHeight: 1.2,
+                                    }}>{item.split(' — ')[0]}</span>
+                                    <span style={{
+                                      fontFamily: "'DM Sans', sans-serif",
+                                      fontSize: 'clamp(11px,1.1vw,12.5px)',
+                                      fontWeight: 400,
+                                      color: 'rgba(255,255,255,0.58)',
+                                      lineHeight: 1.5,
+                                    }}>{item.split(' — ').slice(1).join(' — ')}</span>
                                   </>
-                                ) : item}
+                                ) : (
+                                  <span style={{
+                                    fontFamily: "'DM Sans', sans-serif",
+                                    fontSize: 'clamp(12px,1.2vw,13.5px)',
+                                    fontWeight: 500,
+                                    color: 'rgba(255,255,255,0.82)',
+                                    lineHeight: 1.5,
+                                  }}>{item}</span>
+                                )}
                               </span>
                             </motion.div>
                           ))}
