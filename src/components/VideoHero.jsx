@@ -113,61 +113,61 @@ const CHAPTERS = [
     align:        'center',
     globeChapter: true,
   },
-  // ── bejoice_truck: 294–438 ──
+  // ── bejoice_truck: 211–355 ──
   {
-    frameRange: [303, 353],
+    frameRange: [211, 340],
     eyebrow:    '',
     headline:   ['FROM BLUE PRINT TO DELIVERY,', 'WE MOVE IT ALL'],
     sub:        'Seamless cross-border land transport across the GCC — powered by a modern fleet connecting Saudi Arabia to every regional hub.',
     align:      'right',
   },
+  // ── port: 356–524 ──
   {
-    frameRange: [361, 431],
+    frameRange: [356, 415],
     eyebrow:    'OCEAN FREIGHT',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
     align:      'left',
   },
-  // ── port: 439–607 ──
   {
-    frameRange: [446, 502],
+    frameRange: [420, 476],
     eyebrow:    'CUSTOMS CLEARANCE · PORT OPERATIONS',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
     sub:        'ZATCA-certified experts navigating complex regulatory landscapes to ensure rapid, compliant clearance for every shipment.',
     align:      'right',
   },
   {
-    frameRange: [510, 596],
+    frameRange: [481, 524],
     eyebrow:    'FCL & LCL',
     headline:   ['FROM PORT TO PORT.', 'WORLD-CLASS LOGISTICS'],
     sub:        'Comprehensive ocean freight solutions — full container loads, consolidated shipments, and breakbulk cargo managed with Saudi expertise.',
     align:      'left',
   },
-  // ── frames8: 608–728 ──
+  // ── frames8: 525–645 ──
   {
-    frameRange: [615, 669],
+    frameRange: [525, 590],
     eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
     headline:   ['SPEED ABOVE ALL.', 'DELIVERED ON TIME'],
     sub:        'Express air cargo solutions connecting Saudi Arabia to global hubs — critical shipments, time-sensitive freight, temperature-controlled cargo.',
     align:      'right',
   },
   {
-    frameRange: [670, 721],
+    frameRange: [595, 645],
     eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
     headline:   ['WORLD CLASS AIR FREIGHT'],
     sub:        '',
     align:      'right',
   },
-  // ── tech_enng: 729–873 ──
+  // ── tech_enng: 646–790 ──
   {
-    frameRange: [736, 800],
+    frameRange: [646, 720],
     eyebrow:    'HEAVY LIFT · PROJECT CARGO',
     headline:   ['PRECISION IN HANDLING.', 'EXCELLENCE IN DELIVERY'],
     sub:        'End-to-end technical cargo solutions engineered for complexity — heavy machinery, industrial equipment, and high-value freight delivered with zero compromise.',
     align:      'right',
   },
   {
-    frameRange: [808, 867],
+    frameRange: [725, 790],
     eyebrow:    '',
     headline:   ['TECHNICAL', 'ENGINEERING'],
     sub:        'Specialised handling of oversized, overweight and high-value cargo — engineered solutions for every challenge.',
