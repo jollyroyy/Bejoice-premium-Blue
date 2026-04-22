@@ -843,7 +843,7 @@ export default function VideoHero({ onQuoteClick }) {
             >
 
               {/* ── Text block with subtle dark backdrop ── */}
-              <div className="hero-chapter-textblock" style={{
+              {(displayHeadline.length > 0 || displayEyebrow) && <div className="hero-chapter-textblock" style={{
                 display:'flex', flexDirection:'column',
                 alignItems: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                 background:'rgba(0,0,0,0.42)',
@@ -989,7 +989,7 @@ export default function VideoHero({ onQuoteClick }) {
                   </div>
                 )}
 
-              </div>{/* end text backdrop */}
+              </div>}{/* end text backdrop */}
             </div>
           )
         })}
