@@ -140,7 +140,7 @@ export default function Nav({ onQuoteClick }) {
             role="link"
             aria-label={isAr ? 'الصفحة الرئيسية بيجويس' : 'Bejoice Home'}
             aria-current="page"
-            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-395px' }}>
+            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-345px' }}>
             <img
               src="/bejoice-logo-nav.webp"
               alt="Bejoice"
