@@ -434,7 +434,7 @@ export default function Services() {
                                   <>
                                     <span style={{
                                       fontFamily: "'Bebas Neue', sans-serif",
-                                      fontSize: 'clamp(14px,1.35vw,16px)',
+                                      fontSize: 'clamp(17px,1.7vw,20px)',
                                       letterSpacing: '0.06em',
                                       color: '#5BC2E7',
                                       lineHeight: 1.2,
