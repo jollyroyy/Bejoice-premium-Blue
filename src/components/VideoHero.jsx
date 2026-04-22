@@ -788,7 +788,7 @@ export default function VideoHero({ onQuoteClick }) {
           position:'absolute', inset:0, zIndex:3, pointerEvents:'none',
           background:`
             radial-gradient(ellipse 75% 65% at 50% 50%,rgba(24,54,80,0) 0%,rgba(24,54,80,0.45) 100%),
-            linear-gradient(to bottom,rgba(24,54,80,0.50) 0%,rgba(24,54,80,0.01) 22%,rgba(24,54,80,0.01) 76%,rgba(24,54,80,0.70) 100%)
+            linear-gradient(to bottom,rgba(24,54,80,0) 0%,rgba(24,54,80,0.01) 22%,rgba(24,54,80,0.01) 76%,rgba(24,54,80,0.70) 100%)
           `,
         }} />
 
