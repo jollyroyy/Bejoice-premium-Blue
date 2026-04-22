@@ -105,6 +105,18 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
     group.rotation.x = 0.18;
     scene.add(group);
 
+    // Circular sprite texture for round Points
+    const makeCircleTex = () => {
+      const c = document.createElement('canvas'); c.width = 32; c.height = 32;
+      const ctx = c.getContext('2d');
+      const g = ctx.createRadialGradient(16,16,0,16,16,16);
+      g.addColorStop(0,'rgba(255,255,255,1)'); g.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(16,16,16,0,Math.PI*2); ctx.fill();
+      const tex = new THREE.CanvasTexture(c);
+      return tex;
+    };
+    const circleTex = makeCircleTex();
+
     // Star field
     const addStars = (count, minR, maxR, size, opacity) => {
       const verts = [];
@@ -337,6 +349,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
     networkGroup.add(new THREE.Points(fillGeo, new THREE.PointsMaterial({
       color: 0xc8eeff, size: 0.020, transparent: true, opacity: 0.65,
       sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+      map: circleTex, alphaTest: 0.01,
     })));
 
     // Port dots — brighter, larger
@@ -346,6 +359,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
     const hubDots = new THREE.Points(portGeo, new THREE.PointsMaterial({
       color: 0xffffff, size: 0.042, transparent: true, opacity: 0.95,
       sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+      map: circleTex, alphaTest: 0.01,
     }));
     networkGroup.add(hubDots);
 
@@ -356,6 +370,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
     networkGroup.add(new THREE.Points(saudiGeo, new THREE.PointsMaterial({
       color: 0xffffff, size: 0.082, transparent: true, opacity: 1.0,
       sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false,
+      map: circleTex, alphaTest: 0.01,
     })));
 
     // Lighting
