@@ -619,6 +619,11 @@ body {
   .lang-toggle-wrap { display: none !important; }
 }
 
+/* ── FOOTER: responsive column shift ── */
+.footer-col-shift { transform: translateX(-120px); }
+@media (max-width: 1024px) { .footer-col-shift { transform: translateX(-40px); } }
+@media (max-width: 767px)  { .footer-col-shift { transform: none; } }
+
 /* ── NAV: kill negative margins on tablet + mobile ── */
 /* Logo is 200×130px natural; inline style forces it wide (315-630px) which overflows tablets.
    Remove negative margins at ≤1280px so Surface Pro (912px) and iPad Pro (1024px) are clean. */

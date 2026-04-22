@@ -204,7 +204,7 @@ export default function Footer() {
 
           {/* Company + Support links */}
           {Object.entries(footerLinks).map(([category, items]) => (
-            <div key={category} style={{ transform: 'translateX(-120px)' }}>
+            <div key={category} className="footer-col-shift">
               <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.1vw,14px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.92)', fontWeight: 600, marginBottom: '20px' }}>
                 {isAr ? (ar.footer.categories[category] || category) : category}
               </div>
@@ -246,7 +246,7 @@ export default function Footer() {
           ))}
 
           {/* Contact Us */}
-          <div style={{ transform: 'translateX(-120px)' }}>
+          <div className="footer-col-shift">
             <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(11px,1.1vw,14px)', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.92)', fontWeight: 600, marginBottom: '20px' }}>{isAr ? ar.footer.categories['Contact Us'] : 'Contact Us'}</div>
             <ul className="space-y-4">
               <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
