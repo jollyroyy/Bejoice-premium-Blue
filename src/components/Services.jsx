@@ -441,19 +441,19 @@ export default function Services() {
                                     }}>{item.split(' — ')[0]}</span>
                                     <span style={{
                                       fontFamily: "'DM Sans', sans-serif",
-                                      fontSize: 'clamp(11px,1.1vw,12.5px)',
-                                      fontWeight: 400,
-                                      color: 'rgba(255,255,255,0.58)',
-                                      lineHeight: 1.5,
+                                      fontSize: 'clamp(13px,1.3vw,15px)',
+                                      fontWeight: 450,
+                                      color: 'rgba(255,255,255,0.72)',
+                                      lineHeight: 1.7,
                                     }}>{item.split(' — ').slice(1).join(' — ')}</span>
                                   </>
                                 ) : (
                                   <span style={{
                                     fontFamily: "'DM Sans', sans-serif",
-                                    fontSize: 'clamp(12px,1.2vw,13.5px)',
-                                    fontWeight: 500,
-                                    color: 'rgba(255,255,255,0.82)',
-                                    lineHeight: 1.5,
+                                    fontSize: 'clamp(13px,1.3vw,15px)',
+                                    fontWeight: 450,
+                                    color: 'rgba(255,255,255,0.72)',
+                                    lineHeight: 1.7,
                                   }}>{item}</span>
                                 )}
                               </span>
