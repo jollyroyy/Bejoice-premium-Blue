@@ -436,7 +436,13 @@ export default function Services() {
                                 color: 'rgba(255,255,255,0.82)',
                                 lineHeight: 1.5,
                               }}>
-                                {item}
+                                {item.includes(' — ') ? (
+                                  <>
+                                    <span style={{ color: '#5BC2E7', fontWeight: 600 }}>{item.split(' — ')[0]}</span>
+                                    {' — '}
+                                    {item.split(' — ').slice(1).join(' — ')}
+                                  </>
+                                ) : item}
                               </span>
                             </motion.div>
                           ))}
