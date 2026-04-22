@@ -19,7 +19,7 @@ const OFFICES = [
 
 // Country region highlights — center lat/lng + approximate radius on the globe
 const COUNTRIES = [
-  { name: 'UAE',   lat: 24.0,  lng: 54.5,  radius: 0.04, color: 0xffe680, type: 'hq'      },
+  { name: 'UAE',   lat: 24.0,  lng: 54.5,  radius: 0.04, color: 0x183650, type: 'hq'      },
   { name: 'KSA',   lat: 24.0,  lng: 44.5,  radius: 0.12, color: 0x5BC2E7, type: 'office'  },
   { name: 'India', lat: 22.0,  lng: 78.5,  radius: 0.14, color: 0x5ec4d4, type: 'partner' },
   { name: 'China', lat: 35.0,  lng: 105.0, radius: 0.18, color: 0x5ec4d4, type: 'partner' },
@@ -178,7 +178,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
 
       const isHQ = o.type === 'hq';
       const isPartner = o.type === 'partner';
-      const dotColor = isHQ ? 0xffe680 : isPartner ? 0x5ec4d4 : 0x5BC2E7;
+      const dotColor = isHQ ? 0x183650 : isPartner ? 0x5ec4d4 : 0x5BC2E7;
       const dotSize = isHQ ? 0.018 : 0.012;
 
       const dot = new THREE.Mesh(
@@ -193,7 +193,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
       // HQ gets a subtle pulsing ring
       if (isHQ) {
         const ringGeo = new THREE.RingGeometry(0.028, 0.035, 32);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0xffe680, transparent: true, opacity: 0.6, side: THREE.DoubleSide });
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x183650, transparent: true, opacity: 0.6, side: THREE.DoubleSide });
         const ring = new THREE.Mesh(ringGeo, ringMat);
         ring.position.copy(pos);
         ring.lookAt(pos.clone().multiplyScalar(2));
@@ -215,7 +215,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
     // Country region glows — soft discs on globe surface
     COUNTRIES.forEach(c => {
       const pos = latLngToVec3(c.lat, c.lng, 1.005);
-      const geo = new THREE.PlaneGeometry(c.radius * 2, c.radius * 2);
+      const geo = new THREE.CircleGeometry(c.radius, 48);
       const mat = new THREE.ShaderMaterial({
         uniforms: {
           glowColor: { value: new THREE.Color(c.color) },
