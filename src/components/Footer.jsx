@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import logoSrc from '../assets/bejoice-logo-group.png'
 import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
 
@@ -193,9 +194,8 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '24px' }}>
               <img
-                src="/bejoice-logo-group.png"
+                src={logoSrc}
                 alt="Bejoice"
-                width="1080" height="1080"
                 loading="lazy" decoding="async"
                 style={{ height: '187px', width: 'auto', objectFit: 'contain', display: 'block', opacity: 0.92 }}
               />
