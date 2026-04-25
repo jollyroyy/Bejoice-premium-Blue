@@ -66,7 +66,7 @@ const CAPABILITIES = [
 const FOUNDERS = [
   { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', img: '/ashraful-coo.webp' },
   { name: 'Preetham Canute Pinto',    role: 'CEO & Co-Owner', img: '/preetham-ceo.webp' },
-  { name: 'Shahil',                    role: 'Managing Partner', img: '/shahil-hdr.png' },
+  { name: 'Shahil',                    role: 'Managing Partner', img: '/shahil-mp.webp' },
 ]
 
 export default function WhyBejoice() {
@@ -159,7 +159,7 @@ export default function WhyBejoice() {
           >
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 'clamp(14px,1.4vw,16.5px)',
+              fontSize: 'clamp(16px,1.6vw,18.5px)',
               fontWeight: 400, color: 'rgba(255,255,255,0.78)',
               lineHeight: 1.85, margin: 0,
               maxWidth: '72ch', marginLeft: 'auto', marginRight: 'auto',
@@ -174,7 +174,7 @@ export default function WhyBejoice() {
             </p>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 'clamp(13px,1.3vw,15px)',
+              fontSize: 'clamp(15px,1.5vw,17px)',
               fontWeight: 400, color: 'rgba(255,255,255,0.6)',
               lineHeight: 1.85, margin: '1.2rem 0 0',
               maxWidth: '72ch', marginLeft: 'auto', marginRight: 'auto',
@@ -197,7 +197,7 @@ export default function WhyBejoice() {
             <div style={{ display:'flex', alignItems:'center', justifyContent: 'center', gap:12, marginBottom:'clamp(1.5rem,2.5vw,2rem)' }}>
               <div style={{ width:40, height:2, background:'linear-gradient(90deg, transparent, #5BC2E7)', borderRadius:1 }} />
               <span style={{
-                fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.6vw,18px)',
+                fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(16px,1.8vw,21px)',
                 fontWeight:800, letterSpacing:'0.35em', textTransform:'uppercase',
                 color:'#5BC2E7', textShadow:'0 0 20px rgba(91,194,231,0.6)',
               }}>
@@ -254,7 +254,7 @@ export default function WhyBejoice() {
                   <div>
                     <div style={{
                       fontFamily: "'Bebas Neue', sans-serif",
-                      fontSize: 'clamp(1.2rem,1.9vw,1.45rem)',
+                      fontSize: 'clamp(1.4rem,2.2vw,1.7rem)',
                       letterSpacing: '0.06em', lineHeight: 1.1,
                       color: '#ffffff', marginBottom: 4,
                       textShadow: '0 2px 10px rgba(0,0,0,0.3)',
@@ -263,8 +263,8 @@ export default function WhyBejoice() {
                     </div>
                     <div style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 'clamp(11px,1.1vw,13px)',
-                      color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, fontWeight: 450,
+                      fontSize: 'clamp(13px,1.3vw,15.5px)',
+                      color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, fontWeight: 450,
                     }}>
                       {cap.desc}
                     </div>
@@ -298,8 +298,8 @@ export default function WhyBejoice() {
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: 'clamp(0.8rem,1.5vw,1.2rem)',
-              maxWidth: 680,
+              gap: 'clamp(1rem,2vw,1.5rem)',
+              maxWidth: 840,
               margin: '0 auto',
             }}>
               {FOUNDERS.map((f, i) => (
@@ -309,8 +309,8 @@ export default function WhyBejoice() {
                   animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
                   transition={{ delay: 0.6 + i * 0.12, type: 'spring', stiffness: 80, damping: 16 }}
                   whileHover={{ 
-                    scale: 1.15, 
-                    y: -28, 
+                    scale: 1.1, 
+                    y: -20, 
                     borderColor: 'rgba(91,194,231,0.85)',
                     boxShadow: '0 40px 80px rgba(0,0,0,0.6)',
                     zIndex: 10 
@@ -322,10 +322,10 @@ export default function WhyBejoice() {
                   }}
                   style={{
                     textAlign: 'center',
-                    padding: 'clamp(1rem,1.8vw,1.4rem) clamp(0.6rem,1vw,0.8rem)',
+                    padding: 'clamp(1.2rem,2vw,1.8rem) clamp(0.8rem,1vw,1.2rem)',
                     background: 'linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(91,194,231,0.015) 100%)',
                     border: '1px solid rgba(91,194,231,0.14)',
-                    borderRadius: 14,
+                    borderRadius: 18,
                     cursor: 'default',
                     transition: 'border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease',
                     position: 'relative',
@@ -342,9 +342,9 @@ export default function WhyBejoice() {
                   {/* Portrait */}
                   <motion.div 
                     style={{
-                      width: 'clamp(72px,9vw,100px)', height: 'clamp(72px,9vw,100px)',
+                      width: 'clamp(110px,13vw,170px)', height: 'clamp(110px,13vw,170px)',
                       borderRadius: '50%',
-                      margin: '0 auto clamp(0.7rem,1.2vw,1rem)',
+                      margin: '0 auto clamp(0.8rem,1.4vw,1.2rem)',
                       background: 'linear-gradient(135deg, rgba(91,194,231,0.2), rgba(91,194,231,0.05))',
                       border: '2px solid rgba(91,194,231,0.25)',
                       overflow: 'hidden',
@@ -381,7 +381,7 @@ export default function WhyBejoice() {
                   {/* Role */}
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 'clamp(9px,0.95vw,11px)',
+                    fontSize: 'clamp(11px,1.15vw,13px)',
                     fontWeight: 600, letterSpacing: '0.12em',
                     textTransform: 'uppercase',
                     color: 'rgba(91,194,231,0.75)',
