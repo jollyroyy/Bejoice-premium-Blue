@@ -197,7 +197,7 @@ export default function Footer() {
                 alt="Bejoice"
                 width="1080" height="1080"
                 loading="lazy" decoding="async"
-                style={{ height: '375px', width: 'auto', objectFit: 'contain', display: 'block', opacity: 0.92 }}
+                style={{ height: '187px', width: 'auto', objectFit: 'contain', display: 'block', opacity: 0.92 }}
               />
             </div>
           </div>
