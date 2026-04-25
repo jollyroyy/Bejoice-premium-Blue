@@ -212,24 +212,29 @@ export default function Footer() {
                 {items.map(item => (
                   <li key={item}>
                     <a 
-                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : (item === 'Certifications' || item === 'Why Bejoice') ? '#certifications' : item === 'Our Offices' ? '#globe' : item === 'Key Markets' ? '#markets' : item === 'About Bejoice' ? '#hero' : '#'} 
+                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : item === 'Why Bejoice' ? '#why-us' : item === 'Certifications' ? '#certifications' : item === 'Our Offices' ? '#globe' : item === 'Key Markets' ? '#markets' : item === 'About Bejoice' ? '#hero' : '#'}
                       onClick={(e) => {
                         const targets = {
                           'Get a Quote': 'contact',
                           'Contact Us': 'contact',
                           'Certifications': 'certifications',
-                          'Why Bejoice': 'certifications',
+                          'Why Bejoice': 'why-us',
                           'Our Offices': 'globe',
                           'Key Markets': 'markets',
-                          'Why Bejoice': 'hero'
+                          'About Bejoice': 'hero',
                         }
                         const targetId = targets[item]
                         if (targetId) {
                           e.preventDefault()
                           const el = document.getElementById(targetId)
                           if (el) {
-                            if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
-                            else el.scrollIntoView({ behavior: 'smooth' })
+                            if (targetId === 'why-us') {
+                              if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
+                              else el.scrollIntoView({ behavior: 'instant' })
+                            } else {
+                              if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
+                              else el.scrollIntoView({ behavior: 'smooth' })
+                            }
                           }
                         }
                       }}

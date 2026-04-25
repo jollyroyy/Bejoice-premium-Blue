@@ -7,7 +7,7 @@ import ar from '../i18n/ar'
 const CAL_LINK = "sudeshna-pal-ruww5f/freight-consultation"
 
 const links = [
-  { label: 'Why Bejoice',                    arLabel: 'لماذا بيجويس',                id: 'certifications', num: '01', sub: 'Our story & edge',    arSub: 'قصتنا وميزتنا' },
+  { label: 'Why Bejoice',                    arLabel: 'لماذا بيجويس',                id: 'why-us',         num: '01', sub: 'Our story & edge',    arSub: 'قصتنا وميزتنا' },
   { label: 'Services',                       arLabel: 'الخدمات',                     id: 'services',       num: '02', sub: 'Full logistics suite',  arSub: 'حلول لوجستية متكاملة' },
   { label: 'Heavy Lift & Project Logistics', arLabel: 'رفع ثقيل ولوجستيات المشاريع', id: 'heavy-cargo',    num: '03', sub: '1500+ operations',    arSub: '+1500 عملية' },
   { label: 'Bejoice Wings',                  arLabel: 'أجنحة بيجويس',                id: 'globe',          num: '04', sub: 'Our global network',   arSub: 'شبكتنا العالمية', isGlobe: true },
@@ -76,8 +76,13 @@ export default function Nav({ onQuoteClick }) {
     setTimeout(() => {
       const el = document.getElementById(id)
       if (el) {
-        if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
-        else el.scrollIntoView({ behavior: 'smooth' })
+        if (id === 'why-us') {
+          if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
+          else el.scrollIntoView({ behavior: 'instant' })
+        } else {
+          if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
+          else el.scrollIntoView({ behavior: 'smooth' })
+        }
       }
     }, 400)
   }
