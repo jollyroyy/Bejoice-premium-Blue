@@ -123,7 +123,7 @@ const CHAPTERS = [
   },
   // ── port: 356–524 ──
   {
-    frameRange: [316, 415],
+    frameRange: [296, 415],
     eyebrow:    'OCEAN FREIGHT',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
