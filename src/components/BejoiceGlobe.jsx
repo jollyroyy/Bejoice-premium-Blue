@@ -601,7 +601,8 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
               transition={{ type:'spring', stiffness:300, damping:20 }}
               style={{
                 gridColumn:'1 / -1',
-                display:'flex', alignItems:'center', gap:'clamp(0.6rem,1.2vw,1rem)',
+                display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+                gap:'clamp(0.3rem,0.6vw,0.5rem)',
                 padding:'clamp(0.8rem,1.4vw,1.1rem) clamp(1rem,1.6vw,1.3rem)',
                 background:'linear-gradient(135deg, rgba(91,194,231,0.08) 0%, rgba(91,194,231,0.02) 100%)',
                 border:'1px solid rgba(91,194,231,0.22)',
@@ -612,32 +613,12 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             >
               {/* Ambient glow */}
               <div style={{ position:'absolute', top:'-30%', left:'-10%', width:'60%', height:'160%', background:'radial-gradient(ellipse, rgba(91,194,231,0.06) 0%, transparent 70%)', pointerEvents:'none' }} />
-              {/* Icon */}
-              <div style={{
-                width:'clamp(36px,3.5vw,44px)', height:'clamp(36px,3.5vw,44px)',
-                borderRadius:10,
-                background:'linear-gradient(135deg, rgba(91,194,231,0.18) 0%, rgba(91,194,231,0.06) 100%)',
-                border:'1px solid rgba(91,194,231,0.3)',
-                display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0,
-                boxShadow:'0 4px 16px rgba(91,194,231,0.12), inset 0 1px 0 rgba(91,194,231,0.2)',
-              }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-                </svg>
+              <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(8px,0.9vw,10px)', letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(91,194,231,0.8)', fontWeight:700, position:'relative', zIndex:1 }}>
+                {isAr ? 'المقر الرئيسي' : 'HEADQUARTERS'}
               </div>
-              <div style={{ position:'relative', zIndex:1 }}>
-                <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(8px,0.9vw,10px)', letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(91,194,231,0.8)', fontWeight:700, marginBottom:3 }}>
-                  {isAr ? 'المقر الرئيسي' : 'HEADQUARTERS'}
-                </div>
-                <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.05rem,2vw,1.4rem)', letterSpacing:'0.08em', color:'#ffffff', lineHeight:1.1 }}>
-                  {isAr ? ar.globe.hq : 'DUBAI, UNITED ARAB EMIRATES'}
-                </div>
+              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.05rem,2vw,1.4rem)', letterSpacing:'0.08em', color:'#ffffff', lineHeight:1.1, textAlign:'center', position:'relative', zIndex:1 }}>
+                {isAr ? ar.globe.hq : 'DUBAI, UNITED ARAB EMIRATES'}
               </div>
-              {/* HQ badge */}
-              <div style={{ marginLeft:'auto', flexShrink:0, padding:'3px 10px', borderRadius:20,
-                background:'rgba(91,194,231,0.12)', border:'1px solid rgba(91,194,231,0.3)',
-                fontFamily:"'DM Sans',sans-serif", fontSize:9, fontWeight:800, letterSpacing:'0.15em', color:'#5BC2E7',
-              }}>HQ</div>
             </motion.div>
 
           </div>
