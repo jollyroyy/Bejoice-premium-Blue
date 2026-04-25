@@ -123,14 +123,14 @@ const CHAPTERS = [
   },
   // ── port: 356–524 ──
   {
-    frameRange: [296, 415],
+    frameRange: [296, 385],
     eyebrow:    'OCEAN FREIGHT',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
     align:      'left',
   },
   {
-    frameRange: [420, 476],
+    frameRange: [390, 476],
     eyebrow:    'CUSTOMS CLEARANCE · PORT OPERATIONS',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
     sub:        'ZATCA-certified experts navigating complex regulatory landscapes to ensure rapid, compliant clearance for every shipment.',
