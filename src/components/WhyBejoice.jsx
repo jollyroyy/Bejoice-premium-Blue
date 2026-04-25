@@ -194,15 +194,16 @@ export default function WhyBejoice() {
             position: 'relative', zIndex: 2,
           }}>
             {/* Section label */}
-            <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:'clamp(1.2rem,2vw,1.8rem)' }}>
-              <div style={{ width:28, height:2, background:'linear-gradient(90deg, #5BC2E7, rgba(91,194,231,0.2))', borderRadius:1 }} />
+            <div style={{ display:'flex', alignItems:'center', justifyContent: 'center', gap:12, marginBottom:'clamp(1.5rem,2.5vw,2rem)' }}>
+              <div style={{ width:40, height:2, background:'linear-gradient(90deg, transparent, #5BC2E7)', borderRadius:1 }} />
               <span style={{
-                fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(10px,1.1vw,12px)',
+                fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.6vw,18px)',
                 fontWeight:800, letterSpacing:'0.35em', textTransform:'uppercase',
-                color:'#5BC2E7', textShadow:'0 0 16px rgba(91,194,231,0.4)',
+                color:'#5BC2E7', textShadow:'0 0 20px rgba(91,194,231,0.6)',
               }}>
                 Our Capabilities
               </span>
+              <div style={{ width:40, height:2, background:'linear-gradient(90deg, #5BC2E7, transparent)', borderRadius:1 }} />
             </div>
 
             <div style={{
@@ -222,10 +223,22 @@ export default function WhyBejoice() {
                     borderBottom: i < 3 ? '1px solid rgba(91,194,231,0.06)' : 'none',
                     display: 'flex', gap: 'clamp(0.6rem,1vw,0.8rem)',
                     alignItems: 'flex-start',
-                    transition: 'background 0.3s ease',
+                    transition: 'all 0.4s cubic-bezier(0.33, 1, 0.68, 1)',
                     cursor: 'default',
+                    zIndex: 1,
                   }}
-                  whileHover={{ backgroundColor: 'rgba(91,194,231,0.04)' }}
+                  whileHover={{ 
+                    scale: 1.1, 
+                    y: -18,
+                    backgroundColor: 'rgba(91,194,231,0.12)',
+                    boxShadow: '0 30px 60px rgba(0,0,0,0.45)',
+                    zIndex: 10,
+                  }}
+                  transition={{ 
+                    type: 'spring', 
+                    stiffness: 1000, 
+                    damping: 40 
+                  }}
                 >
                   {/* Icon badge */}
                   <div style={{
@@ -241,9 +254,10 @@ export default function WhyBejoice() {
                   <div>
                     <div style={{
                       fontFamily: "'Bebas Neue', sans-serif",
-                      fontSize: 'clamp(1rem,1.6vw,1.2rem)',
+                      fontSize: 'clamp(1.2rem,1.9vw,1.45rem)',
                       letterSpacing: '0.06em', lineHeight: 1.1,
                       color: '#ffffff', marginBottom: 4,
+                      textShadow: '0 2px 10px rgba(0,0,0,0.3)',
                     }}>
                       {cap.title}
                     </div>
@@ -268,15 +282,15 @@ export default function WhyBejoice() {
             {/* Section label */}
             <div style={{ textAlign:'center', marginBottom:'clamp(1.5rem,2.5vw,2rem)' }}>
               <div style={{ display:'inline-flex', alignItems:'center', gap:12, marginBottom:'clamp(0.6rem,1vw,0.8rem)' }}>
-                <div style={{ width:24, height:1, background:'linear-gradient(90deg, transparent, rgba(91,194,231,0.5))' }} />
+                <div style={{ width:40, height:2, background:'linear-gradient(90deg, transparent, #5BC2E7)', borderRadius:1 }} />
                 <span style={{
-                  fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(9px,1vw,11px)',
+                  fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.6vw,18px)',
                   fontWeight:800, letterSpacing:'0.35em', textTransform:'uppercase',
-                  color:'rgba(91,194,231,0.8)',
+                  color:'#5BC2E7', textShadow:'0 0 20px rgba(91,194,231,0.6)',
                 }}>
                   Founding Members — Bejoice KSA
                 </span>
-                <div style={{ width:24, height:1, background:'linear-gradient(90deg, rgba(91,194,231,0.5), transparent)' }} />
+                <div style={{ width:40, height:2, background:'linear-gradient(90deg, #5BC2E7, transparent)', borderRadius:1 }} />
               </div>
             </div>
 
@@ -294,7 +308,18 @@ export default function WhyBejoice() {
                   initial={{ opacity: 0, y: 24, scale: 0.95 }}
                   animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
                   transition={{ delay: 0.6 + i * 0.12, type: 'spring', stiffness: 80, damping: 16 }}
-                  whileHover={{ y: -4, borderColor: 'rgba(91,194,231,0.45)' }}
+                  whileHover={{ 
+                    scale: 1.15, 
+                    y: -28, 
+                    borderColor: 'rgba(91,194,231,0.85)',
+                    boxShadow: '0 40px 80px rgba(0,0,0,0.6)',
+                    zIndex: 10 
+                  }}
+                  transition={{ 
+                    type: 'spring', 
+                    stiffness: 1000, 
+                    damping: 40 
+                  }}
                   style={{
                     textAlign: 'center',
                     padding: 'clamp(1rem,1.8vw,1.4rem) clamp(0.6rem,1vw,0.8rem)',
@@ -315,16 +340,18 @@ export default function WhyBejoice() {
                   }} className="founder-glow" />
 
                   {/* Portrait */}
-                  <div style={{
-                    width: 'clamp(72px,9vw,100px)', height: 'clamp(72px,9vw,100px)',
-                    borderRadius: '50%',
-                    margin: '0 auto clamp(0.7rem,1.2vw,1rem)',
-                    background: 'linear-gradient(135deg, rgba(91,194,231,0.2), rgba(91,194,231,0.05))',
-                    border: '2px solid rgba(91,194,231,0.25)',
-                    overflow: 'hidden',
-                    boxShadow: '0 6px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(91,194,231,0.1) inset',
-                    position: 'relative',
-                  }}>
+                  <motion.div 
+                    style={{
+                      width: 'clamp(72px,9vw,100px)', height: 'clamp(72px,9vw,100px)',
+                      borderRadius: '50%',
+                      margin: '0 auto clamp(0.7rem,1.2vw,1rem)',
+                      background: 'linear-gradient(135deg, rgba(91,194,231,0.2), rgba(91,194,231,0.05))',
+                      border: '2px solid rgba(91,194,231,0.25)',
+                      overflow: 'hidden',
+                      boxShadow: '0 6px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(91,194,231,0.1) inset',
+                      position: 'relative',
+                    }}
+                  >
                     <img
                       src={f.img}
                       alt={f.name}
@@ -338,7 +365,7 @@ export default function WhyBejoice() {
                         e.target.style.display = 'none'
                       }}
                     />
-                  </div>
+                  </motion.div>
 
                   {/* Name */}
                   <div style={{

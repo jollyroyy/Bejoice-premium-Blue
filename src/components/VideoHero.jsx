@@ -154,7 +154,7 @@ const CHAPTERS = [
   {
     frameRange: [595, 645],
     eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
-    headline:   ['WORLD CLASS AIR FREIGHT'],
+    headline:   ['WORLD CLASS', 'AIR FREIGHT'],
     sub:        '',
     align:      'right',
   },
@@ -899,7 +899,8 @@ export default function VideoHero({ onQuoteClick }) {
                         {displayHeadline.map((line, li) => (
                           <div key={li} style={{
                             fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
-                            fontSize: isAr ? 'clamp(1.8rem,5vw,5rem)' : (ch.headline?.join('').length > 30 ? 'clamp(1.7rem,4vw,4rem)' : 'clamp(2rem,5.5vw,5.5rem)'),
+                            fontSize: isAr ? 'clamp(1.5rem,4vw,4rem)' : 'clamp(1.6rem,4vw,4.5rem)',
+                            fontWeight: 400,
                             lineHeight: isAr ? 1.1 : 0.87, letterSpacing: isAr ? '0' : '0.06em', margin:0,
                             color: li % 2 === 0 ? '#ffffff' : 'rgba(91,194,231,1)',
                             textShadow: li % 2 === 0
@@ -1278,7 +1279,6 @@ export default function VideoHero({ onQuoteClick }) {
             text-align: center !important;
             max-width: calc(100% - 2rem) !important;
           }
-          .hero-chapter-textblock h1 { text-align: center !important; }
           .hero-eyebrow { align-self: center !important; }
         }
       `}</style>
