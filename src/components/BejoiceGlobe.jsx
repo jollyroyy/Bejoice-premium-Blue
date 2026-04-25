@@ -557,10 +557,10 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
         <motion.div
           initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.8, ease: [0.16,1,0.3,1] }}
-          style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center', textAlign: 'center' }}
+          style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 'clamp(1rem,2vw,1.6rem)', alignItems: 'center', textAlign: 'center' }}
         >
           {/* Eyebrow */}
-          <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:'clamp(0.7rem,1.2vw,1rem)' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
             <div style={{ width:32, height:2, background:'linear-gradient(90deg, rgba(91,194,231,0.2), #5BC2E7)', flexShrink:0, borderRadius:1 }} />
             <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(10px,1.1vw,12px)', fontWeight:800,
               letterSpacing: isAr ? '0' : '0.35em', textTransform: isAr ? 'none' : 'uppercase',
@@ -576,7 +576,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
             fontSize:'clamp(1.8rem,4vw,3.6rem)',
             color:'#ffffff', letterSpacing: isAr ? '0' : '0.05em',
-            lineHeight: isAr ? 1.3 : 0.95, margin:'0 0 clamp(1.2rem,2.5vw,2rem)',
+            lineHeight: isAr ? 1.3 : 0.95, margin:0,
             textShadow:'0 2px 4px rgba(0,0,0,0.9), 0 0 40px rgba(91,194,231,0.15)',
             textAlign:'center',
           }}>
@@ -591,7 +591,6 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             display:'grid',
             gridTemplateColumns:'1fr 1fr',
             gap:'clamp(0.5rem,1vw,0.75rem)',
-            marginBottom:'clamp(0.8rem,1.5vw,1.2rem)',
             width:'100%',
           }}>
 
@@ -624,7 +623,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
           </div>
 
           {/* Branch offices — dot separated */}
-          <div style={{ marginBottom:'clamp(0.8rem,1.5vw,1.2rem)', textAlign:'center' }}>
+          <div style={{ textAlign:'center' }}>
             <span style={{
               fontFamily:"'Bebas Neue',sans-serif",
               fontSize:'clamp(1.1rem,2.8vw,1.5rem)',
