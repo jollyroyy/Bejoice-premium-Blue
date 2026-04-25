@@ -12,9 +12,9 @@ const CAPABILITIES = [
 ]
 
 const TEAM = [
-  { name: 'Preetham Canute Pinto', role: 'CEO & Co-Owner',    initials: 'PC', photo: '/preetham-ceo.jpg' },
-  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', initials: 'MA', photo: '/ashraful-coo.png' },
-  { name: 'Shahil',                  role: 'Managing Partner', initials: 'SH' },
+  { name: 'Preetham Canute Pinto', role: 'CEO & Co-Owner',    initials: 'PC', photo: '/preetham-ceo.jpg', pos: 'center 15%' },
+  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', initials: 'MA', photo: '/ashraful-coo.png', pos: 'center 10%' },
+  { name: 'Shahil',                  role: 'Managing Partner', initials: 'SH', photo: '/shahil-mp.jpg',   pos: 'center 18%' },
 ]
 
 export default function WhyBejoice() {
@@ -235,7 +235,7 @@ export default function WhyBejoice() {
 
           {/* ── TEAM CARDS ── */}
           <div className="wb-team-grid" style={{ position: 'relative', zIndex: 2 }}>
-            {TEAM.map(({ name, role, initials, photo }, i) => (
+            {TEAM.map(({ name, role, initials, photo, pos }, i) => (
               <div key={name} className="wb-team-card fade-up">
 
                 {/* Avatar ring */}
@@ -251,8 +251,7 @@ export default function WhyBejoice() {
                   {photo ? (
                     <img src={photo} alt={name} style={{
                       width: '100%', height: '100%',
-                      objectFit: 'cover', objectPosition: 'center top',
-                      objectPosition: 'center 20%',
+                      objectFit: 'cover', objectPosition: pos || 'center 15%',
                     }} />
                   ) : (
                     <span style={{
