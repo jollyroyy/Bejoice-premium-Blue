@@ -141,7 +141,7 @@ export default function Nav({ onQuoteClick }) {
             className="nav-logo-wrap"
             role="link"
             aria-label={isAr ? 'الصفحة الرئيسية بيجويس' : 'Bejoice Home'}
-            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-380px' }}>
+            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-435px' }}>
             <img
               src="/bejoice-logo-group.png"
               alt="Bejoice"
