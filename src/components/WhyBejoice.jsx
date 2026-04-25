@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import useFadeUpBatch from '../hooks/useFadeUpBatch'
+import { SparklesCore } from './ui/sparkles'
 
 const CAPABILITIES = [
   'Strong presence in Saudi Arabia, aligned with regional growth and Vision 2030',
@@ -25,13 +26,14 @@ export default function WhyBejoice() {
       id="why-us"
       ref={sectionRef}
       style={{
-        background: '#050508',
+        background: '#183650',
         borderTop: '1px solid rgba(91,194,231,0.08)',
         position: 'relative',
         overflow: 'hidden',
         padding: 'clamp(3rem,8vw,7rem) clamp(1rem,5vw,2.5rem)',
       }}
     >
+      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(91,194,231,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
       {/* Ambient top glow */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
@@ -90,20 +92,21 @@ export default function WhyBejoice() {
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 11, letterSpacing: '0.38em', textTransform: 'uppercase',
                 color: 'rgba(91,194,231,0.85)', fontWeight: 700,
-              }}>Why Bejoice</span>
+              }}>Our Advantage</span>
               <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(91,194,231,0.25), transparent)' }} />
             </div>
 
             {/* Headline */}
             <h2 style={{
               fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(2.6rem,6.5vw,6rem)',
-              letterSpacing: '0.07em', lineHeight: 0.95,
+              fontSize: 'clamp(3rem,7vw,6rem)',
+              letterSpacing: '0.07em', lineHeight: 1,
               margin: '0 0 clamp(1rem,2vw,1.6rem)',
               textShadow: '0 2px 40px rgba(0,0,0,0.8)',
+              filter: 'drop-shadow(0 0 30px rgba(91,194,231,0.3))',
             }}>
-              <span style={{ color: '#ffffff' }}>MOVING TRADE </span>
-              <span style={{ color: '#5BC2E7', textShadow: '0 0 50px rgba(91,194,231,0.4)' }}>BEYOND BORDERS</span>
+              <span style={{ color: '#ffffff' }}>WHY </span>
+              <span style={{ color: '#5BC2E7', textShadow: '0 0 50px rgba(91,194,231,0.4)' }}>BEJOICE</span>
             </h2>
 
             {/* Divider rule */}
@@ -136,32 +139,6 @@ export default function WhyBejoice() {
                 With our HQ in Dubai and established operations in Saudi Arabia, China, and India, Bejoice is strategically positioned to support the Kingdom's vision of becoming a global logistics hub under Vision 2030. We specialize in heavy lift and project cargo — every movement carefully engineered with full accountability from origin to final delivery, supporting the Kingdom's mega-projects and industrial growth requirements.
               </p>
 
-              {/* Stat row */}
-              <div className="wb-stat-strip">
-                {[['180+','Countries'],['20+','Years'],['1,500+','Heavy Lifts'],['24/7','Operations']].map(([num, label]) => (
-                  <div key={label} style={{
-                    flex: '1 1 0', minWidth: 0,
-                    display: 'flex', flexDirection: 'column', alignItems: 'center',
-                    padding: 'clamp(0.7rem,1.2vw,1rem) clamp(0.5rem,1vw,0.8rem)',
-                    background: 'rgba(91,194,231,0.04)',
-                    border: '1px solid rgba(91,194,231,0.13)',
-                    borderTop: '1px solid rgba(91,194,231,0.26)',
-                    borderRadius: 10,
-                  }}>
-                    <span style={{
-                      fontFamily: "'Bebas Neue', sans-serif",
-                      fontSize: 'clamp(1.4rem,2.5vw,2.2rem)', letterSpacing: '0.06em',
-                      color: '#5BC2E7', textShadow: '0 0 22px rgba(91,194,231,0.35)', lineHeight: 1,
-                    }}>{num}</span>
-                    <span style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 'clamp(9px,0.85vw,11px)', letterSpacing: '0.24em',
-                      textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)',
-                      marginTop: 4, fontWeight: 600,
-                    }}>{label}</span>
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* RIGHT — capabilities card */}
