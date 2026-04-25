@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import logoSrc from '../assets/bejoice-logo-group.png'
 import gsap from 'gsap'
 import { useCalBooking } from '../hooks/useCalBooking'
 import { useLang } from '../context/LangContext'
@@ -141,17 +142,16 @@ export default function Nav({ onQuoteClick }) {
             className="nav-logo-wrap"
             role="link"
             aria-label={isAr ? 'الصفحة الرئيسية بيجويس' : 'Bejoice Home'}
-            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-430px' }}>
+            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block' }}>
             <img
-              src="/bejoice-logo-group.png"
+              src={logoSrc}
               alt="Bejoice"
               className="nav-logo-img"
               fetchPriority="high"
               decoding="async"
               style={{
-                height: 'clamp(130px, 16vw, 200px)',
-                width: 'clamp(470px, 63vw, 750px)',
-                objectFit: 'contain',
+                height: 'clamp(60px, 8vw, 100px)',
+                width: 'auto',
                 display: 'block',
                 filter: 'brightness(1.05) contrast(1.05) drop-shadow(0 2px 14px rgba(0,0,0,0.6)) drop-shadow(0 0 28px rgba(255,255,255,0.12))',
               }}
@@ -159,7 +159,7 @@ export default function Nav({ onQuoteClick }) {
           </div>
 
           {/* Right side: CTA + Hamburger */}
-          <div className="nav-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)', marginRight: '-250px' }}>
+          <div className="nav-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)' }}>
 
             {/* CTA — Book a Call */}
             <button
