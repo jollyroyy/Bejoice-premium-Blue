@@ -1337,4 +1337,65 @@ section {
 @keyframes db-spin-cw  { from { transform: rotate(0deg)    } to { transform: rotate(360deg)  } }
 @keyframes db-spin-ccw { from { transform: rotate(0deg)    } to { transform: rotate(-360deg) } }
 
+/* ══════════════════════════════════════════════════════════
+   WHY BEJOICE SECTION
+   ══════════════════════════════════════════════════════════ */
+.wb-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+}
+.wb-stat-strip {
+  display: flex;
+  gap: clamp(0.4rem, 0.8vw, 0.7rem);
+  flex-wrap: nowrap;
+}
+.wb-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.2rem, 2.5vw, 2.5rem);
+}
+.wb-team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1.4rem, 2.2vw, 2.4rem) clamp(1rem, 1.8vw, 2rem);
+  background: linear-gradient(145deg, rgba(255,255,255,0.028) 0%, rgba(91,194,231,0.02) 100%);
+  border: 1px solid rgba(91,194,231,0.13);
+  border-top: 1px solid rgba(91,194,231,0.26);
+  border-radius: 18px;
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 40px rgba(0,0,0,0.45);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.wb-team-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(91,194,231,0.4) 50%, transparent);
+  pointer-events: none;
+}
+.wb-team-card:hover {
+  border-color: rgba(91,194,231,0.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07), 0 16px 60px rgba(0,0,0,0.55), 0 0 30px rgba(91,194,231,0.07);
+  transform: translateY(-5px);
+}
+
+/* Responsive */
+@media (max-width: 912px) {
+  .wb-two-col { grid-template-columns: 1fr; }
+}
+@media (max-width: 767px) {
+  .wb-team-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .wb-team-card {
+    flex-direction: row; gap: clamp(1rem,4vw,1.4rem);
+    padding: clamp(1rem,4vw,1.2rem);
+    text-align: left !important;
+  }
+  .wb-stat-strip { display: grid; grid-template-columns: 1fr 1fr; }
+}
+
 @keyframes qqToastIn { from { opacity: 0; transform: translateX(-50%) translateY(-16px) scale(0.95); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }

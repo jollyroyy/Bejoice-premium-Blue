@@ -6,6 +6,7 @@ import Nav from './components/Nav'
 import VideoHero from './components/VideoHero'
 const LogisticsTools = lazy(() => import('./components/LogisticsTools'))
 const Services       = lazy(() => import('./components/Services'))
+const WhyBejoice     = lazy(() => import('./components/WhyBejoice'))
 const Certifications = lazy(() => import('./components/Certifications'))
 const Contact        = lazy(() => import('./components/Contact'))
 const Footer         = lazy(() => import('./components/Footer'))
@@ -89,6 +90,7 @@ export default function App() {
         <Suspense fallback={<ContactSkeleton />}><Contact /></Suspense>
         <Suspense fallback={<LogisticsToolsSkeleton />}><LogisticsTools /></Suspense>
         <Suspense fallback={<ServicesSkeleton />}><Services /></Suspense>
+        <Suspense fallback={<ServicesSkeleton />}><WhyBejoice /></Suspense>
         <Suspense fallback={<CertificationsSkeleton />}><Certifications /></Suspense>
       </main>
       <Suspense fallback={<FooterSkeleton />}>
