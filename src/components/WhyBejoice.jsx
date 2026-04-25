@@ -83,14 +83,14 @@ export default function WhyBejoice() {
           }} />
 
           {/* ── HEADER ── */}
-          <div className="fade-up" style={{ position: 'relative', zIndex: 2, marginBottom: 'clamp(2rem,4vw,3.5rem)' }}>
+          <div className="fade-up" style={{ position: 'relative', zIndex: 2, marginBottom: 'clamp(2rem,4vw,3.5rem)', textAlign: 'center' }}>
 
             {/* Headline */}
             <h2 style={{
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: 'clamp(3rem,7vw,6rem)',
               letterSpacing: '0.07em', lineHeight: 1,
-              margin: '0 0 clamp(1rem,2vw,1.6rem)',
+              margin: '0 0 clamp(0.5rem,1vw,0.8rem)',
               textShadow: '0 2px 40px rgba(0,0,0,0.8)',
               filter: 'drop-shadow(0 0 30px rgba(91,194,231,0.3))',
             }}>
@@ -110,10 +110,10 @@ export default function WhyBejoice() {
             </p>
 
             {/* Divider rule */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div style={{ width: 52, height: 2, background: 'linear-gradient(90deg,#5BC2E7,rgba(91,194,231,0.15))' }} />
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+              <div style={{ width: 52, height: 2, background: 'linear-gradient(90deg,rgba(91,194,231,0.15),#5BC2E7)' }} />
               <div style={{ width: 5, height: 5, background: '#5BC2E7', opacity: 0.65, transform: 'rotate(45deg)', flexShrink: 0 }} />
-              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,rgba(91,194,231,0.14),transparent)' }} />
+              <div style={{ width: 52, height: 2, background: 'linear-gradient(90deg,#5BC2E7,rgba(91,194,231,0.15))' }} />
             </div>
           </div>
 
