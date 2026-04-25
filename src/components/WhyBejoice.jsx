@@ -252,7 +252,7 @@ export default function WhyBejoice() {
                     <img src={photo} alt={name} style={{
                       width: '100%', height: '100%',
                       objectFit: 'cover', objectPosition: 'center top',
-                      transform: 'rotate(90deg) scale(1.15)',
+                      transform: 'rotate(-90deg) scale(1.15)',
                     }} />
                   ) : (
                     <span style={{
