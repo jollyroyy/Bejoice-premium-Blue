@@ -193,9 +193,9 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '24px' }}>
               <img
-                src="https://bejoice-premium.s3.me-central-1.amazonaws.com/bejoice-logo-white.webp"
+                src="/bejoice-logo-group.png"
                 alt="Bejoice"
-                width="1509" height="839"
+                width="1080" height="1080"
                 loading="lazy" decoding="async"
                 style={{ height: '125px', width: 'auto', objectFit: 'contain', display: 'block', opacity: 0.92 }}
               />
