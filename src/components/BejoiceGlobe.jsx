@@ -553,87 +553,180 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
           </div>
         </motion.div>
 
-        {/* ── RIGHT: All text ── */}
+        {/* ── RIGHT: Premium Bento Location Panel ── */}
         <motion.div
           initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.8, ease: [0.16,1,0.3,1] }}
-          style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 0,
-            borderLeft: '1px solid rgba(91,194,231,0.15)',
-            paddingLeft: 'clamp(1.5rem,3vw,2.5rem)',
-          }}
+          style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 0 }}
         >
           {/* Eyebrow */}
-          <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:'clamp(0.9rem,1.5vw,1.2rem)' }}>
-            <div style={{ width:28, height:1.5, background:'#5BC2E7', flexShrink:0 }} />
-            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:11, fontWeight:800,
+          <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:'clamp(0.7rem,1.2vw,1rem)' }}>
+            <div style={{ width:32, height:2, background:'linear-gradient(90deg, #5BC2E7, rgba(91,194,231,0.2))', flexShrink:0, borderRadius:1 }} />
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(10px,1.1vw,12px)', fontWeight:800,
               letterSpacing: isAr ? '0' : '0.35em', textTransform: isAr ? 'none' : 'uppercase',
-              color:'#5BC2E7',
+              color:'#5BC2E7', textShadow:'0 0 16px rgba(91,194,231,0.4)',
             }}>
               {isAr ? ar.globe.eyebrow : 'GLOBAL PRESENCE'}
             </span>
           </div>
 
           {/* Headline */}
-          <h2 style={{
+          <h2 className="no-reveal" style={{
             fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
-            fontSize:'clamp(2rem,4.5vw,4.2rem)',
+            fontSize:'clamp(1.8rem,4vw,3.6rem)',
             color:'#ffffff', letterSpacing: isAr ? '0' : '0.05em',
-            lineHeight: isAr ? 1.3 : 0.95, margin:'0 0 clamp(1.6rem,3vw,2.4rem)',
+            lineHeight: isAr ? 1.3 : 0.95, margin:'0 0 clamp(1.2rem,2.5vw,2rem)',
             textShadow:'0 2px 4px rgba(0,0,0,0.9), 0 0 40px rgba(91,194,231,0.15)',
           }}>
             {isAr ? ar.globe.headline : <>
-              <span style={{ color:'#ffffff' }}>BEJOICE CONNECTS </span>
+              <span style={{ color:'#ffffff' }}>BEJOICE CONNECTS </span><br/>
               <span style={{ color:'#5BC2E7', textShadow:'0 0 30px rgba(91,194,231,0.4)' }}>SAUDI TO THE WORLD</span>
             </>}
           </h2>
 
-          {/* HQ row */}
+          {/* ── Bento Grid ── */}
           <div style={{
-            display:'flex', alignItems:'center', gap:'0.75rem',
-            padding:'clamp(0.7rem,1.2vw,1rem) clamp(0.9rem,1.5vw,1.2rem)',
-            background:'rgba(91,194,231,0.06)',
-            border:'1px solid rgba(91,194,231,0.18)',
-            borderLeft:'3px solid #5BC2E7',
-            borderRadius:'0 8px 8px 0',
-            marginBottom:'clamp(1rem,2vw,1.5rem)',
+            display:'grid',
+            gridTemplateColumns:'1fr 1fr',
+            gap:'clamp(0.5rem,1vw,0.75rem)',
+            marginBottom:'clamp(0.8rem,1.5vw,1.2rem)',
           }}>
-            <span style={{ width:10, height:10, borderRadius:'50%', background:'#5BC2E7', flexShrink:0, boxShadow:'0 0 10px rgba(91,194,231,0.7)' }} />
-            <div>
-              <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(91,194,231,0.7)', fontWeight:700, marginBottom:2 }}>Headquarters</div>
-              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1rem,2.2vw,1.35rem)', letterSpacing:'0.1em', color:'#ffffff', lineHeight:1 }}>
-                {isAr ? ar.globe.hq : 'DUBAI, UNITED ARAB EMIRATES'}
+
+            {/* HQ Card — spans full width */}
+            <motion.div
+              whileHover={{ scale:1.015, borderColor:'rgba(91,194,231,0.5)' }}
+              transition={{ type:'spring', stiffness:300, damping:20 }}
+              style={{
+                gridColumn:'1 / -1',
+                display:'flex', alignItems:'center', gap:'clamp(0.6rem,1.2vw,1rem)',
+                padding:'clamp(0.8rem,1.4vw,1.1rem) clamp(1rem,1.6vw,1.3rem)',
+                background:'linear-gradient(135deg, rgba(91,194,231,0.08) 0%, rgba(91,194,231,0.02) 100%)',
+                border:'1px solid rgba(91,194,231,0.22)',
+                borderRadius:12,
+                position:'relative', overflow:'hidden',
+                cursor:'default',
+              }}
+            >
+              {/* Ambient glow */}
+              <div style={{ position:'absolute', top:'-30%', left:'-10%', width:'60%', height:'160%', background:'radial-gradient(ellipse, rgba(91,194,231,0.06) 0%, transparent 70%)', pointerEvents:'none' }} />
+              {/* Icon */}
+              <div style={{
+                width:'clamp(36px,3.5vw,44px)', height:'clamp(36px,3.5vw,44px)',
+                borderRadius:10,
+                background:'linear-gradient(135deg, rgba(91,194,231,0.18) 0%, rgba(91,194,231,0.06) 100%)',
+                border:'1px solid rgba(91,194,231,0.3)',
+                display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0,
+                boxShadow:'0 4px 16px rgba(91,194,231,0.12), inset 0 1px 0 rgba(91,194,231,0.2)',
+              }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
               </div>
-            </div>
+              <div style={{ position:'relative', zIndex:1 }}>
+                <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(8px,0.9vw,10px)', letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(91,194,231,0.8)', fontWeight:700, marginBottom:3 }}>
+                  {isAr ? 'المقر الرئيسي' : 'HEADQUARTERS'}
+                </div>
+                <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.05rem,2vw,1.4rem)', letterSpacing:'0.08em', color:'#ffffff', lineHeight:1.1 }}>
+                  {isAr ? ar.globe.hq : 'DUBAI, UNITED ARAB EMIRATES'}
+                </div>
+              </div>
+              {/* HQ badge */}
+              <div style={{ marginLeft:'auto', flexShrink:0, padding:'3px 10px', borderRadius:20,
+                background:'rgba(91,194,231,0.12)', border:'1px solid rgba(91,194,231,0.3)',
+                fontFamily:"'DM Sans',sans-serif", fontSize:9, fontWeight:800, letterSpacing:'0.15em', color:'#5BC2E7',
+              }}>HQ</div>
+            </motion.div>
+
+            {/* Branch Office Cards */}
+            {[
+              { flag:'🇸🇦', name: isAr ? 'السعودية' : 'SAUDI ARABIA', cities: isAr ? 'الرياض · جدة · الدمام' : 'Riyadh · Jeddah · Dammam', type:'office' },
+              { flag:'🇮🇳', name: isAr ? 'الهند' : 'INDIA', cities: isAr ? 'مومباي' : 'Mumbai', type:'partner' },
+              { flag:'🇨🇳', name: isAr ? 'الصين' : 'CHINA', cities: isAr ? 'شنغهاي' : 'Shanghai', type:'partner' },
+              { flag:'🇦🇪', name: isAr ? 'الإمارات' : 'UAE', cities: isAr ? 'دبي' : 'Dubai', type:'hq' },
+            ].map((loc, i) => (
+              <motion.div
+                key={loc.name}
+                initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ delay: 0.15 + i * 0.08, duration:0.5, ease:[0.16,1,0.3,1] }}
+                whileHover={{ scale:1.03, borderColor:'rgba(91,194,231,0.45)' }}
+                style={{
+                  padding:'clamp(0.65rem,1.1vw,0.85rem) clamp(0.7rem,1.2vw,1rem)',
+                  background:'linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(91,194,231,0.015) 100%)',
+                  border:'1px solid rgba(91,194,231,0.12)',
+                  borderRadius:10,
+                  cursor:'default',
+                  transition:'border-color 0.3s ease, background 0.3s ease',
+                  position:'relative', overflow:'hidden',
+                }}
+              >
+                {/* Hover glow */}
+                <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(91,194,231,0.04) 0%, transparent 70%)', opacity:0, transition:'opacity 0.4s', pointerEvents:'none' }} className="bento-glow" />
+                <div style={{ display:'flex', alignItems:'center', gap:'clamp(0.4rem,0.8vw,0.6rem)', marginBottom:4 }}>
+                  <span style={{ fontSize:'clamp(14px,1.6vw,18px)', lineHeight:1 }}>{loc.flag}</span>
+                  <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(0.85rem,1.8vw,1.15rem)', letterSpacing:'0.1em', color:'#ffffff', lineHeight:1 }}>{loc.name}</span>
+                </div>
+                <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(9px,0.9vw,11px)', color:'rgba(255,255,255,0.5)', letterSpacing:'0.04em', lineHeight:1.3 }}>
+                  {loc.cities}
+                </div>
+                {/* Type indicator dot */}
+                <div style={{
+                  position:'absolute', top:8, right:8,
+                  width:6, height:6, borderRadius:'50%',
+                  background: loc.type === 'hq' ? '#5BC2E7' : loc.type === 'office' ? '#5BC2E7' : 'rgba(94,196,212,0.7)',
+                  boxShadow: `0 0 8px ${loc.type === 'hq' ? 'rgba(91,194,231,0.6)' : loc.type === 'office' ? 'rgba(91,194,231,0.5)' : 'rgba(94,196,212,0.4)'}`,
+                }} />
+              </motion.div>
+            ))}
           </div>
 
-          {/* Branch offices */}
-          <div style={{ marginBottom:'clamp(1rem,2vw,1.5rem)' }}>
-            <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(91,194,231,0.6)', fontWeight:700, marginBottom:'clamp(0.6rem,1vw,0.8rem)' }}>
-              {isAr ? ar.globe.branchOffices : 'Branch Offices'}
-            </div>
-            <div style={{ display:'flex', flexWrap:'wrap', gap:'0.5rem 0' }}>
-              {(isAr ? ['السعودية','الإمارات','الهند','الصين'] : ['SAUDI ARABIA','UAE','INDIA','CHINA']).map((loc, idx, arr) => (
-                <span key={loc} style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem' }}>
-                  <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1rem,2.5vw,1.4rem)', letterSpacing:'0.12em', color:'rgba(255,255,255,0.9)', lineHeight:1 }}>{loc}</span>
-                  {idx < arr.length - 1 && <span style={{ width:4, height:4, borderRadius:'50%', background:'rgba(91,194,231,0.5)', display:'inline-block', flexShrink:0 }} />}
-                </span>
-              ))}
-            </div>
+          {/* Divider with label */}
+          <div style={{ display:'flex', alignItems:'center', gap:'clamp(0.5rem,1vw,0.75rem)', marginBottom:'clamp(0.6rem,1.2vw,1rem)' }}>
+            <div style={{ flex:1, height:1, background:'linear-gradient(90deg, rgba(91,194,231,0.3), transparent)' }} />
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(7px,0.75vw,9px)', letterSpacing:'0.25em', textTransform:'uppercase', color:'rgba(91,194,231,0.45)', fontWeight:700, flexShrink:0 }}>
+              {isAr ? 'الشبكة' : 'NETWORK'}
+            </span>
+            <div style={{ flex:1, height:1, background:'linear-gradient(90deg, transparent, rgba(91,194,231,0.3))' }} />
           </div>
 
-          {/* Divider */}
-          <div style={{ height:1, background:'linear-gradient(90deg, rgba(91,194,231,0.25), transparent)', marginBottom:'clamp(1rem,2vw,1.5rem)' }} />
+          {/* Stats row */}
+          <div style={{
+            display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gap:'clamp(0.4rem,0.8vw,0.6rem)',
+            marginBottom:'clamp(0.8rem,1.5vw,1.2rem)',
+          }}>
+            {[
+              { val: '4', label: isAr ? 'دول' : 'Countries' },
+              { val: '6', label: isAr ? 'مكاتب' : 'Offices' },
+              { val: '23', label: isAr ? 'موانئ' : 'Port Links' },
+            ].map((s, i) => (
+              <motion.div key={s.label}
+                initial={{ opacity:0, y:12 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ delay:0.4 + i*0.1, duration:0.5 }}
+                style={{
+                  textAlign:'center',
+                  padding:'clamp(0.5rem,1vw,0.7rem) 0',
+                  background:'rgba(91,194,231,0.03)',
+                  border:'1px solid rgba(91,194,231,0.08)',
+                  borderRadius:8,
+                }}
+              >
+                <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.2rem,2.5vw,1.8rem)', color:'#5BC2E7', lineHeight:1, letterSpacing:'0.04em',
+                  textShadow:'0 0 20px rgba(91,194,231,0.35)',
+                }}>{s.val}</div>
+                <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(7px,0.8vw,9px)', color:'rgba(255,255,255,0.45)', letterSpacing:'0.12em', textTransform:'uppercase', fontWeight:600, marginTop:2 }}>{s.label}</div>
+              </motion.div>
+            ))}
+          </div>
 
           {/* Tagline */}
           <motion.div
-            animate={{ opacity: [0.65, 1, 0.65] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+            animate={{ opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             style={{ display:'flex', alignItems:'center', gap:10 }}
           >
-            <div style={{ width:20, height:1.5, background:'rgba(91,194,231,0.5)', flexShrink:0 }} />
-            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.78rem,1.4vw,0.95rem)',
-              color:'rgba(91,194,231,0.9)', letterSpacing:'0.12em', textTransform:'uppercase',
-              margin:0, fontWeight:600, lineHeight:1.4,
+            <div style={{ width:24, height:2, background:'linear-gradient(90deg, rgba(91,194,231,0.6), transparent)', flexShrink:0, borderRadius:1 }} />
+            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.7rem,1.2vw,0.88rem)',
+              color:'rgba(91,194,231,0.85)', letterSpacing:'0.1em', textTransform:'uppercase',
+              margin:0, fontWeight:600, lineHeight:1.5,
             }}>
               {isAr ? ar.globe.tagline : 'Strategically positioned for seamless global connectivity'}
             </p>

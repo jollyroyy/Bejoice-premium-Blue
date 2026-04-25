@@ -1,318 +1,392 @@
-import { useRef, useState } from 'react'
-import useFadeUpBatch from '../hooks/useFadeUpBatch'
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { useLang } from '../context/LangContext'
+import ar from '../i18n/ar'
 import { SparklesCore } from './ui/sparkles'
 
+/* ── Capabilities data ── */
 const CAPABILITIES = [
-  'Strong presence in Saudi Arabia, aligned with regional growth and Vision 2030',
-  'Strategically positioned — Dubai HQ, KSA, India & China',
-  'Specialized expertise in Heavy Lift & Project Logistics',
-  'Structured for fast, decisive, and solution-driven execution',
-  'Experienced, hands-on team with deep regional and international knowledge',
-  'Strong commitment to reliability, safety, and performance excellence',
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+    ),
+    title: 'Saudi Arabia Focus',
+    desc: 'Strong presence aligned with Vision 2030 and regional growth',
+  },
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+      </svg>
+    ),
+    title: 'Strategic Positioning',
+    desc: 'Dubai HQ with operations in KSA, India & China',
+  },
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 20V10M12 20V4M18 20v-6"/>
+      </svg>
+    ),
+    title: 'Heavy Lift Experts',
+    desc: 'Specialized in heavy lift & project logistics execution',
+  },
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+      </svg>
+    ),
+    title: 'Decisive Execution',
+    desc: 'Fast, solution-driven logistics with full accountability',
+  },
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+      </svg>
+    ),
+    title: 'Hands-On Team',
+    desc: 'Deep regional and international knowledge at every level',
+  },
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5BC2E7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    ),
+    title: 'Safety & Reliability',
+    desc: 'Committed to performance excellence and zero-compromise safety',
+  },
 ]
 
-const TEAM = [
-  { name: 'Preetham Canute Pinto', role: 'CEO & Co-Owner',    initials: 'PC', photo: '/preetham-ceo.webp', pos: 'center 15%' },
-  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', initials: 'MA', photo: '/ashraful-coo.webp', pos: 'center 10%' },
-  { name: 'Shahil',                  role: 'Managing Partner', initials: 'SH', photo: '/shahil-mp.webp',   pos: 'center 18%' },
+/* ── Founding members ── */
+const FOUNDERS = [
+  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', img: '/founders/ashraful.jpg' },
+  { name: 'Preetham Canute Pinto',    role: 'CEO & Co-Owner', img: '/founders/preetham.jpg' },
+  { name: 'Shahil',                    role: 'Managing Partner', img: '/founders/shahil.jpg' },
 ]
 
 export default function WhyBejoice() {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
   const sectionRef = useRef(null)
-  const [hoveredCap, setHoveredCap] = useState(null)
-  const [hoveredMember, setHoveredMember] = useState(null)
-  useFadeUpBatch(sectionRef)
+  const isInView = useInView(sectionRef, { once: true, margin: '-80px 0px' })
 
   return (
     <section
-      id="why-us"
       ref={sectionRef}
-      style={{
-        background: '#183650',
-        borderTop: '1px solid rgba(91,194,231,0.08)',
-        position: 'relative',
-        overflow: 'hidden',
-        padding: 'clamp(3rem,8vw,7rem) clamp(1rem,5vw,2.5rem)',
-      }}
+      id="why-us"
+      className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-4 md:px-10 lg:px-20"
+      style={{ background: '#183650' }}
     >
-      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(91,194,231,0.9)" speed={2.2} className="absolute inset-0 w-full h-full pointer-events-none" />
-      {/* Ambient top glow */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: 'radial-gradient(ellipse 80% 45% at 50% 0%, rgba(91,194,231,0.07) 0%, transparent 65%)',
-      }} />
-      {/* Bottom-right orb */}
-      <div style={{
-        position: 'absolute', bottom: '-12%', right: '-6%', pointerEvents: 'none',
-        width: 'clamp(300px,50vw,700px)', height: 'clamp(300px,50vw,700px)', borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(91,194,231,0.04) 0%, transparent 65%)',
-      }} />
-      {/* Grid hatch */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.35,
-        backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(91,194,231,0.022) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(91,194,231,0.022) 60px)',
-      }} />
+      <SparklesCore background="transparent" minSize={0.5} maxSize={1.8} particleDensity={45} particleColor="rgba(91,194,231,0.8)" speed={0.6} className="absolute inset-0 w-full h-full pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(91,194,231,0.06) 0%, transparent 60%)' }} />
 
-      <div style={{ maxWidth: 'min(1200px, calc(100vw - 2rem))', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+      <div className="max-w-5xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
 
-        {/* ══ OUTER PRESTIGE CARD ══ */}
-        <div style={{
-          position: 'relative',
-          background: 'linear-gradient(145deg, rgba(255,255,255,0.032) 0%, rgba(255,255,255,0.012) 55%, rgba(91,194,231,0.016) 100%)',
-          backdropFilter: 'blur(40px)', WebkitBackdropFilter: 'blur(40px)',
-          border: '1px solid rgba(91,194,231,0.3)',
-          borderTop: '1px solid rgba(91,194,231,0.6)',
-          borderRadius: 28,
-          overflow: 'hidden',
-          boxShadow: '0 60px 120px rgba(0,0,0,0.8), 0 0 0 1px rgba(91,194,231,0.07) inset, inset 0 1px 0 rgba(91,194,231,0.28), 0 0 70px rgba(91,194,231,0.08)',
-          padding: 'clamp(2rem,4vw,4rem) clamp(1.5rem,4vw,4rem)',
-        }}>
+        {/* ── Outer Glassmorphism Card ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ type: 'spring', stiffness: 80, damping: 20 }}
+          style={{
+            background: 'linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 50%, rgba(91,194,231,0.02) 100%)',
+            backdropFilter: 'blur(32px)', WebkitBackdropFilter: 'blur(32px)',
+            border: '1px solid rgba(91,194,231,0.28)',
+            borderTop: '1px solid rgba(91,194,231,0.55)',
+            borderRadius: 24,
+            overflow: 'hidden',
+            boxShadow: '0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(91,194,231,0.06) inset, inset 0 1px 0 rgba(91,194,231,0.22), 0 0 50px rgba(91,194,231,0.06)',
+            position: 'relative',
+          }}
+        >
+          {/* Ambient light layers */}
+          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', overflow:'hidden', borderRadius:24 }}>
+            <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse 80% 50% at 50% -5%, rgba(91,194,231,0.08) 0%, transparent 60%)' }}/>
+            <div style={{ position:'absolute', bottom:'-10%', right:'-5%', width:'clamp(300px,50vw,600px)', height:'clamp(300px,50vw,600px)', borderRadius:'50%', background:'radial-gradient(circle, rgba(91,194,231,0.03) 0%, transparent 65%)' }}/>
+          </div>
 
-          {/* Top sweep shimmer */}
+          {/* ── Header Block ── */}
           <div style={{
-            position: 'absolute', top: 0, left: 0, right: 0, height: 1, pointerEvents: 'none',
-            background: 'linear-gradient(90deg, transparent 0%, rgba(91,194,231,0.55) 40%, rgba(91,194,231,0.8) 50%, rgba(91,194,231,0.55) 60%, transparent 100%)',
-          }} />
-          {/* Inner diagonal texture */}
-          <div style={{
-            position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.018,
-            backgroundImage: 'repeating-linear-gradient(45deg, #5BC2E7 0px, #5BC2E7 1px, transparent 1px, transparent 14px)',
-          }} />
-          {/* Left ambient radial */}
-          <div style={{
-            position: 'absolute', inset: 0, pointerEvents: 'none',
-            background: 'radial-gradient(ellipse 55% 70% at 0% 50%, rgba(91,194,231,0.05) 0%, transparent 70%)',
-          }} />
-
-          {/* ── HEADER ── */}
-          <div className="fade-up" style={{ position: 'relative', zIndex: 2, marginBottom: 'clamp(2rem,4vw,3.5rem)', textAlign: 'center' }}>
-
-            {/* Headline */}
-            <h2 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(3rem,7vw,6rem)',
-              letterSpacing: '0.07em', lineHeight: 1,
-              margin: '0 0 clamp(0.5rem,1vw,0.8rem)',
-              textShadow: '0 2px 40px rgba(0,0,0,0.8)',
-              filter: 'drop-shadow(0 0 30px rgba(91,194,231,0.3))',
+            textAlign: 'center',
+            padding: 'clamp(2.5rem,5vw,4rem) clamp(1.5rem,5vw,4rem) clamp(1.2rem,2.5vw,2rem)',
+            borderBottom: '1px solid rgba(91,194,231,0.1)',
+            position: 'relative', zIndex: 2,
+          }}>
+            <div style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(13px,1.4vw,16px)',
+              letterSpacing: '0.45em', textTransform: 'uppercase',
+              color: 'rgba(91,194,231,1)',
+              textShadow: '0 0 20px rgba(91,194,231,0.5)',
+              fontWeight: 700, marginBottom: '0.8rem',
             }}>
+              Moving Trade Beyond Borders
+            </div>
+            <motion.h2
+              className="no-reveal"
+              initial={{ x: -70, opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
+              animate={isInView ? { x: 0, opacity: 1, clipPath: 'inset(0 0% 0 0)' } : {}}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 'clamp(3rem,7vw,6rem)',
+                letterSpacing: '0.07em', lineHeight: 1,
+                margin: 0,
+                color: '#ffffff',
+                filter: 'drop-shadow(0 0 30px rgba(91,194,231,0.3))',
+              }}
+            >
               <span style={{ color: '#ffffff' }}>WHY </span>
-              <span style={{ color: '#5BC2E7', textShadow: '0 0 50px rgba(91,194,231,0.4)' }}>BEJOICE</span>
-            </h2>
+              <span style={{ color: '#5BC2E7' }}>BEJOICE</span>
+            </motion.h2>
+            <div style={{ width: 60, height: 2, margin: '1.4rem auto 0', background: 'linear-gradient(90deg, transparent, rgba(91,194,231,0.7), transparent)' }} />
+          </div>
 
-            {/* Subheading */}
+          {/* ── Main Description ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            style={{
+              padding: 'clamp(1.5rem,3vw,2.5rem) clamp(1.5rem,5vw,4rem)',
+              borderBottom: '1px solid rgba(91,194,231,0.08)',
+              position: 'relative', zIndex: 2,
+            }}
+          >
             <p style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(1.1rem,2.4vw,1.9rem)',
-              letterSpacing: '0.12em', lineHeight: 1.1,
-              color: 'rgba(255,255,255,0.45)',
-              margin: '0 0 clamp(1rem,2vw,1.6rem)',
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(14px,1.4vw,16.5px)',
+              fontWeight: 400, color: 'rgba(255,255,255,0.78)',
+              lineHeight: 1.85, margin: 0,
+              maxWidth: '72ch', marginLeft: 'auto', marginRight: 'auto',
+              textAlign: 'center',
             }}>
-              MOVING TRADE BEYOND BORDERS
+              Bejoice is a dynamic freight forwarding company focused on moving cargo with precision, speed,
+              and reliability across key international trade lanes, with a strong and growing emphasis on
+              <span style={{ color: '#5BC2E7', fontWeight: 600 }}> Saudi Arabia's rapidly expanding logistics sector</span>.
+              With our HQ in Dubai and established operations in Saudi Arabia, China, and India, Bejoice
+              is strategically positioned to support the Kingdom's vision of becoming a global logistics
+              hub under <span style={{ color: '#5BC2E7', fontWeight: 600 }}>Vision 2030</span>.
             </p>
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(13px,1.3vw,15px)',
+              fontWeight: 400, color: 'rgba(255,255,255,0.6)',
+              lineHeight: 1.85, margin: '1.2rem 0 0',
+              maxWidth: '72ch', marginLeft: 'auto', marginRight: 'auto',
+              textAlign: 'center',
+            }}>
+              We specialize in heavy lift and project cargo, where planning, execution, and safety are
+              critical. Every movement is carefully engineered with coordination, control, and full
+              accountability from origin to final delivery — supporting the Kingdom's mega projects
+              and industrial growth requirements.
+            </p>
+          </motion.div>
 
-            {/* Divider rule */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-              <div style={{ width: 52, height: 2, background: 'linear-gradient(90deg,rgba(91,194,231,0.15),#5BC2E7)' }} />
-              <div style={{ width: 5, height: 5, background: '#5BC2E7', opacity: 0.65, transform: 'rotate(45deg)', flexShrink: 0 }} />
-              <div style={{ width: 52, height: 2, background: 'linear-gradient(90deg,#5BC2E7,rgba(91,194,231,0.15))' }} />
+          {/* ── Capabilities Grid ── */}
+          <div style={{
+            padding: 'clamp(1.5rem,3vw,2.5rem) clamp(1.5rem,5vw,4rem)',
+            borderBottom: '1px solid rgba(91,194,231,0.08)',
+            position: 'relative', zIndex: 2,
+          }}>
+            {/* Section label */}
+            <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:'clamp(1.2rem,2vw,1.8rem)' }}>
+              <div style={{ width:28, height:2, background:'linear-gradient(90deg, #5BC2E7, rgba(91,194,231,0.2))', borderRadius:1 }} />
+              <span style={{
+                fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(10px,1.1vw,12px)',
+                fontWeight:800, letterSpacing:'0.35em', textTransform:'uppercase',
+                color:'#5BC2E7', textShadow:'0 0 16px rgba(91,194,231,0.4)',
+              }}>
+                Our Capabilities
+              </span>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))',
+              gap: 0,
+            }}>
+              {CAPABILITIES.map((cap, i) => (
+                <motion.div
+                  key={cap.title}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.4 + i * 0.08, duration: 0.5, ease: [0.16,1,0.3,1] }}
+                  style={{
+                    padding: 'clamp(1rem,1.8vw,1.4rem) clamp(0.8rem,1.5vw,1.2rem)',
+                    borderRight: i % 3 !== 2 ? '1px solid rgba(91,194,231,0.06)' : 'none',
+                    borderBottom: i < 3 ? '1px solid rgba(91,194,231,0.06)' : 'none',
+                    display: 'flex', gap: 'clamp(0.6rem,1vw,0.8rem)',
+                    alignItems: 'flex-start',
+                    transition: 'background 0.3s ease',
+                    cursor: 'default',
+                  }}
+                  whileHover={{ backgroundColor: 'rgba(91,194,231,0.04)' }}
+                >
+                  {/* Icon badge */}
+                  <div style={{
+                    width: 'clamp(34px,3.2vw,40px)', height: 'clamp(34px,3.2vw,40px)',
+                    borderRadius: 9, flexShrink: 0,
+                    background: 'linear-gradient(135deg, rgba(91,194,231,0.14) 0%, rgba(91,194,231,0.04) 100%)',
+                    border: '1px solid rgba(91,194,231,0.22)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    boxShadow: '0 3px 12px rgba(91,194,231,0.08), inset 0 1px 0 rgba(91,194,231,0.15)',
+                  }}>
+                    {cap.icon}
+                  </div>
+                  <div>
+                    <div style={{
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontSize: 'clamp(1rem,1.6vw,1.2rem)',
+                      letterSpacing: '0.06em', lineHeight: 1.1,
+                      color: '#ffffff', marginBottom: 4,
+                    }}>
+                      {cap.title}
+                    </div>
+                    <div style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 'clamp(11px,1.1vw,13px)',
+                      color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, fontWeight: 450,
+                    }}>
+                      {cap.desc}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
 
-          {/* ── TWO-COLUMN BODY ── */}
-          <div className="wb-two-col" style={{ position: 'relative', zIndex: 2, marginBottom: 'clamp(2.5rem,5vw,4rem)' }}>
-
-            {/* LEFT — body text */}
-            <div className="fade-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(1.4rem,2.5vw,2rem)' }}>
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 'clamp(15px,1.55vw,17px)',
-                lineHeight: 1.9, color: 'rgba(255,255,255,0.78)',
-                letterSpacing: '0.012em',
-              }}>
-                Bejoice is a dynamic freight forwarding company focused on moving cargo with precision, speed, and reliability across key international trade lanes — with a strong and growing emphasis on Saudi Arabia's rapidly expanding logistics sector.
-              </p>
-              <p style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 'clamp(15px,1.55vw,17px)',
-                lineHeight: 1.9, color: 'rgba(255,255,255,0.68)',
-                letterSpacing: '0.012em',
-              }}>
-                With our HQ in Dubai and established operations in Saudi Arabia, China, and India, Bejoice is strategically positioned to support the Kingdom's vision of becoming a global logistics hub under Vision 2030. We specialize in heavy lift and project cargo — every movement carefully engineered with full accountability from origin to final delivery, supporting the Kingdom's mega-projects and industrial growth requirements.
-              </p>
-
-            </div>
-
-            {/* RIGHT — capabilities card */}
-            <div className="fade-up">
-              <div style={{
-                background: 'linear-gradient(145deg,rgba(255,255,255,0.028) 0%,rgba(91,194,231,0.025) 100%)',
-                border: '1px solid rgba(91,194,231,0.16)',
-                borderTop: '1px solid rgba(91,194,231,0.3)',
-                borderRadius: 16,
-                padding: 'clamp(1.4rem,2.2vw,2rem) clamp(1.2rem,2vw,1.8rem)',
-                backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.4)',
-                position: 'relative', overflow: 'hidden',
-                height: '100%',
-              }}>
-                <div style={{
-                  position: 'absolute', top: 0, left: 0, right: 0, height: 1,
-                  background: 'linear-gradient(90deg,transparent,rgba(91,194,231,0.45) 50%,transparent)',
-                }} />
-
-                <h3 style={{
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: 'clamp(1.4rem,2.5vw,2rem)',
-                  letterSpacing: '0.1em', lineHeight: 1,
-                  color: '#ffffff',
-                  margin: '0 0 clamp(1rem,1.6vw,1.4rem)',
+          {/* ── Founding Members ── */}
+          <div style={{
+            padding: 'clamp(2rem,3.5vw,3rem) clamp(1.5rem,5vw,4rem)',
+            position: 'relative', zIndex: 2,
+          }}>
+            {/* Section label */}
+            <div style={{ textAlign:'center', marginBottom:'clamp(1.5rem,2.5vw,2rem)' }}>
+              <div style={{ display:'inline-flex', alignItems:'center', gap:12, marginBottom:'clamp(0.6rem,1vw,0.8rem)' }}>
+                <div style={{ width:24, height:1, background:'linear-gradient(90deg, transparent, rgba(91,194,231,0.5))' }} />
+                <span style={{
+                  fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(9px,1vw,11px)',
+                  fontWeight:800, letterSpacing:'0.35em', textTransform:'uppercase',
+                  color:'rgba(91,194,231,0.8)',
                 }}>
-                  <span style={{ color: '#ffffff' }}>OUR </span>
-                  <span style={{ color: '#5BC2E7' }}>CAPABILITIES</span>
-                </h3>
-
-                <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                  {CAPABILITIES.map((cap, i) => {
-                    const isHov = hoveredCap === i
-                    return (
-                    <li key={i}
-                      onMouseEnter={() => setHoveredCap(i)}
-                      onMouseLeave={() => setHoveredCap(null)}
-                      style={{
-                        display: 'flex', alignItems: 'flex-start',
-                        gap: 12, padding: 'clamp(0.6rem,1vw,0.85rem) 6px',
-                        borderBottom: i < CAPABILITIES.length - 1
-                          ? '1px solid rgba(91,194,231,0.07)' : 'none',
-                        borderRadius: 6,
-                        cursor: 'default',
-                        background: isHov ? 'rgba(91,194,231,0.06)' : 'transparent',
-                        transition: 'background 0.25s ease',
-                      }}>
-                      <div style={{
-                        width: 6, height: 6, minWidth: 6, borderRadius: '50%',
-                        background: '#5BC2E7',
-                        boxShadow: isHov ? '0 0 14px rgba(91,194,231,0.9)' : '0 0 8px rgba(91,194,231,0.5)',
-                        marginTop: 6, flexShrink: 0,
-                        transition: 'box-shadow 0.25s ease',
-                      }} />
-                      <span style={{
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: 'clamp(13px,1.2vw,15px)',
-                        color: isHov ? '#5BC2E7' : 'rgba(255,255,255,0.75)',
-                        lineHeight: 1.6, letterSpacing: '0.01em',
-                        textShadow: isHov ? '0 0 18px rgba(91,194,231,0.5)' : 'none',
-                        transition: 'color 0.25s ease, text-shadow 0.25s ease',
-                      }}>{cap}</span>
-                    </li>
-                    )
-                  })}
-                </ul>
+                  Founding Members — Bejoice KSA
+                </span>
+                <div style={{ width:24, height:1, background:'linear-gradient(90deg, rgba(91,194,231,0.5), transparent)' }} />
               </div>
             </div>
-          </div>
 
-          {/* ── FOUNDING MEMBERS DIVIDER ── */}
-          {/* ── FOUNDING MEMBERS SUBHEADING ── */}
-          <div className="fade-up" style={{
-            position: 'relative', zIndex: 2, textAlign: 'center',
-            marginBottom: 'clamp(2rem,3.5vw,3rem)',
-          }}>
-            <h3 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(1.4rem,2.5vw,2rem)',
-              letterSpacing: '0.1em', lineHeight: 1,
-              margin: '0 0 0.6rem',
+            {/* Founders Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 'clamp(0.8rem,1.5vw,1.2rem)',
+              maxWidth: 680,
+              margin: '0 auto',
             }}>
-              <span style={{ color: '#ffffff' }}>FOUNDING MEMBERS </span>
-              <span style={{ color: '#5BC2E7' }}>— BEJOICE KSA</span>
-            </h3>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-              <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg,rgba(91,194,231,0.15),#5BC2E7)' }} />
-              <div style={{ width: 4, height: 4, background: '#5BC2E7', opacity: 0.65, transform: 'rotate(45deg)', flexShrink: 0 }} />
-              <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg,#5BC2E7,rgba(91,194,231,0.15))' }} />
-            </div>
-          </div>
+              {FOUNDERS.map((f, i) => (
+                <motion.div
+                  key={f.name}
+                  initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                  animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                  transition={{ delay: 0.6 + i * 0.12, type: 'spring', stiffness: 80, damping: 16 }}
+                  whileHover={{ y: -4, borderColor: 'rgba(91,194,231,0.45)' }}
+                  style={{
+                    textAlign: 'center',
+                    padding: 'clamp(1rem,1.8vw,1.4rem) clamp(0.6rem,1vw,0.8rem)',
+                    background: 'linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(91,194,231,0.015) 100%)',
+                    border: '1px solid rgba(91,194,231,0.14)',
+                    borderRadius: 14,
+                    cursor: 'default',
+                    transition: 'border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {/* Ambient hover glow */}
+                  <div style={{
+                    position:'absolute', inset:0, pointerEvents:'none',
+                    background:'radial-gradient(ellipse 70% 50% at 50% 30%, rgba(91,194,231,0.06) 0%, transparent 70%)',
+                    opacity:0, transition:'opacity 0.4s',
+                  }} className="founder-glow" />
 
-          {/* ── TEAM CARDS ── */}
-          <div className="wb-team-grid" style={{ position: 'relative', zIndex: 2 }}>
-            {TEAM.map(({ name, role, initials, photo, pos }, i) => {
-              const isHovM = hoveredMember === i
-              return (
-              <div key={name} className="wb-team-card fade-up"
-                onMouseEnter={() => setHoveredMember(i)}
-                onMouseLeave={() => setHoveredMember(null)}
-              >
+                  {/* Portrait */}
+                  <div style={{
+                    width: 'clamp(72px,9vw,100px)', height: 'clamp(72px,9vw,100px)',
+                    borderRadius: '50%',
+                    margin: '0 auto clamp(0.7rem,1.2vw,1rem)',
+                    background: 'linear-gradient(135deg, rgba(91,194,231,0.2), rgba(91,194,231,0.05))',
+                    border: '2px solid rgba(91,194,231,0.25)',
+                    overflow: 'hidden',
+                    boxShadow: '0 6px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(91,194,231,0.1) inset',
+                    position: 'relative',
+                  }}>
+                    <img
+                      src={f.img}
+                      alt={f.name}
+                      loading="lazy"
+                      style={{
+                        width: '100%', height: '100%',
+                        objectFit: 'cover', objectPosition: 'center top',
+                        filter: 'grayscale(15%) contrast(1.05)',
+                      }}
+                      onError={(e) => {
+                        e.target.style.display = 'none'
+                      }}
+                    />
+                  </div>
 
-                {/* Avatar ring */}
-                <div style={{
-                  width: 'clamp(120px,14vw,180px)', height: 'clamp(120px,14vw,180px)',
-                  borderRadius: '50%', flexShrink: 0,
-                  background: 'linear-gradient(145deg,rgba(91,194,231,0.15),rgba(24,54,80,0.9))',
-                  boxShadow: isHovM
-                    ? '0 0 0 3px rgba(91,194,231,0.7), 0 0 40px rgba(91,194,231,0.45), 0 0 0 7px rgba(91,194,231,0.15)'
-                    : '0 0 0 2px rgba(91,194,231,0.35), 0 0 24px rgba(91,194,231,0.15), 0 0 0 5px rgba(91,194,231,0.07)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  animation: `wbRingPulse ${3.5 + i * 0.4}s ease-in-out infinite`,
-                  overflow: 'hidden',
-                  transform: isHovM ? 'scale(1.18) translateY(-8px)' : 'scale(1) translateY(0)',
-                  transition: 'transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease',
-                  cursor: 'default',
-                  zIndex: isHovM ? 10 : 1,
-                  position: 'relative',
-                }}>
-                  {photo ? (
-                    <img src={photo} alt={name} style={{
-                      width: '100%', height: '100%',
-                      objectFit: 'cover', objectPosition: pos || 'center 15%',
-                    }} />
-                  ) : (
-                    <span style={{
-                      fontFamily: "'Bebas Neue', sans-serif",
-                      fontSize: 'clamp(1.6rem,2.5vw,2.2rem)',
-                      letterSpacing: '0.1em',
-                      color: 'rgba(91,194,231,0.85)',
-                      textShadow: '0 0 20px rgba(91,194,231,0.4)',
-                    }}>{initials}</span>
-                  )}
-                </div>
-
-                {/* Name + role */}
-                <div style={{ textAlign: 'center', marginTop: 'clamp(0.9rem,1.5vw,1.2rem)' }}>
+                  {/* Name */}
                   <div style={{
                     fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: 'clamp(1.2rem,2vw,1.7rem)',
-                    letterSpacing: '0.1em', color: '#ffffff', lineHeight: 1.1,
-                    marginBottom: 6,
-                    textShadow: '0 0 20px rgba(255,255,255,0.1)',
-                    minHeight: '2.2em',
-                    display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
-                  }}>{name}</div>
+                    fontSize: 'clamp(0.9rem,1.6vw,1.15rem)',
+                    letterSpacing: '0.06em', lineHeight: 1.15,
+                    color: '#ffffff',
+                    marginBottom: 3,
+                  }}>
+                    {f.name}
+                  </div>
+
+                  {/* Role */}
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 'clamp(12px,1.1vw,14px)',
-                    letterSpacing: '0.22em', textTransform: 'uppercase',
-                    color: 'rgba(91,194,231,0.8)', fontWeight: 600,
-                  }}>{role}</div>
-                </div>
-
-                {/* Bottom accent */}
-                <div style={{
-                  width: 'clamp(22px,3vw,36px)', height: 1,
-                  background: 'linear-gradient(90deg,transparent,rgba(91,194,231,0.45),transparent)',
-                  margin: 'clamp(0.7rem,1vw,0.9rem) auto 0',
-                }} />
-              </div>
-            )})}
+                    fontSize: 'clamp(9px,0.95vw,11px)',
+                    fontWeight: 600, letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(91,194,231,0.75)',
+                    lineHeight: 1.3,
+                  }}>
+                    {f.role}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
-        </div>{/* end prestige card */}
+        </motion.div>
       </div>
 
+      {/* ── Mobile responsive overrides ── */}
       <style>{`
-        @keyframes wbRingPulse {
-          0%,100% { box-shadow:0 0 0 2px rgba(91,194,231,0.32),0 0 18px rgba(91,194,231,0.12),0 0 0 5px rgba(91,194,231,0.06); }
-          50%      { box-shadow:0 0 0 3px rgba(91,194,231,0.58),0 0 30px rgba(91,194,231,0.28),0 0 0 7px rgba(91,194,231,0.1); }
+        @media (max-width: 600px) {
+          #why-us .max-w-5xl > div > div:nth-child(4) > div:last-child {
+            grid-template-columns: 1fr !important;
+            max-width: 280px !important;
+            margin: 0 auto !important;
+          }
+        }
+        @media (max-width: 768px) {
+          #why-us .max-w-5xl > div > div:nth-child(3) > div:last-child > div {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(91,194,231,0.06) !important;
+          }
+          #why-us .max-w-5xl > div > div:nth-child(3) > div:last-child > div:last-child {
+            border-bottom: none !important;
+          }
         }
       `}</style>
     </section>
