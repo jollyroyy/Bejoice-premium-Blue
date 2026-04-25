@@ -115,7 +115,7 @@ const CHAPTERS = [
   },
   // ── bejoice_truck: 211–355 ──
   {
-    frameRange: [211, 340],
+    frameRange: [211, 255],
     eyebrow:    '',
     headline:   ['FROM BLUE PRINT TO DELIVERY,', 'WE MOVE IT ALL'],
     sub:        'Seamless cross-border land transport across the GCC — powered by a modern fleet connecting Saudi Arabia to every regional hub.',
