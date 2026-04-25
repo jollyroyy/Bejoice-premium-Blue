@@ -115,7 +115,7 @@ const CHAPTERS = [
   },
   // ── bejoice_truck: 211–355 ──
   {
-    frameRange: [211, 255],
+    frameRange: [211, 285],
     eyebrow:    '',
     headline:   ['FROM BLUE PRINT TO DELIVERY,', 'WE MOVE IT ALL'],
     sub:        'Seamless cross-border land transport across the GCC — powered by a modern fleet connecting Saudi Arabia to every regional hub.',
@@ -123,7 +123,7 @@ const CHAPTERS = [
   },
   // ── port: 356–524 ──
   {
-    frameRange: [356, 415],
+    frameRange: [316, 415],
     eyebrow:    'OCEAN FREIGHT',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
