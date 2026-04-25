@@ -554,55 +554,94 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
         </motion.div>
 
         {/* ── RIGHT: All text ── */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'clamp(1.5rem,3.5vw,3rem)', minWidth: 0 }}>
-
-          {/* Eyebrow + headline */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }}
-          >
-            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'0.85rem', fontWeight:800, letterSpacing: isAr ? '0' : '0.3em', textTransform: isAr ? 'none' : 'uppercase', color:'#5BC2E7', display:'block', marginBottom:'0.9rem' }}>
+        <motion.div
+          initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.8, ease: [0.16,1,0.3,1] }}
+          style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 0,
+            borderLeft: '1px solid rgba(91,194,231,0.15)',
+            paddingLeft: 'clamp(1.5rem,3vw,2.5rem)',
+          }}
+        >
+          {/* Eyebrow */}
+          <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:'clamp(0.9rem,1.5vw,1.2rem)' }}>
+            <div style={{ width:28, height:1.5, background:'#5BC2E7', flexShrink:0 }} />
+            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:11, fontWeight:800,
+              letterSpacing: isAr ? '0' : '0.35em', textTransform: isAr ? 'none' : 'uppercase',
+              color:'#5BC2E7',
+            }}>
               {isAr ? ar.globe.eyebrow : 'GLOBAL PRESENCE'}
             </span>
-            <h2 style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'clamp(1.6rem,4vw,3.8rem)', color:'#ffffff', letterSpacing: isAr ? '0' : '0.04em', lineHeight: isAr ? 1.3 : 1.0, margin:0, textShadow:'0 2px 4px rgba(0,0,0,1), 0 6px 24px rgba(0,0,0,0.8)' }}>
-              {isAr ? ar.globe.headline : 'BEJOICE CONNECTS SAUDI TO THE WORLD'}
-            </h2>
-          </motion.div>
+          </div>
 
-          {/* Office list */}
+          {/* Headline */}
+          <h2 style={{
+            fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
+            fontSize:'clamp(2rem,4.5vw,4.2rem)',
+            color:'#ffffff', letterSpacing: isAr ? '0' : '0.05em',
+            lineHeight: isAr ? 1.3 : 0.95, margin:'0 0 clamp(1.6rem,3vw,2.4rem)',
+            textShadow:'0 2px 4px rgba(0,0,0,0.9), 0 0 40px rgba(91,194,231,0.15)',
+          }}>
+            {isAr ? ar.globe.headline : <>
+              <span style={{ color:'#ffffff' }}>BEJOICE CONNECTS </span>
+              <span style={{ color:'#5BC2E7', textShadow:'0 0 30px rgba(91,194,231,0.4)' }}>SAUDI</span>
+              <br />
+              <span style={{ color:'#ffffff' }}>TO THE WORLD</span>
+            </>}
+          </h2>
+
+          {/* HQ row */}
+          <div style={{
+            display:'flex', alignItems:'center', gap:'0.75rem',
+            padding:'clamp(0.7rem,1.2vw,1rem) clamp(0.9rem,1.5vw,1.2rem)',
+            background:'rgba(91,194,231,0.06)',
+            border:'1px solid rgba(91,194,231,0.18)',
+            borderLeft:'3px solid #5BC2E7',
+            borderRadius:'0 8px 8px 0',
+            marginBottom:'clamp(1rem,2vw,1.5rem)',
+          }}>
+            <span style={{ width:10, height:10, borderRadius:'50%', background:'#5BC2E7', flexShrink:0, boxShadow:'0 0 10px rgba(91,194,231,0.7)' }} />
+            <div>
+              <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(91,194,231,0.7)', fontWeight:700, marginBottom:2 }}>Headquarters</div>
+              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1rem,2.2vw,1.35rem)', letterSpacing:'0.1em', color:'#ffffff', lineHeight:1 }}>
+                {isAr ? ar.globe.hq : 'DUBAI, UNITED ARAB EMIRATES'}
+              </div>
+            </div>
+          </div>
+
+          {/* Branch offices */}
+          <div style={{ marginBottom:'clamp(1rem,2vw,1.5rem)' }}>
+            <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:9, letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(91,194,231,0.6)', fontWeight:700, marginBottom:'clamp(0.6rem,1vw,0.8rem)' }}>
+              {isAr ? ar.globe.branchOffices : 'Branch Offices'}
+            </div>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:'0.5rem 0' }}>
+              {(isAr ? ['السعودية','الإمارات','الهند','الصين'] : ['SAUDI ARABIA','UAE','INDIA','CHINA']).map((loc, idx, arr) => (
+                <span key={loc} style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem' }}>
+                  <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1rem,2.5vw,1.4rem)', letterSpacing:'0.12em', color:'rgba(255,255,255,0.9)', lineHeight:1 }}>{loc}</span>
+                  {idx < arr.length - 1 && <span style={{ width:4, height:4, borderRadius:'50%', background:'rgba(91,194,231,0.5)', display:'inline-block', flexShrink:0 }} />}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div style={{ height:1, background:'linear-gradient(90deg, rgba(91,194,231,0.25), transparent)', marginBottom:'clamp(1rem,2vw,1.5rem)' }} />
+
+          {/* Tagline */}
           <motion.div
-            initial={{ opacity:0, x:30 }} whileInView={{ opacity:1, x:0 }}
-            viewport={{ once:true }} transition={{ duration:0.7, delay:0.2 }}
+            animate={{ opacity: [0.65, 1, 0.65] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ display:'flex', alignItems:'center', gap:10 }}
           >
-            {/* HQ */}
-            <div style={{ display:'flex', alignItems:'center', gap:'0.7rem', marginBottom:'1.5rem' }}>
-              <span style={{ width:12, height:12, borderRadius:'50%', background:'#8DD8F0', flexShrink:0, boxShadow:'0 0 8px rgba(91,194,231,0.5)' }} />
-              <span style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,2.5vw,1.4rem)', color:'#8DD8F0', letterSpacing: isAr ? '0' : '0.08em' }}>{isAr ? ar.globe.hq : 'DUBAI, UAE — HEADQUARTERS'}</span>
-            </div>
-
-            {/* Separator */}
-            <div style={{ display:'flex', alignItems:'center', gap:12, margin:'1.2rem 0 0.8rem' }}>
-              <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
-              <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:10, fontWeight:600, color:'rgba(91,194,231,0.95)', letterSpacing: isAr ? '0' : '0.2em', textTransform: isAr ? 'none' : 'uppercase', flexShrink:0 }}>{isAr ? ar.globe.branchOffices : 'Branch Offices'}</span>
-              <div style={{ flex:1, height:1, background:'rgba(91,194,231,0.15)' }} />
-            </div>
-
-            <div style={{ marginBottom:'0.25rem', minHeight:44, display:'flex', alignItems:'center' }}>
-              <span style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.1rem,2.8vw,1.5rem)', letterSpacing:'0.22em', color:'rgba(255,255,255,0.92)', lineHeight:1.2 }}>
-                SAUDI ARABIA &nbsp;·&nbsp; UAE &nbsp;·&nbsp; INDIA &nbsp;·&nbsp; CHINA
-              </span>
-            </div>
-
-            <motion.p
-              animate={{ opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.85rem,2vw,1.1rem)', color:'rgba(91,194,231,0.95)', letterSpacing:'0.15em', textTransform:'uppercase', marginTop:'0.75rem', fontStyle:'italic', fontWeight:600 }}
-            >
+            <div style={{ width:20, height:1.5, background:'rgba(91,194,231,0.5)', flexShrink:0 }} />
+            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.78rem,1.4vw,0.95rem)',
+              color:'rgba(91,194,231,0.9)', letterSpacing:'0.12em', textTransform:'uppercase',
+              margin:0, fontWeight:600, lineHeight:1.4,
+            }}>
               {isAr ? ar.globe.tagline : 'Strategically positioned for seamless global connectivity'}
-            </motion.p>
+            </p>
           </motion.div>
 
-        </div>
+        </motion.div>
       </div>
   )
 
