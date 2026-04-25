@@ -78,12 +78,12 @@ export const SparklesCore = ({
           const dy = a.y - b.y
           const dist = Math.sqrt(dx * dx + dy * dy)
           if (dist < CONNECT_DIST) {
-            const lineOpacity = (1 - dist / CONNECT_DIST) * 0.35
+            const lineOpacity = (1 - dist / CONNECT_DIST) * 0.72
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
             ctx.lineTo(b.x, b.y)
             ctx.strokeStyle = `rgba(${baseColor},${lineOpacity.toFixed(3)})`
-            ctx.lineWidth = 0.8
+            ctx.lineWidth = 1.4
             ctx.stroke()
           }
         }
