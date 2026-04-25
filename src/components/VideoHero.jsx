@@ -502,8 +502,8 @@ export default function VideoHero({ onQuoteClick }) {
     const cw    = canvas.width
     const ch    = canvas.height
 
-    // Always cover — fill entire canvas, no black bars
-    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
+    // Contain — full image always visible, brand colour fills letterbox gaps
+    const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight)
 
     const w = img.naturalWidth  * scale
     const h = img.naturalHeight * scale
@@ -514,7 +514,7 @@ export default function VideoHero({ onQuoteClick }) {
     ctx.fillRect(0, 0, cw, ch)
 
     ctx.imageSmoothingEnabled = true
-    ctx.imageSmoothingQuality = 'medium'
+    ctx.imageSmoothingQuality = 'high'
 
     ctx.drawImage(img, x, y, w, h)
   }, [])
