@@ -557,7 +557,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
         <motion.div
           initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.8, ease: [0.16,1,0.3,1] }}
-          style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 'clamp(1rem,2vw,1.6rem)', alignItems: 'center', textAlign: 'center' }}
+          style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 'clamp(1rem,2vw,1.6rem)', alignItems: 'center', textAlign: 'center', paddingLeft: 'clamp(1rem,3vw,3rem)' }}
         >
           {/* Headline */}
           <h2 className="no-reveal" style={{
