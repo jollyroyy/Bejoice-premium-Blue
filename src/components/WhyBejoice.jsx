@@ -13,7 +13,7 @@ const CAPABILITIES = [
 
 const TEAM = [
   { name: 'Preetham Canute Pinto', role: 'CEO & Co-Owner',    initials: 'PC', photo: '/preetham-ceo.jpg' },
-  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', initials: 'MA' },
+  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', initials: 'MA', photo: '/ashraful-coo.png' },
   { name: 'Shahil',                  role: 'Managing Partner', initials: 'SH' },
 ]
 
