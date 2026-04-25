@@ -1,77 +1,124 @@
-import React, { useMemo } from 'react'
-
-const DumbbellIcon = ({ size, color, opacity }) => (
-  <svg
-    width={size * 3}
-    height={size}
-    viewBox="0 0 24 6"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    style={{ display: 'block' }}
-  >
-    {/* left dot */}
-    <circle cx="2" cy="3" r="2" fill={color} opacity={opacity} />
-    {/* dash */}
-    <line x1="4.5" y1="3" x2="19.5" y2="3" stroke={color} strokeWidth="1" opacity={opacity * 0.7} strokeLinecap="round" />
-    {/* right dot */}
-    <circle cx="22" cy="3" r="2" fill={color} opacity={opacity} />
-  </svg>
-)
-
-// simple deterministic pseudo-random from a seed
-function makeRand(seed) {
-  let s = (seed * 1664525 + 1013904223) & 0x7fffffff
-  return () => {
-    s = (s * 1664525 + 1013904223) & 0x7fffffff
-    return s / 0x7fffffff
-  }
-}
+import { useEffect, useRef } from 'react'
 
 export const SparklesCore = ({
-  id,
   className,
-  particleColor,
-  particleDensity = 55,
-  speed,
+  particleDensity = 60,
+  particleColor = 'rgba(91,194,231,0.9)',
+  speed = 0.8,
 }) => {
-  const color = '#ffffff'
-  const count  = Math.min(particleDensity * 4, 280)
-  const seed   = id ? [...id].reduce((a, c) => a + c.charCodeAt(0), 0) : 7
+  const canvasRef = useRef(null)
 
-  const particles = useMemo(() => {
-    const rand = makeRand(seed)
-    return Array.from({ length: count }, (_, i) => ({
-      id:       i,
-      left:     rand() * 100,
-      top:      rand() * 100,
-      size:     4 + rand() * 4,                               // 4–8px
-      opacity:  0.45 + rand() * 0.40,                        // 0.45–0.85
-      duration: (speed ? 5 / speed : 1) * (0.8 + rand() * 2),// 0.8–2.8s fast spin
-      delay:    -(rand() * 3),
-      cw:       rand() > 0.5,
-    }))
-  }, [seed, count, speed])
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+
+    // Base color stripped of alpha — we control alpha ourselves
+    const baseColor = '91,194,231'
+
+    // Particle count scaled to density prop
+    const COUNT = Math.round(particleDensity * 0.65)
+    const CONNECT_DIST = 160
+    const BASE_SPEED   = speed * 0.35
+
+    let W, H, particles, raf
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth
+      H = canvas.height = canvas.offsetHeight
+    }
+
+    function makeParticle() {
+      const angle = Math.random() * Math.PI * 2
+      const spd   = BASE_SPEED * (0.3 + Math.random() * 0.7)
+      return {
+        x:    Math.random() * W,
+        y:    Math.random() * H,
+        r:    1.8 + Math.random() * 2.8,      // 1.8 – 4.6 px radius
+        vx:   Math.cos(angle) * spd,
+        vy:   Math.sin(angle) * spd,
+        // subtle drift wobble
+        wobbleFreq:  0.003 + Math.random() * 0.004,
+        wobbleAmp:   0.15  + Math.random() * 0.15,
+        phase:       Math.random() * Math.PI * 2,
+        opacity: 0.55 + Math.random() * 0.35,
+      }
+    }
+
+    function init() {
+      resize()
+      particles = Array.from({ length: COUNT }, makeParticle)
+    }
+
+    let tick = 0
+    function draw() {
+      ctx.clearRect(0, 0, W, H)
+      tick++
+
+      // update positions
+      for (const p of particles) {
+        // add gentle wobble to velocity
+        const wobble = Math.sin(tick * p.wobbleFreq + p.phase) * p.wobbleAmp
+        p.x += p.vx + wobble
+        p.y += p.vy + wobble
+
+        // wrap around edges
+        if (p.x < -10) p.x = W + 10
+        if (p.x > W + 10) p.x = -10
+        if (p.y < -10) p.y = H + 10
+        if (p.y > H + 10) p.y = -10
+      }
+
+      // draw connecting lines
+      for (let i = 0; i < particles.length; i++) {
+        const a = particles[i]
+        for (let j = i + 1; j < particles.length; j++) {
+          const b = particles[j]
+          const dx = a.x - b.x
+          const dy = a.y - b.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          if (dist < CONNECT_DIST) {
+            const lineOpacity = (1 - dist / CONNECT_DIST) * 0.35
+            ctx.beginPath()
+            ctx.moveTo(a.x, a.y)
+            ctx.lineTo(b.x, b.y)
+            ctx.strokeStyle = `rgba(${baseColor},${lineOpacity.toFixed(3)})`
+            ctx.lineWidth = 0.8
+            ctx.stroke()
+          }
+        }
+      }
+
+      // draw dots on top of lines
+      for (const p of particles) {
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(${baseColor},${p.opacity.toFixed(3)})`
+        ctx.fill()
+      }
+
+      raf = requestAnimationFrame(draw)
+    }
+
+    init()
+    draw()
+
+    const ro = new ResizeObserver(() => {
+      resize()
+    })
+    ro.observe(canvas)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      ro.disconnect()
+    }
+  }, [particleDensity, speed])
 
   return (
-    <div
+    <canvas
+      ref={canvasRef}
       className={className || ''}
-      style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}
-    >
-      {particles.map(p => (
-        <div
-          key={p.id}
-          style={{
-            position:        'absolute',
-            left:            `${p.left}%`,
-            top:             `${p.top}%`,
-            animation:       `${p.cw ? 'db-spin-cw' : 'db-spin-ccw'} ${p.duration.toFixed(2)}s ${p.delay.toFixed(2)}s linear infinite`,
-            willChange:      'transform',
-            transformOrigin: 'center center',
-          }}
-        >
-          <DumbbellIcon size={p.size} color={color} opacity={p.opacity} />
-        </div>
-      ))}
-    </div>
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
+    />
   )
 }

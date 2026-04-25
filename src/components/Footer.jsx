@@ -257,7 +257,7 @@ export default function Footer() {
                     onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.90)'}
                   >+966 13 823 3461</a>
                   <span style={{ color: 'rgba(91,194,231,0.5)', fontSize: '12px' }}>·</span>
-                  <a href="mailto:info@bejoiceshipping-ksa.com" dir="ltr" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.90)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5, direction: 'ltr', unicodeBidi: 'embed', overflowWrap: 'break-word', wordBreak: 'break-all' }}
+                  <a href="mailto:info@bejoiceshipping-ksa.com" dir="ltr" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.90)', textDecoration: 'none', transition: 'color 0.3s', lineHeight: 1.5, direction: 'ltr', unicodeBidi: 'embed', whiteSpace: 'nowrap' }}
                     onMouseEnter={e => e.target.style.color = '#ffffff'}
                     onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.90)'}
                   >info@bejoiceshipping-ksa.com</a>
