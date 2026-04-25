@@ -557,17 +557,18 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
         <motion.div
           initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.8, ease: [0.16,1,0.3,1] }}
-          style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 0 }}
+          style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 0, alignItems: 'center', textAlign: 'center' }}
         >
           {/* Eyebrow */}
           <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:'clamp(0.7rem,1.2vw,1rem)' }}>
-            <div style={{ width:32, height:2, background:'linear-gradient(90deg, #5BC2E7, rgba(91,194,231,0.2))', flexShrink:0, borderRadius:1 }} />
+            <div style={{ width:32, height:2, background:'linear-gradient(90deg, rgba(91,194,231,0.2), #5BC2E7)', flexShrink:0, borderRadius:1 }} />
             <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(10px,1.1vw,12px)', fontWeight:800,
               letterSpacing: isAr ? '0' : '0.35em', textTransform: isAr ? 'none' : 'uppercase',
               color:'#5BC2E7', textShadow:'0 0 16px rgba(91,194,231,0.4)',
             }}>
               {isAr ? ar.globe.eyebrow : 'GLOBAL PRESENCE'}
             </span>
+            <div style={{ width:32, height:2, background:'linear-gradient(90deg, #5BC2E7, rgba(91,194,231,0.2))', flexShrink:0, borderRadius:1 }} />
           </div>
 
           {/* Headline */}
@@ -577,6 +578,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             color:'#ffffff', letterSpacing: isAr ? '0' : '0.05em',
             lineHeight: isAr ? 1.3 : 0.95, margin:'0 0 clamp(1.2rem,2.5vw,2rem)',
             textShadow:'0 2px 4px rgba(0,0,0,0.9), 0 0 40px rgba(91,194,231,0.15)',
+            textAlign:'center',
           }}>
             {isAr ? ar.globe.headline : <>
               <span style={{ color:'#ffffff' }}>BEJOICE CONNECTS </span><br/>
@@ -590,6 +592,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
             gridTemplateColumns:'1fr 1fr',
             gap:'clamp(0.5rem,1vw,0.75rem)',
             marginBottom:'clamp(0.8rem,1.5vw,1.2rem)',
+            width:'100%',
           }}>
 
             {/* HQ Card — spans full width */}
@@ -640,7 +643,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
           </div>
 
           {/* Branch offices — dot separated */}
-          <div style={{ marginBottom:'clamp(0.8rem,1.5vw,1.2rem)' }}>
+          <div style={{ marginBottom:'clamp(0.8rem,1.5vw,1.2rem)', textAlign:'center' }}>
             <span style={{
               fontFamily:"'Bebas Neue',sans-serif",
               fontSize:'clamp(1.1rem,2.8vw,1.5rem)',
@@ -656,15 +659,16 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
           <motion.div
             animate={{ opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ display:'flex', alignItems:'center', gap:10 }}
+            style={{ display:'flex', alignItems:'center', gap:10, justifyContent:'center' }}
           >
-            <div style={{ width:24, height:2, background:'linear-gradient(90deg, rgba(91,194,231,0.6), transparent)', flexShrink:0, borderRadius:1 }} />
+            <div style={{ width:24, height:2, background:'linear-gradient(90deg, rgba(91,194,231,0.2), rgba(91,194,231,0.6))', flexShrink:0, borderRadius:1 }} />
             <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.7rem,1.2vw,0.88rem)',
               color:'rgba(91,194,231,0.85)', letterSpacing:'0.1em', textTransform:'uppercase',
-              margin:0, fontWeight:600, lineHeight:1.5,
+              margin:0, fontWeight:600, lineHeight:1.5, textAlign:'center',
             }}>
               {isAr ? ar.globe.tagline : 'Strategically positioned for seamless global connectivity'}
             </p>
+            <div style={{ width:24, height:2, background:'linear-gradient(90deg, rgba(91,194,231,0.6), rgba(91,194,231,0.2))', flexShrink:0, borderRadius:1 }} />
           </motion.div>
 
         </motion.div>
