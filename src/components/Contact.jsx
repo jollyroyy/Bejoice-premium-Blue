@@ -370,7 +370,7 @@ export default function Contact() {
             <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(4rem,10vw,7rem)', color:'#5BC2E7', textShadow:'0 0 40px rgba(91,194,231,0.4)', lineHeight:1, marginBottom:'1.2rem' }}>✓</div>
             <h3 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.8rem,4vw,3rem)', letterSpacing:'0.1em', color:'#ffffff', marginBottom:'0.8rem' }}>{isAr ? ar.contact.successTitle : 'ENQUIRY SENT'}</h3>
             <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(13px,1.5vw,16px)', color:'rgba(255,255,255,0.6)', maxWidth:360, margin:'0 auto 2rem', lineHeight:1.75 }}>
-              {isAr ? ar.contact.successBody : 'Our logistics team will contact you within 2 business hours with a tailored quote.'}
+              {isAr ? ar.contact.successBody : 'Your form has been submitted. Our expert will contact you back in 5 minutes.'}
             </p>
             <button className="btn-ghost" onClick={() => setSent(false)}><span>{isAr ? ar.contact.newEnquiry : 'New Enquiry'}</span></button>
           </div>
