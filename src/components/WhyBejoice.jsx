@@ -20,6 +20,7 @@ const TEAM = [
 export default function WhyBejoice() {
   const sectionRef = useRef(null)
   const [hoveredCap, setHoveredCap] = useState(null)
+  const [hoveredMember, setHoveredMember] = useState(null)
   useFadeUpBatch(sectionRef)
 
   return (
@@ -235,18 +236,30 @@ export default function WhyBejoice() {
 
           {/* ── TEAM CARDS ── */}
           <div className="wb-team-grid" style={{ position: 'relative', zIndex: 2 }}>
-            {TEAM.map(({ name, role, initials, photo, pos }, i) => (
-              <div key={name} className="wb-team-card fade-up">
+            {TEAM.map(({ name, role, initials, photo, pos }, i) => {
+              const isHovM = hoveredMember === i
+              return (
+              <div key={name} className="wb-team-card fade-up"
+                onMouseEnter={() => setHoveredMember(i)}
+                onMouseLeave={() => setHoveredMember(null)}
+              >
 
                 {/* Avatar ring */}
                 <div style={{
                   width: 'clamp(120px,14vw,180px)', height: 'clamp(120px,14vw,180px)',
                   borderRadius: '50%', flexShrink: 0,
                   background: 'linear-gradient(145deg,rgba(91,194,231,0.15),rgba(24,54,80,0.9))',
-                  boxShadow: '0 0 0 2px rgba(91,194,231,0.35), 0 0 24px rgba(91,194,231,0.15), 0 0 0 5px rgba(91,194,231,0.07)',
+                  boxShadow: isHovM
+                    ? '0 0 0 3px rgba(91,194,231,0.7), 0 0 40px rgba(91,194,231,0.45), 0 0 0 7px rgba(91,194,231,0.15)'
+                    : '0 0 0 2px rgba(91,194,231,0.35), 0 0 24px rgba(91,194,231,0.15), 0 0 0 5px rgba(91,194,231,0.07)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   animation: `wbRingPulse ${3.5 + i * 0.4}s ease-in-out infinite`,
                   overflow: 'hidden',
+                  transform: isHovM ? 'scale(1.18) translateY(-8px)' : 'scale(1) translateY(0)',
+                  transition: 'transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease',
+                  cursor: 'default',
+                  zIndex: isHovM ? 10 : 1,
+                  position: 'relative',
                 }}>
                   {photo ? (
                     <img src={photo} alt={name} style={{
@@ -268,7 +281,7 @@ export default function WhyBejoice() {
                 <div style={{ textAlign: 'center', marginTop: 'clamp(0.9rem,1.5vw,1.2rem)' }}>
                   <div style={{
                     fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: 'clamp(1rem,1.6vw,1.35rem)',
+                    fontSize: 'clamp(1.2rem,2vw,1.7rem)',
                     letterSpacing: '0.1em', color: '#ffffff', lineHeight: 1.1,
                     marginBottom: 6,
                     textShadow: '0 0 20px rgba(255,255,255,0.1)',
@@ -288,7 +301,7 @@ export default function WhyBejoice() {
                   margin: 'clamp(0.7rem,1vw,0.9rem) auto 0',
                 }} />
               </div>
-            ))}
+            )})}
           </div>
 
         </div>{/* end prestige card */}
