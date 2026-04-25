@@ -601,7 +601,7 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
               {/* Ambient glow */}
               <div style={{ position:'absolute', top:'-30%', left:'-10%', width:'60%', height:'160%', background:'radial-gradient(ellipse, rgba(91,194,231,0.06) 0%, transparent 70%)', pointerEvents:'none' }} />
               <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(8px,0.9vw,10px)', letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(91,194,231,0.8)', fontWeight:700, position:'relative', zIndex:1 }}>
-                {isAr ? 'المقر الرئيسي' : 'HEADQUARTERS'}
+                {isAr ? 'المقر الرئيسي' : 'HEAD QUARTER'}
               </div>
               <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.05rem,2vw,1.4rem)', letterSpacing:'0.08em', color:'#ffffff', lineHeight:1.1, textAlign:'center', position:'relative', zIndex:1 }}>
                 {isAr ? ar.globe.hq : 'DUBAI, UNITED ARAB EMIRATES'}
