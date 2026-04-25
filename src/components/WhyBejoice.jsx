@@ -240,7 +240,7 @@ export default function WhyBejoice() {
 
                 {/* Avatar ring */}
                 <div style={{
-                  width: 'clamp(88px,11vw,120px)', height: 'clamp(88px,11vw,120px)',
+                  width: 'clamp(120px,14vw,180px)', height: 'clamp(120px,14vw,180px)',
                   borderRadius: '50%', flexShrink: 0,
                   background: 'linear-gradient(145deg,rgba(91,194,231,0.15),rgba(24,54,80,0.9))',
                   boxShadow: '0 0 0 2px rgba(91,194,231,0.35), 0 0 24px rgba(91,194,231,0.15), 0 0 0 5px rgba(91,194,231,0.07)',
