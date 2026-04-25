@@ -64,9 +64,9 @@ const CAPABILITIES = [
 
 /* ── Founding members ── */
 const FOUNDERS = [
-  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', img: '/founders/ashraful.jpg' },
-  { name: 'Preetham Canute Pinto',    role: 'CEO & Co-Owner', img: '/founders/preetham.jpg' },
-  { name: 'Shahil',                    role: 'Managing Partner', img: '/founders/shahil.jpg' },
+  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', img: '/ashraful-coo.webp' },
+  { name: 'Preetham Canute Pinto',    role: 'CEO & Co-Owner', img: '/preetham-ceo.webp' },
+  { name: 'Shahil',                    role: 'Managing Partner', img: '/shahil-hdr.png' },
 ]
 
 export default function WhyBejoice() {
