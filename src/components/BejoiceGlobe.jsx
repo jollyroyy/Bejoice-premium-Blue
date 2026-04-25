@@ -603,7 +603,9 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
               <div style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(8px,0.9vw,10px)', letterSpacing:'0.3em', textTransform:'uppercase', color:'rgba(91,194,231,0.8)', fontWeight:700, position:'relative', zIndex:1 }}>
                 {isAr ? 'المقر الرئيسي' : 'HEAD QUARTER'}
               </div>
-              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.05rem,2vw,1.4rem)', letterSpacing:'0.08em', color:'#ffffff', lineHeight:1.1, textAlign:'center', position:'relative', zIndex:1 }}>
+              <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.05rem,2vw,1.4rem)', letterSpacing:'0.08em', lineHeight:1.1, textAlign:'center', position:'relative', zIndex:1,
+                color:'#5BC2E7', textShadow:'0 0 24px rgba(91,194,231,0.6), 0 0 48px rgba(91,194,231,0.25)',
+              }}>
                 {isAr ? ar.globe.hq : 'DUBAI, UNITED ARAB EMIRATES'}
               </div>
             </motion.div>
