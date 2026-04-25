@@ -617,6 +617,7 @@ export default function FloatingBookCTA() {
   const activeMessages     = isAr ? ar.layla.floatingMessages : MESSAGES;
   const activeQuickReplies = isAr ? ar.layla.quickReplies     : QUICK_REPLIES;
   const [visible, setVisible]           = useState(true);
+  const [dismissed, setDismissed]       = useState(false);
   const [open, setOpen]                 = useState(false);
   const [msgIndex, setMsgIndex]         = useState(0);
   const [showBubble, setShowBubble]     = useState(true);
@@ -630,9 +631,10 @@ export default function FloatingBookCTA() {
   const chatEndRef  = useRef(null);
   const inputRef    = useRef(null);
 
-  // Hide only near the very bottom (footer area)
+  // Hide only near the very bottom (footer area) — never re-show if dismissed
   useEffect(() => {
     const onScroll = () => {
+      if (dismissed) return;
       const scrollY   = window.scrollY;
       const docHeight = document.documentElement.scrollHeight;
       const viewH     = window.innerHeight;
@@ -640,7 +642,7 @@ export default function FloatingBookCTA() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [dismissed]);
 
   // Cycle speech bubble
   useEffect(() => {
@@ -727,7 +729,7 @@ export default function FloatingBookCTA() {
     }
   };
 
-  if (!visible) return null;
+  if (!visible || dismissed) return null;
 
   return (
     <div className="layla-fab-wrap ca-fab-mobile" style={{
@@ -1030,7 +1032,7 @@ export default function FloatingBookCTA() {
         >
           {/* Dismiss badge */}
           <button
-            onClick={e => { e.stopPropagation(); setVisible(false); setOpen(false); }}
+            onClick={e => { e.stopPropagation(); setDismissed(true); setVisible(false); setOpen(false); }}
             title="Dismiss Layla"
             style={{
               position: "absolute", top: -8, right: -8, zIndex: 10,
