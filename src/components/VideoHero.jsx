@@ -116,7 +116,7 @@ const CHAPTERS = [
   // ── bejoice_truck: 211–355 ──
   {
     frameRange: [211, 285],
-    eyebrow:    '',
+    eyebrow:    'SPECIALIZED CARGO HANDLING',
     headline:   ['FROM BLUE PRINT TO DELIVERY,', 'WE MOVE IT ALL'],
     sub:        'Seamless cross-border land transport across the GCC — powered by a modern fleet connecting Saudi Arabia to every regional hub.',
     align:      'right',
