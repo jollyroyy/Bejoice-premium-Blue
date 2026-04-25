@@ -502,12 +502,12 @@ export default function VideoHero({ onQuoteClick }) {
     const cw    = canvas.width
     const ch    = canvas.height
 
-    // Contain — full image always visible, brand colour fills letterbox gaps
-    const scale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight)
+    // Scale to fill full width, maintain aspect ratio — no side bars
+    const scale = cw / img.naturalWidth
 
-    const w = img.naturalWidth  * scale
+    const w = cw
     const h = img.naturalHeight * scale
-    const x = (cw - w) / 2
+    const x = 0
     const y = (ch - h) / 2
 
     ctx.fillStyle = '#183650'
