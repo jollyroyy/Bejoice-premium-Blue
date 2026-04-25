@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import useFadeUpBatch from '../hooks/useFadeUpBatch'
 import { SparklesCore } from './ui/sparkles'
 
@@ -19,6 +19,7 @@ const TEAM = [
 
 export default function WhyBejoice() {
   const sectionRef = useRef(null)
+  const [hoveredCap, setHoveredCap] = useState(null)
   useFadeUpBatch(sectionRef)
 
   return (
@@ -171,26 +172,40 @@ export default function WhyBejoice() {
                 </h3>
 
                 <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                  {CAPABILITIES.map((cap, i) => (
-                    <li key={i} style={{
-                      display: 'flex', alignItems: 'flex-start',
-                      gap: 12, padding: 'clamp(0.6rem,1vw,0.85rem) 0',
-                      borderBottom: i < CAPABILITIES.length - 1
-                        ? '1px solid rgba(91,194,231,0.07)' : 'none',
-                    }}>
+                  {CAPABILITIES.map((cap, i) => {
+                    const isHov = hoveredCap === i
+                    return (
+                    <li key={i}
+                      onMouseEnter={() => setHoveredCap(i)}
+                      onMouseLeave={() => setHoveredCap(null)}
+                      style={{
+                        display: 'flex', alignItems: 'flex-start',
+                        gap: 12, padding: 'clamp(0.6rem,1vw,0.85rem) 6px',
+                        borderBottom: i < CAPABILITIES.length - 1
+                          ? '1px solid rgba(91,194,231,0.07)' : 'none',
+                        borderRadius: 6,
+                        cursor: 'default',
+                        background: isHov ? 'rgba(91,194,231,0.06)' : 'transparent',
+                        transition: 'background 0.25s ease',
+                      }}>
                       <div style={{
                         width: 6, height: 6, minWidth: 6, borderRadius: '50%',
-                        background: '#5BC2E7', boxShadow: '0 0 8px rgba(91,194,231,0.5)',
+                        background: '#5BC2E7',
+                        boxShadow: isHov ? '0 0 14px rgba(91,194,231,0.9)' : '0 0 8px rgba(91,194,231,0.5)',
                         marginTop: 6, flexShrink: 0,
+                        transition: 'box-shadow 0.25s ease',
                       }} />
                       <span style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: 'clamp(13px,1.2vw,15px)',
-                        color: 'rgba(255,255,255,0.75)', lineHeight: 1.6,
-                        letterSpacing: '0.01em',
+                        color: isHov ? '#5BC2E7' : 'rgba(255,255,255,0.75)',
+                        lineHeight: 1.6, letterSpacing: '0.01em',
+                        textShadow: isHov ? '0 0 18px rgba(91,194,231,0.5)' : 'none',
+                        transition: 'color 0.25s ease, text-shadow 0.25s ease',
                       }}>{cap}</span>
                     </li>
-                  ))}
+                    )
+                  })}
                 </ul>
               </div>
             </div>
