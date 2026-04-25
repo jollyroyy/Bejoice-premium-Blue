@@ -85,17 +85,6 @@ export default function WhyBejoice() {
           {/* ── HEADER ── */}
           <div className="fade-up" style={{ position: 'relative', zIndex: 2, marginBottom: 'clamp(2rem,4vw,3.5rem)' }}>
 
-            {/* Eyebrow */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-              <div style={{ width: 36, height: '1.5px', background: '#5BC2E7', flexShrink: 0 }} />
-              <span style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 11, letterSpacing: '0.38em', textTransform: 'uppercase',
-                color: 'rgba(91,194,231,0.85)', fontWeight: 700,
-              }}>Our Advantage</span>
-              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(91,194,231,0.25), transparent)' }} />
-            </div>
-
             {/* Headline */}
             <h2 style={{
               fontFamily: "'Bebas Neue', sans-serif",
@@ -108,6 +97,17 @@ export default function WhyBejoice() {
               <span style={{ color: '#ffffff' }}>WHY </span>
               <span style={{ color: '#5BC2E7', textShadow: '0 0 50px rgba(91,194,231,0.4)' }}>BEJOICE</span>
             </h2>
+
+            {/* Subheading */}
+            <p style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(1.1rem,2.4vw,1.9rem)',
+              letterSpacing: '0.12em', lineHeight: 1.1,
+              color: 'rgba(255,255,255,0.45)',
+              margin: '0 0 clamp(1rem,2vw,1.6rem)',
+            }}>
+              MOVING TRADE BEYOND BORDERS
+            </p>
 
             {/* Divider rule */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
