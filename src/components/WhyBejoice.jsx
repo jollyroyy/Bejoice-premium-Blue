@@ -212,18 +212,25 @@ export default function WhyBejoice() {
           </div>
 
           {/* ── FOUNDING MEMBERS DIVIDER ── */}
+          {/* ── FOUNDING MEMBERS SUBHEADING ── */}
           <div className="fade-up" style={{
-            position: 'relative', zIndex: 2,
-            display: 'flex', alignItems: 'center', gap: 16,
+            position: 'relative', zIndex: 2, textAlign: 'center',
             marginBottom: 'clamp(2rem,3.5vw,3rem)',
           }}>
-            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,transparent,rgba(91,194,231,0.2) 50%)' }} />
-            <span style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: 10, letterSpacing: '0.36em', textTransform: 'uppercase',
-              color: 'rgba(91,194,231,0.6)', fontWeight: 700, whiteSpace: 'nowrap', flexShrink: 0,
-            }}>Founding Members — Bejoice KSA</span>
-            <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,rgba(91,194,231,0.2) 50%,transparent)' }} />
+            <h3 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(1.4rem,2.5vw,2rem)',
+              letterSpacing: '0.1em', lineHeight: 1,
+              margin: '0 0 0.6rem',
+            }}>
+              <span style={{ color: '#ffffff' }}>FOUNDING MEMBERS </span>
+              <span style={{ color: '#5BC2E7' }}>— BEJOICE KSA</span>
+            </h3>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+              <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg,rgba(91,194,231,0.15),#5BC2E7)' }} />
+              <div style={{ width: 4, height: 4, background: '#5BC2E7', opacity: 0.65, transform: 'rotate(45deg)', flexShrink: 0 }} />
+              <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg,#5BC2E7,rgba(91,194,231,0.15))' }} />
+            </div>
           </div>
 
           {/* ── TEAM CARDS ── */}
