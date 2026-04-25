@@ -504,10 +504,10 @@ export default function VideoHero({ onQuoteClick }) {
 
     // Full width, height at 90% of width-fill scale — wider than tall, no side bars
     const scaleY = (cw / img.naturalWidth) * 0.90
-    const w = cw
-    const h = img.naturalHeight * scaleY
+    const w = Math.round(cw)
+    const h = Math.round(img.naturalHeight * scaleY)
     const x = 0
-    const y = (ch - h) / 2
+    const y = Math.round((ch - h) / 2)
 
     ctx.fillStyle = '#183650'
     ctx.fillRect(0, 0, cw, ch)
@@ -755,6 +755,8 @@ export default function VideoHero({ onQuoteClick }) {
           width:'100%', height:'100%',
           opacity:1,
           willChange:'transform',
+          transform: 'translateZ(0)',
+          WebkitTransform: 'translateZ(0)',
           filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
           background:'#183650',
         }} />
@@ -863,7 +865,7 @@ export default function VideoHero({ onQuoteClick }) {
                 borderRadius:'10px',
                 padding:'clamp(14px,2vw,24px) clamp(16px,2.5vw,28px)',
                 border:'1px solid rgba(255,255,255,0.06)',
-                maxWidth: ch.headline?.join('').length > 30 ? 'min(calc(100vw - 2rem), 620px)' : 'min(calc(100vw - 2rem), max-content)',
+                maxWidth: ch.headline?.join('').length > 30 ? 'min(calc(100% - 2rem), 620px)' : 'min(calc(100% - 2rem), max-content)',
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
               }}>
 
@@ -1274,7 +1276,7 @@ export default function VideoHero({ onQuoteClick }) {
             align-items: center !important;
             align-self: center !important;
             text-align: center !important;
-            max-width: calc(100vw - 2rem) !important;
+            max-width: calc(100% - 2rem) !important;
           }
           .hero-chapter-textblock h1 { text-align: center !important; }
           .hero-eyebrow { align-self: center !important; }

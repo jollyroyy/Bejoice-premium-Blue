@@ -1,0 +1,284 @@
+- generic [ref=e2]:
+  - link "Skip to main content" [ref=e3] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link "Fracht Group logo" [ref=e6] [cursor=pointer]:
+        - /url: https://www.frachtgroup.com/en
+        - img "Fracht Group logo" [ref=e7]
+      - button "" [ref=e8] [cursor=pointer]
+    - text:  
+    - generic:  
+  - main [ref=e9]:
+    - article [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e23]:
+          - list [ref=e25]:
+            - listitem [ref=e26]:
+              - heading "One Global Family" [level=1] [ref=e27]
+            - listitem [ref=e28]:
+              - heading "Eine Globale Familie" [level=1] [ref=e29]
+            - listitem [ref=e30]:
+              - heading "Una Famiglia Globale" [level=1] [ref=e31]
+            - listitem [ref=e32]:
+              - heading "Une Famille Mondiale" [level=1] [ref=e33]
+            - listitem [ref=e34]:
+              - heading "Uma Família Global" [level=1] [ref=e35]
+            - listitem [ref=e36]:
+              - heading "Una Familia Global" [level=1] [ref=e37]
+          - paragraph [ref=e39]:
+            - strong [ref=e40]: The Fracht Group now consists of six independent sister holding companies providing general and specialized global logistics solutions.
+          - paragraph [ref=e41]:
+            - link "Learn More" [ref=e42] [cursor=pointer]:
+              - /url: /en/about
+        - generic [ref=e43]:
+          - generic [ref=e48]:
+            - generic [ref=e51]:
+              - heading "Our Solutions" [level=2] [ref=e52]
+              - paragraph [ref=e53]: Operating from a network of more than 150 offices worldwide, Fracht Group is an NVOCC (Non-Vessel-Operating Common Carrier) as well as a traditional freight forwarder. We are an industry leader in providing general and specialized logistics solutions and multimodal freight transport.
+              - paragraph [ref=e54]:
+                - link "View All Solutions" [ref=e55] [cursor=pointer]:
+                  - /url: /en/solutions
+            - generic [ref=e58]:
+              - generic [ref=e62]:
+                - img "Fracht air freight" [ref=e64]
+                - generic [ref=e67]:
+                  - heading "Air Freight" [level=3] [ref=e68]
+                  - paragraph [ref=e69]: Fracht’s award-winning air cargo division offers a complete line of domestic and international air cargo services, including full and partial charter services, consolidated airfreight services, hazardous material, express, and courier options.
+                  - paragraph [ref=e70]:
+                    - link "Learn More" [ref=e71] [cursor=pointer]:
+                      - /url: /en/solutions/air-freight
+                      - generic [ref=e72]: Learn More
+              - generic [ref=e76]:
+                - img "Fracht ocean freight" [ref=e78]
+                - generic [ref=e81]:
+                  - heading "Ocean Freight" [level=3] [ref=e82]
+                  - paragraph [ref=e83]: Fracht operates as a licensed and bonded NVOCC. We partner with the world’s leading ocean carriers to offer point-to-point global FCL (Full-Container-Load) and LCL (Less-Than-Container-Load) General Cargo services, as well as Project Cargo services for customized and specialized seaborne cargo movement.
+                  - paragraph [ref=e84]:
+                    - link "Learn More" [ref=e85] [cursor=pointer]:
+                      - /url: /en/solutions/ocean-freight
+                      - generic [ref=e86]: Learn More
+              - generic [ref=e90]:
+                - img "Fracht truck freight" [ref=e92]
+                - generic [ref=e95]:
+                  - heading "Trucking" [level=3] [ref=e96]
+                  - paragraph [ref=e97]: Fracht’s trucking services include domestic LTL and FTL, oversized cargo, cross-border, hot shot, and motor rail solutions. Freight cost optimization helps to balance speed against expense, while cargo tracking, seamless communication, and a single point of contact help ensure satisfaction.
+                  - paragraph [ref=e98]:
+                    - link "Learn More" [ref=e99] [cursor=pointer]:
+                      - /url: /en/solutions/road-freight
+                      - generic [ref=e100]: Learn More
+              - generic [ref=e104]:
+                - img "Fracht rail freight" [ref=e106]
+                - generic [ref=e109]:
+                  - heading "Rail Freight" [level=3] [ref=e110]
+                  - paragraph [ref=e111]: Fracht offers specialized Project Cargo transport via rail, with a fleet of specialized railcars operated by a team of rail engineers, coordinators, and expeditors who help customers avoid the scale and regulatory limitations of truck freight with more than 200 complex rail cargo moves every year.
+                  - paragraph [ref=e112]:
+                    - link "Learn More" [ref=e113] [cursor=pointer]:
+                      - /url: /en/solutions/rail-freight
+                      - generic [ref=e114]: Learn More
+          - generic [ref=e119]:
+            - img "Crane lifting freight onto a vessel" [ref=e122]
+            - generic [ref=e125]:
+              - heading "Industries" [level=3] [ref=e126]
+              - paragraph [ref=e127]: "Fracht supports a global customer base working in countless industries. This experience helps us align to the logistical needs particular to those industries: what they ship, by what modes, and with what cargo- and delivery-specific considerations."
+              - paragraph [ref=e128]:
+                - link "Automotive" [ref=e129] [cursor=pointer]:
+                  - /url: /en/industries/automotive
+              - paragraph [ref=e130]:
+                - link "Energy and Industrial" [ref=e131] [cursor=pointer]:
+                  - /url: /en/industries/energy-and-industrial
+              - paragraph [ref=e132]:
+                - link "Defense and Government" [ref=e133] [cursor=pointer]:
+                  - /url: /en/industries/defense-and-government
+              - paragraph [ref=e134]:
+                - link "Aid and Relief" [ref=e135] [cursor=pointer]:
+                  - /url: /en/industries/aid-and-relief
+              - paragraph [ref=e136]:
+                - link "View All Industries" [ref=e137] [cursor=pointer]:
+                  - /url: /en/industries
+          - generic [ref=e142]: Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight Fracht Group We Love Freight
+          - generic [ref=e145]:
+            - heading "Sustainability and Collaboration" [level=2] [ref=e148]
+            - generic [ref=e150]:
+              - img "Fracht employees and family cleaning up a park" [ref=e153]
+              - generic [ref=e156]:
+                - heading "Fracht Forward" [level=3] [ref=e157]
+                - paragraph [ref=e158]:
+                  - text: Fracht Group is committed to improving, increasing, and expanding our sustainability strategy across all areas of the business, in alignment to the United Nations’ Sustainable Development Goals. Our
+                  - emphasis [ref=e159]:
+                    - strong [ref=e160]: Fracht Forward
+                  - text: program puts this commitment into action to create a better future for our local communities, the environment, and society as a whole.
+                - paragraph [ref=e161]:
+                  - link "Learn More" [ref=e162] [cursor=pointer]:
+                    - /url: /en/sustainability
+          - generic [ref=e168]:
+            - heading "Careers At Fracht" [level=2] [ref=e170]:
+              - generic [ref=e171]: Careers At Fracht
+            - generic [ref=e173]:
+              - paragraph [ref=e174]: Our success is built on the ability and commitment of our diverse global workforce. That's why we are so committed to the growth and development of our people. There are numerous openings across the organization—all characterized by opportunity for advancement in an atmosphere of integrity and respect.
+              - paragraph [ref=e175]:
+                - link "Join Us" [ref=e176] [cursor=pointer]:
+                  - /url: https://workforcenow.adp.com/mascsr/default/mdf/recruitment/recruitment.html?cid=91c03243-c5fa-4357-8bcc-29462577d95d&ccId=19000101_000001&lang=en_US
+          - generic [ref=e181]:
+            - heading "Global Insights" [level=2] [ref=e184]
+            - generic [ref=e185]:
+              - generic [ref=e188]:
+                - link "Balance graphic" [ref=e190] [cursor=pointer]:
+                  - /url: /en/insights/news/fracht-france-publishes-its-2025-gender-equality-index-results
+                  - img "Balance graphic" [ref=e191]
+                - generic [ref=e192]:
+                  - paragraph [ref=e193]: News
+                  - paragraph [ref=e194]: Feb 27, 2026
+                  - heading "Fracht France Publishes Its 2025 Gender Equality Index Results" [level=3] [ref=e195]:
+                    - link "Fracht France Publishes Its 2025 Gender Equality Index Results" [ref=e196] [cursor=pointer]:
+                      - /url: /en/insights/news/fracht-france-publishes-its-2025-gender-equality-index-results
+                  - paragraph [ref=e197]: Fracht France announces its 2025 Gender Equality Index score of 76/100 in accordance with French regulatory requirements and outlines its commitment to continued improvement in workplace equity.
+                  - paragraph [ref=e198]:
+                    - link "Learn More" [ref=e199] [cursor=pointer]:
+                      - /url: /en/insights/news/fracht-france-publishes-its-2025-gender-equality-index-results
+              - generic [ref=e202]:
+                - link "Fracht Group and Grupo Tical announce a joint venture to expand logistics and supply chain capabilities across Central America." [ref=e204] [cursor=pointer]:
+                  - /url: /en/insights/news/fracht-group-and-grupo-tical-form-joint-venture-enhance-logistics-across-central
+                  - img "Fracht Group and Grupo Tical announce a joint venture to expand logistics and supply chain capabilities across Central America." [ref=e205]
+                - generic [ref=e206]:
+                  - paragraph [ref=e207]: News
+                  - paragraph [ref=e208]: Feb 25, 2026
+                  - heading "Fracht Group and Grupo Tical Form Joint Venture to Enhance Logistics Across Central America" [level=3] [ref=e209]:
+                    - link "Fracht Group and Grupo Tical Form Joint Venture to Enhance Logistics Across Central America" [ref=e210] [cursor=pointer]:
+                      - /url: /en/insights/news/fracht-group-and-grupo-tical-form-joint-venture-enhance-logistics-across-central
+                  - paragraph [ref=e211]: Fracht Group and Grupo Tical Holding S.A. have joined forces to strengthen logistics and supply chain connectivity across Central America, establishing operations in six countries and expanding Fracht Group’s connected footprint from Canada to Patagonia.
+                  - paragraph [ref=e212]:
+                    - link "Learn More" [ref=e213] [cursor=pointer]:
+                      - /url: /en/insights/news/fracht-group-and-grupo-tical-form-joint-venture-enhance-logistics-across-central
+              - generic [ref=e216]:
+                - link "2026" [ref=e218] [cursor=pointer]:
+                  - /url: /en/insights/newsletters/logistics-market-report-january-2026
+                  - img "2026" [ref=e219]
+                - generic [ref=e220]:
+                  - paragraph [ref=e221]: Newsletters
+                  - paragraph [ref=e222]: Jan 5, 2026
+                  - heading "Logistics Market Report—January 2026" [level=3] [ref=e223]:
+                    - link "Logistics Market Report—January 2026" [ref=e224] [cursor=pointer]:
+                      - /url: /en/insights/newsletters/logistics-market-report-january-2026
+                  - paragraph [ref=e225]: The January 2026 edition of Fracht News Logistics Market Report is now available.
+                  - paragraph [ref=e226]:
+                    - link "Learn More" [ref=e227] [cursor=pointer]:
+                      - /url: /en/insights/newsletters/logistics-market-report-january-2026
+              - generic [ref=e230]:
+                - link "Cargo containers" [ref=e232] [cursor=pointer]:
+                  - /url: /en/insights/newsletters/logistics-market-report-december-2025
+                  - img "Cargo containers" [ref=e233]
+                - generic [ref=e234]:
+                  - paragraph [ref=e235]: Newsletters
+                  - paragraph [ref=e236]: Dec 1, 2025
+                  - heading "Logistics Market Report—December 2025" [level=3] [ref=e237]:
+                    - link "Logistics Market Report—December 2025" [ref=e238] [cursor=pointer]:
+                      - /url: /en/insights/newsletters/logistics-market-report-december-2025
+                  - paragraph [ref=e239]: The December 2025 edition of Fracht News Logistics Market Report is now available.
+                  - paragraph [ref=e240]:
+                    - link "Learn More" [ref=e241] [cursor=pointer]:
+                      - /url: /en/insights/newsletters/logistics-market-report-december-2025
+            - link "View all Insights" [ref=e245] [cursor=pointer]:
+              - /url: /en/insights
+          - generic [ref=e250]:
+            - generic [ref=e251]:
+              - heading "Start the Conversation" [level=2] [ref=e252]
+              - paragraph [ref=e253]: If you’re looking for a transportation quote or information about our capabilities, or if you have a general inquiry about Fracht Group, please complete the form below for a quick response.
+            - generic [ref=e259]:
+              - generic [ref=e260]:
+                - generic [ref=e261]: Full Name
+                - textbox "Full Name" [ref=e262]
+              - generic [ref=e263]:
+                - generic [ref=e264]: Email Address
+                - textbox "Email Address Email" [ref=e265]:
+                  - /placeholder: Email Address
+              - generic [ref=e266]:
+                - generic [ref=e269]:
+                  - generic [ref=e270]: Job Title
+                  - textbox "Job Title" [ref=e271]
+                - generic [ref=e274]:
+                  - generic [ref=e275]: Company
+                  - textbox "Company" [ref=e276]:
+                    - /placeholder: Company Name
+              - generic [ref=e277]:
+                - generic [ref=e278]: Interests
+                - combobox "Interests" [ref=e279]:
+                  - option "Select area of interest" [selected]
+                  - option "Air Freight"
+                  - option "Truck Freight"
+                  - option "Ocean Freight"
+                  - option "Rail"
+                  - option "Warehousing"
+                  - option "Other"
+              - generic [ref=e280]:
+                - generic [ref=e281]: Brief Description(optional)
+                - textbox "Brief Description(optional)" [ref=e283]
+              - generic [ref=e284]:
+                - checkbox "Yes, I would like to receive information about Fracht Group solutions and services." [ref=e285] [cursor=pointer]: 
+                - generic [ref=e286] [cursor=pointer]: Yes, I would like to receive information about Fracht Group solutions and services.
+              - button "Contact Us" [ref=e288] [cursor=pointer]
+              - text: (optional)
+  - contentinfo [ref=e290]:
+    - generic [ref=e291]:
+      - generic [ref=e293]:
+        - generic [ref=e296]:
+          - paragraph [ref=e298]: Subscribe to Fracht News
+          - generic [ref=e299]:
+            - generic [ref=e300]: Email
+            - textbox "Enter your email address" [ref=e301]
+          - generic [ref=e302]:
+            - button "Submit" [ref=e304] [cursor=pointer]
+            - paragraph [ref=e306]:
+              - link "Manage" [ref=e307] [cursor=pointer]:
+                - /url: /en/newsletter/validate
+          - text: (optional)
+        - generic [ref=e308]:
+          - paragraph [ref=e309]: Download the Fracht App
+          - paragraph [ref=e310]: View all our locations and experience real-time conversations, presentation of all incoterms, and much more—all on the go!
+          - link "Image Google Play store logo" [ref=e311] [cursor=pointer]:
+            - /url: https://play.google.com/store/apps/details?id=pl.itcraft.fracht
+            - generic [ref=e313]:
+              - generic [ref=e314]: Image
+              - img "Google Play store logo" [ref=e316]
+          - link "Image Apple App Store logo" [ref=e317] [cursor=pointer]:
+            - /url: https://apps.apple.com/us/app/fracht/id454427614
+            - generic [ref=e319]:
+              - generic [ref=e320]: Image
+              - img "Apple App Store logo" [ref=e322]
+        - generic [ref=e325]:
+          - generic [ref=e326]: Image
+          - generic [ref=e327]:
+            - img "Fracht Group Logo"
+      - generic [ref=e331]:
+        - paragraph [ref=e332]: Fracht FWO, Inc. © 2026 All rights reserved.
+        - paragraph [ref=e333]: Fracht and Fracht Group, are registered trademarks or trademarks of Fracht FWO Inc. All rights reserved.
+        - generic:
+          - list [ref=e334]:
+            - listitem [ref=e335]:
+              - link "Careers" [ref=e336] [cursor=pointer]:
+                - /url: /en/about/careers
+            - listitem [ref=e337]:
+              - link "Feedback" [ref=e338] [cursor=pointer]:
+                - /url: /en/submit-feedback
+            - listitem [ref=e339]:
+              - link "Locations" [ref=e340] [cursor=pointer]:
+                - /url: /en/locations
+            - listitem [ref=e341]:
+              - link "Privacy Policy" [ref=e342] [cursor=pointer]:
+                - /url: /en/privacy-policy
+            - listitem [ref=e343]:
+              - link "Terms and Conditions of Service" [ref=e344] [cursor=pointer]:
+                - /url: /en/document/519
+            - listitem [ref=e345]:
+              - link "Whistleblower Policy" [ref=e346] [cursor=pointer]:
+                - /url: https://app.twixyapps.fr/whistleblower/fracht/
+          - list [ref=e347]:
+            - listitem [ref=e348]:
+              - link "Cookie Preferences" [ref=e349] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e350]:
+              - link "Accessibility Preferences" [ref=e351] [cursor=pointer]:
+                - /url: "#showacsb"
+    - link "":
+      - /url: "#"
+      - generic: 

@@ -105,7 +105,7 @@ export default function Contact() {
         backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(91,194,231,0.02) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(91,194,231,0.02) 60px)',
       }}/>
 
-      <div style={{ maxWidth:'min(780px, calc(100vw - 2rem))', margin:'0 auto', position:'relative', zIndex:1 }}>
+      <div style={{ maxWidth:'min(780px, calc(100% - 2rem))', margin:'0 auto', position:'relative', zIndex:1 }}>
 
       {/* ══ OUTER AESTHETIC CARD ══ */}
       <div style={{

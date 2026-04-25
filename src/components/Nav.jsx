@@ -141,8 +141,7 @@ export default function Nav({ onQuoteClick }) {
             className="nav-logo-wrap"
             role="link"
             aria-label={isAr ? 'الصفحة الرئيسية بيجويس' : 'Bejoice Home'}
-            aria-current="page"
-            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-445px' }}>
+            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-350px' }}>
             <img
               src="/bejoice-logo-nav.webp"
               alt="Bejoice"
@@ -160,7 +159,7 @@ export default function Nav({ onQuoteClick }) {
           </div>
 
           {/* Right side: CTA + Hamburger */}
-          <div className="nav-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)', marginRight: '-200px' }}>
+          <div className="nav-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)' }}>
 
             {/* CTA — Book a Call */}
             <button

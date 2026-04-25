@@ -1424,7 +1424,7 @@ export default function QuickQuoteSection({ sectionRef, lang: langProp, inModal 
             background: 'linear-gradient(135deg,rgba(10,30,50,0.97),rgba(15,40,65,0.97))',
             border: '1px solid rgba(91,194,231,0.45)', borderRadius: 12,
             padding: '14px 22px', boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
-            fontFamily: "'DM Sans',sans-serif", color: '#fff', maxWidth: 'calc(100vw - 32px)',
+            fontFamily: "'DM Sans',sans-serif", color: '#fff', maxWidth: 'calc(100% - 32px)',
             animation: 'qqToastIn 0.35s cubic-bezier(0.34,1.56,0.64,1)',
           }}>
             <span style={{ fontSize: 22 }}>✅</span>

@@ -582,7 +582,7 @@ if (typeof document !== "undefined" && !document.getElementById(STYLE_ID)) {
     /* ── Mobile overrides ── */
     @media (max-width: 480px) {
       .ca-panel-mobile {
-        width: calc(100vw - 16px) !important;
+        width: calc(100% - 16px) !important;
         right: 8px !important;
         left: 8px !important;
         border-radius: 20px !important;
@@ -743,7 +743,7 @@ export default function FloatingBookCTA() {
       ══════════════════════════════════════ */}
       {open && (
         <div className="ca-panel-mobile" style={{
-          width: "min(380px, calc(100vw - 16px))",
+          width: "min(380px, calc(100% - 16px))",
           background: "linear-gradient(170deg, #0b1120 0%, #091524 100%)",
           border: "1px solid rgba(91,194,231,0.3)",
           borderRadius: 24,
