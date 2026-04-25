@@ -76,13 +76,8 @@ export default function Nav({ onQuoteClick }) {
     setTimeout(() => {
       const el = document.getElementById(id)
       if (el) {
-        if (id === 'why-us') {
-          if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
-          else el.scrollIntoView({ behavior: 'instant' })
-        } else {
-          if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
-          else el.scrollIntoView({ behavior: 'smooth' })
-        }
+        if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
+        else el.scrollIntoView({ behavior: 'instant' })
       }
     }, 400)
   }
@@ -575,7 +570,7 @@ export default function Nav({ onQuoteClick }) {
                 {isAr ? ar.nav.bookConsult : 'Book a Consultation →'}
               </button>
               <button
-                onClick={() => { setHeavyOpen(false); const el = document.getElementById('heavy-cargo'); if (el) { if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 }); else el.scrollIntoView({ behavior: 'smooth' }) } }}
+                onClick={() => { setHeavyOpen(false); const el = document.getElementById('heavy-cargo'); if (el) { if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true }); else el.scrollIntoView({ behavior: 'instant' }) } }}
                 style={{
                   flex: '1 1 160px', padding: '0.85rem 1.4rem', minHeight: 48,
                   background: 'transparent',

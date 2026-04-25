@@ -228,13 +228,8 @@ export default function Footer() {
                           e.preventDefault()
                           const el = document.getElementById(targetId)
                           if (el) {
-                            if (targetId === 'why-us') {
-                              if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
-                              else el.scrollIntoView({ behavior: 'instant' })
-                            } else {
-                              if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
-                              else el.scrollIntoView({ behavior: 'smooth' })
-                            }
+                            if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
+                            else el.scrollIntoView({ behavior: 'instant' })
                           }
                         }
                       }}
