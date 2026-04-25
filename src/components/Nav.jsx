@@ -153,7 +153,7 @@ export default function Nav({ onQuoteClick }) {
                 width: 'clamp(470px, 63vw, 750px)',
                 objectFit: 'contain',
                 display: 'block',
-                filter: 'brightness(1.45) contrast(1.1) drop-shadow(0 2px 14px rgba(0,0,0,0.6)) drop-shadow(0 0 28px rgba(255,255,255,0.12))',
+                filter: 'brightness(1.05) contrast(1.05) drop-shadow(0 2px 14px rgba(0,0,0,0.6)) drop-shadow(0 0 28px rgba(255,255,255,0.12))',
               }}
             />
           </div>
