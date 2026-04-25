@@ -12,7 +12,7 @@ const CAPABILITIES = [
 ]
 
 const TEAM = [
-  { name: 'Preetham Canute Pinto', role: 'CEO & Co-Owner',    initials: 'PC' },
+  { name: 'Preetham Canute Pinto', role: 'CEO & Co-Owner',    initials: 'PC', photo: '/preetham-ceo.jpg' },
   { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', initials: 'MA' },
   { name: 'Shahil',                  role: 'Managing Partner', initials: 'SH' },
 ]
@@ -235,7 +235,7 @@ export default function WhyBejoice() {
 
           {/* ── TEAM CARDS ── */}
           <div className="wb-team-grid" style={{ position: 'relative', zIndex: 2 }}>
-            {TEAM.map(({ name, role, initials }, i) => (
+            {TEAM.map(({ name, role, initials, photo }, i) => (
               <div key={name} className="wb-team-card fade-up">
 
                 {/* Avatar ring */}
@@ -246,14 +246,23 @@ export default function WhyBejoice() {
                   boxShadow: '0 0 0 2px rgba(91,194,231,0.35), 0 0 24px rgba(91,194,231,0.15), 0 0 0 5px rgba(91,194,231,0.07)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   animation: `wbRingPulse ${3.5 + i * 0.4}s ease-in-out infinite`,
+                  overflow: 'hidden',
                 }}>
-                  <span style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: 'clamp(1.6rem,2.5vw,2.2rem)',
-                    letterSpacing: '0.1em',
-                    color: 'rgba(91,194,231,0.85)',
-                    textShadow: '0 0 20px rgba(91,194,231,0.4)',
-                  }}>{initials}</span>
+                  {photo ? (
+                    <img src={photo} alt={name} style={{
+                      width: '100%', height: '100%',
+                      objectFit: 'cover', objectPosition: 'center top',
+                      transform: 'rotate(90deg) scale(1.15)',
+                    }} />
+                  ) : (
+                    <span style={{
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontSize: 'clamp(1.6rem,2.5vw,2.2rem)',
+                      letterSpacing: '0.1em',
+                      color: 'rgba(91,194,231,0.85)',
+                      textShadow: '0 0 20px rgba(91,194,231,0.4)',
+                    }}>{initials}</span>
+                  )}
                 </div>
 
                 {/* Name + role */}
