@@ -35,7 +35,7 @@ export default function WhyBejoice() {
         padding: 'clamp(3rem,8vw,7rem) clamp(1rem,5vw,2.5rem)',
       }}
     >
-      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(91,194,231,0.9)" speed={0.8} className="absolute inset-0 w-full h-full pointer-events-none" />
+      <SparklesCore background="transparent" minSize={0.6} maxSize={2} particleDensity={60} particleColor="rgba(91,194,231,0.9)" speed={2.2} className="absolute inset-0 w-full h-full pointer-events-none" />
       {/* Ambient top glow */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
