@@ -625,13 +625,13 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
 
           {/* Tagline */}
           <motion.div
-            animate={{ opacity: [0.6, 1, 0.6] }}
+            animate={{ opacity: [0.85, 1, 0.85] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             style={{ display:'flex', alignItems:'center', gap:10, justifyContent:'center' }}
           >
             <div style={{ width:24, height:2, background:'linear-gradient(90deg, rgba(91,194,231,0.2), rgba(91,194,231,0.6))', flexShrink:0, borderRadius:1 }} />
             <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(0.7rem,1.2vw,0.88rem)',
-              color:'rgba(91,194,231,0.85)', letterSpacing:'0.1em', textTransform:'uppercase',
+              color:'rgba(91,194,231,1)', letterSpacing:'0.1em', textTransform:'uppercase',
               margin:0, fontWeight:600, lineHeight:1.5, textAlign:'center',
             }}>
               {isAr ? ar.globe.tagline : 'Strategically positioned for seamless global connectivity'}
