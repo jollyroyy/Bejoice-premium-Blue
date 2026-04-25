@@ -167,7 +167,7 @@ const CHAPTERS = [
     align:      'right',
   },
   {
-    frameRange: [725, 790],
+    frameRange: [720, 790],
     eyebrow:    '',
     headline:   ['TECHNICAL', 'ENGINEERING'],
     sub:        'Specialised handling of oversized, overweight and high-value cargo — engineered solutions for every challenge.',
@@ -650,10 +650,10 @@ export default function VideoHero({ onQuoteClick }) {
         heroCardsRef.current.style.pointerEvents = finalOp < 0.1 ? 'none' : 'all'
       }
 
-      // ── Exit fade — last 3% of scroll ──
+      // ── Exit fade — last 1% of scroll ──
       if (exitOverlayRef.current) {
         exitOverlayRef.current.style.opacity = String(
-          Math.max(0, Math.min(1, (smoothP - 0.97) / 0.03))
+          Math.max(0, Math.min(1, (smoothP - 0.99) / 0.01))
         )
       }
 
