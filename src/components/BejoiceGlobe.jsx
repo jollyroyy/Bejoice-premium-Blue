@@ -639,6 +639,19 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
 
           </div>
 
+          {/* Branch offices — dot separated */}
+          <div style={{ marginBottom:'clamp(0.8rem,1.5vw,1.2rem)' }}>
+            <span style={{
+              fontFamily:"'Bebas Neue',sans-serif",
+              fontSize:'clamp(1.1rem,2.8vw,1.5rem)',
+              letterSpacing:'0.08em',
+              color:'rgba(255,255,255,0.75)',
+              lineHeight:1,
+            }}>
+              {isAr ? 'السعودية · الإمارات · الهند · الصين' : 'SAUDI ARABIA · UAE · INDIA · CHINA'}
+            </span>
+          </div>
+
           {/* Tagline */}
           <motion.div
             animate={{ opacity: [0.6, 1, 0.6] }}
