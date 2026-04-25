@@ -288,7 +288,7 @@ export default function WhyBejoice() {
                   }}>{name}</div>
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 'clamp(10px,0.9vw,12px)',
+                    fontSize: 'clamp(12px,1.1vw,14px)',
                     letterSpacing: '0.22em', textTransform: 'uppercase',
                     color: 'rgba(91,194,231,0.8)', fontWeight: 600,
                   }}>{role}</div>
