@@ -12,9 +12,9 @@ const CAPABILITIES = [
 ]
 
 const TEAM = [
-  { name: 'Preetham Canute Pinto', role: 'CEO & Co-Owner',    initials: 'PC', photo: '/preetham-ceo.jpg', pos: 'center 15%' },
-  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', initials: 'MA', photo: '/ashraful-coo.png', pos: 'center 10%' },
-  { name: 'Shahil',                  role: 'Managing Partner', initials: 'SH', photo: '/shahil-mp.jpg',   pos: 'center 18%' },
+  { name: 'Preetham Canute Pinto', role: 'CEO & Co-Owner',    initials: 'PC', photo: '/preetham-ceo.webp', pos: 'center 15%' },
+  { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', initials: 'MA', photo: '/ashraful-coo.webp', pos: 'center 10%' },
+  { name: 'Shahil',                  role: 'Managing Partner', initials: 'SH', photo: '/shahil-mp.webp',   pos: 'center 18%' },
 ]
 
 export default function WhyBejoice() {
@@ -285,6 +285,8 @@ export default function WhyBejoice() {
                     letterSpacing: '0.1em', color: '#ffffff', lineHeight: 1.1,
                     marginBottom: 6,
                     textShadow: '0 0 20px rgba(255,255,255,0.1)',
+                    minHeight: '2.2em',
+                    display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
                   }}>{name}</div>
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif",
