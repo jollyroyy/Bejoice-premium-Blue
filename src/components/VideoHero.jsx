@@ -451,8 +451,11 @@ export default function VideoHero({ onQuoteClick }) {
       }
 
       opacity = Math.max(0, Math.min(1, opacity))
-      el.style.opacity       = String(opacity)
-      el.style.transform     = `translateY(${(1 - opacity) * 28}px)`
+      el.style.opacity = String(opacity)
+      // Last two chapters: pure opacity fade (no slide) — matches ch1→ch2 feel
+      el.style.transform = (i >= CHAPTERS.length - 2)
+        ? 'none'
+        : `translateY(${(1 - opacity) * 28}px)`
       el.style.pointerEvents = opacity < 0.1 ? 'none' : 'all'
     }
   }, [])
