@@ -559,18 +559,6 @@ export default function BejoiceGlobe({ embedded = false, fullscreen = false }) {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.8, ease: [0.16,1,0.3,1] }}
           style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 'clamp(1rem,2vw,1.6rem)', alignItems: 'center', textAlign: 'center' }}
         >
-          {/* Eyebrow */}
-          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-            <div style={{ width:32, height:2, background:'linear-gradient(90deg, rgba(91,194,231,0.2), #5BC2E7)', flexShrink:0, borderRadius:1 }} />
-            <span style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(10px,1.1vw,12px)', fontWeight:800,
-              letterSpacing: isAr ? '0' : '0.35em', textTransform: isAr ? 'none' : 'uppercase',
-              color:'#5BC2E7', textShadow:'0 0 16px rgba(91,194,231,0.4)',
-            }}>
-              {isAr ? ar.globe.eyebrow : 'GLOBAL PRESENCE'}
-            </span>
-            <div style={{ width:32, height:2, background:'linear-gradient(90deg, #5BC2E7, rgba(91,194,231,0.2))', flexShrink:0, borderRadius:1 }} />
-          </div>
-
           {/* Headline */}
           <h2 className="no-reveal" style={{
             fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
