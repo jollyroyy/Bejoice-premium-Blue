@@ -795,14 +795,6 @@ export default function VideoHero({ onQuoteClick }) {
           `,
         }} />
 
-        {/* Nav-area shield — prevents raw frame content from bleeding through
-            the transparent nav. Covers top ~14% of viewport with a consistent
-            brand-colour tint regardless of what the video frame looks like. */}
-        <div style={{
-          position:'absolute', top:0, left:0, right:0,
-          height:'14%', zIndex:4, pointerEvents:'none',
-          background:'linear-gradient(to bottom,rgba(24,54,80,0.72) 0%,rgba(24,54,80,0.30) 55%,rgba(24,54,80,0) 100%)',
-        }} />
 
 
         {/* ── Canvas dimmer — darkens frame scrubbing during globe chapter ── */}
