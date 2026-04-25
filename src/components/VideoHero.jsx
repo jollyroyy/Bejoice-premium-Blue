@@ -794,6 +794,14 @@ export default function VideoHero({ onQuoteClick }) {
           `,
         }} />
 
+        {/* Nav legibility shield — dark fade covering only the nav bar height,
+            stops before the CTA card area. Pointer-events none, no scroll logic. */}
+        <div style={{
+          position:'absolute', top:0, left:0, right:0, height:'18%',
+          zIndex:5, pointerEvents:'none',
+          background:'linear-gradient(to bottom,rgba(14,32,52,0.82) 0%,rgba(14,32,52,0.40) 45%,rgba(14,32,52,0) 100%)',
+        }} />
+
 
 
         {/* ── Canvas dimmer — darkens frame scrubbing during globe chapter ── */}
