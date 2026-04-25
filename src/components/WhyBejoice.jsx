@@ -159,12 +159,16 @@ export default function WhyBejoice() {
                   background: 'linear-gradient(90deg,transparent,rgba(91,194,231,0.45) 50%,transparent)',
                 }} />
 
-                <div style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 10, letterSpacing: '0.36em', textTransform: 'uppercase',
-                  color: 'rgba(91,194,231,0.7)', fontWeight: 700,
-                  marginBottom: 'clamp(1rem,1.6vw,1.4rem)',
-                }}>Our Capabilities</div>
+                <h3 style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 'clamp(1.4rem,2.5vw,2rem)',
+                  letterSpacing: '0.1em', lineHeight: 1,
+                  color: '#ffffff',
+                  margin: '0 0 clamp(1rem,1.6vw,1.4rem)',
+                }}>
+                  <span style={{ color: '#ffffff' }}>OUR </span>
+                  <span style={{ color: '#5BC2E7' }}>CAPABILITIES</span>
+                </h3>
 
                 <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
                   {CAPABILITIES.map((cap, i) => (
