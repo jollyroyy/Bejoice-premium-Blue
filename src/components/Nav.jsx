@@ -149,8 +149,8 @@ export default function Nav({ onQuoteClick }) {
               fetchPriority="high"
               decoding="async"
               style={{
-                height: 'clamp(82px, 10.5vw, 127px)',
-                width: 'clamp(300px, 40vw, 480px)',
+                height: 'clamp(165px, 21vw, 255px)',
+                width: 'clamp(600px, 81vw, 960px)',
                 objectFit: 'contain',
                 display: 'block',
                 filter: 'brightness(1.45) contrast(1.1) drop-shadow(0 2px 14px rgba(0,0,0,0.6)) drop-shadow(0 0 28px rgba(255,255,255,0.12))',

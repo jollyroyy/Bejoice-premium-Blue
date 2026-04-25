@@ -637,10 +637,10 @@ body {
 /* ── NAV: constrain logo WIDTH only — height stays from inline clamp(82px,11.2vw,128px) ── */
 /* objectFit:contain ensures the 200×130 logo fills height-first inside the box.          */
 @media (max-width: 1280px) {
-  .nav-logo-img { width: clamp(165px, 21vw, 236px) !important; }
+  .nav-logo-img { width: clamp(330px, 42vw, 472px) !important; }
 }
 @media (max-width: 900px) {
-  .nav-logo-img { width: clamp(135px, 24vw, 195px) !important; }
+  .nav-logo-img { width: clamp(270px, 48vw, 390px) !important; }
   /* Book a Call: shorter label + tighter padding */
   .nav-book-call {
     padding: 9px 14px !important;
@@ -651,7 +651,7 @@ body {
   }
 }
 @media (max-width: 479px) {
-  .nav-logo-img { width: clamp(90px, 27vw, 120px) !important; }
+  .nav-logo-img { width: clamp(180px, 54vw, 240px) !important; }
   /* Book a Call → icon-only square pill to free up horizontal space */
   .nav-book-call {
     padding: 8px 9px !important;
