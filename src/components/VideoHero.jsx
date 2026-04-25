@@ -863,7 +863,7 @@ export default function VideoHero({ onQuoteClick }) {
                 borderRadius:'10px',
                 padding:'clamp(14px,2vw,24px) clamp(16px,2.5vw,28px)',
                 border:'1px solid rgba(255,255,255,0.06)',
-                maxWidth: 'min(calc(100vw - 2rem), max-content)',
+                maxWidth: ch.headline?.join('').length > 30 ? 'min(calc(100vw - 2rem), 620px)' : 'min(calc(100vw - 2rem), max-content)',
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
               }}>
 
@@ -897,7 +897,7 @@ export default function VideoHero({ onQuoteClick }) {
                         {displayHeadline.map((line, li) => (
                           <div key={li} style={{
                             fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif",
-                            fontSize: isAr ? 'clamp(1.8rem,5vw,5rem)' : 'clamp(2rem,5.5vw,5.5rem)',
+                            fontSize: isAr ? 'clamp(1.8rem,5vw,5rem)' : (ch.headline?.join('').length > 30 ? 'clamp(1.7rem,4vw,4rem)' : 'clamp(2rem,5.5vw,5.5rem)'),
                             lineHeight: isAr ? 1.1 : 0.87, letterSpacing: isAr ? '0' : '0.06em', margin:0,
                             color: li % 2 === 0 ? '#ffffff' : 'rgba(91,194,231,1)',
                             textShadow: li % 2 === 0
