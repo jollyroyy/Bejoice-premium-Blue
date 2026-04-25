@@ -124,9 +124,9 @@ const CHAPTERS = [
   // ── port: 356–524 ──
   {
     frameRange: [296, 385],
-    eyebrow:    'OCEAN FREIGHT',
+    eyebrow:    'OCEAN FREIGHT · FCL · LCL · BREAKBULK · REEFER · DG · OOG',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
-    sub:        'Global maritime networks connecting the Port of Jeddah to every major international hub with precision and reliability.',
+    sub:        'Full-spectrum sea freight — containerized, breakbulk, consolidated, reefer, dangerous goods, and out-of-gauge cargo handled end to end.',
     align:      'left',
   },
   {
