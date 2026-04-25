@@ -73,21 +73,23 @@ export default function Nav({ onQuoteClick }) {
 
   const scrollTo = (id) => {
     setMenuOpen(false)
+    // globe jumps with zero delay — no transition at all
+    const delay = id === 'globe' ? 0 : 400
     setTimeout(() => {
       const el = document.getElementById(id)
       if (el) {
         if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
         else el.scrollIntoView({ behavior: 'instant' })
       }
-    }, 400)
+    }, delay)
   }
 
   const scrollToTop = () => {
     setMenuOpen(false)
     const el = document.getElementById('globe')
     if (el) {
-      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
-      else el.scrollIntoView({ behavior: 'smooth' })
+      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
+      else el.scrollIntoView({ behavior: 'instant' })
     }
   }
 
