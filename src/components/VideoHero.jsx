@@ -502,12 +502,11 @@ export default function VideoHero({ onQuoteClick }) {
     const cw    = canvas.width
     const ch    = canvas.height
 
-    // Scale to fill width then pull back 10% — slightly smaller, aspect ratio preserved
-    const scale = (cw / img.naturalWidth) * 0.90
-
-    const w = img.naturalWidth  * scale
-    const h = img.naturalHeight * scale
-    const x = (cw - w) / 2
+    // Full width, height at 90% of width-fill scale — wider than tall, no side bars
+    const scaleY = (cw / img.naturalWidth) * 0.90
+    const w = cw
+    const h = img.naturalHeight * scaleY
+    const x = 0
     const y = (ch - h) / 2
 
     ctx.fillStyle = '#183650'
