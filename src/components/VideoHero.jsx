@@ -146,7 +146,7 @@ const CHAPTERS = [
   // ── frames8: 525–645 ──
   {
     frameRange: [525, 590],
-    eyebrow:    'AIR CHARTER SERVICES',
+    eyebrow:    'AIR FREIGHT',
     headline:   ['SPEED ABOVE ALL.', 'DELIVERED ON TIME'],
     sub:        'Express air cargo solutions connecting Saudi Arabia to global hubs — critical shipments, time-sensitive freight, temperature-controlled cargo.',
     align:      'right',
