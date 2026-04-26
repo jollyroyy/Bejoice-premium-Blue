@@ -394,23 +394,6 @@ export default function Services() {
                       </button>
                     )}
                   </div>
-                  {/* Divider */}
-                  <div style={{
-                    width: isActive || isExpanded ? '40px' : '20px',
-                    height: 1, marginBottom: '0.8rem',
-                    background: 'linear-gradient(90deg, rgba(91,194,231,0.8), transparent)',
-                    transition: 'width 0.4s ease',
-                  }} />
-                  {/* Description */}
-                  <p style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: isAr ? 'clamp(17px,1.7vw,19px)' : 'clamp(13px,1.3vw,15px)', fontWeight: 450,
-                    color: 'rgba(255,255,255,0.72)', lineHeight: 1.7,
-                    margin: 0,
-                  }}>
-                    {isAr && arItem ? arItem.desc : s.desc}
-                  </p>
-
                   {/* Expandable sub-services */}
                   <AnimatePresence>
                     {isExpanded && hasExpand && (
