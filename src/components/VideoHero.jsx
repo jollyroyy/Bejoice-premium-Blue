@@ -442,7 +442,7 @@ export default function VideoHero({ onQuoteClick }) {
       // Last chapter (TECHNICAL ENGINEERING) — 1s CSS transition delay on fade-in
       if (i === CHAPTERS.length - 1) {
         const entering = opacity > 0 && el.style.opacity === '0'
-        el.style.transition = entering ? 'opacity 0.6s ease 3s, transform 0.6s ease 3s' : ''
+        el.style.transition = entering ? 'opacity 0.6s ease 4s, transform 0.6s ease 4s' : ''
       }
 
       el.style.opacity = String(opacity)
