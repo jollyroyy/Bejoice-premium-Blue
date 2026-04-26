@@ -371,7 +371,7 @@ export default function WhyBejoice() {
                   <div style={{
                     fontFamily: "'Bebas Neue', sans-serif",
                     fontSize: 'clamp(0.9rem,1.6vw,1.15rem)',
-                    letterSpacing: '0.06em', lineHeight: 1.15,
+                    letterSpacing: '0.12em', lineHeight: 1.15,
                     color: '#ffffff',
                     marginBottom: 3,
                   }}>
