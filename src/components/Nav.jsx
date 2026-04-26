@@ -211,12 +211,7 @@ export default function Nav({ onQuoteClick }) {
                 }
               }}
             >
-              {/* Compass icon */}
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, opacity: menuOpen ? 1 : 0.75, transition: 'opacity 0.3s, transform 0.4s cubic-bezier(0.23,1,0.32,1)', transform: menuOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}>
-                <circle cx="12" cy="12" r="9" stroke="#5BC2E7" strokeWidth="1.5"/>
-                <path d="M16.24 7.76l-3.18 7.07-3.88-3.88 7.06-3.19z" fill="#5BC2E7" opacity="0.9"/>
-              </svg>
-              <span style={{
+<span style={{
                 fontFamily: "'Bebas Neue', sans-serif",
                 fontSize: 'clamp(13px,1.3vw,15px)',
                 letterSpacing: '0.3em',
