@@ -197,7 +197,7 @@ export default function Footer() {
                 src={logoSrc}
                 alt="Bejoice"
                 loading="lazy" decoding="async"
-                style={{ height: '187px', width: 'auto', objectFit: 'contain', display: 'block', opacity: 0.92 }}
+                style={{ height: '230px', width: 'auto', objectFit: 'contain', display: 'block', opacity: 0.92 }}
               />
             </div>
           </div>
