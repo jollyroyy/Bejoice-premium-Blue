@@ -367,11 +367,11 @@ function FreightCalcCard() {
     <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
-          <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#ffffff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
+          <p className="hero-card-title" style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#ffffff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             {isAr ? ar.hero.calcTitle : 'LOAD CALCULATION'}
           </p>
         </div>
-        <button onClick={handleOpen} className="btn-gold"
+        <button onClick={handleOpen} className="btn-gold hero-card-btn"
           style={{ padding:'12px 28px', fontSize:'1rem', borderRadius:'10px', whiteSpace:'nowrap', flexShrink:0, fontWeight:400 }}>
           {isAr ? ar.hero.calcBtn : 'Open Calculator'}
         </button>
@@ -387,16 +387,16 @@ function TrackCard() {
     <SleekCard style={{ justifyContent:'center', padding:'1.25rem 1.75rem' }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:'24px' }}>
         <div>
-          <p style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
+          <p className="hero-card-title" style={{ fontFamily: isAr ? "'Cairo','Noto Sans Arabic',sans-serif" : "'Bebas Neue',sans-serif", fontSize:'1.8rem', color:'#fff', letterSpacing: isAr ? '0' : '0.08em', margin:0, lineHeight:1.1, textShadow:'0 0 24px rgba(255,255,255,0.25)' }}>
             {isAr ? ar.hero.trackTitle : 'SHIPMENT TRACKING'}
           </p>
-          <p style={{ fontFamily:"'Inter',sans-serif", fontSize: isAr ? '15px' : '11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing: isAr ? '0' : '0.14em', textTransform: isAr ? 'none' : 'uppercase', fontWeight:600 }}>
+          <p className="hero-card-sub" style={{ fontFamily:"'Inter',sans-serif", fontSize: isAr ? '15px' : '11px', color:'rgba(255,255,255,0.75)', margin:'6px 0 0', letterSpacing: isAr ? '0' : '0.14em', textTransform: isAr ? 'none' : 'uppercase', fontWeight:600 }}>
             {isAr ? ar.hero.trackSub : 'Real-Time Global Visibility'}
           </p>
         </div>
         <button
           onClick={() => window.open('https://www.track-trace.com/', '_blank', 'noopener,noreferrer')}
-          className="btn-gold"
+          className="btn-gold hero-card-btn"
           style={{ padding:'12px 28px', fontSize:'1rem', borderRadius:'10px', whiteSpace:'nowrap', flexShrink:0, fontWeight:400 }}
         >
           {isAr ? ar.hero.trackBtn : 'Track Now'}
@@ -1004,11 +1004,11 @@ export default function VideoHero({ onQuoteClick }) {
         {/* ── Bottom bar — track card + stats ── */}
         <div ref={heroCardsRef} className="hero-bottom-bar" style={{
           position:'absolute', bottom:'clamp(24px,5vh,60px)', left:0, right:0, zIndex:5,
-          display:'flex', flexWrap:'wrap', gap:'clamp(60px,8vw,120px)',
+          display:'flex', flexWrap:'nowrap', gap:'clamp(8px,1.5vw,24px)',
           alignItems:'stretch', justifyContent:'center',
-          padding:'0 clamp(2rem,5vw,6rem)', pointerEvents:'all',
+          padding:'0 clamp(0.75rem,3vw,4rem)', pointerEvents:'all',
         }}>
-          <div style={{ display:'flex', gap:'clamp(16px,2vw,24px)', flex:'0 1 auto', minWidth:0, alignItems:'stretch' }}>
+          <div style={{ display:'flex', gap:'clamp(8px,1.2vw,16px)', flex:'1 1 0', minWidth:0, alignItems:'stretch', overflow:'hidden' }}>
             <div className="hero-track-wrap" style={{ flex:'0 1 auto', minWidth:0, display:'flex', alignItems:'stretch' }}>
               <TrackCard />
             </div>
@@ -1069,6 +1069,32 @@ export default function VideoHero({ onQuoteClick }) {
 
         /* Mobile inline cards — hidden on desktop */
         .hero-mobile-cards { display: none; }
+
+        /* ── Bottom bar: scale down on smaller desktop/tablet ── */
+        @media (max-width: 1200px) {
+          .hero-card-title { font-size: 1.4rem !important; }
+          .hero-card-btn { padding: 10px 18px !important; font-size: 0.88rem !important; }
+          .hero-stat-number { font-size: 1.5rem !important; }
+          .hero-stat-cell { padding: 1rem clamp(6px,1vw,12px) !important; }
+        }
+        @media (max-width: 1000px) {
+          .hero-card-title { font-size: 1.1rem !important; }
+          .hero-card-sub   { font-size: 9.5px !important; }
+          .hero-card-btn { padding: 8px 14px !important; font-size: 0.8rem !important; }
+          .hero-stat-number { font-size: 1.25rem !important; }
+          .hero-stat-label { font-size: 8.5px !important; letter-spacing: 0.09em !important; }
+          .hero-stat-cell { padding: 0.9rem 6px !important; }
+          .sleek-card { padding: 0.8rem 1rem !important; }
+        }
+        @media (max-width: 870px) {
+          .hero-card-title { font-size: 0.95rem !important; }
+          .hero-card-sub   { display: none !important; }
+          .hero-card-btn { padding: 7px 10px !important; font-size: 0.74rem !important; }
+          .hero-stat-number { font-size: 1.1rem !important; }
+          .hero-stat-label { font-size: 7.5px !important; letter-spacing: 0.06em !important; }
+          .hero-stat-cell { padding: 0.75rem 5px !important; }
+          .sleek-card { padding: 0.6rem 0.75rem !important; }
+        }
 
         .sleek-input, .sleek-select {
           width: 100%;

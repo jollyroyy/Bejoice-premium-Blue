@@ -182,7 +182,7 @@ export default function Nav({ onQuoteClick }) {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
-              className={!menuOpen ? 'hamburger-btn' : ''}
+              className=""
               style={{
                 display: 'flex', alignItems: 'center', gap: '10px',
                 opacity: pastHero ? 0 : 1, pointerEvents: pastHero ? 'none' : 'auto', transition: 'opacity 0.4s ease',
@@ -197,11 +197,6 @@ export default function Nav({ onQuoteClick }) {
               onMouseEnter={e => { if (!menuOpen) { e.currentTarget.style.background = 'rgba(91,194,231,0.1)'; e.currentTarget.style.borderColor = 'rgba(91,194,231,0.7)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(91,194,231,0.2)' } }}
               onMouseLeave={e => { if (!menuOpen) { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(91,194,231,0.45)'; e.currentTarget.style.boxShadow = '0 0 0 rgba(91,194,231,0)' } }}
             >
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: 'clamp(18px,3vw,20px)' }}>
-                <span style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: '#5BC2E7', width: 'clamp(18px,3vw,20px)', transform: menuOpen ? 'translateY(6.5px) rotate(45deg)' : 'none', transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)' }}/>
-                <span className={!menuOpen ? 'bar-mid' : ''} style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: 'rgba(91,194,231,0.55)', width: 'clamp(11px,2vw,13px)', opacity: menuOpen ? 0 : 1, transform: menuOpen ? 'scaleX(0)' : undefined, transition: 'all 0.25s ease' }}/>
-                <span style={{ display: 'block', height: '1.5px', borderRadius: '2px', background: '#5BC2E7', width: 'clamp(18px,3vw,20px)', transform: menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none', transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)' }}/>
-              </div>
               <span style={{
                 fontFamily: "'Bebas Neue', sans-serif",
                 fontSize: '15px',
