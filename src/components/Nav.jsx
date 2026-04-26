@@ -122,7 +122,7 @@ export default function Nav({ onQuoteClick }) {
       <a href="#main-content" className="skip-link">
         {isAr ? 'تجاوز إلى المحتوى الرئيسي' : 'Skip to Content'}
       </a>
-      <nav 
+      <nav
         role="navigation"
         aria-label={isAr ? 'الملاحة الرئيسية' : 'Main Navigation'}
         style={{
@@ -142,7 +142,7 @@ export default function Nav({ onQuoteClick }) {
             className="nav-logo-wrap"
             role="link"
             aria-label={isAr ? 'الصفحة الرئيسية بيجويس' : 'Bejoice Home'}
-            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', marginLeft: '-180px' }}>
+            style={{ position: 'relative', cursor: 'pointer', display: 'inline-block', flexShrink: 0 }}>
             <img
               src={logoSrc}
               alt="Bejoice"
@@ -150,16 +150,16 @@ export default function Nav({ onQuoteClick }) {
               fetchPriority="high"
               decoding="async"
               style={{
-                height: 'clamp(120px, 16vw, 200px)',
+                height: 'clamp(80px, 10vw, 130px)',
                 width: 'auto',
                 display: 'block',
-                filter: 'brightness(1.05) contrast(1.05) drop-shadow(0 2px 14px rgba(0,0,0,0.6)) drop-shadow(0 0 28px rgba(255,255,255,0.12))',
+                filter: 'drop-shadow(0 2px 12px rgba(0,0,0,0.7)) drop-shadow(0 0 24px rgba(255,255,255,0.15))',
               }}
             />
           </div>
 
           {/* Right side: CTA + Hamburger */}
-          <div className="nav-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)', marginRight: '-300px' }}>
+          <div className="nav-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)' }}>
 
             {/* CTA — Book a Call */}
             <button
