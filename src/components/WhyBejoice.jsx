@@ -140,8 +140,17 @@ export default function WhyBejoice() {
                 filter: 'drop-shadow(0 0 30px rgba(91,194,231,0.3))',
               }}
             >
-              <span style={{ color: '#ffffff' }}>WHY </span>
-              <span style={{ color: '#5BC2E7' }}>BEJOICE</span>
+              {isAr ? (
+                <>
+                  <span style={{ color: '#ffffff' }}>{ar.whyBejoice.why} </span>
+                  <span style={{ color: '#5BC2E7' }}>{ar.whyBejoice.bejoice}</span>
+                </>
+              ) : (
+                <>
+                  <span style={{ color: '#ffffff' }}>WHY </span>
+                  <span style={{ color: '#5BC2E7' }}>BEJOICE</span>
+                </>
+              )}
             </motion.h2>
             <div style={{ width: 60, height: 2, margin: '1.4rem auto 0', background: 'linear-gradient(90deg, transparent, rgba(91,194,231,0.7), transparent)' }} />
           </div>
