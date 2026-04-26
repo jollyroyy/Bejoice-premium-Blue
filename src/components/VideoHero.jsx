@@ -936,13 +936,15 @@ export default function VideoHero({ onQuoteClick }) {
                       display:'inline-flex', alignItems:'center', gap:'10px',
                       fontFamily:"'Bebas Neue',sans-serif",
                       fontSize:'1rem', letterSpacing:'0.18em',
-                      padding:'12px 32px', borderRadius:'10px', cursor:'pointer',
+                      padding:'12px 32px', borderRadius:'10px',
+                      cursor:'pointer',
                       pointerEvents:'all',
                       position:'relative', zIndex: 20,
+                      userSelect:'none',
                     }}
                   >
-                    <span style={{ position:'relative', zIndex:2 }}>{isAr ? ar.hero.ctaQuote : 'START SHIPMENT'}</span>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0, position:'relative', zIndex:2 }}>
+                    <span style={{ pointerEvents:'none', userSelect:'none' }}>{isAr ? ar.hero.ctaQuote : 'START SHIPMENT'}</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink:0, pointerEvents:'none' }}>
                       <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                     <div className="btn-shine-overlay" />
