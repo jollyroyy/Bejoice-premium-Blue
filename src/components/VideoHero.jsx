@@ -167,7 +167,6 @@ const CHAPTERS = [
   },
   {
     frameRange: [720, 790],
-    eyebrow:    'LIFT PLANS · LOAD DISTRIBUTION · STRUCTURAL ANALYSIS',
     headline:   ['TECHNICAL', 'ENGINEERING'],
     sub:        'Specialised handling of oversized, overweight and high-value cargo — engineered solutions for every challenge.',
     align:      'center',
