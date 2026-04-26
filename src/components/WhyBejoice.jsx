@@ -308,7 +308,7 @@ export default function WhyBejoice() {
                   fontWeight:800, letterSpacing:'0.35em', textTransform:'uppercase',
                   color:'#5BC2E7', textShadow:'0 0 20px rgba(91,194,231,0.6)',
                 }}>
-                  {isAr ? ar.whyBejoice.foundingMembers : 'Founding Members — Bejoice KSA'}
+                  {isAr ? ar.whyBejoice.foundingMembers : 'Founding Members of Bejoice KSA'}
                 </span>
                 <div style={{ width:40, height:2, background:'linear-gradient(90deg, #5BC2E7, transparent)', borderRadius:1 }} />
               </div>
@@ -322,7 +322,7 @@ export default function WhyBejoice() {
               maxWidth: 840,
               margin: '0 auto',
             }}>
-              {FOUNDERS.map((f, i) => (
+              {(isAr ? FOUNDERS.map((f, idx) => ({ ...f, name: ar.whyBejoice.founders[idx].name, role: ar.whyBejoice.founders[idx].role })) : FOUNDERS).map((f, i) => (
                 <motion.div
                   key={f.name}
                   initial={{ opacity: 0, y: 24, scale: 0.95 }}
@@ -389,9 +389,9 @@ export default function WhyBejoice() {
 
                   {/* Name */}
                   <div style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: 'clamp(0.9rem,1.6vw,1.15rem)',
-                    letterSpacing: '0.12em', lineHeight: 1.15,
+                    fontFamily: isAr ? "'Cairo', sans-serif" : "'Bebas Neue', sans-serif",
+                    fontSize: isAr ? 'clamp(1rem,1.8vw,1.3rem)' : 'clamp(0.9rem,1.6vw,1.15rem)',
+                    letterSpacing: isAr ? '0' : '0.12em', lineHeight: 1.15,
                     color: '#ffffff',
                     marginBottom: 3,
                   }}>
@@ -400,10 +400,10 @@ export default function WhyBejoice() {
 
                   {/* Role */}
                   <div style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 'clamp(13px,1.35vw,16px)',
-                    fontWeight: 600, letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
+                    fontFamily: isAr ? "'Cairo', sans-serif" : "'DM Sans', sans-serif",
+                    fontSize: isAr ? 'clamp(12px,1.2vw,14px)' : 'clamp(13px,1.35vw,16px)',
+                    fontWeight: 600, letterSpacing: isAr ? '0' : '0.12em',
+                    textTransform: isAr ? 'none' : 'uppercase',
                     color: 'rgba(91,194,231,0.75)',
                     lineHeight: 1.3,
                   }}>

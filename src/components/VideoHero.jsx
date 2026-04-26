@@ -131,14 +131,14 @@ const CHAPTERS = [
   },
   {
     frameRange: [390, 476],
-    eyebrow:    'CUSTOMS CLEARANCE · PORT OPERATIONS',
+    eyebrow:    'CUSTOMS & GOVT COORDINATION',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
     sub:        'ZATCA-certified experts navigating complex regulatory landscapes to ensure rapid, compliant clearance for every shipment.',
     align:      'right',
   },
   {
     frameRange: [481, 524],
-    eyebrow:    'FCL & LCL',
+    eyebrow:    'DUTY & TAX · PAYMENT HANDLING',
     headline:   ['FROM PORT TO PORT.', 'WORLD-CLASS LOGISTICS'],
     sub:        'Comprehensive ocean freight solutions — full container loads, consolidated shipments, and breakbulk cargo managed with Saudi expertise.',
     align:      'left',
@@ -146,14 +146,14 @@ const CHAPTERS = [
   // ── frames8: 525–645 ──
   {
     frameRange: [525, 590],
-    eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
+    eyebrow:    'AIR CHARTER SERVICES',
     headline:   ['SPEED ABOVE ALL.', 'DELIVERED ON TIME'],
     sub:        'Express air cargo solutions connecting Saudi Arabia to global hubs — critical shipments, time-sensitive freight, temperature-controlled cargo.',
     align:      'right',
   },
   {
     frameRange: [595, 645],
-    eyebrow:    'AIR FREIGHT · IATA CERTIFIED',
+    eyebrow:    'DANGEROUS GOODS (DGR) HANDLING',
     headline:   ['WORLD CLASS', 'AIR FREIGHT'],
     sub:        '',
     align:      'right',
@@ -168,7 +168,7 @@ const CHAPTERS = [
   },
   {
     frameRange: [720, 790],
-    eyebrow:    '',
+    eyebrow:    'LIFT PLANS · LOAD DISTRIBUTION · STRUCTURAL ANALYSIS',
     headline:   ['TECHNICAL', 'ENGINEERING'],
     sub:        'Specialised handling of oversized, overweight and high-value cargo — engineered solutions for every challenge.',
     align:      'center',
@@ -430,33 +430,22 @@ export default function VideoHero({ onQuoteClick }) {
       if (!el) continue
 
       const [start, end] = CHAPTERS[i].frameRange
-      const isLast  = i === CHAPTERS.length - 1
-      const isFirst = i === 0
-      let opacity = 0
+      const dist = Math.min(
+        Math.max(0, frameIdx - start),
+        Math.max(0, end - frameIdx)
+      )
 
-      if (isLast) {
-        // Last chapter fades in and stays; exit overlay covers the end
-        if      (frameIdx >= start + FRAME_FADE) opacity = 1
-        else if (frameIdx >= start)              opacity = (frameIdx - start) / FRAME_FADE
-      } else if (isFirst) {
-        // First chapter: no fade-in — fully visible from frame 0
-        if      (frameIdx <= end - FRAME_FADE) opacity = 1
-        else if (frameIdx <= end)              opacity = (end - frameIdx) / FRAME_FADE
-        else opacity = 0
-      } else {
-        if      (frameIdx >= start + FRAME_FADE && frameIdx <= end - FRAME_FADE) opacity = 1
-        else if (frameIdx >= start              && frameIdx <  start + FRAME_FADE) opacity = (frameIdx - start) / FRAME_FADE
-        else if (frameIdx >  end - FRAME_FADE   && frameIdx <= end)                opacity = (end - frameIdx)   / FRAME_FADE
-        else opacity = 0
+      let opacity = Math.min(dist / FRAME_FADE, 1)
+      // Special case for Chapter 0: ensure it's visible at the very start (scroll 0)
+      if (i === 0 && frameIdx <= end) {
+        // Only fade out at the end, don't fade in at the start
+        const exitDist = Math.max(0, end - frameIdx)
+        opacity = Math.min(exitDist / FRAME_FADE, 1)
       }
 
-      opacity = Math.max(0, Math.min(1, opacity))
       el.style.opacity = String(opacity)
-      // Last two chapters: pure opacity fade (no slide) — matches ch1→ch2 feel
-      el.style.transform = (i >= CHAPTERS.length - 2)
-        ? 'none'
-        : `translateY(${(1 - opacity) * 28}px)`
-      el.style.pointerEvents = opacity < 0.1 ? 'none' : 'all'
+      el.style.transform = `translateY(${28 * (1 - opacity)}px)`
+      el.style.zIndex = opacity > 0.1 ? '100' : '1'
     }
   }, [])
 
@@ -838,7 +827,7 @@ export default function VideoHero({ onQuoteClick }) {
               ref={el => chaptersRef.current[i] = el}
               className="hero-content-overlay"
               style={{
-                position:'absolute', inset:0, zIndex:4,
+                position:'absolute', inset:0,
                 display:'flex', flexDirection:'column',
                 justifyContent: isTop ? 'flex-start' : isBottom ? 'flex-end' : 'center',
                 alignItems:    isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
@@ -849,9 +838,10 @@ export default function VideoHero({ onQuoteClick }) {
                 /* NO opacity here — React re-renders would reset it.
                    Initial opacity:0 is applied by the useEffect below.
                    The RAF owns opacity from then on. */
-                pointerEvents:'none',
-                willChange:'opacity,transform',
-                transition:'none',
+                pointerEvents: 'none',
+                zIndex: 10,
+                willChange: 'opacity, transform',
+                transition: 'none',
               }}
             >
 
@@ -867,6 +857,7 @@ export default function VideoHero({ onQuoteClick }) {
                 border:'1px solid rgba(255,255,255,0.06)',
                 maxWidth: ch.headline?.join('').length > 30 ? 'min(calc(100% - 2rem), 620px)' : 'min(calc(100% - 2rem), max-content)',
                 alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
+                pointerEvents:'auto',
               }}>
 
                 {/* Eyebrow */}
@@ -884,7 +875,7 @@ export default function VideoHero({ onQuoteClick }) {
                     marginBottom:'14px',
                     alignSelf: isCenter ? 'center' : isRight ? 'flex-end' : 'flex-start',
                     backdropFilter:'blur(8px)',
-                    userSelect:'none', pointerEvents:'none',
+                    userSelect:'none',
                   }}>
                     {displayEyebrow}
                   </div>
@@ -928,7 +919,7 @@ export default function VideoHero({ onQuoteClick }) {
                 {ch.showCTA && (
                   <button
                     className="hero-intro-cta btn-gold"
-                    onClick={e => { e.stopPropagation(); onQuoteClick?.() }}
+                    onClick={() => onQuoteClick?.()}
                     aria-label={isAr ? 'ابدأ الشحن - احصل على عرض سعر' : 'Start Shipment - Get a Quote'}
                     style={{
                       marginTop:'28px',
@@ -939,7 +930,7 @@ export default function VideoHero({ onQuoteClick }) {
                       padding:'12px 32px', borderRadius:'10px',
                       cursor:'pointer',
                       pointerEvents:'all',
-                      position:'relative', zIndex: 20,
+                      position:'relative', zIndex: 1000,
                       userSelect:'none',
                     }}
                   >
@@ -1014,7 +1005,7 @@ export default function VideoHero({ onQuoteClick }) {
         <div ref={heroCardsRef} className="hero-bottom-bar" style={{
           position:'absolute', bottom:'clamp(24px,5vh,60px)', left:0, right:0, zIndex:5,
           display:'flex', flexWrap:'wrap', gap:'clamp(60px,8vw,120px)',
-          alignItems:'stretch', justifyContent:'flex-start',
+          alignItems:'stretch', justifyContent:'center',
           padding:'0 clamp(2rem,5vw,6rem)', pointerEvents:'all',
         }}>
           <div style={{ display:'flex', gap:'clamp(16px,2vw,24px)', flex:'0 1 auto', minWidth:0, alignItems:'stretch' }}>

@@ -17,7 +17,7 @@ function cn(...inputs) {
 // We reference frames as poster images for cards without dedicated video.
 const services = [
   {
-    num: '01', title: 'Air Freight',
+    num: '01', eyebrow: 'Air Charter Services', title: 'Air Freight',
     desc: 'Time-critical global air cargo with priority handling and real-time tracking. Express and charter options available.',
     subServices: [
       'General Cargo Consolidation',
@@ -340,17 +340,32 @@ export default function Services() {
                   </div>
                   {/* Title row */}
                   <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
-                    <h3 style={{
-                      fontFamily: "'Bebas Neue', sans-serif",
-                      fontSize: 'clamp(1.3rem,2.2vw,1.7rem)',
-                      letterSpacing: '0.08em', lineHeight: 1.1,
-                      color: isExpanded ? 'rgba(91,194,231,1)' : isActive ? 'rgba(91,194,231,1)' : '#ffffff',
-                      margin: 0,
-                      marginTop: '8px', 
-                      transition: 'color 0.3s ease',
-                    }}>
-                      {isAr && arItem ? arItem.title : s.title}
-                    </h3>
+                    <div>
+                      {s.eyebrow && (
+                        <div style={{
+                          fontFamily: isAr ? "'Cairo', sans-serif" : "'DM Sans', sans-serif",
+                          fontSize: 'clamp(10px,1vw,12px)',
+                          letterSpacing: isAr ? '0' : '0.2em',
+                          textTransform: 'uppercase',
+                          color: 'rgba(91,194,231,0.85)',
+                          fontWeight: 700,
+                          marginBottom: '2px'
+                        }}>
+                          {isAr && arItem?.eyebrow ? arItem.eyebrow : s.eyebrow}
+                        </div>
+                      )}
+                      <h3 style={{
+                        fontFamily: isAr ? "'Cairo', sans-serif" : "'Bebas Neue', sans-serif",
+                        fontSize: isAr ? 'clamp(1.1rem,2vw,1.4rem)' : 'clamp(1.3rem,2.2vw,1.7rem)',
+                        letterSpacing: isAr ? '0' : '0.08em', lineHeight: 1.1,
+                        color: isExpanded ? 'rgba(91,194,231,1)' : isActive ? 'rgba(91,194,231,1)' : '#ffffff',
+                        margin: 0,
+                        marginTop: s.eyebrow ? '0' : '8px', 
+                        transition: 'color 0.3s ease',
+                      }}>
+                        {isAr && arItem ? arItem.title : s.title}
+                      </h3>
+                    </div>
                     {hasExpand && (
                       <button
                         onClick={() => setExpandedCard(isExpanded ? null : s.num)}
