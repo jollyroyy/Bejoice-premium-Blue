@@ -709,7 +709,10 @@ export default function VideoHero({ onQuoteClick }) {
     const onScroll = () => {
       const rect  = wrapper.getBoundingClientRect()
       const total = wrapper.offsetHeight - window.innerHeight
-      targetP = Math.max(0, Math.min(1, -rect.top / total))
+      const newP  = Math.max(0, Math.min(1, -rect.top / total))
+      // Large jump (e.g. instant nav link) — snap smoothP so canvas doesn't animate through frames
+      if (Math.abs(newP - targetP) > 0.04) smoothP = newP
+      targetP = newP
       if (!rafId) rafId = requestAnimationFrame(render)
     }
 
