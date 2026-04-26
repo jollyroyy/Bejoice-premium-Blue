@@ -491,11 +491,11 @@ export default function VideoHero({ onQuoteClick }) {
     const cw    = canvas.width
     const ch    = canvas.height
 
-    // Full width, height at 90% of width-fill scale — wider than tall, no side bars
-    const scaleY = (cw / img.naturalWidth) * 0.90
-    const w = Math.round(cw)
-    const h = Math.round(img.naturalHeight * scaleY)
-    const x = 0
+    // object-fit: cover — scale until BOTH dimensions are filled, crop the excess
+    const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
+    const w = Math.round(img.naturalWidth  * scale)
+    const h = Math.round(img.naturalHeight * scale)
+    const x = Math.round((cw - w) / 2)
     const y = Math.round((ch - h) / 2)
 
     ctx.fillStyle = '#183650'
