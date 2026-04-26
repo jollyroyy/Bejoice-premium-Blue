@@ -17,7 +17,7 @@ function cn(...inputs) {
 // We reference frames as poster images for cards without dedicated video.
 const services = [
   {
-    num: '01', eyebrow: 'Air Charter Services', title: 'Air Freight',
+    num: '01', title: 'Air Freight',
     desc: 'Time-critical global air cargo with priority handling and real-time tracking. Express and charter options available.',
     subServices: [
       'General Cargo Consolidation',
