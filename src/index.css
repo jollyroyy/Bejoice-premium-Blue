@@ -628,11 +628,11 @@ body {
 /* No negative margins. Logo stays on left within flex nav at all sizes. */
 .nav-logo-img {
   width: auto !important;
-  height: clamp(80px, 10vw, 130px) !important;
+  height: clamp(100px, 13vw, 160px) !important;
   display: block;
 }
 @media (max-width: 900px) {
-  .nav-logo-img { height: clamp(68px, 12vw, 90px) !important; }
+  .nav-logo-img { height: clamp(80px, 13vw, 110px) !important; }
   /* Book a Call: shorter label + tighter padding */
   .nav-book-call {
     padding: 9px 14px !important;
@@ -643,7 +643,7 @@ body {
   }
 }
 @media (max-width: 479px) {
-  .nav-logo-img { height: clamp(58px, 14vw, 72px) !important; }
+  .nav-logo-img { height: clamp(68px, 16vw, 82px) !important; }
   /* Book a Call → icon-only square pill to free up horizontal space */
   .nav-book-call {
     padding: 8px 9px !important;
