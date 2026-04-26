@@ -131,14 +131,14 @@ const CHAPTERS = [
   },
   {
     frameRange: [390, 476],
-    eyebrow:    'CUSTOMS & GOVT COORDINATION',
+    eyebrow:    'PORT OPERATIONS',
     headline:   ['DRIVEN BY TRANSPARENCY.', 'DELIVERED WITH TRUST'],
     sub:        'ZATCA-certified experts navigating complex regulatory landscapes to ensure rapid, compliant clearance for every shipment.',
     align:      'right',
   },
   {
     frameRange: [481, 524],
-    eyebrow:    'DUTY & TAX · PAYMENT HANDLING',
+    eyebrow:    'POWERING SAUDI PROJECTS THROUGH EVERY STORM',
     headline:   ['FROM PORT TO PORT.', 'WORLD-CLASS LOGISTICS'],
     sub:        'Comprehensive ocean freight solutions — full container loads, consolidated shipments, and breakbulk cargo managed with Saudi expertise.',
     align:      'left',
@@ -161,7 +161,6 @@ const CHAPTERS = [
   // ── tech_enng: 646–790 ──
   {
     frameRange: [646, 720],
-    eyebrow:    'HEAVY LIFT · PROJECT CARGO',
     headline:   ['PRECISION IN HANDLING.', 'EXCELLENCE IN DELIVERY'],
     sub:        'End-to-end technical cargo solutions engineered for complexity — heavy machinery, industrial equipment, and high-value freight delivered with zero compromise.',
     align:      'right',
