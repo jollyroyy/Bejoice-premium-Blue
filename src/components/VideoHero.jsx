@@ -493,10 +493,11 @@ export default function VideoHero({ onQuoteClick }) {
 
     // object-fit: cover — scale until BOTH dimensions are filled, crop the excess
     const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight)
-    const w = Math.round(img.naturalWidth  * scale)
-    const h = Math.round(img.naturalHeight * scale)
-    const x = Math.round((cw - w) / 2)
-    const y = Math.round((ch - h) / 2)
+    const w = Math.ceil(img.naturalWidth  * scale)
+    const h = Math.ceil(img.naturalHeight * scale)
+    // Math.floor for x,y anchors the image on whole pixels → no subpixel jitter
+    const x = Math.floor((cw - w) / 2)
+    const y = Math.floor((ch - h) / 2)
 
     ctx.fillStyle = '#183650'
     ctx.fillRect(0, 0, cw, ch)
@@ -504,11 +505,11 @@ export default function VideoHero({ onQuoteClick }) {
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'high'
 
-    // Apply colour correction inside the canvas draw call — avoids CSS filter
-    // which forces software compositing on integrated GPUs (causes flickering)
+    // ctx.save/restore ensures filter state never leaks between frames
+    ctx.save()
     ctx.filter = 'contrast(1.12) saturate(1.2) brightness(1.02)'
     ctx.drawImage(img, x, y, w, h)
-    ctx.filter = 'none'
+    ctx.restore()
   }, [])
 
   // ── Progressive frame loader ──────────────────────────────────────
@@ -706,25 +707,9 @@ export default function VideoHero({ onQuoteClick }) {
       if (!rafId) rafId = requestAnimationFrame(render)
     }
 
-    // High-DPI Canvas Resizing
-    const handleResize = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const dpr = window.devicePixelRatio || 1;
-      const { width, height } = canvas.getBoundingClientRect();
-      if (canvas.width !== Math.floor(width * dpr) || canvas.height !== Math.floor(height * dpr)) {
-        canvas.width = Math.floor(width * dpr);
-        canvas.height = Math.floor(height * dpr);
-        paintFrame(Math.min(Math.round(targetP * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1))
-      }
-    };
-
-    window.addEventListener('resize', handleResize)
-    handleResize()
     window.addEventListener('scroll', onScroll, { passive: true })
-    
+
     return () => {
-      window.removeEventListener('resize', handleResize)
       window.removeEventListener('scroll', onScroll)
       if (rafId) cancelAnimationFrame(rafId)
     }
