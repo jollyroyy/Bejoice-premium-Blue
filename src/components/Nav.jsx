@@ -402,9 +402,10 @@ export default function Nav({ onQuoteClick }) {
           onClick={() => setHeavyOpen(false)}
           style={{
             position: 'fixed', inset: 0, zIndex: 99999,
-            background: 'rgba(7,16,28,0.92)', backdropFilter: 'blur(18px)',
+            background: 'rgba(4,10,20,0.96)', backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: 'clamp(8px,3vw,40px) clamp(8px,3vw,24px)',
+            padding: 'clamp(12px,3vw,48px) clamp(12px,3vw,24px)',
             overflowY: 'auto',
           }}
         >
@@ -412,77 +413,111 @@ export default function Nav({ onQuoteClick }) {
             onClick={e => e.stopPropagation()}
             style={{
               position: 'relative',
-              width: '100%', maxWidth: 720,
-              maxHeight: 'calc(100svh - 16px)',
+              width: '100%', maxWidth: 780,
+              maxHeight: 'calc(100svh - 24px)',
               overflowY: 'auto',
-              background: 'linear-gradient(170deg, rgba(7,16,28,0.99) 0%, rgba(10,24,38,1) 100%)',
-              border: '1px solid rgba(91,194,231,0.22)',
-              borderRadius: 'clamp(14px,3vw,24px)',
-              boxShadow: '0 40px 80px rgba(0,0,0,0.9), 0 0 0 1px rgba(91,194,231,0.06)',
+              background: 'linear-gradient(158deg, #07101e 0%, #0b1928 55%, #060e1a 100%)',
+              border: '1px solid rgba(91,194,231,0.28)',
+              borderRadius: 'clamp(18px,3vw,28px)',
+              boxShadow: '0 60px 120px rgba(0,0,0,0.95), 0 0 80px rgba(91,194,231,0.07), 0 0 0 1px rgba(91,194,231,0.07)',
               overflow: 'hidden',
             }}
           >
-            {/* ── Top gold rule ── */}
-            <div style={{ height: 3, background: 'linear-gradient(90deg, transparent 0%, rgba(91,194,231,0.9) 30%, #8DD8F0 50%, rgba(91,194,231,0.9) 70%, transparent 100%)' }} />
+            {/* Top accent — thicker, brighter */}
+            <div style={{ height: 4, background: 'linear-gradient(90deg, transparent 0%, #5BC2E7 25%, #8DD8F0 50%, #5BC2E7 75%, transparent 100%)', flexShrink: 0 }} />
+
+            {/* Atmospheric top glow */}
+            <div style={{
+              position: 'absolute', top: 0, left: 0, right: 0, height: '55%',
+              background: 'radial-gradient(ellipse at 50% -10%, rgba(91,194,231,0.1) 0%, transparent 68%)',
+              pointerEvents: 'none',
+            }} />
 
             {/* ── Header ── */}
             <div style={{
-              padding: 'clamp(1rem,2.5vw,1.4rem) clamp(1.4rem,4vw,2rem) clamp(0.75rem,2vw,1rem)',
-              background: 'linear-gradient(180deg, rgba(91,194,231,0.07) 0%, transparent 100%)',
-              borderBottom: '1px solid rgba(91,194,231,0.1)',
+              padding: 'clamp(1.6rem,4vw,2.4rem) clamp(1.6rem,4vw,2.4rem) clamp(1.2rem,3vw,1.8rem)',
               position: 'relative', overflow: 'hidden',
             }}>
-              {/* faint background grid */}
+              {/* Large watermark — decorative */}
               <div style={{
-                position: 'absolute', inset: 0, opacity: 0.03,
-                backgroundImage: 'repeating-linear-gradient(0deg, rgba(91,194,231,1) 0px, rgba(91,194,231,1) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(90deg, rgba(91,194,231,1) 0px, rgba(91,194,231,1) 1px, transparent 1px, transparent 32px)',
-                pointerEvents: 'none',
-              }} />
+                position: 'absolute', right: 'clamp(1rem,3vw,2rem)', top: '50%',
+                transform: 'translateY(-55%)',
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 'clamp(6rem,14vw,10rem)',
+                color: 'rgba(91,194,231,0.045)', lineHeight: 1,
+                pointerEvents: 'none', userSelect: 'none', letterSpacing: '-0.02em',
+              }}>1500+</div>
+
               <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.55rem' }}>
-                    <div style={{ width: 28, height: 2, background: 'linear-gradient(90deg, #5BC2E7, #8DD8F0)' }} />
-                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.6rem,1.2vw,0.68rem)', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.75)' }}>
+                  {/* Eyebrow */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.9rem' }}>
+                    <div style={{ width: 32, height: 2.5, background: 'linear-gradient(90deg, #5BC2E7, #8DD8F0)', borderRadius: 2, flexShrink: 0 }} />
+                    <span style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 'clamp(0.67rem,1.2vw,0.74rem)',
+                      letterSpacing: '0.3em', textTransform: 'uppercase',
+                      color: '#5BC2E7', fontWeight: 700,
+                    }}>
                       {isAr ? ar.nav.heavyLiftSub : 'Bejoice Specialized Services'}
                     </span>
                   </div>
+
+                  {/* Headline — significantly larger */}
                   <h2 style={{
                     fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                    fontSize: 'clamp(1.8rem,5vw,2.8rem)', letterSpacing: '0.04em',
-                    color: '#ffffff', lineHeight: 1, margin: '0 0 0.6rem',
+                    fontSize: 'clamp(2.4rem,6vw,4rem)', letterSpacing: '0.04em',
+                    color: '#ffffff', lineHeight: 0.95, margin: '0 0 1.1rem',
                   }}>
-                    {isAr ? ar.nav.heavyLiftTitle : <>{`Heavy Lift & Project `}<span style={{ color: '#5BC2E7' }}>Logistics</span></>}
+                    {isAr ? ar.nav.heavyLiftTitle : (
+                      <>Heavy Lift &amp; Project{' '}<span style={{ color: '#5BC2E7' }}>Logistics</span></>
+                    )}
                   </h2>
-                  {/* stat chips */}
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                    {(isAr ? ['+1,500 عملية', 'متخصصون ODC', 'شحن OOG', 'مرخص في KSA'] : ['1,500+ Operations', 'ODC Specialists', 'OOG Cargo', 'KSA Licensed']).map(tag => (
+
+                  {/* Stat chips */}
+                  <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap' }}>
+                    {(isAr
+                      ? ['+1,500 عملية', 'متخصصون ODC', 'شحن OOG', 'مرخص في KSA']
+                      : ['1,500+ Operations', 'ODC Specialists', 'OOG Cargo', 'KSA Licensed']
+                    ).map(tag => (
                       <span key={tag} style={{
-                        fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(0.6rem,1.1vw,0.67rem)',
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: 'clamp(0.67rem,1.1vw,0.74rem)',
                         letterSpacing: '0.08em', textTransform: 'uppercase',
-                        color: 'rgba(91,194,231,0.9)', background: 'rgba(91,194,231,0.08)',
-                        border: '1px solid rgba(91,194,231,0.2)', borderRadius: 4,
-                        padding: '3px 8px',
+                        color: 'rgba(91,194,231,0.95)',
+                        background: 'rgba(91,194,231,0.1)',
+                        border: '1px solid rgba(91,194,231,0.28)',
+                        borderRadius: 5, padding: '4px 10px', fontWeight: 600,
                       }}>{tag}</span>
                     ))}
                   </div>
                 </div>
+
+                {/* Close button */}
                 <button
                   onClick={() => setHeavyOpen(false)}
                   style={{
-                    flexShrink: 0, width: 40, height: 40, minHeight: 44, minWidth: 44,
-                    background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '50%', color: 'rgba(255,255,255,0.45)', fontSize: '0.9rem',
+                    flexShrink: 0, width: 44, height: 44, minHeight: 44, minWidth: 44,
+                    background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)',
+                    borderRadius: '50%', color: 'rgba(255,255,255,0.5)', fontSize: '1rem',
                     cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                     transition: 'all 0.2s', marginTop: '0.1rem',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.45)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.35)'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
                 >✕</button>
               </div>
+
+              {/* Separator */}
+              <div style={{
+                height: 1,
+                background: 'linear-gradient(90deg, rgba(91,194,231,0.45) 0%, rgba(91,194,231,0.08) 70%, transparent 100%)',
+                marginTop: 'clamp(1.2rem,3vw,1.8rem)',
+              }} />
             </div>
 
             {/* ── Services ── */}
-            <div style={{ padding: 'clamp(0.6rem,1.5vw,0.9rem) clamp(1.4rem,4vw,2rem)', display: 'flex', flexDirection: 'column', gap: 0 }}>
+            <div style={{ padding: '0 clamp(1rem,3.5vw,1.8rem) clamp(0.5rem,1.5vw,0.8rem)' }}>
               {[
                 {
                   num: '01',
@@ -512,76 +547,90 @@ export default function Nav({ onQuoteClick }) {
               ].map((item, i) => {
                 const arItem = ar.nav.heavyServices[i]
                 return (
-                <div key={i}>
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'clamp(1.8rem,4vw,2.4rem) 1fr',
-                    gap: '0 clamp(0.7rem,1.8vw,1rem)',
-                    alignItems: 'start',
-                    padding: 'clamp(0.6rem,1.4vw,0.8rem) 0',
-                  }}>
-                    {/* number */}
+                  <div
+                    key={i}
+                    style={{
+                      display: 'flex', gap: 'clamp(0.9rem,2.5vw,1.4rem)', alignItems: 'flex-start',
+                      padding: 'clamp(0.9rem,2vw,1.15rem) clamp(0.8rem,2vw,1rem)',
+                      borderRadius: 12, marginBottom: '0.2rem',
+                      borderLeft: '2px solid transparent',
+                      transition: 'background 0.22s ease, border-color 0.22s ease',
+                      cursor: 'default',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.background = 'rgba(91,194,231,0.06)'
+                      e.currentTarget.style.borderLeftColor = 'rgba(91,194,231,0.55)'
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = 'transparent'
+                      e.currentTarget.style.borderLeftColor = 'transparent'
+                    }}
+                  >
+                    {/* Large decorative number */}
                     <div style={{
                       fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                      fontSize: 'clamp(1rem,2.2vw,1.25rem)', lineHeight: 1,
-                      color: 'rgba(91,194,231,0.35)', letterSpacing: '0.04em',
-                      paddingTop: '0.1rem',
+                      fontSize: 'clamp(1.8rem,3.5vw,2.4rem)', lineHeight: 1,
+                      color: 'rgba(91,194,231,0.22)', letterSpacing: '0.04em',
+                      flexShrink: 0, paddingTop: '0.05rem', minWidth: 'clamp(2.2rem,4.5vw,3rem)',
                     }}>{item.num}</div>
-                    {/* content */}
-                    <div>
+
+                    <div style={{ flex: 1 }}>
+                      {/* Service title — much larger */}
                       <div style={{
                         fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                        fontSize: 'clamp(0.9rem,2vw,1.05rem)', letterSpacing: '0.07em',
-                        color: '#f0e6c0', marginBottom: '0.2rem', lineHeight: 1.2,
+                        fontSize: 'clamp(1.1rem,2.3vw,1.4rem)', letterSpacing: '0.09em',
+                        color: '#deeef8', marginBottom: '0.38rem', lineHeight: 1.2,
                       }}>{isAr ? arItem.title : item.title}</div>
+                      {/* Description — larger, more readable */}
                       <div style={{
                         fontFamily: "'DM Sans', sans-serif",
-                        fontSize: 'clamp(0.7rem,1.3vw,0.78rem)',
-                        color: 'rgba(255,255,255,0.55)', lineHeight: 1.5,
+                        fontSize: 'clamp(0.84rem,1.5vw,0.94rem)',
+                        color: 'rgba(255,255,255,0.52)', lineHeight: 1.65,
+                        fontWeight: 400,
                       }}>{isAr ? arItem.desc : item.desc}</div>
                     </div>
                   </div>
-                  {i < 4 && <div style={{ height: 1, background: 'linear-gradient(90deg, rgba(91,194,231,0.18) 0%, rgba(91,194,231,0.04) 100%)' }} />}
-                </div>
-              )})}
+                )
+              })}
             </div>
 
             {/* ── CTA footer ── */}
             <div style={{
-              padding: 'clamp(0.7rem,2vw,1.2rem) clamp(1rem,4vw,2rem) clamp(0.9rem,2.5vw,1.6rem)',
-              borderTop: '1px solid rgba(91,194,231,0.1)',
-              background: 'rgba(91,194,231,0.03)',
+              padding: 'clamp(1rem,2.5vw,1.4rem) clamp(1.4rem,4vw,2rem) clamp(1.2rem,3vw,1.8rem)',
+              borderTop: '1px solid rgba(91,194,231,0.12)',
+              background: 'linear-gradient(0deg, rgba(91,194,231,0.05) 0%, transparent 100%)',
               display: 'flex', gap: '0.75rem', flexWrap: 'wrap',
+              marginTop: '0.5rem',
             }}>
               <button
                 onClick={() => { setHeavyOpen(false); setTimeout(() => openCalPopup(), 300) }}
                 style={{
-                  flex: '1 1 180px', padding: '0.85rem 1.4rem', minHeight: 48,
+                  flex: '1 1 180px', padding: '1rem 1.6rem', minHeight: 52,
                   background: 'linear-gradient(135deg, #5BC2E7 0%, #8DD8F0 50%, #5BC2E7 100%)',
-                  border: 'none', borderRadius: 10, cursor: 'pointer',
+                  border: 'none', borderRadius: 12, cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                  fontSize: 'clamp(0.9rem,2vw,1rem)', letterSpacing: '0.14em',
+                  fontSize: 'clamp(0.95rem,2vw,1.1rem)', letterSpacing: '0.2em',
                   color: '#07101c',
-                  boxShadow: '0 4px 24px rgba(91,194,231,0.25)',
-                  transition: 'transform 0.15s, box-shadow 0.15s',
+                  boxShadow: '0 4px 28px rgba(91,194,231,0.32)',
+                  transition: 'transform 0.18s ease, box-shadow 0.18s ease',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(91,194,231,0.35)' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(91,194,231,0.25)' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 40px rgba(91,194,231,0.48)' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 28px rgba(91,194,231,0.32)' }}
               >
                 {isAr ? ar.nav.bookConsult : 'Book a Consultation →'}
               </button>
               <button
                 onClick={() => { setHeavyOpen(false); const el = document.getElementById('heavy-cargo'); if (el) { if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true }); else el.scrollIntoView({ behavior: 'instant' }) } }}
                 style={{
-                  flex: '1 1 160px', padding: '0.85rem 1.4rem', minHeight: 48,
+                  flex: '1 1 160px', padding: '1rem 1.6rem', minHeight: 52,
                   background: 'transparent',
-                  border: '1px solid rgba(91,194,231,0.3)', borderRadius: 10, cursor: 'pointer',
+                  border: '1.5px solid rgba(91,194,231,0.35)', borderRadius: 12, cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                  fontSize: 'clamp(0.9rem,2vw,1rem)', letterSpacing: '0.14em',
-                  color: 'rgba(91,194,231,0.8)', transition: 'all 0.2s',
+                  fontSize: 'clamp(0.95rem,2vw,1.1rem)', letterSpacing: '0.2em',
+                  color: 'rgba(91,194,231,0.85)', transition: 'all 0.2s ease',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(91,194,231,0.08)'; e.currentTarget.style.borderColor = 'rgba(91,194,231,0.5)'; e.currentTarget.style.color = '#5BC2E7' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(91,194,231,0.3)'; e.currentTarget.style.color = 'rgba(91,194,231,0.8)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(91,194,231,0.09)'; e.currentTarget.style.borderColor = 'rgba(91,194,231,0.6)'; e.currentTarget.style.color = '#8DD8F0' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(91,194,231,0.35)'; e.currentTarget.style.color = 'rgba(91,194,231,0.85)' }}
               >
                 {isAr ? ar.nav.viewSection : 'View Full Section ↓'}
               </button>
