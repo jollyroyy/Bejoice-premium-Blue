@@ -439,6 +439,12 @@ export default function VideoHero({ onQuoteClick }) {
         opacity = Math.min(exitDist / FRAME_FADE, 1)
       }
 
+      // Last chapter (TECHNICAL ENGINEERING) — 1s CSS transition delay on fade-in
+      if (i === CHAPTERS.length - 1) {
+        const entering = opacity > 0 && el.style.opacity === '0'
+        el.style.transition = entering ? 'opacity 0.6s ease 1s, transform 0.6s ease 1s' : ''
+      }
+
       el.style.opacity = String(opacity)
       el.style.transform = `translateY(${Math.round(28 * (1 - opacity))}px)`
       el.style.zIndex = opacity > 0.1 ? '100' : '1'
