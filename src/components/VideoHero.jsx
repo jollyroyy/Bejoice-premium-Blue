@@ -928,7 +928,7 @@ export default function VideoHero({ onQuoteClick }) {
                 {ch.showCTA && (
                   <button
                     className="hero-intro-cta btn-gold"
-                    onClick={onQuoteClick}
+                    onClick={e => { e.stopPropagation(); onQuoteClick?.() }}
                     aria-label={isAr ? 'ابدأ الشحن - احصل على عرض سعر' : 'Start Shipment - Get a Quote'}
                     style={{
                       marginTop:'28px',
@@ -937,8 +937,8 @@ export default function VideoHero({ onQuoteClick }) {
                       fontFamily:"'Bebas Neue',sans-serif",
                       fontSize:'1rem', letterSpacing:'0.18em',
                       padding:'12px 32px', borderRadius:'10px', cursor:'pointer',
-                      pointerEvents:'auto',
-                      zIndex: 10,
+                      pointerEvents:'all',
+                      position:'relative', zIndex: 20,
                     }}
                   >
                     <span style={{ position:'relative', zIndex:2 }}>{isAr ? ar.hero.ctaQuote : 'START SHIPMENT'}</span>

@@ -161,11 +161,11 @@ export default function Nav({ onQuoteClick }) {
           {/* Right side: CTA + Hamburger */}
           <div className="nav-right-wrap" style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px,2vw,16px)' }}>
 
-            {/* CTA — Book a Call */}
+            {/* CTA — Book a Call (hidden after hero scrollytelling) */}
             <button
               onClick={openCalPopup}
               className="btn-gold nav-book-call"
-              style={{ padding: 'clamp(9px,1.5vw,12px) clamp(12px,2.5vw,22px)', whiteSpace: 'nowrap', fontSize: 'clamp(0.75rem,1.1vw,0.95rem)' }}
+              style={{ padding: 'clamp(9px,1.5vw,12px) clamp(12px,2.5vw,22px)', whiteSpace: 'nowrap', fontSize: 'clamp(0.75rem,1.1vw,0.95rem)', opacity: pastHero ? 0 : 1, pointerEvents: pastHero ? 'none' : 'auto', transition: 'opacity 0.4s ease' }}
             >
               <div className="btn-shine-overlay" />
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -178,13 +178,14 @@ export default function Nav({ onQuoteClick }) {
               <span className="sm:hidden">{isAr ? ar.nav.bookCallShort : 'Book a Call'}</span>
             </button>
 
-            {/* Hamburger — premium pill button */}
+            {/* Hamburger — premium pill button (hidden after hero scrollytelling) */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
               className={!menuOpen ? 'hamburger-btn' : ''}
               style={{
                 display: 'flex', alignItems: 'center', gap: '10px',
+                opacity: pastHero ? 0 : 1, pointerEvents: pastHero ? 'none' : 'auto', transition: 'opacity 0.4s ease',
                 padding: 'clamp(8px,1.5vw,10px) clamp(14px,2.5vw,18px) clamp(8px,1.5vw,10px) clamp(10px,2vw,14px)',
                 background: menuOpen ? 'rgba(91,194,231,0.14)' : 'rgba(255,255,255,0.04)',
                 border: `1.5px solid ${menuOpen ? 'rgba(91,194,231,0.7)' : 'rgba(91,194,231,0.45)'}`,
@@ -435,7 +436,7 @@ export default function Nav({ onQuoteClick }) {
 
             {/* ── Header ── */}
             <div style={{
-              padding: 'clamp(0.9rem,2.5vw,1.4rem) clamp(1.2rem,3vw,1.8rem) clamp(0.6rem,1.5vw,0.9rem)',
+              padding: 'clamp(1.4rem,3.5vw,2rem) clamp(1.6rem,4vw,2.4rem) clamp(1rem,2.5vw,1.4rem)',
               position: 'relative', overflow: 'hidden',
             }}>
 <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
@@ -443,8 +444,8 @@ export default function Nav({ onQuoteClick }) {
                   {/* Headline — centered */}
                   <h2 style={{
                     fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                    fontSize: 'clamp(1.9rem,4.5vw,3rem)', letterSpacing: '0.04em',
-                    color: '#ffffff', lineHeight: 0.95, margin: '0 0 0.65rem',
+                    fontSize: 'clamp(2.4rem,6vw,4rem)', letterSpacing: '0.04em',
+                    color: '#ffffff', lineHeight: 0.95, margin: '0 0 1rem',
                     textAlign: 'center',
                   }}>
                     {isAr ? ar.nav.heavyLiftTitle : (
@@ -473,12 +474,12 @@ export default function Nav({ onQuoteClick }) {
               <div style={{
                 height: 1,
                 background: 'linear-gradient(90deg, rgba(91,194,231,0.45) 0%, rgba(91,194,231,0.08) 70%, transparent 100%)',
-                marginTop: 'clamp(0.6rem,1.5vw,0.9rem)',
+                marginTop: 'clamp(1rem,2.5vw,1.4rem)',
               }} />
             </div>
 
             {/* ── Services ── */}
-            <div style={{ padding: '0 clamp(0.8rem,2.5vw,1.4rem) 0.2rem' }}>
+            <div style={{ padding: '0 clamp(1rem,3.5vw,1.8rem) clamp(0.5rem,1.5vw,0.8rem)' }}>
               {[
                 {
                   num: '01',
@@ -511,9 +512,9 @@ export default function Nav({ onQuoteClick }) {
                   <div
                     key={i}
                     style={{
-                      display: 'flex', gap: 'clamp(0.7rem,1.8vw,1rem)', alignItems: 'flex-start',
-                      padding: 'clamp(0.5rem,1.2vw,0.7rem) clamp(0.6rem,1.5vw,0.8rem)',
-                      borderRadius: 10, marginBottom: 0,
+                      display: 'flex', gap: 'clamp(0.9rem,2.5vw,1.4rem)', alignItems: 'flex-start',
+                      padding: 'clamp(0.85rem,2vw,1.1rem) clamp(0.8rem,2vw,1rem)',
+                      borderRadius: 12, marginBottom: '0.2rem',
                       borderLeft: '2px solid transparent',
                       transition: 'background 0.22s ease, border-color 0.22s ease',
                       cursor: 'default',
@@ -527,26 +528,26 @@ export default function Nav({ onQuoteClick }) {
                       e.currentTarget.style.borderLeftColor = 'transparent'
                     }}
                   >
-                    {/* Decorative number */}
+                    {/* Large decorative number */}
                     <div style={{
                       fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                      fontSize: 'clamp(1.2rem,2.5vw,1.6rem)', lineHeight: 1,
+                      fontSize: 'clamp(1.8rem,3.5vw,2.4rem)', lineHeight: 1,
                       color: 'rgba(91,194,231,0.22)', letterSpacing: '0.04em',
-                      flexShrink: 0, paddingTop: '0.05rem', minWidth: 'clamp(1.6rem,3.2vw,2.2rem)',
+                      flexShrink: 0, paddingTop: '0.05rem', minWidth: 'clamp(2.2rem,4.5vw,3rem)',
                     }}>{item.num}</div>
 
                     <div style={{ flex: 1 }}>
                       {/* Service title */}
                       <div style={{
                         fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                        fontSize: 'clamp(1.05rem,2.1vw,1.3rem)', letterSpacing: '0.09em',
-                        color: '#deeef8', marginBottom: '0.18rem', lineHeight: 1.2,
+                        fontSize: 'clamp(1.1rem,2.3vw,1.4rem)', letterSpacing: '0.09em',
+                        color: '#deeef8', marginBottom: '0.35rem', lineHeight: 1.2,
                       }}>{isAr ? arItem.title : item.title}</div>
-                      {/* Description — +2 font size */}
+                      {/* Description — increased by 2 for readability */}
                       <div style={{
                         fontFamily: "'DM Sans', sans-serif",
                         fontSize: 'clamp(0.97rem,1.7vw,1.06rem)',
-                        color: 'rgba(255,255,255,0.55)', lineHeight: 1.55,
+                        color: 'rgba(255,255,255,0.55)', lineHeight: 1.62,
                         fontWeight: 400,
                       }}>{isAr ? arItem.desc : item.desc}</div>
                     </div>
@@ -557,15 +558,16 @@ export default function Nav({ onQuoteClick }) {
 
             {/* ── CTA footer ── */}
             <div style={{
-              padding: 'clamp(0.7rem,1.5vw,0.9rem) clamp(1rem,3vw,1.6rem) clamp(0.9rem,2vw,1.2rem)',
+              padding: 'clamp(0.9rem,2.5vw,1.3rem) clamp(1.4rem,4vw,2rem) clamp(1.1rem,2.5vw,1.6rem)',
               borderTop: '1px solid rgba(91,194,231,0.12)',
               background: 'linear-gradient(0deg, rgba(91,194,231,0.05) 0%, transparent 100%)',
-              display: 'flex', gap: '0.6rem', flexWrap: 'wrap',
+              display: 'flex', gap: '0.75rem', flexWrap: 'wrap',
+              marginTop: '0.4rem',
             }}>
               <button
                 onClick={() => { setHeavyOpen(false); setTimeout(() => openCalPopup(), 300) }}
                 style={{
-                  flex: '1 1 160px', padding: '0.75rem 1.4rem', minHeight: 44,
+                  flex: '1 1 180px', padding: '1rem 1.6rem', minHeight: 52,
                   background: 'linear-gradient(135deg, #5BC2E7 0%, #8DD8F0 50%, #5BC2E7 100%)',
                   border: 'none', borderRadius: 12, cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
@@ -582,7 +584,7 @@ export default function Nav({ onQuoteClick }) {
               <button
                 onClick={() => { setHeavyOpen(false); const el = document.getElementById('heavy-cargo'); if (el) { if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true }); else el.scrollIntoView({ behavior: 'instant' }) } }}
                 style={{
-                  flex: '1 1 140px', padding: '0.75rem 1.4rem', minHeight: 44,
+                  flex: '1 1 160px', padding: '1rem 1.6rem', minHeight: 52,
                   background: 'transparent',
                   border: '1.5px solid rgba(91,194,231,0.35)', borderRadius: 12, cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,

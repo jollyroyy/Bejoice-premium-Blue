@@ -730,8 +730,6 @@ body {
   }
   /* Footer logo — smaller on tablet */
   footer img[alt="Bejoice"] { height: 120px !important; }
-  /* Prevent any section from overflowing sideways */
-  section, main > div { max-width: 100vw !important; }
 }
 
 /* ── SMALL TABLET / LARGE PHONE (481–640px): tighter grids ── */
