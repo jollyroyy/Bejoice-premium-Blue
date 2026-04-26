@@ -444,7 +444,7 @@ export default function VideoHero({ onQuoteClick }) {
       }
 
       el.style.opacity = String(opacity)
-      el.style.transform = `translateY(${28 * (1 - opacity)}px)`
+      el.style.transform = `translateY(${Math.round(28 * (1 - opacity))}px)`
       el.style.zIndex = opacity > 0.1 ? '100' : '1'
     }
   }, [])
@@ -504,7 +504,11 @@ export default function VideoHero({ onQuoteClick }) {
     ctx.imageSmoothingEnabled = true
     ctx.imageSmoothingQuality = 'high'
 
+    // Apply colour correction inside the canvas draw call — avoids CSS filter
+    // which forces software compositing on integrated GPUs (causes flickering)
+    ctx.filter = 'contrast(1.12) saturate(1.2) brightness(1.02)'
     ctx.drawImage(img, x, y, w, h)
+    ctx.filter = 'none'
   }, [])
 
   // ── Progressive frame loader ──────────────────────────────────────
@@ -746,7 +750,8 @@ export default function VideoHero({ onQuoteClick }) {
           willChange:'transform',
           transform: 'translateZ(0)',
           WebkitTransform: 'translateZ(0)',
-          filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
           background:'#183650',
         }} />
 
@@ -763,7 +768,6 @@ export default function VideoHero({ onQuoteClick }) {
             position:'absolute', inset:0, zIndex:2,
             width:'100%', height:'100%',
             objectFit:'cover',
-            filter: 'contrast(1.12) saturate(1.2) brightness(1.02)',
             transition:'opacity 0.4s ease',
             willChange:'opacity',
           }}
@@ -840,7 +844,7 @@ export default function VideoHero({ onQuoteClick }) {
                    The RAF owns opacity from then on. */
                 pointerEvents: 'none',
                 zIndex: 10,
-                willChange: 'opacity, transform',
+                willChange: 'opacity',
                 transition: 'none',
               }}
             >
