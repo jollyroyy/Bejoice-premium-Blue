@@ -745,6 +745,8 @@ export default function VideoHero({ onQuoteClick }) {
     <div ref={wrapperRef} id="hero" style={{ height:`${SCROLL_HEIGHT}vh`, position:'relative' }}>
       {/* Scroll anchor for Nav/Footer redirection to the 3D Globe section */}
       <div id="globe" style={{ position: 'absolute', top: '16.5%', width: 1, height: 1, pointerEvents: 'none' }} />
+      {/* Globe mid anchor — midpoint of globe chapter (frame ~177/791 × 2000vh ≈ 22.4%) */}
+      <div id="globe-mid" style={{ position: 'absolute', top: '22.4%', width: 1, height: 1, pointerEvents: 'none' }} />
 
       {/* ── STICKY VIEWPORT ── */}
       <div className="hero-sticky-viewport" style={{ position:'sticky', top:0, height:'100vh', overflow:'hidden' }}>

@@ -211,8 +211,27 @@ export default function Footer() {
               <ul className="space-y-3">
                 {items.map(item => (
                   <li key={item}>
-                    <a 
-                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : item === 'Why Bejoice' ? '#why-us' : item === 'Certifications' ? '#certifications' : item === 'Our Offices' ? '#globe' : item === 'Key Markets' ? '#markets' : item === 'About Bejoice' ? '#hero' : '#'}
+                    {item === 'Key Markets' ? (
+                      /* Replace Key Markets text with Bejoice wings logo → globe mid */
+                      <a
+                        href="#globe-mid"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          const el = document.getElementById('globe-mid')
+                          if (el) {
+                            if (window.__lenis) window.__lenis.scrollTo(el, { offset: 0, immediate: true })
+                            else el.scrollIntoView({ behavior: 'instant' })
+                          }
+                        }}
+                        style={{ display: 'inline-block', opacity: 0.88, transition: 'opacity 0.3s' }}
+                        onMouseEnter={e => e.currentTarget.style.opacity = '1'}
+                        onMouseLeave={e => e.currentTarget.style.opacity = '0.88'}
+                      >
+                        <img src={logoSrc} alt="Bejoice Globe" style={{ height: '60px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+                      </a>
+                    ) : (
+                    <a
+                      href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : item === 'Why Bejoice' ? '#why-us' : item === 'Certifications' ? '#certifications' : item === 'Our Offices' ? '#globe' : item === 'About Bejoice' ? '#hero' : '#'}
                       onClick={(e) => {
                         const targets = {
                           'Get a Quote': 'contact',
@@ -220,7 +239,6 @@ export default function Footer() {
                           'Certifications': 'certifications',
                           'Why Bejoice': 'why-us',
                           'Our Offices': 'globe',
-                          'Key Markets': 'markets',
                           'About Bejoice': 'hero',
                         }
                         const targetId = targets[item]
@@ -239,6 +257,7 @@ export default function Footer() {
                       onMouseEnter={e => e.target.style.color = '#ffffff'}
                       onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.90)'}
                     >{isAr ? (ar.footer.links[item] || item) : item}</a>
+                    )}
                   </li>
                 ))}
               </ul>
