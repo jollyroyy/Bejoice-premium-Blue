@@ -382,10 +382,6 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="absolute bottom-0 right-0 select-none pointer-events-none overflow-hidden"
-          style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(60px,12vw,120px)', lineHeight: 1, letterSpacing: '0.05em', color: 'rgba(255,255,255,0.02)' }}>
-          BEJOICE
-        </div>
       </div>
 
       {openPolicy && <PolicyModal title={openPolicy} onClose={() => setOpenPolicy(null)} />}
