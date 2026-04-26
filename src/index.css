@@ -27,6 +27,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-feature-settings: 'kern' 1, 'liga' 1;
+  /* Match body so iOS/Android overscroll never shows a different colour */
+  background: #183650;
+  /* Contain overscroll bounce so the area behind the page stays hidden */
+  overscroll-behavior-y: none;
 }
 img {
   image-rendering: -webkit-optimize-contrast;
@@ -182,6 +186,22 @@ html { scroll-behavior: auto; }
   .hero-sticky-viewport { height: 100svh !important; }
 }
 
+/* ── PATCH ELIMINATION — safe-area & overscroll ──────────────────────────────
+   On notched phones (iPhone X+, Android notch), the canvas/hero base must
+   bleed into the safe area. We do this by extending the hero wrapper's dark
+   base colour into the surrounding whitespace rather than expanding content. */
+#hero {
+  /* Extends the dark base behind the iOS notch / Android punch-hole */
+  background: #183650;
+}
+/* On mobile, fill the footer background all the way to the bottom edge so
+   the home-indicator safe area matches rather than showing a gap. */
+@media (max-width: 1024px) {
+  #root {
+    background: #183650;
+  }
+}
+
 body {
   background: var(--obsidian);
   color: var(--cream);
@@ -189,12 +209,18 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Cinematic Vignette for all sections */
+  overscroll-behavior-y: none;
+  /* Cinematic Vignette for all sections — desktop only */
   background-image: radial-gradient(circle at center, rgba(24, 54, 80, 0) 0%, rgba(16, 36, 58, 0.5) 100%);
   background-attachment: fixed;
 }
 @media (max-width: 1024px) {
-  body { background-attachment: scroll; }
+  body {
+    background-attachment: scroll;
+    /* Strip the gradient on mobile — solid #183650 only so overscroll
+       never reveals a mismatched shade at the top or bottom */
+    background-image: none;
+  }
 }
 
 /* ── SCROLLBAR ── */
