@@ -212,7 +212,7 @@ export default function Footer() {
                 {items.map(item => (
                   <li key={item}>
                     {item === 'Key Markets' ? (
-                      /* Replace Key Markets text with Bejoice wings logo → globe mid */
+                      /* Bejoice Wings text link → globe mid */
                       <a
                         href="#globe-mid"
                         onClick={(e) => {
@@ -223,11 +223,11 @@ export default function Footer() {
                             else el.scrollIntoView({ behavior: 'instant' })
                           }
                         }}
-                        style={{ display: 'inline-block', opacity: 0.88, transition: 'opacity 0.3s' }}
-                        onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-                        onMouseLeave={e => e.currentTarget.style.opacity = '0.88'}
+                        style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.90)', textDecoration: 'none', transition: 'color 0.3s' }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#ffffff'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.90)'}
                       >
-                        <img src={logoSrc} alt="Bejoice Globe" style={{ height: '60px', width: 'auto', objectFit: 'contain', display: 'block' }} />
+                        Bejoice Wings
                       </a>
                     ) : (
                     <a

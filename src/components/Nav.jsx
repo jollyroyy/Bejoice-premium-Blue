@@ -175,33 +175,58 @@ export default function Nav({ onQuoteClick }) {
               <span className="sm:hidden">{isAr ? ar.nav.bookCallShort : 'Book a Call'}</span>
             </button>
 
-            {/* Hamburger — premium pill button (hidden after hero scrollytelling) */}
+            {/* Explore button — premium glass pill with gradient border */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
-              className=""
+              className="explore-btn"
               style={{
-                display: 'flex', alignItems: 'center', gap: '10px',
-                opacity: pastHero ? 0 : 1, pointerEvents: pastHero ? 'none' : 'auto', transition: 'opacity 0.4s ease',
-                padding: 'clamp(8px,1.5vw,10px) clamp(14px,2.5vw,18px) clamp(8px,1.5vw,10px) clamp(10px,2vw,14px)',
-                background: menuOpen ? 'rgba(91,194,231,0.14)' : 'rgba(255,255,255,0.04)',
-                border: `1.5px solid ${menuOpen ? 'rgba(91,194,231,0.7)' : 'rgba(91,194,231,0.45)'}`,
-                borderRadius: '100px', cursor: 'pointer', zIndex: 60,
-                transition: 'all 0.3s cubic-bezier(0.23,1,0.32,1)',
-                boxShadow: menuOpen ? '0 0 24px rgba(91,194,231,0.25), inset 0 1px 0 rgba(91,194,231,0.15)' : undefined,
-                backdropFilter: 'blur(8px)',
+                display: 'flex', alignItems: 'center', gap: '8px',
+                opacity: pastHero ? 0 : 1, pointerEvents: pastHero ? 'none' : 'auto',
+                padding: 'clamp(8px,1.5vw,11px) clamp(16px,2.5vw,22px)',
+                background: menuOpen
+                  ? 'linear-gradient(135deg, rgba(91,194,231,0.18) 0%, rgba(0,125,186,0.14) 100%)'
+                  : 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(91,194,231,0.04) 100%)',
+                border: 'none', borderRadius: '100px', cursor: 'pointer', zIndex: 60,
+                position: 'relative', overflow: 'visible',
+                backdropFilter: 'blur(12px)',
+                boxShadow: menuOpen
+                  ? '0 0 28px rgba(91,194,231,0.3), inset 0 1px 0 rgba(255,255,255,0.12)'
+                  : '0 2px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06)',
+                outline: `1.5px solid ${menuOpen ? 'rgba(91,194,231,0.75)' : 'rgba(91,194,231,0.35)'}`,
+                transition: 'all 0.35s cubic-bezier(0.23,1,0.32,1)',
               }}
-              onMouseEnter={e => { if (!menuOpen) { e.currentTarget.style.background = 'rgba(91,194,231,0.1)'; e.currentTarget.style.borderColor = 'rgba(91,194,231,0.7)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(91,194,231,0.2)' } }}
-              onMouseLeave={e => { if (!menuOpen) { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(91,194,231,0.45)'; e.currentTarget.style.boxShadow = '0 0 0 rgba(91,194,231,0)' } }}
+              onMouseEnter={e => {
+                if (!menuOpen) {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(91,194,231,0.13) 0%, rgba(0,125,186,0.1) 100%)'
+                  e.currentTarget.style.outline = '1.5px solid rgba(91,194,231,0.7)'
+                  e.currentTarget.style.boxShadow = '0 0 24px rgba(91,194,231,0.22), inset 0 1px 0 rgba(255,255,255,0.1)'
+                }
+              }}
+              onMouseLeave={e => {
+                if (!menuOpen) {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(91,194,231,0.04) 100%)'
+                  e.currentTarget.style.outline = '1.5px solid rgba(91,194,231,0.35)'
+                  e.currentTarget.style.boxShadow = '0 2px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06)'
+                }
+              }}
             >
+              {/* Compass icon */}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, opacity: menuOpen ? 1 : 0.75, transition: 'opacity 0.3s, transform 0.4s cubic-bezier(0.23,1,0.32,1)', transform: menuOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}>
+                <circle cx="12" cy="12" r="9" stroke="#5BC2E7" strokeWidth="1.5"/>
+                <path d="M16.24 7.76l-3.18 7.07-3.88-3.88 7.06-3.19z" fill="#5BC2E7" opacity="0.9"/>
+              </svg>
               <span style={{
                 fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: '15px',
-                letterSpacing: '0.28em',
+                fontSize: 'clamp(13px,1.3vw,15px)',
+                letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: '#ffffff',
-                transition: 'color 0.3s ease',
+                background: menuOpen ? 'linear-gradient(90deg, #5BC2E7, #ffffff)' : 'linear-gradient(90deg, #ffffff, rgba(255,255,255,0.85))',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
                 lineHeight: 1,
+                transition: 'all 0.3s ease',
               }}>
                 {menuOpen ? (isAr ? ar.nav.close : 'Close') : (isAr ? ar.nav.explore : 'Explore')}
               </span>
