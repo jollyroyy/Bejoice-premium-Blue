@@ -438,17 +438,7 @@ export default function Nav({ onQuoteClick }) {
               padding: 'clamp(1.6rem,4vw,2.4rem) clamp(1.6rem,4vw,2.4rem) clamp(1.2rem,3vw,1.8rem)',
               position: 'relative', overflow: 'hidden',
             }}>
-              {/* Large watermark — decorative */}
-              <div style={{
-                position: 'absolute', right: 'clamp(1rem,3vw,2rem)', top: '50%',
-                transform: 'translateY(-55%)',
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: 'clamp(6rem,14vw,10rem)',
-                color: 'rgba(91,194,231,0.045)', lineHeight: 1,
-                pointerEvents: 'none', userSelect: 'none', letterSpacing: '-0.02em',
-              }}>1500+</div>
-
-              <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
+<div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
                 <div style={{ flex: 1 }}>
                   {/* Headline — centered */}
                   <h2 style={{
