@@ -540,14 +540,14 @@ export default function Nav({ onQuoteClick }) {
                       {/* Service title */}
                       <div style={{
                         fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                        fontSize: 'clamp(1.1rem,2.3vw,1.4rem)', letterSpacing: '0.09em',
+                        fontSize: 'clamp(1.22rem,2.5vw,1.55rem)', letterSpacing: '0.09em',
                         color: '#deeef8', marginBottom: '0.35rem', lineHeight: 1.2,
                       }}>{isAr ? arItem.title : item.title}</div>
-                      {/* Description — increased by 2 for readability */}
+                      {/* Description */}
                       <div style={{
                         fontFamily: "'DM Sans', sans-serif",
-                        fontSize: 'clamp(0.97rem,1.7vw,1.06rem)',
-                        color: 'rgba(255,255,255,0.55)', lineHeight: 1.62,
+                        fontSize: 'clamp(1.09rem,1.9vw,1.19rem)',
+                        color: 'rgba(255,255,255,0.6)', lineHeight: 1.6,
                         fontWeight: 400,
                       }}>{isAr ? arItem.desc : item.desc}</div>
                     </div>
