@@ -87,11 +87,8 @@ export default function Nav({ onQuoteClick }) {
 
   const scrollToTop = () => {
     setMenuOpen(false)
-    const el = document.getElementById('globe')
-    if (el) {
-      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
-      else el.scrollIntoView({ behavior: 'instant' })
-    }
+    if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.6 })
+    else window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleQuote = () => {
