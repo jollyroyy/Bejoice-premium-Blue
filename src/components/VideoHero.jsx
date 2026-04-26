@@ -355,8 +355,8 @@ function FreightCalcCard() {
   const handleOpen = () => {
     const el = document.getElementById('tools')
     if (el) {
-      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, duration: 1.6 })
-      else el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true })
+      else el.scrollIntoView({ behavior: 'instant', block: 'start' })
     }
   }
 
@@ -442,7 +442,7 @@ export default function VideoHero({ onQuoteClick }) {
       // Last chapter (TECHNICAL ENGINEERING) — 1s CSS transition delay on fade-in
       if (i === CHAPTERS.length - 1) {
         const entering = opacity > 0 && el.style.opacity === '0'
-        el.style.transition = entering ? 'opacity 0.6s ease 5s, transform 0.6s ease 5s' : ''
+        el.style.transition = entering ? 'opacity 0.6s ease 6s, transform 0.6s ease 6s' : ''
       }
 
       el.style.opacity = String(opacity)
