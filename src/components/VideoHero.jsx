@@ -419,9 +419,6 @@ export default function VideoHero({ onQuoteClick }) {
   const framesRef       = useRef([])     // decoded Image objects
   const lastIdxRef      = useRef(-1)     // last drawn frame index
   const kickRenderRef   = useRef(null)   // fn to restart RAF when a frame loads late
-  // Timer state for TECHNICAL ENGINEERING chapter (last chapter) 3s reveal delay
-  const techRevealRef   = useRef({ timer: null, revealed: false, wasActive: false })
-
   // ── Chapter opacity driven by exact frame index (hardcoded to footage) ──
   const applyProgress = useCallback((frameIdx) => {
     for (let i = 0; i < CHAPTERS.length; i++) {
@@ -440,32 +437,6 @@ export default function VideoHero({ onQuoteClick }) {
         // Only fade out at the end, don't fade in at the start
         const exitDist = Math.max(0, end - frameIdx)
         opacity = Math.min(exitDist / FRAME_FADE, 1)
-      }
-
-      // TECHNICAL ENGINEERING chapter (last) — 3-second reveal delay
-      if (i === CHAPTERS.length - 1) {
-        const tr = techRevealRef.current
-        if (opacity > 0) {
-          if (!tr.wasActive) {
-            // Just entered chapter — start 3s timer
-            tr.wasActive = true
-            tr.revealed  = false
-            tr.timer = setTimeout(() => {
-              tr.revealed = true
-              // Kick the RAF loop so applyProgress re-runs and shows the heading
-              if (kickRenderRef.current) kickRenderRef.current()
-            }, 3000)
-          }
-          if (!tr.revealed) opacity = 0  // hold invisible until timer fires
-        } else {
-          // Left chapter — reset so delay applies again on re-entry
-          if (tr.wasActive) {
-            tr.wasActive = false
-            tr.revealed  = false
-            clearTimeout(tr.timer)
-            tr.timer = null
-          }
-        }
       }
 
       el.style.opacity = String(opacity)
