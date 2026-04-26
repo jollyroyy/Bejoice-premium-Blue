@@ -116,7 +116,7 @@ const CHAPTERS = [
   // ── bejoice_truck: 211–355 ──
   {
     frameRange: [211, 285],
-    eyebrow:    'SPECIALIZED CARGO HANDLING',
+    eyebrow:    'PROJECTS & HEAVY LIFT',
     headline:   ['FROM BLUE PRINT TO DELIVERY,', 'WE MOVE IT ALL'],
     sub:        'Seamless cross-border land transport across the GCC — powered by a modern fleet connecting Saudi Arabia to every regional hub.',
     align:      'right',
@@ -124,7 +124,7 @@ const CHAPTERS = [
   // ── port: 356–524 ──
   {
     frameRange: [296, 385],
-    eyebrow:    'OCEAN FREIGHT · FCL · LCL · BREAKBULK · REEFER · DG · OOG',
+    eyebrow:    'FCL · LCL · BREAKBULK · REEFER · DG · OOG',
     headline:   ['NAVIGATING OCEANS.', 'DELIVERING CONFIDENCE'],
     sub:        'Full-spectrum sea freight — containerized, breakbulk, consolidated, reefer, dangerous goods, and out-of-gauge cargo handled end to end.',
     align:      'left',
@@ -506,8 +506,12 @@ export default function VideoHero({ onQuoteClick }) {
     ctx.imageSmoothingQuality = 'high'
 
     // ctx.save/restore ensures filter state never leaks between frames
+    // 'filter' in ctx guard: iOS Safari ≤15 does NOT support Canvas 2D filter API
+    // — setting it without checking causes silent canvas failure on iPhone
     ctx.save()
-    ctx.filter = 'contrast(1.12) saturate(1.2) brightness(1.02)'
+    if ('filter' in ctx) {
+      ctx.filter = 'contrast(1.12) saturate(1.2) brightness(1.02)'
+    }
     ctx.drawImage(img, x, y, w, h)
     ctx.restore()
   }, [])
