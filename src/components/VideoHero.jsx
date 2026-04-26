@@ -1004,11 +1004,11 @@ export default function VideoHero({ onQuoteClick }) {
         {/* ── Bottom bar — track card + stats ── */}
         <div ref={heroCardsRef} className="hero-bottom-bar" style={{
           position:'absolute', bottom:'clamp(24px,5vh,60px)', left:0, right:0, zIndex:5,
-          display:'flex', flexWrap:'nowrap', gap:'clamp(8px,1.5vw,24px)',
+          display:'flex', flexWrap:'nowrap', gap:'clamp(4px,0.6vw,10px)',
           alignItems:'stretch', justifyContent:'center',
-          padding:'0 clamp(0.75rem,3vw,4rem)', pointerEvents:'all',
+          padding:'0 clamp(0.5rem,2vw,2rem)', pointerEvents:'all',
         }}>
-          <div style={{ display:'flex', gap:'clamp(8px,1.2vw,16px)', flex:'1 1 0', minWidth:0, alignItems:'stretch', overflow:'hidden' }}>
+          <div style={{ display:'flex', gap:'clamp(4px,0.5vw,8px)', flex:'0 0 auto', alignItems:'stretch' }}>
             <div className="hero-track-wrap" style={{ flex:'0 1 auto', minWidth:0, display:'flex', alignItems:'stretch' }}>
               <TrackCard />
             </div>
@@ -1018,7 +1018,7 @@ export default function VideoHero({ onQuoteClick }) {
           </div>
 
           <div className="hero-stats-bar" style={{
-            flex:'0 0 auto', display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'stretch',
+            flex:'0 0 auto', position:'relative', display:'flex', flexDirection:'row', flexWrap:'nowrap', alignItems:'stretch',
             background:'rgba(10, 10, 14, 0.55)',
             border:'1px solid rgba(91, 194, 231, 0.12)', borderRadius:'14px',
             backdropFilter:'blur(40px)', WebkitBackdropFilter:'blur(40px)',
