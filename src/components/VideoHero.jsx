@@ -450,7 +450,11 @@ export default function VideoHero({ onQuoteClick }) {
             // Just entered chapter — start 3s timer
             tr.wasActive = true
             tr.revealed  = false
-            tr.timer = setTimeout(() => { tr.revealed = true }, 3000)
+            tr.timer = setTimeout(() => {
+              tr.revealed = true
+              // Kick the RAF loop so applyProgress re-runs and shows the heading
+              if (kickRenderRef.current) kickRenderRef.current()
+            }, 3000)
           }
           if (!tr.revealed) opacity = 0  // hold invisible until timer fires
         } else {
