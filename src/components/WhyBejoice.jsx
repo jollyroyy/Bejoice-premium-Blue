@@ -124,7 +124,7 @@ export default function WhyBejoice() {
               textShadow: '0 0 20px rgba(91,194,231,0.5)',
               fontWeight: 700, marginBottom: '0.8rem',
             }}>
-              Moving Trade Beyond Borders
+              {isAr ? ar.whyBejoice.movingTrade : 'Moving Trade Beyond Borders'}
             </div>
             <motion.h2
               className="no-reveal"
@@ -164,13 +164,26 @@ export default function WhyBejoice() {
               lineHeight: 1.85, margin: 0,
               maxWidth: '72ch', marginLeft: 'auto', marginRight: 'auto',
               textAlign: 'center',
+              direction: isAr ? 'rtl' : 'ltr',
             }}>
-              Bejoice is a dynamic freight forwarding company focused on moving cargo with precision, speed,
-              and reliability across key international trade lanes, with a strong and growing emphasis on
-              <span style={{ color: '#5BC2E7', fontWeight: 600 }}> Saudi Arabia's rapidly expanding logistics sector</span>.
-              With our HQ in Dubai and established operations in Saudi Arabia, China, and India, Bejoice
-              is strategically positioned to support the Kingdom's vision of becoming a global logistics
-              hub under <span style={{ color: '#5BC2E7', fontWeight: 600 }}>Vision 2030</span>.
+              {isAr ? (
+                <>
+                  {ar.whyBejoice.desc1}{' '}
+                  <span style={{ color: '#5BC2E7', fontWeight: 600 }}>{ar.whyBejoice.desc1Highlight}</span>
+                  {'. '}{ar.whyBejoice.desc1Mid}{' '}
+                  <span style={{ color: '#5BC2E7', fontWeight: 600 }}>{ar.whyBejoice.desc1Vision}</span>
+                  {'.'}
+                </>
+              ) : (
+                <>
+                  Bejoice is a dynamic freight forwarding company focused on moving cargo with precision, speed,
+                  and reliability across key international trade lanes, with a strong and growing emphasis on
+                  <span style={{ color: '#5BC2E7', fontWeight: 600 }}> Saudi Arabia's rapidly expanding logistics sector</span>.
+                  With our HQ in Dubai and established operations in Saudi Arabia, China, and India, Bejoice
+                  is strategically positioned to support the Kingdom's vision of becoming a global logistics
+                  hub under <span style={{ color: '#5BC2E7', fontWeight: 600 }}>Vision 2030</span>.
+                </>
+              )}
             </p>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
@@ -179,11 +192,9 @@ export default function WhyBejoice() {
               lineHeight: 1.85, margin: '1.2rem 0 0',
               maxWidth: '72ch', marginLeft: 'auto', marginRight: 'auto',
               textAlign: 'center',
+              direction: isAr ? 'rtl' : 'ltr',
             }}>
-              We specialize in heavy lift and project cargo, where planning, execution, and safety are
-              critical. Every movement is carefully engineered with coordination, control, and full
-              accountability from origin to final delivery — supporting the Kingdom's mega projects
-              and industrial growth requirements.
+              {isAr ? ar.whyBejoice.desc2 : 'We specialize in heavy lift and project cargo, where planning, execution, and safety are critical. Every movement is carefully engineered with coordination, control, and full accountability from origin to final delivery — supporting the Kingdom\'s mega projects and industrial growth requirements.'}
             </p>
           </motion.div>
 
@@ -201,7 +212,7 @@ export default function WhyBejoice() {
                 fontWeight:800, letterSpacing:'0.35em', textTransform:'uppercase',
                 color:'#5BC2E7', textShadow:'0 0 20px rgba(91,194,231,0.6)',
               }}>
-                Our Capabilities
+                {isAr ? ar.whyBejoice.ourCapabilities : 'Our Capabilities'}
               </span>
               <div style={{ width:40, height:2, background:'linear-gradient(90deg, #5BC2E7, transparent)', borderRadius:1 }} />
             </div>
@@ -211,7 +222,7 @@ export default function WhyBejoice() {
               gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))',
               gap: 0,
             }}>
-              {CAPABILITIES.map((cap, i) => (
+              {(isAr ? CAPABILITIES.map((cap, idx) => ({ ...cap, title: ar.whyBejoice.capabilities[idx].title, desc: ar.whyBejoice.capabilities[idx].desc })) : CAPABILITIES).map((cap, i) => (
                 <motion.div
                   key={cap.title}
                   initial={{ opacity: 0, y: 18 }}
@@ -288,7 +299,7 @@ export default function WhyBejoice() {
                   fontWeight:800, letterSpacing:'0.35em', textTransform:'uppercase',
                   color:'#5BC2E7', textShadow:'0 0 20px rgba(91,194,231,0.6)',
                 }}>
-                  Founding Members — Bejoice KSA
+                  {isAr ? ar.whyBejoice.foundingMembers : 'Founding Members — Bejoice KSA'}
                 </span>
                 <div style={{ width:40, height:2, background:'linear-gradient(90deg, #5BC2E7, transparent)', borderRadius:1 }} />
               </div>
