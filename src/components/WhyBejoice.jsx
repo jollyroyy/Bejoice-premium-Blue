@@ -381,7 +381,7 @@ export default function WhyBejoice() {
                   {/* Role */}
                   <div style={{
                     fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 'clamp(11px,1.15vw,13px)',
+                    fontSize: 'clamp(13px,1.35vw,16px)',
                     fontWeight: 600, letterSpacing: '0.12em',
                     textTransform: 'uppercase',
                     color: 'rgba(91,194,231,0.75)',
