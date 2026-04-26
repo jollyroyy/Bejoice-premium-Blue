@@ -82,7 +82,7 @@ export default function WhyBejoice() {
       className="relative pt-6 pb-16 md:pt-10 md:pb-24 lg:pt-14 lg:pb-32 px-4 md:px-10 lg:px-20"
       style={{ background: '#183650' }}
     >
-      <SparklesCore background="transparent" minSize={0.5} maxSize={1.8} particleDensity={45} particleColor="rgba(91,194,231,0.8)" speed={0.6} className="absolute inset-0 w-full h-full pointer-events-none" />
+      <SparklesCore background="transparent" minSize={0.5} maxSize={1.4} particleDensity={10} particleColor="rgba(91,194,231,0.7)" speed={0.3} className="absolute inset-0 w-full h-full pointer-events-none" />
       <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(91,194,231,0.06) 0%, transparent 60%)' }} />
 
       <div className="max-w-5xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
@@ -94,7 +94,7 @@ export default function WhyBejoice() {
           transition={{ type: 'spring', stiffness: 80, damping: 20 }}
           style={{
             background: 'linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 50%, rgba(91,194,231,0.02) 100%)',
-            backdropFilter: 'blur(32px)', WebkitBackdropFilter: 'blur(32px)',
+            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
             border: '1px solid rgba(91,194,231,0.28)',
             borderTop: '1px solid rgba(91,194,231,0.55)',
             borderRadius: 24,
@@ -128,16 +128,16 @@ export default function WhyBejoice() {
             </div>
             <motion.h2
               className="no-reveal"
-              initial={{ x: -70, opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
-              animate={isInView ? { x: 0, opacity: 1, clipPath: 'inset(0 0% 0 0)' } : {}}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
               style={{
                 fontFamily: "'Bebas Neue', sans-serif",
                 fontSize: 'clamp(3rem,7vw,6rem)',
                 letterSpacing: '0.07em', lineHeight: 1,
                 margin: 0,
                 color: '#ffffff',
-                filter: 'drop-shadow(0 0 30px rgba(91,194,231,0.3))',
+                filter: 'none',
               }}
             >
               {isAr ? (
@@ -243,22 +243,10 @@ export default function WhyBejoice() {
                     borderBottom: i < 3 ? '1px solid rgba(91,194,231,0.06)' : 'none',
                     display: 'flex', gap: 'clamp(0.6rem,1vw,0.8rem)',
                     alignItems: 'flex-start',
-                    transition: 'all 0.4s cubic-bezier(0.33, 1, 0.68, 1)',
                     cursor: 'default',
-                    zIndex: 1,
                   }}
-                  whileHover={{ 
-                    scale: 1.1, 
-                    y: -18,
-                    backgroundColor: 'rgba(91,194,231,0.12)',
-                    boxShadow: '0 30px 60px rgba(0,0,0,0.45)',
-                    zIndex: 10,
-                  }}
-                  transition={{ 
-                    type: 'spring', 
-                    stiffness: 1000, 
-                    damping: 40 
-                  }}
+                  whileHover={{ backgroundColor: 'rgba(91,194,231,0.08)' }}
+                  transition={{ delay: 0.4 + i * 0.08, duration: 0.5, ease: [0.16,1,0.3,1] }}
                 >
                   {/* Icon badge */}
                   <div style={{
@@ -328,18 +316,8 @@ export default function WhyBejoice() {
                   initial={{ opacity: 0, y: 24, scale: 0.95 }}
                   animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
                   transition={{ delay: 0.6 + i * 0.12, type: 'spring', stiffness: 80, damping: 16 }}
-                  whileHover={{ 
-                    scale: 1.1, 
-                    y: -20, 
-                    borderColor: 'rgba(91,194,231,0.85)',
-                    boxShadow: '0 40px 80px rgba(0,0,0,0.6)',
-                    zIndex: 10 
-                  }}
-                  transition={{ 
-                    type: 'spring', 
-                    stiffness: 1000, 
-                    damping: 40 
-                  }}
+                  whileHover={{ borderColor: 'rgba(91,194,231,0.5)' }}
+                  transition={{ delay: 0.6 + i * 0.12, type: 'spring', stiffness: 80, damping: 16 }}
                   style={{
                     textAlign: 'center',
                     padding: 'clamp(1.2rem,2vw,1.8rem) clamp(0.8rem,1vw,1.2rem)',
@@ -347,7 +325,6 @@ export default function WhyBejoice() {
                     border: '1px solid rgba(91,194,231,0.14)',
                     borderRadius: 18,
                     cursor: 'default',
-                    transition: 'border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease',
                     position: 'relative',
                     overflow: 'hidden',
                   }}
