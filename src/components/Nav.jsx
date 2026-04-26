@@ -435,7 +435,7 @@ export default function Nav({ onQuoteClick }) {
 
             {/* ── Header ── */}
             <div style={{
-              padding: 'clamp(1.6rem,4vw,2.4rem) clamp(1.6rem,4vw,2.4rem) clamp(1.2rem,3vw,1.8rem)',
+              padding: 'clamp(0.9rem,2.5vw,1.4rem) clamp(1.2rem,3vw,1.8rem) clamp(0.6rem,1.5vw,0.9rem)',
               position: 'relative', overflow: 'hidden',
             }}>
 <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
@@ -443,8 +443,8 @@ export default function Nav({ onQuoteClick }) {
                   {/* Headline — centered */}
                   <h2 style={{
                     fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                    fontSize: 'clamp(2.4rem,6vw,4rem)', letterSpacing: '0.04em',
-                    color: '#ffffff', lineHeight: 0.95, margin: '0 0 1.1rem',
+                    fontSize: 'clamp(1.9rem,4.5vw,3rem)', letterSpacing: '0.04em',
+                    color: '#ffffff', lineHeight: 0.95, margin: '0 0 0.65rem',
                     textAlign: 'center',
                   }}>
                     {isAr ? ar.nav.heavyLiftTitle : (
@@ -452,23 +452,6 @@ export default function Nav({ onQuoteClick }) {
                     )}
                   </h2>
 
-                  {/* Stat chips */}
-                  <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                    {(isAr
-                      ? ['+1,500 عملية', 'متخصصون ODC', 'شحن OOG', 'مرخص في KSA']
-                      : ['1,500+ Operations', 'ODC Specialists', 'OOG Cargo', 'KSA Licensed']
-                    ).map(tag => (
-                      <span key={tag} style={{
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: 'clamp(0.67rem,1.1vw,0.74rem)',
-                        letterSpacing: '0.08em', textTransform: 'uppercase',
-                        color: 'rgba(91,194,231,0.95)',
-                        background: 'rgba(91,194,231,0.1)',
-                        border: '1px solid rgba(91,194,231,0.28)',
-                        borderRadius: 5, padding: '4px 10px', fontWeight: 600,
-                      }}>{tag}</span>
-                    ))}
-                  </div>
                 </div>
 
                 {/* Close button */}
@@ -490,12 +473,12 @@ export default function Nav({ onQuoteClick }) {
               <div style={{
                 height: 1,
                 background: 'linear-gradient(90deg, rgba(91,194,231,0.45) 0%, rgba(91,194,231,0.08) 70%, transparent 100%)',
-                marginTop: 'clamp(1.2rem,3vw,1.8rem)',
+                marginTop: 'clamp(0.6rem,1.5vw,0.9rem)',
               }} />
             </div>
 
             {/* ── Services ── */}
-            <div style={{ padding: '0 clamp(1rem,3.5vw,1.8rem) clamp(0.5rem,1.5vw,0.8rem)' }}>
+            <div style={{ padding: '0 clamp(0.8rem,2.5vw,1.4rem) 0.2rem' }}>
               {[
                 {
                   num: '01',
@@ -528,9 +511,9 @@ export default function Nav({ onQuoteClick }) {
                   <div
                     key={i}
                     style={{
-                      display: 'flex', gap: 'clamp(0.9rem,2.5vw,1.4rem)', alignItems: 'flex-start',
-                      padding: 'clamp(0.9rem,2vw,1.15rem) clamp(0.8rem,2vw,1rem)',
-                      borderRadius: 12, marginBottom: '0.2rem',
+                      display: 'flex', gap: 'clamp(0.7rem,1.8vw,1rem)', alignItems: 'flex-start',
+                      padding: 'clamp(0.5rem,1.2vw,0.7rem) clamp(0.6rem,1.5vw,0.8rem)',
+                      borderRadius: 10, marginBottom: 0,
                       borderLeft: '2px solid transparent',
                       transition: 'background 0.22s ease, border-color 0.22s ease',
                       cursor: 'default',
@@ -544,26 +527,26 @@ export default function Nav({ onQuoteClick }) {
                       e.currentTarget.style.borderLeftColor = 'transparent'
                     }}
                   >
-                    {/* Large decorative number */}
+                    {/* Decorative number */}
                     <div style={{
                       fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                      fontSize: 'clamp(1.8rem,3.5vw,2.4rem)', lineHeight: 1,
+                      fontSize: 'clamp(1.2rem,2.5vw,1.6rem)', lineHeight: 1,
                       color: 'rgba(91,194,231,0.22)', letterSpacing: '0.04em',
-                      flexShrink: 0, paddingTop: '0.05rem', minWidth: 'clamp(2.2rem,4.5vw,3rem)',
+                      flexShrink: 0, paddingTop: '0.05rem', minWidth: 'clamp(1.6rem,3.2vw,2.2rem)',
                     }}>{item.num}</div>
 
                     <div style={{ flex: 1 }}>
-                      {/* Service title — much larger */}
+                      {/* Service title */}
                       <div style={{
                         fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
-                        fontSize: 'clamp(1.1rem,2.3vw,1.4rem)', letterSpacing: '0.09em',
-                        color: '#deeef8', marginBottom: '0.38rem', lineHeight: 1.2,
+                        fontSize: 'clamp(1.05rem,2.1vw,1.3rem)', letterSpacing: '0.09em',
+                        color: '#deeef8', marginBottom: '0.18rem', lineHeight: 1.2,
                       }}>{isAr ? arItem.title : item.title}</div>
-                      {/* Description — larger, more readable */}
+                      {/* Description — +2 font size */}
                       <div style={{
                         fontFamily: "'DM Sans', sans-serif",
-                        fontSize: 'clamp(0.84rem,1.5vw,0.94rem)',
-                        color: 'rgba(255,255,255,0.52)', lineHeight: 1.65,
+                        fontSize: 'clamp(0.97rem,1.7vw,1.06rem)',
+                        color: 'rgba(255,255,255,0.55)', lineHeight: 1.55,
                         fontWeight: 400,
                       }}>{isAr ? arItem.desc : item.desc}</div>
                     </div>
@@ -574,16 +557,15 @@ export default function Nav({ onQuoteClick }) {
 
             {/* ── CTA footer ── */}
             <div style={{
-              padding: 'clamp(1rem,2.5vw,1.4rem) clamp(1.4rem,4vw,2rem) clamp(1.2rem,3vw,1.8rem)',
+              padding: 'clamp(0.7rem,1.5vw,0.9rem) clamp(1rem,3vw,1.6rem) clamp(0.9rem,2vw,1.2rem)',
               borderTop: '1px solid rgba(91,194,231,0.12)',
               background: 'linear-gradient(0deg, rgba(91,194,231,0.05) 0%, transparent 100%)',
-              display: 'flex', gap: '0.75rem', flexWrap: 'wrap',
-              marginTop: '0.5rem',
+              display: 'flex', gap: '0.6rem', flexWrap: 'wrap',
             }}>
               <button
                 onClick={() => { setHeavyOpen(false); setTimeout(() => openCalPopup(), 300) }}
                 style={{
-                  flex: '1 1 180px', padding: '1rem 1.6rem', minHeight: 52,
+                  flex: '1 1 160px', padding: '0.75rem 1.4rem', minHeight: 44,
                   background: 'linear-gradient(135deg, #5BC2E7 0%, #8DD8F0 50%, #5BC2E7 100%)',
                   border: 'none', borderRadius: 12, cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
@@ -600,7 +582,7 @@ export default function Nav({ onQuoteClick }) {
               <button
                 onClick={() => { setHeavyOpen(false); const el = document.getElementById('heavy-cargo'); if (el) { if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80, immediate: true }); else el.scrollIntoView({ behavior: 'instant' }) } }}
                 style={{
-                  flex: '1 1 160px', padding: '1rem 1.6rem', minHeight: 52,
+                  flex: '1 1 140px', padding: '0.75rem 1.4rem', minHeight: 44,
                   background: 'transparent',
                   border: '1.5px solid rgba(91,194,231,0.35)', borderRadius: 12, cursor: 'pointer',
                   fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,

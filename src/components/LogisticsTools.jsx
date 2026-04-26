@@ -852,14 +852,20 @@ export default function LogisticsTools() {
         @media (max-width: 912px) {
           .sea-row-grid  { grid-template-columns: 1fr 1fr 1fr !important; }
           .air-row-grid  { grid-template-columns: 1fr 1fr 1fr !important; }
-          .land-row-grid { grid-template-columns: 1fr 1fr 1fr 1fr !important; }
+          .land-row-grid { grid-template-columns: 1fr 1fr 1fr !important; }
           .wh-row-grid   { grid-template-columns: 1fr 1fr 1fr !important; }
         }
-        @media (max-width: 480px) {
+        @media (max-width: 640px) {
           .sea-row-grid  { grid-template-columns: 1fr 1fr !important; }
           .air-row-grid  { grid-template-columns: 1fr 1fr !important; }
           .land-row-grid { grid-template-columns: 1fr 1fr !important; }
           .wh-row-grid   { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .sea-row-grid  { grid-template-columns: 1fr !important; }
+          .air-row-grid  { grid-template-columns: 1fr !important; }
+          .land-row-grid { grid-template-columns: 1fr !important; }
+          .wh-row-grid   { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
