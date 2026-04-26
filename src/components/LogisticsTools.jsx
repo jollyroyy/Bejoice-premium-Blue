@@ -823,7 +823,7 @@ export default function LogisticsTools() {
               }}>
                 {isAr
                   ? <>{ar.logisticsTools.mainHeadingWhite} <span style={{ color:'#5BC2E7' }}>{ar.logisticsTools.mainHeadingBlue}</span></>
-                  : <>CONTAINER <span style={{ color:'#5BC2E7' }}>LOAD CALCULATOR</span></>}
+                  : <>LOAD <span style={{ color:'#5BC2E7' }}>CALCULATION</span></>}
               </h2>
               <p style={{
                 fontFamily:"'DM Sans',sans-serif", fontSize: isAr ? 'clamp(19px, 2.3vw, 23px)' : 'clamp(15px, 1.9vw, 19px)',
