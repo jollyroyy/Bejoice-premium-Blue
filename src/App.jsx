@@ -87,10 +87,10 @@ export default function App() {
             progressive-load feel on slow connections.
             On fast connections the prefetch hook ensures chunks are already
             cached, so the skeleton is never shown at all. */}
-        <Suspense fallback={<ContactSkeleton />}><Contact /></Suspense>
-        <Suspense fallback={<LogisticsToolsSkeleton />}><LogisticsTools /></Suspense>
-        <Suspense fallback={<ServicesSkeleton />}><Services /></Suspense>
         <Suspense fallback={<ServicesSkeleton />}><WhyBejoice /></Suspense>
+        <Suspense fallback={<ServicesSkeleton />}><Services /></Suspense>
+        <Suspense fallback={<LogisticsToolsSkeleton />}><LogisticsTools /></Suspense>
+        <Suspense fallback={<ContactSkeleton />}><Contact /></Suspense>
         <Suspense fallback={<CertificationsSkeleton />}><Certifications /></Suspense>
       </main>
       <Suspense fallback={<FooterSkeleton />}>
