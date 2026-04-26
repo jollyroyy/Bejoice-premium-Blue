@@ -189,6 +189,7 @@ export default function Nav({ onQuoteClick }) {
                   : 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(91,194,231,0.04) 100%)',
                 border: 'none', borderRadius: '100px', cursor: 'pointer', zIndex: 60,
                 position: 'relative', overflow: 'visible',
+                WebkitTapHighlightColor: 'transparent',
                 backdropFilter: 'blur(12px)',
                 boxShadow: menuOpen
                   ? '0 0 28px rgba(91,194,231,0.3), inset 0 1px 0 rgba(255,255,255,0.12)'
@@ -216,10 +217,7 @@ export default function Nav({ onQuoteClick }) {
                 fontSize: 'clamp(13px,1.3vw,15px)',
                 letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                background: menuOpen ? 'linear-gradient(90deg, #5BC2E7, #ffffff)' : 'linear-gradient(90deg, #ffffff, rgba(255,255,255,0.85))',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+                color: menuOpen ? '#5BC2E7' : '#ffffff',
                 lineHeight: 1,
                 transition: 'all 0.3s ease',
               }}>
