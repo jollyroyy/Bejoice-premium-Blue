@@ -450,24 +450,12 @@ export default function Nav({ onQuoteClick }) {
 
               <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
                 <div style={{ flex: 1 }}>
-                  {/* Eyebrow */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.9rem' }}>
-                    <div style={{ width: 32, height: 2.5, background: 'linear-gradient(90deg, #5BC2E7, #8DD8F0)', borderRadius: 2, flexShrink: 0 }} />
-                    <span style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 'clamp(0.67rem,1.2vw,0.74rem)',
-                      letterSpacing: '0.3em', textTransform: 'uppercase',
-                      color: '#5BC2E7', fontWeight: 700,
-                    }}>
-                      {isAr ? ar.nav.heavyLiftSub : 'Bejoice Specialized Services'}
-                    </span>
-                  </div>
-
-                  {/* Headline — significantly larger */}
+                  {/* Headline — centered */}
                   <h2 style={{
                     fontFamily: "'Bebas Neue', sans-serif", fontWeight: 400,
                     fontSize: 'clamp(2.4rem,6vw,4rem)', letterSpacing: '0.04em',
                     color: '#ffffff', lineHeight: 0.95, margin: '0 0 1.1rem',
+                    textAlign: 'center',
                   }}>
                     {isAr ? ar.nav.heavyLiftTitle : (
                       <>Heavy Lift &amp; Project{' '}<span style={{ color: '#5BC2E7' }}>Logistics</span></>
@@ -475,7 +463,7 @@ export default function Nav({ onQuoteClick }) {
                   </h2>
 
                   {/* Stat chips */}
-                  <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap', justifyContent: 'center' }}>
                     {(isAr
                       ? ['+1,500 عملية', 'متخصصون ODC', 'شحن OOG', 'مرخص في KSA']
                       : ['1,500+ Operations', 'ODC Specialists', 'OOG Cargo', 'KSA Licensed']
