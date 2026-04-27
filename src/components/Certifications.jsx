@@ -182,20 +182,6 @@ export default function Certifications() {
                     {isAr ? c.ar : c.code}
                   </div>
 
-                  {isAr && (
-                    <div style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 'clamp(0.8rem,1.2vw,0.95rem)',
-                      color: `${c.color}cc`,
-                      marginTop: 8,
-                      letterSpacing: isAr ? '0' : '0.05em',
-                      direction: isAr ? 'rtl' : 'ltr',
-                      fontWeight: 600,
-                      opacity: 0.8,
-                    }}>
-                      {c.code}
-                    </div>
-                  )}
 
                   <div style={{
                     margin: '10px auto 0',

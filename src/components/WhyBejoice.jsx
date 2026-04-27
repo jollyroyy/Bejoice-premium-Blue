@@ -234,10 +234,10 @@ export default function WhyBejoice() {
               {(isAr ? CAPABILITIES.map((cap, idx) => ({ ...cap, title: ar.whyBejoice.capabilities[idx].title, desc: ar.whyBejoice.capabilities[idx].desc })) : CAPABILITIES).map((cap, i) => (
                 <motion.div
                   key={cap.title}
-                  initial={{ opacity: 0, scale: 0.72, y: 44 }}
-                  animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.72, y: 44 }}
-                  transition={{ delay: 0.35 + i * 0.1, type: 'spring', stiffness: 75, damping: 14 }}
-                  whileHover={{ backgroundColor: 'rgba(91,194,231,0.09)', scale: 1.03, transition: { duration: 0.2 } }}
+                  initial={{ opacity: 0, y: 36 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 }}
+                  transition={{ delay: 0.35 + i * 0.09, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ backgroundColor: 'rgba(91,194,231,0.09)', transition: { duration: 0.18 } }}
                   style={{
                     padding: 'clamp(1rem,1.8vw,1.4rem) clamp(0.8rem,1.5vw,1.2rem)',
                     borderRight: i % 3 !== 2 ? '1px solid rgba(91,194,231,0.06)' : 'none',
@@ -270,7 +270,7 @@ export default function WhyBejoice() {
                     </div>
                     <div style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 'clamp(13px,1.3vw,15.5px)',
+                      fontSize: 'clamp(16px,1.6vw,18.5px)',
                       color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, fontWeight: 450,
                     }}>
                       {cap.desc}
@@ -312,11 +312,10 @@ export default function WhyBejoice() {
               {(isAr ? FOUNDERS.map((f, idx) => ({ ...f, name: ar.whyBejoice.founders[idx].name, role: ar.whyBejoice.founders[idx].role })) : FOUNDERS).map((f, i) => (
                 <motion.div
                   key={f.name}
-                  initial={{ opacity: 0, y: 24, scale: 0.95 }}
-                  animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                  transition={{ delay: 0.6 + i * 0.12, type: 'spring', stiffness: 80, damping: 16 }}
-                  whileHover={{ borderColor: 'rgba(91,194,231,0.5)' }}
-                  transition={{ delay: 0.6 + i * 0.12, type: 'spring', stiffness: 80, damping: 16 }}
+                  initial={{ opacity: 0, y: 40, scale: 0.82 }}
+                  animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.82 }}
+                  transition={{ delay: 0.55 + i * 0.15, type: 'spring', stiffness: 70, damping: 13 }}
+                  whileHover={{ borderColor: 'rgba(91,194,231,0.5)', transition: { duration: 0.2 } }}
                   style={{
                     textAlign: 'center',
                     padding: 'clamp(1.2rem,2vw,1.8rem) clamp(0.8rem,1vw,1.2rem)',
@@ -336,7 +335,10 @@ export default function WhyBejoice() {
                   }} className="founder-glow" />
 
                   {/* Portrait */}
-                  <motion.div 
+                  <motion.div
+                    initial={{ scale: 0.55, opacity: 0 }}
+                    animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.55, opacity: 0 }}
+                    transition={{ delay: 0.7 + i * 0.15, type: 'spring', stiffness: 90, damping: 12 }}
                     style={{
                       width: 'clamp(110px,13vw,170px)', height: 'clamp(110px,13vw,170px)',
                       borderRadius: '50%',
