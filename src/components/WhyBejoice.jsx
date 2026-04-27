@@ -234,9 +234,10 @@ export default function WhyBejoice() {
               {(isAr ? CAPABILITIES.map((cap, idx) => ({ ...cap, title: ar.whyBejoice.capabilities[idx].title, desc: ar.whyBejoice.capabilities[idx].desc })) : CAPABILITIES).map((cap, i) => (
                 <motion.div
                   key={cap.title}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.4 + i * 0.08, duration: 0.5, ease: [0.16,1,0.3,1] }}
+                  initial={{ opacity: 0, scale: 0.72, y: 44 }}
+                  animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.72, y: 44 }}
+                  transition={{ delay: 0.35 + i * 0.1, type: 'spring', stiffness: 75, damping: 14 }}
+                  whileHover={{ backgroundColor: 'rgba(91,194,231,0.09)', scale: 1.03, transition: { duration: 0.2 } }}
                   style={{
                     padding: 'clamp(1rem,1.8vw,1.4rem) clamp(0.8rem,1.5vw,1.2rem)',
                     borderRight: i % 3 !== 2 ? '1px solid rgba(91,194,231,0.06)' : 'none',
@@ -245,8 +246,6 @@ export default function WhyBejoice() {
                     alignItems: 'flex-start',
                     cursor: 'default',
                   }}
-                  whileHover={{ backgroundColor: 'rgba(91,194,231,0.08)' }}
-                  transition={{ delay: 0.4 + i * 0.08, duration: 0.5, ease: [0.16,1,0.3,1] }}
                 >
                   {/* Icon badge */}
                   <div style={{
