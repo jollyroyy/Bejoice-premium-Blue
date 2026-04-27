@@ -66,7 +66,7 @@ const CAPABILITIES = [
 const FOUNDERS = [
   { name: 'Mohammed Ashraful Althaf', role: 'COO & Co-Owner', img: '/ashraful-coo.webp' },
   { name: 'Preetham Canute Pinto',    role: 'CEO & Co-Owner', img: '/preetham-ceo.webp' },
-  { name: 'Shahil',                    role: 'Managing Partner', img: '/shahil-mp.webp' },
+  { name: 'Ibrahim Shahil',             role: 'Managing Partner', img: '/shahil-mp.webp' },
 ]
 
 export default function WhyBejoice() {
