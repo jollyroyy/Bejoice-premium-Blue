@@ -393,7 +393,7 @@ export default function Contact() {
             <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.5vw,17px)', color:'#22c55e', fontWeight:600, maxWidth:380, margin:'0 auto 2rem', lineHeight:1.75 }}>
               {isAr ? ar.contact.successTime : 'Our freight expert will reach you in 5 minutes.'}
             </p>
-            <button className="btn-ghost" onClick={() => setSent(false)}><span>{isAr ? ar.contact.newEnquiry : 'New Enquiry'}</span></button>
+            <button className="btn-ghost" onClick={() => { setSent(false); setSubmitting(false); setForm({ name:'', company:'', email:'', phone:'', origin:'', destination:'', type:'', message:'' }) }}><span>{isAr ? ar.contact.newEnquiry : 'New Enquiry'}</span></button>
           </div>
         )}
 
