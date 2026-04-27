@@ -264,14 +264,14 @@ export default function WhyBejoice() {
                       fontFamily: "'Bebas Neue', sans-serif",
                       fontSize: 'clamp(1.4rem,2.2vw,1.7rem)',
                       letterSpacing: '0.06em', lineHeight: 1.1,
-                      color: '#ffffff', marginBottom: 4,
-                      textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                      color: '#5BC2E7', marginBottom: 4,
+                      textShadow: '0 0 20px rgba(91,194,231,0.3), 0 2px 10px rgba(0,0,0,0.3)',
                     }}>
                       {cap.title}
                     </div>
                     <div style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 'clamp(22px,2.2vw,24.5px)',
+                      fontSize: 'clamp(21px,2.1vw,23.5px)',
                       color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, fontWeight: 450,
                     }}>
                       {cap.desc}
