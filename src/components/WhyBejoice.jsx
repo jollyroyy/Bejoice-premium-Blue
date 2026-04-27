@@ -271,7 +271,7 @@ export default function WhyBejoice() {
                     </div>
                     <div style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 'clamp(21px,2.1vw,23.5px)',
+                      fontSize: 'clamp(20px,2.0vw,22.5px)',
                       color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, fontWeight: 450,
                     }}>
                       {cap.desc}
