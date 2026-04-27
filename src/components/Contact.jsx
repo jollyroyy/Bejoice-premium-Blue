@@ -20,7 +20,7 @@ export default function Contact() {
   const { lang } = useLang()
   const isAr = lang === 'ar'
   const sectionRef = useRef(null)
-  const [form, setForm]       = useState({ name:'', company:'', email:'', phone:'', origin:'', destination:'', type:'', message:'' })
+  const [form, setForm]       = useState({ name:'', company:'', email:'', phone:'', origin:'', destination:'', types:[], message:'' })
   const [sent, setSent]       = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [focused, setFocused] = useState(null)
@@ -226,7 +226,7 @@ export default function Contact() {
                       `🚚 SHIPMENT DETAILS`,
                       `• Origin:      ${sanitize(form.origin)}`,
                       `• Destination: ${sanitize(form.destination)}`,
-                      `• Service:     ${sanitize(form.type)}`,
+                      `• Service:     ${form.types.length ? form.types.join(', ') : '—'}`,
                       ``,
                       form.message ? `📝 MESSAGE\n${sanitize(form.message)}` : '',
                     ].filter(Boolean).join('\n')
@@ -242,7 +242,7 @@ export default function Contact() {
                         to_email:    'jollyroyy@gmail.com',
                         reply_to:    sanitize(form.email) || 'info@bejoiceshipping-ksa.com',
                         from_name:   sanitize(form.name) || 'Bejoice Contact Form',
-                        subject:     `[Bejoice Contact] ${sanitize(form.name)} — ${sanitize(form.type) || 'General Enquiry'}`,
+                        subject:     `[Bejoice Contact] ${sanitize(form.name)} — ${form.types.join(', ') || 'General Enquiry'}`,
                         client_name: sanitize(form.name) || '—',
                         company:     sanitize(form.company) || '—',
                         client_email:sanitize(form.email) || '—',
@@ -288,26 +288,51 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  {/* Service type pills */}
+                  {/* Service type pills — multi-select */}
                   <div style={{ marginBottom:'clamp(8px,1.4vw,14px)' }}>
-                    <label style={labelStyle}>{isAr ? ar.contact.labels.serviceType : 'Service Type'}</label>
+                    <label style={labelStyle}>
+                      {isAr ? ar.contact.labels.serviceType : 'Service Type'}
+                      {form.types.length > 0 && (
+                        <span style={{ marginLeft: 8, fontWeight: 500, letterSpacing: '0.05em', textTransform: 'none', color: 'rgba(91,194,231,0.7)', fontSize: 'clamp(11px,1vw,12px)' }}>
+                          {isAr ? `(${form.types.length} محدد)` : `(${form.types.length} selected)`}
+                        </span>
+                      )}
+                    </label>
                     <div style={{ display:'flex', flexWrap:'wrap', gap:'clamp(5px,0.8vw,8px)' }}>
-                      {(isAr ? ar.contact.services : SERVICES).map((s, sIdx) => (
-                        <button key={s} type="button"
-                          onClick={() => setForm(f => ({ ...f, type: f.type === (isAr ? SERVICES[sIdx] : s) ? '' : (isAr ? SERVICES[sIdx] : s) }))}
-                          style={{
-                            fontFamily:"'DM Sans',sans-serif",
-                            fontSize:'clamp(13px,1vw,13px)', fontWeight:600,
-                            letterSpacing:'0.1em', textTransform:'uppercase',
-                            padding:'clamp(8px,0.8vw,9px) clamp(12px,1.3vw,16px)',
-                            minHeight: 36,
-                            borderRadius:6, cursor:'pointer', transition:'all 0.18s',
-                            background: form.type === (isAr ? SERVICES[sIdx] : s) ? 'rgba(91,194,231,0.12)' : 'rgba(255,255,255,0.04)',
-                            border: `1px solid ${form.type === (isAr ? SERVICES[sIdx] : s) ? 'rgba(91,194,231,0.45)' : 'rgba(255,255,255,0.08)'}`,
-                            color: form.type === (isAr ? SERVICES[sIdx] : s) ? '#8DD8F0' : 'rgba(255,255,255,0.85)',
-                          }}
-                        >{s}</button>
-                      ))}
+                      {(isAr ? ar.contact.services : SERVICES).map((s, sIdx) => {
+                        const val = isAr ? SERVICES[sIdx] : s
+                        const active = form.types.includes(val)
+                        return (
+                          <button key={s} type="button"
+                            onClick={() => setForm(f => {
+                              const newTypes = f.types.includes(val)
+                                ? f.types.filter(t => t !== val)
+                                : [...f.types, val]
+                              return { ...f, types: newTypes }
+                            })}
+                            style={{
+                              fontFamily:"'DM Sans',sans-serif",
+                              fontSize:'clamp(13px,1vw,13px)', fontWeight:600,
+                              letterSpacing:'0.1em', textTransform:'uppercase',
+                              padding:'clamp(8px,0.8vw,9px) clamp(12px,1.3vw,16px)',
+                              minHeight: 36,
+                              borderRadius:6, cursor:'pointer', transition:'all 0.18s',
+                              background: active ? 'rgba(91,194,231,0.15)' : 'rgba(255,255,255,0.04)',
+                              border: `1px solid ${active ? 'rgba(91,194,231,0.55)' : 'rgba(255,255,255,0.08)'}`,
+                              color: active ? '#8DD8F0' : 'rgba(255,255,255,0.85)',
+                              boxShadow: active ? '0 0 12px rgba(91,194,231,0.15)' : 'none',
+                              display: 'flex', alignItems: 'center', gap: 6,
+                            }}
+                          >
+                            {active && (
+                              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" style={{ flexShrink: 0 }}>
+                                <path d="M2 6l3 3 5-5" stroke="#8DD8F0" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            )}
+                            {s}
+                          </button>
+                        )
+                      })}
                     </div>
                   </div>
 
@@ -394,7 +419,7 @@ export default function Contact() {
             <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.5vw,17px)', color:'#22c55e', fontWeight:600, maxWidth:380, margin:'0 auto 2rem', lineHeight:1.75 }}>
               {isAr ? ar.contact.successTime : 'Our freight expert will reach you in 5 minutes.'}
             </p>
-            <button className="btn-ghost" onClick={() => { setSent(false); setSubmitting(false); setForm({ name:'', company:'', email:'', phone:'', origin:'', destination:'', type:'', message:'' }) }}><span>{isAr ? ar.contact.newEnquiry : 'New Enquiry'}</span></button>
+            <button className="btn-ghost" onClick={() => { setSent(false); setSubmitting(false); setForm({ name:'', company:'', email:'', phone:'', origin:'', destination:'', types:[], message:'' }) }}><span>{isAr ? ar.contact.newEnquiry : 'New Enquiry'}</span></button>
           </div>
         )}
 
