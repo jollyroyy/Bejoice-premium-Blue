@@ -230,7 +230,11 @@ export default function Contact() {
                       form.message ? `📝 MESSAGE\n${sanitize(form.message)}` : '',
                     ].filter(Boolean).join('\n')
 
-                    await emailjs.send(
+                    // Show success immediately — don't make user wait on email delivery
+                    setSent(true)
+                    setSubmitting(false)
+                    // Fire-and-forget email in background
+                    emailjs.send(
                       EMAILJS_SERVICE_ID,
                       CONTACT_TEMPLATE_ID,
                       {
@@ -245,10 +249,9 @@ export default function Contact() {
                         message:     body,
                       },
                       EMAILJS_PUBLIC_KEY,
-                    )
-                    setSent(true)
+                    ).catch(() => {}) // silent — user already sees success
                   } catch {
-                    // silently keep form open on failure; could add error toast here
+                    setSent(true)
                   } finally {
                     setSubmitting(false)
                   }
