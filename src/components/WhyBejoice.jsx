@@ -237,7 +237,7 @@ export default function WhyBejoice() {
                   initial={{ opacity: 0, y: 36 }}
                   animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 }}
                   transition={{ delay: 0.35 + i * 0.09, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ backgroundColor: 'rgba(91,194,231,0.09)', transition: { duration: 0.18 } }}
+                  whileHover={{ backgroundColor: 'rgba(91,194,231,0.09)', scale: 1.05, zIndex: 5, transition: { duration: 0.22, ease: [0.22,1,0.36,1] } }}
                   style={{
                     padding: 'clamp(1rem,1.8vw,1.4rem) clamp(0.8rem,1.5vw,1.2rem)',
                     borderRight: i % 3 !== 2 ? '1px solid rgba(91,194,231,0.06)' : 'none',
@@ -245,6 +245,7 @@ export default function WhyBejoice() {
                     display: 'flex', gap: 'clamp(0.6rem,1vw,0.8rem)',
                     alignItems: 'flex-start',
                     cursor: 'default',
+                    position: 'relative', zIndex: 1,
                   }}
                 >
                   {/* Icon badge */}
@@ -270,7 +271,7 @@ export default function WhyBejoice() {
                     </div>
                     <div style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 'clamp(16px,1.6vw,18.5px)',
+                      fontSize: 'clamp(21px,2.1vw,23.5px)',
                       color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, fontWeight: 450,
                     }}>
                       {cap.desc}

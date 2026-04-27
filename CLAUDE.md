@@ -101,25 +101,25 @@ Edit `CHAPTERS` array in `VideoHero.jsx`:
 ```
 - 10 chapters + 1 globe chapter (index 1), all mapped to absolute frame indices
 - `FRAME_FADE = 18` — crossfade window in frames
-- `SCROLL_HEIGHT = 1800` vh
+- `SCROLL_HEIGHT = 2000` vh
 - Globe chapter: `{ frameRange: [145, 210], headline: [], globeChapter: true }` — no text, shows BejoiceGlobe
 - `GLOBE_CHAPTER_START = 145`, `GLOBE_CHAPTER_END = 210`
-- Canvas pre-dims 20 frames before globe chapter (`PRE_DIM_START = 125`) for seamless transition
-- Exit fade: last 3% of scroll (`smoothP > 0.97`)
-- Hero cards (TrackCard + FreightCalcCard + StatBar) fade out at frames 140–185 and 793–813
+- Canvas dims behind globe chapter; exit fade at `smoothP > 0.97`
+- Hero cards (TrackCard + FreightCalcCard + StatBar) fade out at frames 100–145 and 683–703
 - `vAlign: 'bottom'` supported on chapters — sets `justifyContent: flex-end`, `paddingBottom: clamp(60px,8vh,100px)`
+- Last chapter (index 9 — TECHNICAL ENGINEERING): CSS transition delay **9s** on fade-in (`opacity 0.6s ease 9s`)
 
-**Current chapter headlines:**
-1. Intro BIC zoomout (frames 0–144)
-2. Globe chapter (145–210)
-3. CONNECTED GLOBALLY — bottom center (218–390)
-4. FROM BLUE PRINT TO DELIVERY, WE MOVE IT ALL (413–463)
-5. NAVIGATING OCEANS. DELIVERING CONFIDENCE — eyebrow: OCEAN FREIGHT (471–541)
-6. FROM PORT TO PORT. WORLD-CLASS LOGISTICS — eyebrow: FCL & LCL (621–707)
-7. DRIVEN BY TRANSPARENCY. DELIVERED WITH TRUST — eyebrow: CUSTOMS CLEARANCE · PORT OPERATIONS (557–613)
-8. SPEED ABOVE ALL. DELIVERED ON TIME — eyebrow: AIR FREIGHT · IATA CERTIFIED (726–780)
-9. WORLD CLASS AIR FREIGHT — eyebrow: AIR FREIGHT · IATA CERTIFIED (781–840)
-10. PRECISION IN HANDLING. EXCELLENCE IN DELIVERY — eyebrow: HEAVY LIFT · PROJECT CARGO (847–911)
+**Current chapter headlines (CHAPTERS array, 10 entries, indices 0–9):**
+0. Intro BIC zoomout (frames 0–144) — eyebrow: CONNECTING KSA TO THE WORLD; headline: SMART FREIGHT / POWERED BY AI
+1. Globe chapter (frames 145–210) — no text, globeChapter: true
+2. (frames 211–285) — eyebrow: PROJECTS & HEAVY LIFT; headline: FROM BLUE PRINT TO DELIVERY, / WE MOVE IT ALL; align: right
+3. (frames 296–385) — eyebrow: FCL · LCL · BREAKBULK · REEFER · DG · OOG; headline: NAVIGATING OCEANS. / DELIVERING CONFIDENCE; align: left
+4. (frames 390–476) — eyebrow: PORT OPERATIONS; headline: DRIVEN BY TRANSPARENCY. / DELIVERED WITH TRUST; align: right
+5. (frames 481–524) — eyebrow: POWERING SAUDI PROJECTS THROUGH EVERY STORM; headline: FROM PORT TO PORT. / WORLD-CLASS LOGISTICS; align: left
+6. (frames 525–590) — eyebrow: AIR FREIGHT; headline: SPEED ABOVE ALL. / DELIVERED ON TIME; align: right
+7. (frames 595–645) — headline: WORLD CLASS / AIR FREIGHT; align: right
+8. (frames 646–720) — headline: PRECISION IN HANDLING. / EXCELLENCE IN DELIVERY; align: right
+9. (frames 720–790) — headline: TECHNICAL / ENGINEERING; align: center, vAlign: bottom; **fade-in delay: 9s**
 
 ### Globe Chapter (VideoHero.jsx)
 - Full-screen `BejoiceGlobe embedded fullscreen` rendered inside `globeChapterRef` div at zIndex 6
@@ -239,6 +239,20 @@ sharp('input.png').resize(w, h, { kernel: sharp.kernel.lanczos3 }).ensureAlpha()
 // Threshold: lum > 210 → transparent, 155-210 → feathered, < 155 → solid white
 // Sharpen: sigma: 2.2, m1: 2.0 | Contrast: linear(1.25, -20) | Trim: threshold 5
 ```
+
+### WhyBejoice (WhyBejoice.jsx)
+- **Not rendered** in current App.jsx (file exists but is unused)
+- Founders: Mohammed Ashraful Althaf (COO), Preetham Canute Pinto (CEO), **Ibrahim Shahil** (Managing Partner)
+- Founder cards: spring pop-in `scale: 0.82 → 1, y: 40 → 0`; portrait circle has its own separate spring `scale: 0.55 → 1` with extra delay
+- Capability cards: `y: 36 → 0, opacity: 0 → 1` slide-in (no scale — avoids grid bleed); hover tints background only
+- Capability desc font: `clamp(16px,1.6vw,18.5px)`
+- **Framer Motion gotcha**: never put two `transition` props on the same `motion.div` — last one silently wins
+
+### Arabic i18n (`src/i18n/ar.js`)
+- `ar.hero.chapters` must have **exactly 10 entries** matching `CHAPTERS` array (indices 0–9); index 1 = `null` (globe)
+- Arabic eyebrows must match English eyebrows per chapter index — mismatches cause wrong text on Arabic page
+- `ar.nav.bejoiceWings` = `'أجنحة بيجويس'` — used in Footer for the "Bejoice Wings" link
+- Certifications: Arabic cert names shown; **English codes NOT shown below** (removed `{isAr && <div>{c.code}</div>}` block)
 
 ### Bejoice-scroll relationship
 - Do NOT modify `C:/Users/ASUS/Desktop/Interactive Websit for Bejoice/bejoice-scroll/`
