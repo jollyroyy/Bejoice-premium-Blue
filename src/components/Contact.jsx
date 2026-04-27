@@ -180,10 +180,11 @@ export default function Contact() {
             {/* ══ GLASS CARD ══ */}
             <div
               ref={cardRef}
-              className="fade-up contact-glass-card"
+              className="contact-glass-card"
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
               style={{
+                animation: 'contactSuccessIn 0.45s ease forwards',
                 /* Glass morphism */
                 background: 'linear-gradient(135deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.02) 100%)',
                 backdropFilter: 'blur(32px)',
