@@ -363,14 +363,31 @@ export default function Contact() {
           /* ── Success ── */
           <div className="fade-up" style={{
             textAlign:'center',
-            background:'linear-gradient(135deg, rgba(91,194,231,0.05) 0%, rgba(91,194,231,0.02) 100%)',
-            border:'1px solid rgba(91,194,231,0.18)',
+            background:'linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(34,197,94,0.02) 100%)',
+            border:'1px solid rgba(34,197,94,0.25)',
             borderRadius:20, padding:'clamp(3rem,6vw,6rem) clamp(2rem,5vw,4rem)',
           }}>
-            <div style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(4rem,10vw,7rem)', color:'#5BC2E7', textShadow:'0 0 40px rgba(91,194,231,0.4)', lineHeight:1, marginBottom:'1.2rem' }}>✓</div>
+            {/* Green tick circle */}
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'center', marginBottom:'1.4rem' }}>
+              <div style={{
+                width:'clamp(72px,10vw,96px)', height:'clamp(72px,10vw,96px)',
+                borderRadius:'50%',
+                background:'linear-gradient(135deg,rgba(34,197,94,0.18) 0%,rgba(22,163,74,0.08) 100%)',
+                border:'2px solid rgba(34,197,94,0.55)',
+                boxShadow:'0 0 40px rgba(34,197,94,0.25), 0 0 80px rgba(34,197,94,0.1)',
+                display:'flex', alignItems:'center', justifyContent:'center',
+              }}>
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+              </div>
+            </div>
             <h3 style={{ fontFamily:"'Bebas Neue',sans-serif", fontSize:'clamp(1.8rem,4vw,3rem)', letterSpacing:'0.1em', color:'#ffffff', marginBottom:'0.8rem' }}>{isAr ? ar.contact.successTitle : 'ENQUIRY SENT'}</h3>
-            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(13px,1.5vw,16px)', color:'rgba(255,255,255,0.6)', maxWidth:360, margin:'0 auto 2rem', lineHeight:1.75 }}>
-              {isAr ? ar.contact.successBody : 'Your form has been submitted. Our expert will contact you back in 5 minutes.'}
+            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.5vw,17px)', color:'rgba(255,255,255,0.72)', maxWidth:380, margin:'0 auto 0.5rem', lineHeight:1.75 }}>
+              {isAr ? ar.contact.successBody : 'Your form has been submitted successfully.'}
+            </p>
+            <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:'clamp(14px,1.5vw,17px)', color:'#22c55e', fontWeight:600, maxWidth:380, margin:'0 auto 2rem', lineHeight:1.75 }}>
+              {isAr ? ar.contact.successTime : 'Our freight expert will reach you in 5 minutes.'}
             </p>
             <button className="btn-ghost" onClick={() => setSent(false)}><span>{isAr ? ar.contact.newEnquiry : 'New Enquiry'}</span></button>
           </div>
