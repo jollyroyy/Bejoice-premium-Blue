@@ -227,7 +227,7 @@ export default function Footer() {
                         onMouseEnter={e => e.currentTarget.style.color = '#ffffff'}
                         onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.90)'}
                       >
-                        Bejoice Wings
+                        {isAr ? ar.nav.bejoiceWings : 'Bejoice Wings'}
                       </a>
                     ) : (
                     <a
