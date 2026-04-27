@@ -364,7 +364,8 @@ export default function Contact() {
           </>
         ) : (
           /* ── Success ── */
-          <div className="fade-up" style={{
+          <div style={{
+            animation: 'contactSuccessIn 0.5s ease forwards',
             textAlign:'center',
             background:'linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(34,197,94,0.02) 100%)',
             border:'1px solid rgba(34,197,94,0.25)',
@@ -401,6 +402,10 @@ export default function Contact() {
 
       {/* ── Keyframes + responsive ── */}
       <style>{`
+        @keyframes contactSuccessIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
         .contact-info-card {
           transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
         }
