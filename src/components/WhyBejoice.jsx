@@ -196,7 +196,7 @@ export default function WhyBejoice() {
             </p>
             <p style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 'clamp(15px,1.5vw,17px)',
+              fontSize: 'clamp(16px,1.6vw,18px)',
               fontWeight: 400, color: 'rgba(255,255,255,0.6)',
               lineHeight: 1.85, margin: '1.2rem 0 0',
               maxWidth: '72ch', marginLeft: 'auto', marginRight: 'auto',
