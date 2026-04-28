@@ -2,6 +2,8 @@ import { useState } from 'react'
 import logoSrc from '../assets/bejoice-logo-group.png'
 import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
+import emailjs from '@emailjs/browser'
+import { EMAILJS_SERVICE_ID, EMAILJS_PUBLIC_KEY } from '../utils/emailService'
 
 const footerLinks = {
   Company: ['Why Bejoice', 'Certifications', 'Key Markets', 'Careers'],
@@ -106,6 +108,381 @@ const POLICIES = {
   },
 }
 
+function CareersModal({ onClose }) {
+  const { lang } = useLang()
+  const isAr = lang === 'ar'
+
+  const POSITIONS = [
+    'Freight Operations Manager',
+    'Business Development Manager',
+    'Customs Clearance Officer',
+    'Sea Freight Coordinator',
+    'Air Freight Coordinator',
+    'Project Cargo Specialist',
+    'Heavy Lift & Project Coordinator',
+    'Sales Executive',
+    'Logistics Coordinator',
+    'Warehouse Supervisor',
+    'Finance & Administration',
+    'IT / Technology',
+    'Other',
+  ]
+
+  const [form, setForm] = useState({ name: '', email: '', phone: '', position: '', otherPosition: '', message: '' })
+  const [cvFile, setCvFile] = useState(null)
+  const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [errors, setErrors] = useState({})
+
+  const set = (field, val) => setForm(prev => ({ ...prev, [field]: val }))
+
+  const fieldErr = (field) => errors[field] ? (
+    <div style={{ color: '#f87171', fontSize: '13px', marginTop: '5px', fontFamily: "'DM Sans', sans-serif" }}>
+      {errors[field]}
+    </div>
+  ) : null
+
+  function validate() {
+    const e = {}
+    if (!form.name.trim()) e.name = 'Name is required'
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = 'Valid email required'
+    if (!form.phone.trim()) e.phone = 'Phone number is required'
+    if (!form.position) e.position = 'Please select a position'
+    if (form.position === 'Other' && !form.otherPosition.trim()) e.otherPosition = 'Please specify the position'
+    return e
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    const errs = validate()
+    if (Object.keys(errs).length > 0) { setErrors(errs); return }
+    setErrors({})
+    setSubmitting(true)
+
+    const positionLabel = form.position === 'Other' ? form.otherPosition : form.position
+    const cvNote = cvFile
+      ? `CV Submitted: ${cvFile.name} (${(cvFile.size / 1024).toFixed(0)} KB) — Please follow up with applicant to receive CV.`
+      : 'No CV uploaded.'
+
+    const body = [
+      '╔══════════════════════════════════════════╗',
+      '  JOB APPLICATION',
+      '  Bejoice Group — Careers Portal',
+      '╚══════════════════════════════════════════╝',
+      '',
+      '👤 APPLICANT DETAILS',
+      `• Name:  ${form.name}`,
+      `• Email: ${form.email}`,
+      `• Phone: ${form.phone}`,
+      '',
+      '💼 POSITION APPLIED FOR',
+      `• ${positionLabel}`,
+      '',
+      '📄 CV / RESUME',
+      cvNote,
+      form.message ? `\n📝 COVER NOTE\n${form.message}` : '',
+    ].join('\n').trim()
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          to_email: 'info@bejoiceshipping-ksa.com',
+          reply_to: form.email,
+          from_name: form.name,
+          subject: `[Bejoice Careers] ${positionLabel} — ${form.name}`,
+          mode: 'Career Application',
+          client_name: form.name,
+          company: '—',
+          client_email: form.email,
+          phone: form.phone,
+          message: body,
+        },
+        EMAILJS_PUBLIC_KEY,
+      )
+    } catch (err) {
+      console.error('Careers email error:', err)
+    } finally {
+      setSubmitting(false)
+      setSubmitted(true)
+    }
+  }
+
+  const inputStyle = {
+    width: '100%',
+    background: 'rgba(255,255,255,0.05)',
+    border: '1px solid rgba(91,194,231,0.2)',
+    borderRadius: '8px',
+    color: '#ffffff',
+    fontSize: '16px',
+    fontFamily: "'DM Sans', sans-serif",
+    padding: '12px 16px',
+    outline: 'none',
+    boxSizing: 'border-box',
+    transition: 'border-color 0.2s, box-shadow 0.2s',
+  }
+  const labelStyle = {
+    display: 'block',
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: '13px',
+    fontWeight: 600,
+    color: 'rgba(91,194,231,0.85)',
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    marginBottom: '7px',
+  }
+  const fieldWrap = { marginBottom: '20px' }
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 99999,
+        background: 'rgba(7,16,28,0.92)', backdropFilter: 'blur(12px)',
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
+        overflowY: 'auto', padding: 'clamp(16px,4vw,48px) clamp(12px,3vw,24px)',
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          width: '100%', maxWidth: '620px',
+          background: 'rgba(255,255,255,0.04)',
+          border: '1px solid rgba(91,194,231,0.2)',
+          borderRadius: '16px',
+          padding: 'clamp(24px,4vw,48px)',
+        }}
+      >
+        {submitted ? (
+          <div style={{ textAlign: 'center', padding: 'clamp(24px,5vw,64px) 0' }}>
+            <div style={{
+              width: 80, height: 80, borderRadius: '50%',
+              background: 'rgba(34,197,94,0.12)',
+              border: '2px solid rgba(34,197,94,0.5)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              margin: '0 auto 28px',
+              animation: 'careersTickPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both',
+            }}>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <h2 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(1.8rem,4vw,2.8rem)',
+              letterSpacing: '0.06em', color: '#ffffff', margin: '0 0 16px',
+            }}>Application Received!</h2>
+            <p style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 'clamp(15px,1.6vw,18px)',
+              color: 'rgba(255,255,255,0.72)',
+              lineHeight: 1.7, maxWidth: '400px', margin: '0 auto 36px',
+            }}>
+              Thank you for your interest. We will notify you once we have an open position in this role.
+            </p>
+            <button className="btn-gold" onClick={onClose} style={{ padding: '12px 40px' }}>Close</button>
+          </div>
+        ) : (
+          <>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+              <div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(91,194,231,0.8)', marginBottom: '8px', fontWeight: 600 }}>
+                  BEJOICE GROUP
+                </div>
+                <h2 style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: 'clamp(1.8rem,4vw,3rem)',
+                  letterSpacing: '0.08em', color: '#ffffff', margin: 0, lineHeight: 1,
+                }}>JOIN OUR TEAM</h2>
+              </div>
+              <button
+                onClick={onClose}
+                style={{
+                  background: 'none', border: '1px solid rgba(255,255,255,0.15)',
+                  color: 'rgba(255,255,255,0.6)', cursor: 'pointer',
+                  width: '44px', height: '44px', borderRadius: '8px',
+                  fontSize: '18px', flexShrink: 0, marginLeft: '16px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}
+              >✕</button>
+            </div>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '15px', color: 'rgba(91,194,231,0.7)', marginBottom: '32px', lineHeight: 1.6 }}>
+              Express your interest and we'll reach out when a matching role opens.
+            </p>
+
+            <form onSubmit={handleSubmit} noValidate>
+              {/* Full Name */}
+              <div style={fieldWrap}>
+                <label style={labelStyle}>Full Name <span style={{ color: '#f87171' }}>*</span></label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={e => set('name', e.target.value)}
+                  placeholder="Your full name"
+                  style={{ ...inputStyle, borderColor: errors.name ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)' }}
+                  onFocus={e => { e.target.style.borderColor = 'rgba(91,194,231,0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(91,194,231,0.1)' }}
+                  onBlur={e => { e.target.style.borderColor = errors.name ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)'; e.target.style.boxShadow = 'none' }}
+                />
+                {fieldErr('name')}
+              </div>
+
+              {/* Email + Phone */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px,100%), 1fr))', gap: '16px', marginBottom: '20px' }}>
+                <div>
+                  <label style={labelStyle}>Email Address <span style={{ color: '#f87171' }}>*</span></label>
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={e => set('email', e.target.value)}
+                    placeholder="your@email.com"
+                    style={{ ...inputStyle, borderColor: errors.email ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)' }}
+                    onFocus={e => { e.target.style.borderColor = 'rgba(91,194,231,0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(91,194,231,0.1)' }}
+                    onBlur={e => { e.target.style.borderColor = errors.email ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)'; e.target.style.boxShadow = 'none' }}
+                  />
+                  {fieldErr('email')}
+                </div>
+                <div>
+                  <label style={labelStyle}>Phone Number <span style={{ color: '#f87171' }}>*</span></label>
+                  <input
+                    type="tel"
+                    value={form.phone}
+                    onChange={e => set('phone', e.target.value)}
+                    placeholder="+966 5X XXX XXXX"
+                    style={{ ...inputStyle, borderColor: errors.phone ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)' }}
+                    onFocus={e => { e.target.style.borderColor = 'rgba(91,194,231,0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(91,194,231,0.1)' }}
+                    onBlur={e => { e.target.style.borderColor = errors.phone ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)'; e.target.style.boxShadow = 'none' }}
+                  />
+                  {fieldErr('phone')}
+                </div>
+              </div>
+
+              {/* Position */}
+              <div style={fieldWrap}>
+                <label style={labelStyle}>Interested Position <span style={{ color: '#f87171' }}>*</span></label>
+                <select
+                  value={form.position}
+                  onChange={e => set('position', e.target.value)}
+                  style={{
+                    ...inputStyle,
+                    borderColor: errors.position ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)',
+                    cursor: 'pointer',
+                    appearance: 'none',
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235BC2E7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E\")",
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'right 14px center',
+                    paddingRight: '44px',
+                  }}
+                  onFocus={e => { e.target.style.borderColor = 'rgba(91,194,231,0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(91,194,231,0.1)' }}
+                  onBlur={e => { e.target.style.borderColor = errors.position ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)'; e.target.style.boxShadow = 'none' }}
+                >
+                  <option value="" style={{ background: '#0d1f32', color: 'rgba(255,255,255,0.5)' }}>Select a position...</option>
+                  {POSITIONS.map(p => (
+                    <option key={p} value={p} style={{ background: '#0d1f32', color: '#ffffff' }}>{p}</option>
+                  ))}
+                </select>
+                {fieldErr('position')}
+              </div>
+
+              {/* Other position */}
+              {form.position === 'Other' && (
+                <div style={fieldWrap}>
+                  <label style={labelStyle}>Specify Position <span style={{ color: '#f87171' }}>*</span></label>
+                  <input
+                    type="text"
+                    value={form.otherPosition}
+                    onChange={e => set('otherPosition', e.target.value)}
+                    placeholder="e.g. Supply Chain Analyst"
+                    style={{ ...inputStyle, borderColor: errors.otherPosition ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)' }}
+                    onFocus={e => { e.target.style.borderColor = 'rgba(91,194,231,0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(91,194,231,0.1)' }}
+                    onBlur={e => { e.target.style.borderColor = errors.otherPosition ? 'rgba(248,113,113,0.5)' : 'rgba(91,194,231,0.2)'; e.target.style.boxShadow = 'none' }}
+                  />
+                  {fieldErr('otherPosition')}
+                </div>
+              )}
+
+              {/* CV Upload */}
+              <div style={fieldWrap}>
+                <label style={labelStyle}>CV / Resume <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0, color: 'rgba(255,255,255,0.35)', fontSize: '12px' }}>(optional)</span></label>
+                <label
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '14px',
+                    padding: '14px 16px',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px dashed rgba(91,194,231,0.3)',
+                    borderRadius: '8px', cursor: 'pointer',
+                    transition: 'border-color 0.2s, background 0.2s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(91,194,231,0.55)'; e.currentTarget.style.background = 'rgba(91,194,231,0.05)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(91,194,231,0.3)'; e.currentTarget.style.background = 'rgba(255,255,255,0.03)' }}
+                >
+                  <div style={{
+                    width: 40, height: 40, borderRadius: '8px', flexShrink: 0,
+                    background: 'rgba(91,194,231,0.1)', border: '1px solid rgba(91,194,231,0.2)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(91,194,231,0.9)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+                    </svg>
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '15px', color: cvFile ? '#ffffff' : 'rgba(255,255,255,0.55)', fontWeight: cvFile ? 500 : 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {cvFile ? cvFile.name : 'Upload CV / Resume'}
+                    </div>
+                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: '12px', color: 'rgba(91,194,231,0.6)', marginTop: '3px' }}>
+                      {cvFile ? `${(cvFile.size / 1024).toFixed(0)} KB` : 'PDF, DOC, DOCX — max 5 MB'}
+                    </div>
+                  </div>
+                  {cvFile && (
+                    <div style={{ color: '#22c55e', flexShrink: 0 }}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                      </svg>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    style={{ display: 'none' }}
+                    onChange={e => {
+                      const f = e.target.files[0]
+                      if (f && f.size > 5 * 1024 * 1024) { alert('File must be under 5 MB'); return }
+                      setCvFile(f || null)
+                    }}
+                  />
+                </label>
+              </div>
+
+              {/* Cover Note */}
+              <div style={fieldWrap}>
+                <label style={labelStyle}>Cover Note <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0, color: 'rgba(255,255,255,0.35)', fontSize: '12px' }}>(optional)</span></label>
+                <textarea
+                  value={form.message}
+                  onChange={e => set('message', e.target.value)}
+                  placeholder="Briefly tell us about your experience and why you'd like to join Bejoice..."
+                  rows={4}
+                  style={{ ...inputStyle, resize: 'vertical', minHeight: '100px' }}
+                  onFocus={e => { e.target.style.borderColor = 'rgba(91,194,231,0.6)'; e.target.style.boxShadow = '0 0 0 3px rgba(91,194,231,0.1)' }}
+                  onBlur={e => { e.target.style.borderColor = 'rgba(91,194,231,0.2)'; e.target.style.boxShadow = 'none' }}
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="btn-gold"
+                disabled={submitting}
+                style={{ width: '100%', padding: '14px', fontSize: '17px', letterSpacing: '0.1em', opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}
+              >
+                {submitting ? 'Submitting...' : 'Submit Application'}
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function PolicyModal({ title, onClose }) {
   const policy = POLICIES[title]
   return (
@@ -183,6 +560,7 @@ export default function Footer() {
   const { lang } = useLang()
   const isAr = lang === 'ar'
   const [openPolicy, setOpenPolicy] = useState(null)
+  const [careersOpen, setCareersOpen] = useState(false)
 
   return (
     <footer className="relative border-t pt-10 md:pt-20 pb-10 px-6 md:px-12 lg:px-24 overflow-hidden cv-section cv-footer" style={{ borderColor: 'rgba(255,255,255,0.08)', background: '#183650' }}>
@@ -229,6 +607,15 @@ export default function Footer() {
                       >
                         {isAr ? ar.nav.bejoiceWings : 'Bejoice Wings'}
                       </a>
+                    ) : item === 'Careers' ? (
+                      <button
+                        onClick={() => setCareersOpen(true)}
+                        style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 'clamp(14px,1.5vw,17px)', color: 'rgba(255,255,255,0.90)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, transition: 'color 0.3s' }}
+                        onMouseEnter={e => e.currentTarget.style.color = '#ffffff'}
+                        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.90)'}
+                      >
+                        {isAr ? (ar.footer.links?.['Careers'] || 'Careers') : 'Careers'}
+                      </button>
                     ) : (
                     <a
                       href={item === 'Track Shipment' ? 'https://www.track-trace.com/' : (item === 'Get a Quote' || item === 'Contact Us') ? '#contact' : item === 'Why Bejoice' ? '#why-us' : item === 'Certifications' ? '#certifications' : item === 'Our Offices' ? '#globe' : item === 'About Bejoice' ? '#hero' : '#'}
@@ -404,6 +791,7 @@ export default function Footer() {
       </div>
 
       {openPolicy && <PolicyModal title={openPolicy} onClose={() => setOpenPolicy(null)} />}
+      {careersOpen && <CareersModal onClose={() => setCareersOpen(false)} />}
     </footer>
   )
 }
