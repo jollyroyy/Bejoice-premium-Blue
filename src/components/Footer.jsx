@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import logoSrc from '../assets/bejoice-logo-group.png'
 import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
@@ -134,6 +134,13 @@ function CareersModal({ onClose }) {
   const [submitting, setSubmitting] = useState(false)
   const [errors, setErrors] = useState({})
 
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = prev }
+  }, [])
+
   const set = (field, val) => setForm(prev => ({ ...prev, [field]: val }))
 
   const fieldErr = (field) => errors[field] ? (
@@ -240,10 +247,18 @@ function CareersModal({ onClose }) {
       style={{
         position: 'fixed', inset: 0, zIndex: 99999,
         background: 'rgba(7,16,28,0.92)', backdropFilter: 'blur(12px)',
-        display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
-        overflowY: 'auto', padding: 'clamp(16px,4vw,48px) clamp(12px,3vw,24px)',
+        overflowY: 'auto',
+        WebkitOverflowScrolling: 'touch',
+        overscrollBehavior: 'contain',
       }}
     >
+      {/* centering wrapper — flex lives here, not on the scrollable root */}
+      <div style={{
+        minHeight: '100%',
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
+        padding: 'clamp(16px,4vw,48px) clamp(12px,3vw,24px)',
+        boxSizing: 'border-box',
+      }}>
       <div
         onClick={e => e.stopPropagation()}
         style={{
@@ -478,6 +493,7 @@ function CareersModal({ onClose }) {
             </form>
           </>
         )}
+      </div>
       </div>
     </div>
   )
