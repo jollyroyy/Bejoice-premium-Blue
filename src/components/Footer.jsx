@@ -134,11 +134,15 @@ function CareersModal({ onClose }) {
   const [submitting, setSubmitting] = useState(false)
   const [errors, setErrors] = useState({})
 
-  // Lock body scroll while modal is open
+  // Lock body scroll + pause Lenis while modal is open
   useEffect(() => {
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = prev }
+    if (window.__lenis) window.__lenis.stop()
+    return () => {
+      document.body.style.overflow = prev
+      if (window.__lenis) window.__lenis.start()
+    }
   }, [])
 
   const set = (field, val) => setForm(prev => ({ ...prev, [field]: val }))
@@ -255,8 +259,8 @@ function CareersModal({ onClose }) {
       {/* centering wrapper — flex lives here, not on the scrollable root */}
       <div style={{
         minHeight: '100%',
-        display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
-        padding: 'clamp(16px,4vw,48px) clamp(12px,3vw,24px)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        padding: 'clamp(24px,4vw,48px) clamp(12px,3vw,24px)',
         boxSizing: 'border-box',
       }}>
       <div
