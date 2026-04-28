@@ -4,7 +4,7 @@ import logoSrc from '../assets/bejoice-logo-group.png'
 import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
 import emailjs from '@emailjs/browser'
-import { EMAILJS_SERVICE_ID, EMAILJS_PUBLIC_KEY, isValidPhone } from '../utils/emailService'
+import { EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY, isValidPhone } from '../utils/emailService'
 
 const footerLinks = {
   Company: ['Why Bejoice', 'Certifications', 'Key Markets', 'Careers'],
