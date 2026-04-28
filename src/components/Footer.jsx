@@ -4,7 +4,7 @@ import logoSrc from '../assets/bejoice-logo-group.png'
 import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
 import emailjs from '@emailjs/browser'
-import { EMAILJS_SERVICE_ID, EMAILJS_PUBLIC_KEY } from '../utils/emailService'
+import { EMAILJS_SERVICE_ID, EMAILJS_PUBLIC_KEY, isValidPhone } from '../utils/emailService'
 
 const footerLinks = {
   Company: ['Why Bejoice', 'Certifications', 'Key Markets', 'Careers'],
@@ -176,7 +176,7 @@ function CareersModal({ onClose }) {
     else if (name.length < 2) e.name = 'Name too short'
     if (!email || !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/.test(email)) e.email = 'Valid email required'
     if (!phone) e.phone = 'Phone is required'
-    else if (!/^[+\d\s\-().]+$/.test(phone) || phone.replace(/\D/g, '').length < 7) e.phone = 'Enter a valid phone number'
+    else if (!isValidPhone(phone)) e.phone = 'Enter a valid phone number (e.g. +966 50 123 4567)'
     if (!form.position) e.position = 'Please select a position'
     if (form.position === 'Other' && !clamp(form.otherPosition, 100)) e.otherPosition = 'Please specify the position'
     return e

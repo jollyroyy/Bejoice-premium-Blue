@@ -33,9 +33,17 @@ export function isValidEmail(email) {
 }
 
 export function isValidPhone(phone) {
-  // Allows +, spaces, dashes, digits, min 7 digits
-  const digits = phone.replace(/\D/g, '')
-  return digits.length >= 7 && digits.length <= 15 && /^[+\d\s\-().]+$/.test(phone)
+  if (!phone || typeof phone !== 'string') return false
+  const s = phone.trim()
+  // Only allowed chars: +, digits, spaces, hyphens, dots, parentheses
+  if (!/^[+\d\s\-().]+$/.test(s)) return false
+  // + is only valid at the very start (not mid-number)
+  if (s.indexOf('+') > 0) return false
+  // Must begin with + (international) or a digit
+  if (!/^[+\d]/.test(s)) return false
+  const digits = s.replace(/\D/g, '')
+  // Min 9 digits (Saudi local 05XXXXXXXX = 10), max 15 (E.164 international)
+  return digits.length >= 9 && digits.length <= 15
 }
 
 // ─── Format helpers ───────────────────────────────────────────────────────────

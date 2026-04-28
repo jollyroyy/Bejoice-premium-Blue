@@ -4,7 +4,7 @@ import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
 import useFadeUpBatch from '../hooks/useFadeUpBatch'
 import emailjs from '@emailjs/browser'
-import { EMAILJS_SERVICE_ID, EMAILJS_PUBLIC_KEY, sanitize } from '../utils/emailService'
+import { EMAILJS_SERVICE_ID, EMAILJS_PUBLIC_KEY, sanitize, isValidPhone } from '../utils/emailService'
 
 const CONTACT_TEMPLATE_ID = 'template_vr3kf0w'
 
@@ -24,6 +24,7 @@ export default function Contact() {
   const [sent, setSent]       = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [focused, setFocused] = useState(null)
+  const [errors, setErrors]   = useState({})
   const cardRef = useRef(null)
   const glowRef = useRef(null)
 
@@ -56,8 +57,8 @@ export default function Contact() {
 
   const iStyle = (name) => ({
     width: '100%', boxSizing: 'border-box',
-    background: focused === name ? 'rgba(91,194,231,0.09)' : 'rgba(255,255,255,0.08)',
-    border: `1px solid ${focused === name ? 'rgba(91,194,231,0.7)' : 'rgba(255,255,255,0.18)'}`,
+    background: errors[name] ? 'rgba(248,113,113,0.05)' : focused === name ? 'rgba(91,194,231,0.09)' : 'rgba(255,255,255,0.08)',
+    border: `1px solid ${errors[name] ? 'rgba(248,113,113,0.65)' : focused === name ? 'rgba(91,194,231,0.7)' : 'rgba(255,255,255,0.18)'}`,
     borderRadius: 8,
     padding: 'clamp(11px,1.4vw,14px) clamp(12px,1.8vw,16px)',
     fontFamily: isAr ? "'Cairo',sans-serif" : "'DM Sans',sans-serif",
@@ -216,6 +217,12 @@ export default function Contact() {
                 <form dir={isAr ? 'rtl' : 'ltr'} onSubmit={async e => {
                   e.preventDefault()
                   if (submitting) return
+                  // Phone format validation (optional field, but must be valid if filled)
+                  if (form.phone.trim() && !isValidPhone(form.phone.trim())) {
+                    setErrors({ phone: isAr ? 'أدخل رقم هاتف صحيحاً (مثال: ‎+966 50 123 4567)' : 'Enter a valid phone number (e.g. +966 50 123 4567)' })
+                    return
+                  }
+                  setErrors({})
                   setSubmitting(true)
                   try {
                     const body = [
@@ -278,7 +285,10 @@ export default function Contact() {
                       <input style={iStyle('email')} placeholder="your@email.com" type="email" name="email" value={form.email} onChange={handleChange} onFocus={()=>setFocused('email')} onBlur={()=>setFocused(null)} required />
                     </div>
                     <div><label style={labelStyle}>{isAr ? ar.contact.labels.phone : 'Phone / WhatsApp'}</label>
-                      <input style={iStyle('phone')} placeholder="+966 5X XXX XXXX" name="phone" value={form.phone} onChange={handleChange} onFocus={()=>setFocused('phone')} onBlur={()=>setFocused(null)} />
+                      <input style={iStyle('phone')} placeholder="+966 5X XXX XXXX" name="phone" value={form.phone}
+                        onChange={e => { handleChange(e); if (errors.phone) setErrors(prev => ({ ...prev, phone: '' })) }}
+                        onFocus={()=>setFocused('phone')} onBlur={()=>setFocused(null)} />
+                      {errors.phone && <div style={{ color:'#f87171', fontSize:'clamp(11px,1.1vw,13px)', marginTop:4, fontFamily:"'DM Sans',sans-serif" }}>{errors.phone}</div>}
                     </div>
                   </div>
 
