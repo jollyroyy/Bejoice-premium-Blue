@@ -5,7 +5,7 @@ import { useCalBooking } from '../hooks/useCalBooking'
 import { useLang } from '../context/LangContext'
 import ar from '../i18n/ar'
 
-const CAL_LINK = "sudeshna-pal-ruww5f/freight-consultation"
+const CAL_LINK = "bejoice/freight-expert-consultation"
 
 const links = [
   { label: 'Why Bejoice',                    arLabel: 'لماذا بيجويس',                id: 'why-us',         num: '01', sub: 'Our story & edge',    arSub: 'قصتنا وميزتنا' },

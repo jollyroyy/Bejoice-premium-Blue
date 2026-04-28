@@ -135,6 +135,7 @@ export default function QuickQuoteModal({ onClose }) {
       {/* Backdrop */}
       <div
         ref={backdropRef}
+        data-lenis-prevent
         onClick={e => { if (e.target === backdropRef.current) onClose() }}
         style={{
           position: 'fixed', inset: 0, zIndex: 99999,
@@ -145,6 +146,7 @@ export default function QuickQuoteModal({ onClose }) {
           padding: 'max(16px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left))',
           animation: 'qqm-backdrop-in 0.28s ease forwards',
           overflowY: 'auto',
+          WebkitOverflowScrolling: 'touch',
         }}
       >
         {/* Panel */}

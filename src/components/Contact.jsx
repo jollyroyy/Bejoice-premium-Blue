@@ -60,22 +60,26 @@ export default function Contact() {
     border: `1px solid ${focused === name ? 'rgba(91,194,231,0.7)' : 'rgba(255,255,255,0.18)'}`,
     borderRadius: 8,
     padding: 'clamp(11px,1.4vw,14px) clamp(12px,1.8vw,16px)',
-    fontFamily: "'DM Sans',sans-serif",
+    fontFamily: isAr ? "'Cairo',sans-serif" : "'DM Sans',sans-serif",
     fontSize: 'clamp(16px,1.7vw,19px)',
     color: '#ffffff',
     textShadow: '0 0 12px rgba(255,255,255,0.15)',
     outline: 'none',
     transition: 'border-color 0.2s, background 0.2s',
+    direction: isAr ? 'rtl' : 'ltr',
+    textAlign: isAr ? 'right' : 'left',
   })
 
   const labelStyle = {
-    fontFamily: "'DM Sans',sans-serif",
+    fontFamily: isAr ? "'Cairo',sans-serif" : "'DM Sans',sans-serif",
     fontSize: 'clamp(13px,1.3vw,15px)',
-    letterSpacing: '0.22em', textTransform: 'uppercase',
+    letterSpacing: isAr ? '0' : '0.22em',
+    textTransform: isAr ? 'none' : 'uppercase',
     color: 'rgba(91,194,231,1)',
     textShadow: '0 0 16px rgba(91,194,231,0.4)',
     fontWeight: 700,
     display: 'block', marginBottom: 7,
+    direction: isAr ? 'rtl' : 'ltr',
   }
 
   return (
@@ -209,7 +213,7 @@ export default function Contact() {
 
               {/* Inner padding */}
               <div style={{ padding: 'clamp(1.6rem,4vw,2.8rem)', position: 'relative', zIndex: 2 }}>
-                <form onSubmit={async e => {
+                <form dir={isAr ? 'rtl' : 'ltr'} onSubmit={async e => {
                   e.preventDefault()
                   if (submitting) return
                   setSubmitting(true)
@@ -239,7 +243,7 @@ export default function Contact() {
                       EMAILJS_SERVICE_ID,
                       CONTACT_TEMPLATE_ID,
                       {
-                        to_email:    'jollyroyy@gmail.com',
+                        to_email:    'info@bejoiceshipping-ksa.com',
                         reply_to:    sanitize(form.email) || 'info@bejoiceshipping-ksa.com',
                         from_name:   sanitize(form.name) || 'Bejoice Contact Form',
                         subject:     `[Bejoice Contact] ${sanitize(form.name)} — ${form.types.join(', ') || 'General Enquiry'}`,
@@ -311,9 +315,10 @@ export default function Contact() {
                               return { ...f, types: newTypes }
                             })}
                             style={{
-                              fontFamily:"'DM Sans',sans-serif",
+                              fontFamily: isAr ? "'Cairo',sans-serif" : "'DM Sans',sans-serif",
                               fontSize:'clamp(13px,1vw,13px)', fontWeight:600,
-                              letterSpacing:'0.1em', textTransform:'uppercase',
+                              letterSpacing: isAr ? '0' : '0.1em',
+                              textTransform: isAr ? 'none' : 'uppercase',
                               padding:'clamp(8px,0.8vw,9px) clamp(12px,1.3vw,16px)',
                               minHeight: 36,
                               borderRadius:6, cursor:'pointer', transition:'all 0.18s',
@@ -322,6 +327,7 @@ export default function Contact() {
                               color: active ? '#8DD8F0' : 'rgba(255,255,255,0.85)',
                               boxShadow: active ? '0 0 12px rgba(91,194,231,0.15)' : 'none',
                               display: 'flex', alignItems: 'center', gap: 6,
+                              flexDirection: isAr ? 'row-reverse' : 'row',
                             }}
                           >
                             {active && (
@@ -371,7 +377,7 @@ export default function Contact() {
                             style={{ animation: 'spin 0.7s linear infinite' }}>
                             <path d="M12 2a10 10 0 1 0 10 10" strokeLinecap="round"/>
                           </svg>
-                          <span style={{ marginLeft: 8 }}>{isAr ? 'جارٍ الإرسال…' : 'Sending…'}</span>
+                          <span style={{ marginLeft: isAr ? 0 : 8, marginRight: isAr ? 8 : 0 }}>{isAr ? 'جارٍ الإرسال…' : 'Sending…'}</span>
                           <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                         </>
                       ) : (
@@ -390,7 +396,7 @@ export default function Contact() {
           </>
         ) : (
           /* ── Success ── */
-          <div style={{
+          <div dir={isAr ? 'rtl' : 'ltr'} style={{
             animation: 'contactSuccessIn 0.5s ease forwards',
             textAlign:'center',
             background:'linear-gradient(135deg, rgba(34,197,94,0.06) 0%, rgba(34,197,94,0.02) 100%)',

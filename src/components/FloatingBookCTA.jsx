@@ -5,7 +5,7 @@ import { retrieveChunks } from "../data/laylaKnowledgeBase";
 import { useLang } from "../context/LangContext";
 import ar from "../i18n/ar";
 
-const CAL_LINK = "sudeshna-pal-ruww5f/freight-consultation";
+const CAL_LINK = "bejoice/freight-expert-consultation";
 
 const MESSAGES = [
   "Hey there! 👋 Need help with shipping?",
