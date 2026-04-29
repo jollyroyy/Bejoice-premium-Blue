@@ -93,8 +93,7 @@ export default function WhyBejoice() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ type: 'spring', stiffness: 80, damping: 20 }}
           style={{
-            background: 'linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 50%, rgba(91,194,231,0.02) 100%)',
-            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+            background: 'linear-gradient(160deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 50%, rgba(91,194,231,0.03) 100%)',
             border: '1px solid rgba(91,194,231,0.28)',
             borderTop: '1px solid rgba(91,194,231,0.55)',
             borderRadius: 24,
