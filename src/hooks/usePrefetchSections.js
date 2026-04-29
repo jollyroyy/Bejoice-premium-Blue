@@ -21,6 +21,7 @@ import { useEffect } from 'react'
 
 // All lazy chunks in load-priority order
 const SECTION_IMPORTS = [
+  () => import('../components/WhyBejoice'),       // first section after hero — highest priority
   () => import('../components/FloatingBookCTA'),  // chatbot — user might click fast
   () => import('../components/Contact'),
   () => import('../components/LogisticsTools'),
