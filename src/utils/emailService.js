@@ -21,7 +21,13 @@ export function sanitize(value) {
 export function sanitizeAll(obj) {
   const out = {}
   for (const [k, v] of Object.entries(obj)) {
-    out[k] = typeof v === 'boolean' ? v : sanitize(String(v))
+    if (typeof v === 'boolean') {
+      out[k] = v
+    } else if (Array.isArray(v)) {
+      out[k] = v  // preserve arrays — body builders (e.g. containers in Sea) need them intact
+    } else {
+      out[k] = sanitize(String(v))
+    }
   }
   return out
 }
